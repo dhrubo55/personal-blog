@@ -4,7 +4,7 @@
 
 This repository hosts the tools, assets & themes for my [personal website][Personal Website]. The site is statically generated with [Hugo][Hugo Landing Page] & the [PaperMod][Hugo-PaperMod] theme. Hugo which is a Static Site Generator(SSG) built with [Golang][Go Landing Page] generates the static contents for the site to be deployed to [Netlify][Netlify Landing Page].
 
-- [:man_technologist: Somraj Saha's Blog](#man_technologist-somraj-sahas-blog)
+- [:man_technologist: Dhrubo's Blog](#man_technologist-somraj-sahas-blog)
   - [:checkered_flag: Getting Started](#checkered_flag-getting-started)
     - [:running: The Easy & Quick Way To Get It Done](#running-the-easy--quick-way-to-get-it-done)
       - [:nut_and_bolt: Setup a Development Environment](#nut_and_bolt-setup-a-development-environment)
