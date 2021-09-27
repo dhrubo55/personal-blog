@@ -1,4 +1,4 @@
-# :man_technologist: Somraj Saha's Blog
+# :man_technologist: Dhrubo's Blog
 
 [![Website][Website]][Personal Website] [![Netlify Deploy][Netlify Deploy Badge]][Netlify Deploy] [![LinkedIn][My LinkedIn Badge]][My LinkedIn] [![Quora profile][My Quora Badge]][My Quora] [![Ask Me Anything !][My AMA Badge]][My AMA] [![Twitter Follow][My Twitter Badge]][My Twitter]
 
