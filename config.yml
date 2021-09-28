@@ -1,4 +1,4 @@
-baseURL: ""
+baseURL: "https://mohibulsblog.netlify.app"
 languageCode: "en-us"
 title: "Mohibul Hassan"
 theme: "hugo-PaperMod"
