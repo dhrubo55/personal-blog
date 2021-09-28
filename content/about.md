@@ -9,7 +9,7 @@ summary: About Mohibul Hassan. This section details what he does & everything el
 ---
 Hi there! :wave: I am Mohibul Hassan Chowdhury.
 
-I work as an independent Software Engineer for a living. Over the years I picked up knowledge in Python & Machine Learning (_mostly due to my academic background in Economics_). And only recently did I start dabbling around with frontend technologies for the Web.
+I work as a Software Engineer for a living. Over the years I picked up knowledge in Python & Machine Learning (_mostly due to my academic background in Economics_). And only recently did I start dabbling around with frontend technologies for the Web.
 
 I've listed my tech stack on the [Technology Stack](../services/#technology-stack) section of my Services page. So, in case you would like to hire me, that information might prove useful for you! :heart:
 
@@ -28,8 +28,8 @@ These are the platforms you can find me on:
 **Note**: I'm more active on Twitter, so you'll definitely want to DM me there.
 
 <!-- Reference Links -->  
-[Twitter]: https://twitter.com/dhrubo555  
-[Linkedin]: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/)  
-[Email]: mailto:mohibulhassan100@gmail.com  
-[Github]: https://github.com/dhrubo55  
-[Blog Source Code]: https://github.com/dhrubo55/personal-blog
+\[Twitter\]: https://twitter.com/dhrubo555  
+\[Linkedin\]: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/)  
+\[Email\]: mailto:mohibulhassan100@gmail.com  
+\[Github\]: https://github.com/dhrubo55  
+\[Blog Source Code\]: https://github.com/dhrubo55/personal-blog
