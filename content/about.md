@@ -3,8 +3,8 @@ title: About Me
 url: "/about"
 hidemeta: true
 disableShare: true
-summary: About Somraj Saha. This section details what he does & everything else you
-  might want to know about him.
+summary: About Mohibul Hassan. This section details what he does & everything else
+  you might want to know about him.
 
 ---
 Hi there! :wave: I am Mohibul Hassan Chowdhury.
