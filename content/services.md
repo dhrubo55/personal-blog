@@ -17,8 +17,8 @@ Following are the list of technologies I'm most familiar with:
 
 | Services              |                     Technology                     |
 | :-------------------- | :------------------------------------------------: |
-| Programming Languages |                  [Python][Python]                  |
-| Backend               |                 [FastAPI][FastAPI]                 |
+| Programming Languages |                [Java][Java],[JS][JS]               |
+| Backend               |           [Springboot][Springboot],[Vue][Vue]      |
 | Hosting               |  [Heroku][Heroku] - [Google Cloud Platform][GCP]   |
 | Machine Learning      | [Scikit-Learn][Sklearn] - [TensorFlow][TensorFlow] |
 | Shell Scripting       |      [PowerShell][PowerShell] - [Bash][Bash]       |
