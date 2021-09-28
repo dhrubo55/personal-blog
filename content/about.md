@@ -15,26 +15,20 @@ I've listed my tech stack on the [Technology Stack](../services/#technology-stac
 
 Besides programming, I'm also an amateur Technical Writer. My [blog](../blog/) is one source where you can find most of my up-to-date written content. But, often there's a book or two I keep working on. If you would like to stay updated on their progress, you might want to follow me on Twitter.
 
-But when I'm on the \[Terminal\]\[Terminal Emulator\], you can find me on Steam probably playing a game or two. If you would like to join me in a game, feel free to drop a message. You can DM me on Discord(**Jarmos#8937**) and/or on my \[Steam\][Steam Profile](**Jarmos-san**).
-
 ### Contact Me
 
 Want to have a professional chat with me? Feel free to drop a DM! :smile:
 
 These are the platforms you can find me on:
 
-* Email: somraj.mle@gmail.com
+* Email: mohibulhassan100@gmail.com
 * Linkedin: \[www.linkedin.com/in/jarmos\]\[Linkedin\]
-* Twitter: \[@Jarmosan\]\[Twitter\]
+* Twitter: \[@dhrubo555\]\[Twitter\]
 
 **Note**: I'm more active on Twitter, so you'll definitely want to DM me there.
 
-<!-- Reference Links -->
-\[Newsletter\]: https://jarmos.ck.page/newsletter
-\[Twitter\]: https://twitter.com/Jarmosan
-\[Linkedin\]: https://www.linkedin.com/in/jarmos
-\[Email\]: mailto:somraj.mle@gmail.com
-\[Github\]: https://github.com/Jarmos-san
-\[Blog Source Code\]: https://github.com/Jarmos-san/blog
-\[Steam Profile\]: https://steamcommunity.com/id/jarmos-san/
-\[Terminal Emulator\]: https://en.wikipedia.org/wiki/Terminal_emulator
+<!-- Reference Links --> \[Newsletter\]: https://jarmos.ck.page/newsletter \[Twitter\]: https://twitter.com/dhrubo555  
+\[Linkedin\]: https://www.linkedin.com/in/jarmos   
+\[Email\]: mailto:mohibulhassan100@gmail.com  
+\[Github\]: https://github.com/dhrubo55   
+\[Blog Source Code\]: https://github.com/dhrubo55/personal-blog
