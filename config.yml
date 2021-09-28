@@ -1,7 +1,7 @@
-baseURL: "https://jarmos.netlify.app"
+baseURL: ""
 languageCode: "en-us"
-title: "Somraj Saha"
-theme: "PaperMod"
+title: "Mohibul Hassan"
+theme: "hugo-PaperMod"
 paginate: 5
 enableRobotsTXT: true
 enableEmoji: true
@@ -13,8 +13,8 @@ minify:
   minifyOutput: true
 params:
   env: production
-  title: Jarmos
-  description: "Personal website for Somraj Saha where I share content based on my experiences as an ML Engineer & self-taught programmer."
+  title: Mohibul Hassan
+  description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast."
   images: ['profile-pic.jpg']
 
   defaultTheme: auto
@@ -22,7 +22,7 @@ params:
   ShowReadingTime: true
   ShowShareButtons: true
   ShowPostNavLinks: true
-  GoogleAnalyticsID: G-V0ZH6RS2BM
+  GoogleAnalyticsID: 
   disableSpecial1stPost: false
   comments: false
   hidemeta: false
@@ -36,32 +36,32 @@ params:
     android-chrome: icons/android-chrome-512x512.png
     disableHLJS: true
   label:
-    text: Somraj Saha
+    text: Mohibul Hassan
   homeInfoParams:
     Title: "Hi there! \U0001F44B"
     Content: |
-      - Welcome to my website!. This is the right place to discover more about me if you're interested. I share my thoughts, opinions, projects showcases & experiences as a self-taught developer.
+      - Welcome to my website!. This is the right place to discover more about me if you're interested. I share my thoughts, opinions, projects showcases & experiences as a software engineer.
       -
-      - Besides that, you'll find content on topics like - "Machine Learning", "Python (the programming language)", "Software development practices" & so on.
+      - Besides that, you'll find content on topics like - "Machine Learning", "Java (the programming language), Javascript", "Software engineering practices" & so on.
       -
       - And if you enjoy reading the content, consider sharing them with your friends, family & acquiantances. Or if you believe I could improve something, leave a feedback though any of my contact details.
   socialIcons:
   - name: twitter
-    url: https://twitter.com/@Jarmosan
+    url: https://twitter.com/@dhrubo555
   - name: github
-    url: https://github.com/Jarmos-san
+    url: https://github.com/dhrubo55
   - name: medium
-    url: https://medium.com/@Jarmos
+    url: https://medium.com/
   - name: instagram
     url: https://www.instagram.com/jarmos.san/
   - name: linkedin
-    url: https://www.linkedin.com/in/jarmos/
+    url: https://www.linkedin.com/in/mohibulhassan
   - name: facebook
-    url: https://www.facebook.com/jarmos.san/
+    url: https://www.facebook.com/
   - name: email
-    url: mailto:somraj.mle@gmail.com
+    url: mailto:mohibulhassan100@gmail.com
   - name: buymeacoffee
-    url: https://www.buymeacoffee.com/Jarmos
+    url: https://www.buymeacoffee.com/
   cover:
     hidden: true
     hiddenInList: true
