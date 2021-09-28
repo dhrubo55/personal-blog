@@ -18,14 +18,12 @@ Following are the list of technologies I'm most familiar with:
 | Services              |                     Technology                     |
 | :-------------------- | :------------------------------------------------: |
 | Programming Languages |                [Java][Java],[JS][JS]               |
-| Backend               |           [Springboot][Springboot],[Vue][Vue]      |
+| Backend               |              [Springboot][Springboot]              |
 | Hosting               |  [Heroku][Heroku] - [Google Cloud Platform][GCP]   |
-| Machine Learning      | [Scikit-Learn][Sklearn] - [TensorFlow][TensorFlow] |
+| Frontend              |           [Vue][Vue] - [Nuxt][Nuxt]                |
 | Shell Scripting       |      [PowerShell][PowerShell] - [Bash][Bash]       |
-| Development Platforms |      [Windows 10][Windows] - [Ubuntu][Ubuntu]      |
-| Miscellaneous         |        [GitHub][GitHub] - [Kaggle][Kaggle]         |
+| Miscellaneous         |                 [GitHub][GitHub]                   |
 
-**Note**: This tech stack is what I'm most confident with. In case you need help with something else, feel free to reach out to me. I might be able to help you out with something. :wink:
 
 ## Services
 
@@ -33,14 +31,14 @@ Following are the list of technologies I'm most familiar with:
 - **Writing**: Need a Technical Writer for your blog or your next book? Then look no further.
 <!-- - **Machine Learning Consulting**: Not sure if your company could benefit from a Machine Learning venture? Then I can help you out sort things out. -->
 
-For any business queries, contact me through the provided [contact details](../about/#contact-me).
+For any queries, contact me through the provided [contact details](../about/#contact-me).
 
 <!-- Reference Links -->
 <!-- * Programming Language -->
 [Java]: https://www.java.com/
 [JS]: https://www.javascript.com
 <!-- * Backend Services Tech -->
-[Springboot]: http://fastapi.tiangolo.com/
+[Springboot]: https://spring.io/projects/spring-boot
 <!-- * Machine Learning Libraries -->
 [TensorFlow]: https://www.tensorflow.org/
 [Sklearn]: https://scikit-learn.org
@@ -49,8 +47,8 @@ For any business queries, contact me through the provided [contact details](../a
 [AWS]: https://aws.amazon.com/
 [GCP]: https://cloud.google.com/
 <!-- * Dev Platforms -->
-[Windows]: https://www.microsoft.com/en-in/windows/get-windows-10
-[Ubuntu]: https://ubuntu.com/
+[Vue]: https://vuejs.org
+[Nuxt]: https://nuxtjs.org
 <!-- * Shell Scripting -->
 [PowerShell]: https://docs.microsoft.com/en-us/powershell/
 [Bash]: https://www.gnu.org/software/bash/
