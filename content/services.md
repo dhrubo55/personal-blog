@@ -3,10 +3,11 @@ title: Hire Me
 url: "/services"
 hidemeta: true
 disableShare: true
-summary: Hire Somraj Saha for your professional needs. This section details his services, rates, skill sets & everything else you might want to know before hiring him.
----
+summary: Hire Somraj Saha for your professional needs. This section details his services,
+  rates, skill sets & everything else you might want to know before hiring him.
 
-I've been fortunate enough to be able to work with some amazing folks over the past couple of years. Most of them were business partners who co-founded some ventures with me or were small-scale business owners. And with their help, I garnered 4+ years of experience working on real business issues. And if you need an experienced helping hand as well, feel free to reach out to me!
+---
+I've been fortunate enough to be able to work with some amazing folks over the past couple of years.  And with their help, I garnered 3+ years of experience working on real business issues. And if you need an experienced helping hand as well, feel free to reach out to me!
 
 You can find the details of my services below & see if they fit your needs.
 
