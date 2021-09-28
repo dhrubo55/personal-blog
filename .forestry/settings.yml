@@ -14,10 +14,10 @@ sections:
   label: Posts
   create: all
   match: "**/*"
-upload_dir: ''
-public_path: https://res.cloudinary.com/jarmos/image/upload
+upload_dir: images-from-blog
+public_path: "/images-from-blog"
 front_matter_path: ''
-use_front_matter_path: false
+use_front_matter_path: 
 file_template: ":filename:"
 build:
   preview_env:
