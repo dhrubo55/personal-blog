@@ -37,9 +37,10 @@ For any business queries, contact me through the provided [contact details](../a
 
 <!-- Reference Links -->
 <!-- * Programming Language -->
-[Python]: https://www.python.org/
+[Java]: https://www.java.com/
+[JS]: https://www.javascript.com
 <!-- * Backend Services Tech -->
-[FastAPI]: http://fastapi.tiangolo.com/
+[Springboot]: http://fastapi.tiangolo.com/
 <!-- * Machine Learning Libraries -->
 [TensorFlow]: https://www.tensorflow.org/
 [Sklearn]: https://scikit-learn.org
