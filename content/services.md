@@ -1,10 +1,10 @@
 ---
-title: Hire Me
+title: Services
 url: "/services"
 hidemeta: true
 disableShare: true
-summary: Hire Somraj Saha for your professional needs. This section details his services,
-  rates, skill sets & everything else you might want to know before hiring him.
+summary: This section details skill sets & everything else you might want to know.
+draft: true
 
 ---
 I've been fortunate enough to be able to work with some amazing folks over the past couple of years.  And with their help, I garnered 3+ years of experience working on real business issues. And if you need an experienced helping hand as well, feel free to reach out to me!
