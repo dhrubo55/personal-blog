@@ -23,13 +23,13 @@ These are the platforms you can find me on:
 
 * Email: mohibulhassan100@gmail.com
 * Linkedin: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/ "https://www.linkedin.com/in/mohibulhassan/")
-* Twitter: \[@dhrubo555\]\[Twitter\]
+* Twitter: [https://twitter.com/dhrubo555](https://twitter.com/dhrubo555 "https://twitter.com/dhrubo555")
 
 **Note**: I'm more active on Twitter, so you'll definitely want to DM me there.
 
-<!-- Reference Links -->   
+<!-- Reference Links -->  
 \[Twitter\]: https://twitter.com/dhrubo555  
-\[Linkedin\]: https://www.linkedin.com/in/mohibulhassan  
+\[Linkedin\]: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/ "https://www.linkedin.com/in/mohibulhassan/")  
 \[Email\]: mailto:mohibulhassan100@gmail.com  
 \[Github\]: https://github.com/dhrubo55  
 \[Blog Source Code\]: https://github.com/dhrubo55/personal-blog
