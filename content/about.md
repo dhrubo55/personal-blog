@@ -22,13 +22,14 @@ Want to have a professional chat with me? Feel free to drop a DM! :smile:
 These are the platforms you can find me on:
 
 * Email: mohibulhassan100@gmail.com
-* Linkedin: \[www.linkedin.com/in/jarmos\]\[Linkedin\]
+* Linkedin: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/ "https://www.linkedin.com/in/mohibulhassan/")
 * Twitter: \[@dhrubo555\]\[Twitter\]
 
 **Note**: I'm more active on Twitter, so you'll definitely want to DM me there.
 
-<!-- Reference Links --> \[Newsletter\]: https://jarmos.ck.page/newsletter \[Twitter\]: https://twitter.com/dhrubo555  
-\[Linkedin\]: https://www.linkedin.com/in/jarmos   
+<!-- Reference Links -->   
+\[Twitter\]: https://twitter.com/dhrubo555  
+\[Linkedin\]: https://www.linkedin.com/in/mohibulhassan  
 \[Email\]: mailto:mohibulhassan100@gmail.com  
-\[Github\]: https://github.com/dhrubo55   
+\[Github\]: https://github.com/dhrubo55  
 \[Blog Source Code\]: https://github.com/dhrubo55/personal-blog
