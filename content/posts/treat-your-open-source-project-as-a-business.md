@@ -1,17 +1,20 @@
 ---
-title: "Why/How Should You Treat Your Open-Source Project As a Business"
-date: "2020-10-11"
+title: Why/How Should You Treat Your Open-Source Project As a Business
+date: 2020-10-11
 category: Open-Source
-summary: Your open-source project is no different from a startup. Consider it as one & ensure its success. Here's a trivial framework to build upon.
-description: Your open-source project is no different from a startup. Consider it as one & ensure its success. Here's a trivial framework to build upon.
+summary: Your open-source project is no different from a startup. Consider it as one
+  & ensure its success. Here's a trivial framework to build upon.
+description: Your open-source project is no different from a startup. Consider it
+  as one & ensure its success. Here's a trivial framework to build upon.
 cover:
-  image: "https://cdn-images-1.medium.com/max/2560/1*izeOstXVPngxTQpsCen3qg.jpeg"
-  alt: "A open sign handing from a door"
-  caption: "Photo by Leyre Labarga on Unsplash"
+  image: https://cdn-images-1.medium.com/max/2560/1*izeOstXVPngxTQpsCen3qg.jpeg
+  alt: A open sign handing from a door
+  caption: Photo by Leyre Labarga on Unsplash
   relative: false
 showtoc: true
----
+draft: true
 
+---
 The early 2000s witnessed the rise of the software revolution. With it came the idea of “[Free & Open-Source Software](https://en.wikipedia.org/wiki/Free_and_open-source_software) (FOSS)” after Richard Stallman initiated his [Free Software Movement](https://en.wikipedia.org/wiki/Free_software_movement). And in 2020, Open-Source Software is almost the new standard within the software industry[1]. So much so that recruiters often expect new budding software developers to “contribute to” open-source software projects. Or other times, an open-source software (not necessarily free though) is chosen over a proprietary one by the consumers simply due to the quality assurance & trust factor. But as tech giants like Microsoft, Facebook, Google, etc are also actively participating in the open-source community, how does your open-source venture compete against them?
 
 The rest of the article will attempt at answering that exact question.

@@ -1,19 +1,21 @@
 ---
-title: "Vim or Neovim? Here's Why You Should Use the Latter"
-date: 2021-07-15T13:10:41+05:30
-slug: "vim-vs-neovim"
-category: "Development Environments"
-summary: Confused between Vim and/or Neovim? Here are my justifications to convince you to use Neovim instead today!
-description: Confused between Vim and/or Neovim? Here are my justifications to convince you to use Neovim instead today!
+title: Vim or Neovim? Here's Why You Should Use the Latter
+date: 2021-07-15T13:10:41.000+05:30
+slug: vim-vs-neovim
+category: Development Environments
+summary: Confused between Vim and/or Neovim? Here are my justifications to convince
+  you to use Neovim instead today!
+description: Confused between Vim and/or Neovim? Here are my justifications to convince
+  you to use Neovim instead today!
 cover:
   image: https://res.cloudinary.com/jarmos/image/upload/v1628425482/vim-vs-neovim_kn8cm9.gif
   alt: Vim vs Neovim; Which one to use?
   caption: Vim vs Neovim; Which one to use?
   relative: false
 showtoc: true
-draft: false
----
+draft: true
 
+---
 If you ever heard of [Vim][Vim] before, you would know all about it's forks that have popped up in recent years! There’s [Neovim][Neovim] (the most popular fork), [LunarVim][LunarVim] (one of the most promising fork) & countless others. And as is obvious, choosing the one right one for yourself can be a difficult task (been there & done that).
 
 So to help you decide, this article will shed light on some of the reasons to choose Neovim over Vim. To be more specific, we’ll look into every day use cases while comparing the two. Analysing everyday use cases is more relevant while comparing consumer products anyway.

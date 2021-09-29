@@ -1,18 +1,23 @@
 ---
-title: "Unveiling Common Misconceptions of “Democratizing” Data Science/Machine Learning"
-date: "2020-06-15"
+title: Unveiling Common Misconceptions of “Democratizing” Data Science/Machine Learning
+date: 2020-06-15
 category: Data Science
 slug: unveiling-common-misconceptions-of-democratizing-data-science-machine-learning
-summary: Are you aspiring to be a Data Scientist or a Machine Learning expert? Then allow me to cut through the hype & clear some of the misconceptions you might be already strangled in.
-description: Are you aspiring to be a Data Scientist or a Machine Learning expert? Then allow me to cut through the hype & clear some of the misconceptions you might be already strangled in.
+summary: Are you aspiring to be a Data Scientist or a Machine Learning expert? Then
+  allow me to cut through the hype & clear some of the misconceptions you might be
+  already strangled in.
+description: Are you aspiring to be a Data Scientist or a Machine Learning expert?
+  Then allow me to cut through the hype & clear some of the misconceptions you might
+  be already strangled in.
 cover:
-  image: "https://miro.medium.com/max/1433/0*wS49o_cjpKyD6RbQ"
-  alt: "A man facepalming himself while seated on a couch"
-  caption: "Photo by Nik Shuliahin on Unsplash"
+  image: https://miro.medium.com/max/1433/0*wS49o_cjpKyD6RbQ
+  alt: A man facepalming himself while seated on a couch
+  caption: Photo by Nik Shuliahin on Unsplash
   relative: false
 showtoc: true
----
+draft: true
 
+---
 Around 4 years ago, it was this specific video — MarI/O — Machine Learning for Video Games on YouTube which piqued my interest in Artificial Intelligence & Machine Learning. Being an avid gamer as well as also having an academic background in Economics, I thought to myself, “*Oh I already have half of the skills required to make Mario do stuff like this on his own*”.
 
 You see, that was the first misconception I had about Machine Learning (or Data Science in general). Little did I know what Reinforcement Learning was, where & how it was used. But did I care? Nope. All I thought about was creating my own *ML model*.
