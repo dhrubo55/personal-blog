@@ -1,18 +1,23 @@
 ---
-title: A Standard	& Complete CI/CD Pipeline for Most Python Projects
-date: "2021-01-21"
+title: "A Standard\t& Complete CI/CD Pipeline for Most Python Projects"
+date: 2021-01-21
 category: Programming
 slug: a-standard-ci-cd-pipeline-for-python-projects
-summary: The most complete (yet standard) CI/CD pipeline you'll ever find for most of your Python projects. Now spend more time on maintaining your project rather than fixing CI/CD issues.
-description: The most complete (yet standard) CI/CD pipeline you'll ever find for most of your Python projects. Now spend more time on maintaining your project rather than fixing CI/CD issues.
+summary: The most complete (yet standard) CI/CD pipeline you'll ever find for most
+  of your Python projects. Now spend more time on maintaining your project rather
+  than fixing CI/CD issues.
+description: The most complete (yet standard) CI/CD pipeline you'll ever find for
+  most of your Python projects. Now spend more time on maintaining your project rather
+  than fixing CI/CD issues.
 cover:
-    image: "covers/pipeline.png"
-    alt: "GitHub services coupled with Poetry is a life saver"
-    caption: "Use GitHub Actions + Poetry & Chill!"
-    relative: true
+  image: covers/pipeline.png
+  alt: GitHub services coupled with Poetry is a life saver
+  caption: Use GitHub Actions + Poetry & Chill!
+  relative: true
 showtoc: true
----
+draft: true
 
+---
 Have you ever spent ages tinkering with CI/CD tools rather than work on writing code for your Python project?
 
 I sure did! There were times [Poetry][Poetry Landing Page] couldn't install dependencies due to virtual environments. Or other times, the dependencies wouldn't just cache for some reasons. On top of that, CI/CD tools are difficult to debug dude to obscure error messages.
