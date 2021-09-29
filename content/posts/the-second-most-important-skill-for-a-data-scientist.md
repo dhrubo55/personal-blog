@@ -1,18 +1,22 @@
 ---
-title: "Domain Knowledge — The Second Most Important Skill to Have as a Data Scientist"
-date: "2020-03-03"
+title: Domain Knowledge — The Second Most Important Skill to Have as a Data Scientist
+date: 2020-03-03
 category: Data Science
 slug: the-second-most-important-skill-for-a-data-scientist
-summary: You mightn’t realize it but if you’ve ample years of experience in a very specific domain of expertise, you might be eligible to be part of a Data Science team.
-description: You mightn’t realize it but if you’ve ample years of experience in a very specific domain of expertise, you might be eligible to be part of a Data Science team.
+summary: You mightn’t realize it but if you’ve ample years of experience in a very
+  specific domain of expertise, you might be eligible to be part of a Data Science
+  team.
+description: You mightn’t realize it but if you’ve ample years of experience in a
+  very specific domain of expertise, you might be eligible to be part of a Data Science
+  team.
 cover:
-  image: "https://miro.medium.com/max/1620/0*-qXHihGXHpTceAcg"
-  alt: "A man looking at a rack of books"
-  caption: "Photo by Matthew Feeney on Unsplash"
+  image: https://miro.medium.com/max/1620/0*-qXHihGXHpTceAcg
+  alt: A man looking at a rack of books
+  caption: Photo by Matthew Feeney on Unsplash
   relative: false
 showtoc: true
----
 
+---
 ## Data Science, dig right into building models, who cares about Domain Knowledge, Right?
 
 *Data Science is all in the blaze at the moment!* A quick search of the keyword on Google yields not a Wikipedia page of the field but hundreds of tutorials & courses on the first page of the search results.

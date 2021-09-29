@@ -17,7 +17,6 @@ cover:
   caption: Photo by Phil Hearing on Unsplash
   relative: false
 showtoc: true
-draft: true
 
 ---
 A series of Missing Values can often stand out like a blotch on a series of structured data.

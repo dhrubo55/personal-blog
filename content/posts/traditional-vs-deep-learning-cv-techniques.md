@@ -1,18 +1,26 @@
 ---
-title: "Deep Learning Vs Traditional Computer Vision Techniques — Which Should You Choose?"
-date: 2020-08-13 23:46:37
+title: Deep Learning Vs Traditional Computer Vision Techniques — Which Should You
+  Choose?
+date: 2020-08-13T23:46:37.000+00:00
 category: Computer Vision
 slug: deep-learning-vs-traditional-techniques-a-comparison
-summary: Deep Learning(DL) techniques are beating the human baseline accuracy rates. Media is going haywire about AI being the next big thing. Everyone is writing a tutorial or two about building a startup or a product using DL. So should you board the hype train too?
-description: Deep Learning(DL) techniques are beating the human baseline accuracy rates. Media is going haywire about AI being the next big thing. Everyone is writing a tutorial or two about building a startup or a product using DL. So should you board the hype train too?
+summary: Deep Learning(DL) techniques are beating the human baseline accuracy rates.
+  Media is going haywire about AI being the next big thing. Everyone is writing a
+  tutorial or two about building a startup or a product using DL. So should you board
+  the hype train too?
+description: Deep Learning(DL) techniques are beating the human baseline accuracy
+  rates. Media is going haywire about AI being the next big thing. Everyone is writing
+  a tutorial or two about building a startup or a product using DL. So should you
+  board the hype train too?
 cover:
-  image: "https://miro.medium.com/max/1400/0*6SzpiBodhv9vNEXb"
-  alt: "A MacBook beside an old typewriter"
-  caption: "Photo by Glenn Carstens-Peters on Unsplash"
+  image: https://miro.medium.com/max/1400/0*6SzpiBodhv9vNEXb
+  alt: A MacBook beside an old typewriter
+  caption: Photo by Glenn Carstens-Peters on Unsplash
   relative: false
 showtoc: true
----
+draft: true
 
+---
 [Deep Learning](https://en.wikipedia.org/wiki/Deep_learning) (DL) is undeniably one of the most popular tools used in the field of [Computer Vision](https://en.wikipedia.org/wiki/Computer_vision) (CV). It’s popular enough to be deemed as the current de facto standard for training models to be later deployed in CV applications. But is DL the only available option for us to develop CV applications? What about Traditional techniques that have served the CV community for an eternity? Has the time to move ahead & drop working on Traditional CV techniques all together in favour of DL arrived already? In this article, we try to answer some of these questions with comprehensive use-case scenarios in support of both DL & Traditional CV implementations.
 
 ## A Little Bit Of History First
