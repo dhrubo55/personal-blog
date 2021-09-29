@@ -1,18 +1,21 @@
 ---
-title: "Medium Vs Static Site Generators — A Computer Vision Engineer’s Dilemma"
-date: "2020-05-12"
+title: Medium Vs Static Site Generators — A Computer Vision Engineer’s Dilemma
+date: 2020-05-12
 slug: medium-vs-static-site-generators
 category: Software
-summary: The wide array of choices for blogging platforms & tools can be overwhelming. As such, I was confused too, but you don’t have to be, so read ahead.
-description: The wide array of choices for blogging platforms & tools can be overwhelming. As such, I was confused too, but you don’t have to be, so read ahead.
+summary: The wide array of choices for blogging platforms & tools can be overwhelming.
+  As such, I was confused too, but you don’t have to be, so read ahead.
+description: The wide array of choices for blogging platforms & tools can be overwhelming.
+  As such, I was confused too, but you don’t have to be, so read ahead.
 cover:
-  image: "https://miro.medium.com/max/1458/0*mkZqMAqpwEB8sKU7"
-  alt: "Crossroads sign post"
-  caption: "Photo by Robert Ruggiero on Unsplash"
+  image: https://miro.medium.com/max/1458/0*mkZqMAqpwEB8sKU7
+  alt: Crossroads sign post
+  caption: Photo by Robert Ruggiero on Unsplash
   relative: false
 showtoc: true
----
+draft: true
 
+---
 The day I took a plunge & went full-time freelance, a lingering thought has bothered me ever since; “How do I make my presence known to my prospective clients?”.
 
 A quick Google search on the same question helped me come up with the following quick conclusions:
