@@ -1,4 +1,4 @@
-baseURL: ""
+baseURL: "https://mohibulsblog.netlify.app"
 languageCode: "en-us"
 title: "Mohibul Hassan"
 theme: "hugo-PaperMod"
@@ -14,7 +14,7 @@ minify:
 params:
   env: production
   title: Mohibul Hassan
-  description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast."
+  description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast"
   images: ['profile-pic.jpg']
 
   defaultTheme: auto
