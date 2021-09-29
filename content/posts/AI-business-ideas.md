@@ -1,18 +1,21 @@
 ---
-title: "Have a Startup Idea? These 5 Tips Should Help You a Long Way Through Your Journey"
-date: "2020-04-01"
+title: Have a Startup Idea? These 5 Tips Should Help You a Long Way Through Your Journey
+date: 2020-04-01
 category: Business
 slug: these-5-tips-should-help-you-with-your-startup-journey
-summary: Consider this list opinionated tips before you set foot onto your AI startup. I assure you a thorough read will give you a better perspective to follow.
-description: Consider this list opinionated tips before you set foot onto your AI startup. I assure you a thorough read will give you a better perspective to follow.
+summary: Consider this list opinionated tips before you set foot onto your AI startup.
+  I assure you a thorough read will give you a better perspective to follow.
+description: Consider this list opinionated tips before you set foot onto your AI
+  startup. I assure you a thorough read will give you a better perspective to follow.
 cover:
-  image: "https://miro.medium.com/max/1458/0*BDlSxjeXPGScC-Lm"
-  alt: "Crumpled paper inside a bin"
-  caption: "Photo by Steve Johnson on Unsplash"
+  image: https://miro.medium.com/max/1458/0*BDlSxjeXPGScC-Lm
+  alt: Crumpled paper inside a bin
+  caption: Photo by Steve Johnson on Unsplash
   relative: false
 showtoc: true
----
+draft: true
 
+---
 Most startups fail. In fact, 90% of all startups are bound to fail. They fail to even hold on for the first few years, reports Patel on The Forbes. [1]
 
 And believe it, startups related to Artificial Intelligence are most susceptible to failure. Marketing to “*revolutionize*” the market adds up even more to that potential threat. Marketing AI startups as revolutionary are so rampant now, the entrepreneurs should feel considerate about their pitch!

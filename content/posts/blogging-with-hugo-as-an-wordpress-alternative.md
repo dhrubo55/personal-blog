@@ -1,19 +1,21 @@
 ---
-title: "How to Create an Overpowered Blog With Hugo (As a Wordpress Alternative)"
-date: 2021-02-21T22:57:04+05:30
-draft: false
+title: How to Create an Overpowered Blog With Hugo (As a Wordpress Alternative)
+date: 2021-02-21T22:57:04.000+05:30
 category: Blogging
 slug: blogging-with-hugo-as-an-wordpress-alternative
-summary: Create a blog with Hugo Static Site Generator as a Wordpress alternative & with added automation plus other superpowers
-description: Create a blog with Hugo Static Site Generator as a Wordpress alternative & with added automation plus other superpowers
+summary: Create a blog with Hugo Static Site Generator as a Wordpress alternative
+  & with added automation plus other superpowers
+description: Create a blog with Hugo Static Site Generator as a Wordpress alternative
+  & with added automation plus other superpowers
 cover:
   image: https://res.cloudinary.com/jarmos/image/upload/v1615628184/Overpowered-Hugo-Blog_li3tx3.jpg
   alt: Hugo, the static site generator with biceps working out with dumbbells
   caption: Hugo Static Site Generator on Steroids by Somraj Saha
   relative: false
 showtoc: true
----
+draft: true
 
+---
 ## Introduction
 
 A developer without a blog is like a fisherman without their fishing rod. While it is possible to fish with just a thread & a hook, the rod makes life much easier for the fishermen. In that context, Dan Bader summed it up well in his article -- [_3 Reasons Why You Need a Programming Blog_][3 Reasons Why You Need a Programming Blog].

@@ -1,18 +1,25 @@
 ---
-title: "Dropping Missing Values? You Probably Shouldn’t."
-date: "2020-02-17"
+title: Dropping Missing Values? You Probably Shouldn’t.
+date: 2020-02-17
 category: Data Science
 slug: few-reasons-to-not-drop-missing-values
-summary: Unbeknownst to us, quite often Missing Values contain as much information as just the rest of the data which is why dropping them isn't always a wise thing to do. This article briefly talks about Missing Values & why you probably should analyze the reasons behind why certain values are missing.
-description: Unbeknownst to us, quite often Missing Values contain as much information as just the rest of the data which is why dropping them isn't always a wise thing to do. This article briefly talks about Missing Values & why you probably should analyze the reasons behind why certain values are missing.
+summary: Unbeknownst to us, quite often Missing Values contain as much information
+  as just the rest of the data which is why dropping them isn't always a wise thing
+  to do. This article briefly talks about Missing Values & why you probably should
+  analyze the reasons behind why certain values are missing.
+description: Unbeknownst to us, quite often Missing Values contain as much information
+  as just the rest of the data which is why dropping them isn't always a wise thing
+  to do. This article briefly talks about Missing Values & why you probably should
+  analyze the reasons behind why certain values are missing.
 cover:
-  image: "https://miro.medium.com/max/1620/1*suXndspXwBiCq5OWYGbPqg.jpeg"
-  alt: "A bunch of baby strollers with one missing in the middle"
-  caption: "Photo by Phil Hearing on Unsplash"
+  image: https://miro.medium.com/max/1620/1*suXndspXwBiCq5OWYGbPqg.jpeg
+  alt: A bunch of baby strollers with one missing in the middle
+  caption: Photo by Phil Hearing on Unsplash
   relative: false
 showtoc: true
----
+draft: true
 
+---
 A series of Missing Values can often stand out like a blotch on a series of structured data.
 
 Look at the picture above. The first thing that you might’ve subconsciously observed is that there’s a stroller missing. Indeed, let me break it to you, that’s exactly how the human brain works.
