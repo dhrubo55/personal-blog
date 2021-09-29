@@ -46,3 +46,22 @@ These are the platforms you can find me on:
 \[Email\]: mailto:mohibulhassan100@gmail.com  
 \[Github\]: https://github.com/dhrubo55  
 \[Blog Source Code\]: https://github.com/dhrubo55/personal-blog
+
+<!-- * Programming Language -->
+[Java]: https://www.java.com/
+[JS]: https://www.javascript.com
+<!-- * Backend Services Tech -->
+[Springboot]: https://spring.io/projects/spring-boot
+<!-- * Machine Learning Libraries -->
+[TensorFlow]: https://www.tensorflow.org/
+[Sklearn]: https://scikit-learn.org
+<!-- * Cloud Platforms -->
+[Heroku]: https://www.heroku.com/
+[AWS]: https://aws.amazon.com/
+[GCP]: https://cloud.google.com/
+<!-- * Dev Platforms -->
+[Vue]: https://vuejs.org
+[Nuxt]: https://nuxtjs.org
+<!-- * Shell Scripting -->
+[PowerShell]: https://docs.microsoft.com/en-us/powershell/
+[Bash]: https://www.gnu.org/software/bash/
