@@ -1,18 +1,19 @@
 ---
-title: "Customizing the New Windows Terminal: A Minimalist Approach"
+title: 'Customizing the New Windows Terminal: A Minimalist Approach'
 date: 2020-12-25
 category: Programming
 slug: customizing-windows-terminal-a-minimalist-approach
 summary: Who needs Linux when you got a fully customized Windows Terminal!
 description: Who needs Linux when you got a fully customized Windows Terminal!
 cover:
-  image: "https://i.ibb.co/V3y7Cb4/DRj-DFi-EQZO.gif"
-  alt: "A .gif image of my customized Windows Terminal"
-  caption: "A GIF of my customized Windows Terminal"
+  image: https://i.ibb.co/V3y7Cb4/DRj-DFi-EQZO.gif
+  alt: A .gif image of my customized Windows Terminal
+  caption: A GIF of my customized Windows Terminal
   relative: false
 showtoc: true
----
+draft: true
 
+---
 Heard of the new Windows Terminal (WT), Microsoft has been actively working on recently? You might’ve if you’ve been following my updates on Twitter. I was advocating Microsoft’s effort to make Windows a more developer-friendly platform for quite a while now. And ever since I moved from Ubuntu to Windows for my coding needs, I’ve come to realise how things have changed on Windows-land for the better.
 
 ## What is This New Windows Terminal?

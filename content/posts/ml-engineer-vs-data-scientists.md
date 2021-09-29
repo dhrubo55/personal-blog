@@ -1,18 +1,22 @@
 ---
-title: "ML Engineer vs Data Scientist: Whom Should You Hire?"
-date: "2020-11-28"
+title: 'ML Engineer vs Data Scientist: Whom Should You Hire?'
+date: 2020-11-28
 category: Software Engineering
 slug: ml-engineer-vs-data-scientists-who-should-you-choose
-summary: Not sure if a specific business need of your company requires a Data Scientist or an ML Engineer? Then read ahead to find out more about it.
-description: Not sure if a specific business need of your company requires a Data Scientist or an ML Engineer? Then read ahead to find out more about it.
+summary: Not sure if a specific business need of your company requires a Data Scientist
+  or an ML Engineer? Then read ahead to find out more about it.
+description: Not sure if a specific business need of your company requires a Data
+  Scientist or an ML Engineer? Then read ahead to find out more about it.
 cover:
-  image: "covers/scientist-vs-engineer.gif"
-  alt: "A GIF image showcasing a versus between an engineer & a scientist"
-  caption: "The Data Scientist VS The ML Engineer: A Showdown | Source -- Somraj Saha (Author)"
+  image: covers/scientist-vs-engineer.gif
+  alt: A GIF image showcasing a versus between an engineer & a scientist
+  caption: 'The Data Scientist VS The ML Engineer: A Showdown | Source -- Somraj Saha
+    (Author)'
   relative: false
 showtoc: true
----
+draft: true
 
+---
 Some time ago, a client approached me with a project proposal. He wanted me to use a certain Product-Market framework & write an article from a Data Scientist’s POV. His reasoning, “*my Machine Learning skills could prove useful to analyze the drawbacks and/or gaps in the framework to add to it*”. And to be clear here, I’m no Data Scientist by craft either.
 
 A couple of emails later, it didn’t take me long to realize his requirements. His target audience for the article were individuals in a non-engineering field. Perhaps, marketing (my assumption) or maybe analysts.
