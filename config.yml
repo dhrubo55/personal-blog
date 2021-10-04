@@ -109,3 +109,8 @@ markup:
     lineNumbersInTable: true
     noClasses: true
     style: native
+Params:
+    ShowReadingTime: true
+    ShowToc: true
+    TocOpen: true
+    ShowCodeCopyButtons: true
