@@ -34,8 +34,8 @@ from timer class.
 > ###### Fixed Rate Execution:
 >
 > Execution after the first execution does depend on the start time of the execution. Second and execution afterwards
-
-    class Scratch {
+```
+	class Scratch {
     
         public static void main(String[] args) {
             retryMethod(() -> uptimeCheck("https://twitter.com"), 3, 5000L);
@@ -81,5 +81,5 @@ from timer class.
                 System.out.println(url + " is down and status: " + statusCode);
         }
     }
-
+```
 Here retryMethod is a method that takes a runnable and interval time and retry count to run the runnable using TimerTask and Timer's scheduleAtFixedRate.
