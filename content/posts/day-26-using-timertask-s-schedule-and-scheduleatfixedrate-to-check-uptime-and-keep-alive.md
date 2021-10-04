@@ -25,14 +25,14 @@ from timer class.
 > * schedule (Fixed delayed execution)
 > * scheduleAtFixedRate (Fixed rate execution)
 >
-> ###### Fixed Delay Execution:
+> #### Fixed Delay Execution:
 >
 > Execution after the first execution does not depend on the start time of the execution rather than the completion of the first execution then it starts the second execution
 >
-> ###### Fixed Rate Execution:
+> #### Fixed Rate Execution:
 >
 > Execution after the first execution does depend on the start time of the execution. Second and execution afterwards
-```Java
+```java
 	class Scratch {
     
         public static void main(String[] args) {
@@ -59,7 +59,7 @@ from timer class.
             }, 0, retryInterval);
         }
     
-        public static void uptimeCheck(String url) {
+        public static void checkAvailability(String url) {
             HttpClient httpClient = HttpClient.newHttpClient();
             int statusCode = 0;
             HttpRequest httpRequest = HttpRequest
@@ -68,7 +68,7 @@ from timer class.
                     .GET()
                     .build();
             try {
-                statusCode = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString()).statusCode();
+                statusCode = httpClient.send(httpRequest, 		HttpResponse.BodyHandlers.ofString()).statusCode();
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -80,4 +80,6 @@ from timer class.
         }
     }
 ```
-Here retryMethod is a method that takes a runnable and interval time and retry count to run the runnable using TimerTask and Timer's scheduleAtFixedRate.
+Here retryMethod is a method that takes a runnable and interval time and retry count to run the runnable using TimerTask and Timer's scheduleAtFixedRate. 
+
+Furthermore here checkAvailability method takes an url and check if the url returns 200 thus getting a partial knowledge about if the site is up or down.
