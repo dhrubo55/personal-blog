@@ -16,6 +16,10 @@ params:
   title: Mohibul Hassan
   description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast"
   images: ['profile-pic.jpg']
+  ShowReadingTime: true
+  ShowToc: true
+  TocOpen: true
+  ShowCodeCopyButtons: true
 
   defaultTheme: auto
   disableThemeToggle: false
@@ -109,8 +113,3 @@ markup:
     lineNumbersInTable: true
     noClasses: true
     style: native
-Params:
-    ShowReadingTime: true
-    ShowToc: true
-    TocOpen: true
-    ShowCodeCopyButtons: true
