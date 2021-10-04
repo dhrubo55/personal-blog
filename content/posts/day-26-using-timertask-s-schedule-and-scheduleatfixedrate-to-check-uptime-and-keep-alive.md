@@ -36,7 +36,7 @@ from timer class.
 	class Scratch {
     
         public static void main(String[] args) {
-            retryMethod(() -> uptimeCheck("https://twitter.com"), 3, 5000L);
+            retryMethod(() -> uptimeCheck("https://twitter.com"), 3, 5000L);                           
         }
     
         public static void retryMethod(Runnable function, int retryCount, long retryInterval) {
