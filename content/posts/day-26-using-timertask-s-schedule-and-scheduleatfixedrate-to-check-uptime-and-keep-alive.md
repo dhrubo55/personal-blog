@@ -32,7 +32,7 @@ from timer class.
 > ###### Fixed Rate Execution:
 >
 > Execution after the first execution does depend on the start time of the execution. Second and execution afterwards
-```
+```Java
 	class Scratch {
     
         public static void main(String[] args) {
