@@ -1,11 +1,11 @@
 +++
 category = []
 date = 2021-09-30T00:00:00Z
-description = "Day 26: Using TimerTask's schedule() and scheduleAtFixedRate to check uptime and keep-alive"
+description = "Writing a method to retry another method execution, Using TimerTask's schedule() and scheduleAtFixedRate to check availability "
 showtoc = false
 slug = "/java/100DaysOfJava/day26"
-summary = "Using TimerTask's schedule() and scheduleAtFixedRate to check uptime and keep-alive"
-title = "Day 26: Using TimerTask's schedule() and scheduleAtFixedRate to check uptime and keep-alive"
+summary = "Writing a method to retry another method execution, using TimerTask's schedule() and scheduleAtFixedRate to check availability"
+title = "Day 26: Writing a method to retry another method execution"
 [cover]
 alt = "cover image"
 caption = "cover images"
@@ -14,9 +14,7 @@ relative = false
 
 +++
 Writing a method which can take another method and run that and if needed
-
 retry that execution given number of times. Using Runnable and scheduleAtFixedRate()
-
 from timer class.
 
 > 
