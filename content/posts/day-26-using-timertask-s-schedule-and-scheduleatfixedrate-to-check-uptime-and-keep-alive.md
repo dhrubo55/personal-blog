@@ -17,21 +17,16 @@ Writing a method which can take another method and run that and if needed
 retry that execution given number of times. Using Runnable and scheduleAtFixedRate()
 from timer class.
 
-> 
->
-> TimerTask along with Timer class can schedule tasks using background thread.
-> Timer has two type of scheduling option
->
-> * schedule (Fixed delayed execution)
-> * scheduleAtFixedRate (Fixed rate execution)
->
-> #### Fixed Delay Execution:
->
-> Execution after the first execution does not depend on the start time of the execution rather than the completion of the first execution then it starts the second execution
->
-> #### Fixed Rate Execution:
->
-> Execution after the first execution does depend on the start time of the execution. Second and execution afterwards
+TimerTask along with Timer class can schedule tasks using background thread. Timer has two type of scheduling option
+        * schedule (Fixed delayed execution)
+        * scheduleAtFixedRate (Fixed rate execution)
+
+#### Fixed Delay Execution:
+Execution after the first execution does not depend on the start time of the execution rather than the completion of the first execution then it starts the second execution
+#### Fixed Rate Execution:
+Execution after the first execution does depend on the start time of the execution. Second and execution afterwards
+
+
 ```java
 	class Scratch {
     
@@ -80,6 +75,7 @@ from timer class.
         }
     }
 ```
-Here retryMethod is a method that takes a runnable and interval time and retry count to run the runnable using TimerTask and Timer's scheduleAtFixedRate. 
+
+Here retryMethod is a method that takes a runnable and interval time and retry count to run the runnable using TimerTask and Timer's scheduleAtFixedRate.
 
 Furthermore here checkAvailability method takes an url and check if the url returns 200 thus getting a partial knowledge about if the site is up or down.
