@@ -1,13 +1,12 @@
 ---
-title: "Projects"
+title: Projects
 url: "/projects"
 hidemeta: true
 disableShare: true
-summary: "A list of personal projects & open-source software authored by Somraj
-Saha. Includes detailed descriptions of all those projects."
-draft: false
----
+summary: A list of personal projects & open-source software authored by Somraj Saha.
+  Includes detailed descriptions of all those projects.
 
+---
 I contribute to open-source software when I'm not busy or working with clients. Following is a list of some of my most prominent & beloved side-projects.
 
 |             Project Name             | Brief Description of the Projects                                                                       |
