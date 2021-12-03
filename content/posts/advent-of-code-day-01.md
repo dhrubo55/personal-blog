@@ -1,0 +1,19 @@
++++
+category = []
+date = 2021-12-01T00:00:00Z
+description = "Solutions of Advent of Code 2021 in Java, Rust and GO"
+draft = true
+showtoc = false
+slug = "/adeventofcode2021/day01"
+summary = "Listed here are the solutions of AOC2021 Day01 in Java, Rust, Go"
+title = "Advent of Code Day 01"
+[cover]
+alt = "Advent of Code 2021 Day 01"
+caption = "Advent of Code 2021 Day 01"
+image = ""
+relative = false
+
++++
+###Java Solution
+
+{{<replit src=“https://replit.com/@dhrubo55/AdventOfCodeDay01Java”>}}

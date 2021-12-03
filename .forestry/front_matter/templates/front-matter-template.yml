@@ -86,4 +86,5 @@ fields:
     field: showtoc
     value: true
 pages:
+- content/posts/advent-of-code-day-01.md
 - content/posts/day-26-using-timertask-s-schedule-and-scheduleatfixedrate-to-check-uptime-and-keep-alive.md
