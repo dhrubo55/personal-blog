@@ -18,3 +18,5 @@ Java Solution
 {{<replit src="https://replit.com/@dhrubo55/AdventOfCodeDay01Java">}}
 
 Rust Solution
+  
+  https://replit.com/@dhrubo55/AdventOfCodeDay01Java
