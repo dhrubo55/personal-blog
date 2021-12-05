@@ -14,3 +14,18 @@ image = ""
 relative = false
 
 +++
+Problem:  [https://adventofcode.com/2021/day/2](https://adventofcode.com/2021/day/2 "https://adventofcode.com/2021/day/2")
+
+Please for changing the code fork it in repl.it or copy**
+
+### Java Solution
+
+{{<replit src="https://replit.com/@dhrubo55/AdventOfCodeDay02Java">}}
+
+### Rust Solution
+
+{{<replit src="[https://replit.com/@dhrubo55/AdventOfCodeDay02Rust](https://replit.com/@dhrubo55/AdventOfCodeDay02Rust "https://replit.com/@dhrubo55/AdventOfCodeDay02Rust")">}}
+
+### Golang Solution
+
+{{<replit src="https://replit.com/@dhrubo55/AdventOfCodeDay02Golang">}}
