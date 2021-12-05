@@ -13,10 +13,16 @@ image = ""
 relative = false
 
 +++
-Java Solution
+**Please for changing the code fork it in repl.it or copy**
+
+### Java Solution
 
 {{<replit src="https://replit.com/@dhrubo55/AdventOfCodeDay01Java">}}
 
-Rust Solution
-  
-  https://replit.com/@dhrubo55/AdventOfCodeDay01Java
+### Rust Solution
+
+{{<replit src="https://replit.com/@dhrubo55/AdventOfCodeRustDay01#src/main.rs">}}
+
+### Golang Solution
+
+{{<replit src="https://replit.com/@dhrubo55/AdventofCode01Go#main.go">}}
