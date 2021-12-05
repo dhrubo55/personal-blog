@@ -21,8 +21,8 @@ relative = false
 
 ### Rust Solution
 
-{{<replit src="https://replit.com/@dhrubo55/AdventOfCodeRustDay01#src/main.rs">}}
+{{<replit src="https://replit.com/@dhrubo55/AdventOfCodeRustDay01">}}
 
 ### Golang Solution
 
-{{<replit src="https://replit.com/@dhrubo55/AdventofCode01Go#main.go">}}
+{{<replit src="https://replit.com/@dhrubo55/AdventofCode01Go">}}
