@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-While working need a structure like Pair in java so tired to emulate the behavior using AbstractMap.SimpleEntry<>() and a technique shared by @starbuxman in his tweet about creating tuple using new Object(){} implementation.
+While working need a structure like Pair in java so tired to emulate the behavior using AbstractMap.SimpleEntry<>() and a technique shared by [@starbuxman ](https://twitter.com/starbuxman/status/1449685459492212740)in his tweet about creating tuple using new Object(){} implementation.
 
 ```java
 class Day35 {
