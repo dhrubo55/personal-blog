@@ -20,6 +20,7 @@ params:
   ShowToc: true
   TocOpen: true
   ShowCodeCopyButtons: true
+  pygmentsUseClasses: true
 
   defaultTheme: auto
   disableThemeToggle: false
