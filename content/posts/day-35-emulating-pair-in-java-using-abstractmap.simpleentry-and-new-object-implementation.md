@@ -2,7 +2,6 @@
 category = []
 date = 2021-12-06T00:00:00Z
 description = "Pair behavior in java"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day35"
 summary = "Pair behavior in java"
