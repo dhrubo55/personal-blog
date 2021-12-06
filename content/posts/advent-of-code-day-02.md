@@ -15,7 +15,7 @@ relative = false
 +++
 Problem:  [https://adventofcode.com/2021/day/2](https://adventofcode.com/2021/day/2 "https://adventofcode.com/2021/day/2")
 
-Please for changing the code fork it in repl.it or copy**
+Please for changing the code fork it in repl.it or copy
 
 ### Java Solution
 
