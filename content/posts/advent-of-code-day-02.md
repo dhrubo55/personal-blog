@@ -23,8 +23,8 @@ Please for changing the code fork it in repl.it or copy**
 
 ### Rust Solution
 
-{{<replit src="[https://replit.com/@dhrubo55/AdventOfCodeDay02Rust](https://replit.com/@dhrubo55/AdventOfCodeDay02Rust "https://replit.com/@dhrubo55/AdventOfCodeDay02Rust")">}}
-
+{{<replit src="https://replit.com/@dhrubo55/AdventOfCodeDay02Rust">}}
+  
 ### Golang Solution
 
 {{<replit src="https://replit.com/@dhrubo55/AdventOfCodeDay02Golang">}}
