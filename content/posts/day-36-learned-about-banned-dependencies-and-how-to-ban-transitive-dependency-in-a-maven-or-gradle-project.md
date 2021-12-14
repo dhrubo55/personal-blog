@@ -21,7 +21,8 @@ Patch and resolvable techniques are already provided in many blogs and websites.
   
 Recently i learned about from banned dependencies from [@gunnarmorling's](https://twitter.com/gunnarmorling) tweet . Maven's enforcer plugin can ban certain dependencies using rules.
 
-    <plugin>
+```xml
+<plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-enforcer-plugin</artifactId>
       <version>3.0.0</version>
@@ -45,3 +46,4 @@ Recently i learned about from banned dependencies from [@gunnarmorling's](https:
         </execution>
       </executions>
     </plugin>
+ ```
