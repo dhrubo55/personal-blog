@@ -51,7 +51,7 @@ Recently i learned about from banned dependencies from [@gunnarmorling's](https:
 
 here `<bannedDependencies>` rule enforces to exclude any log4j dependency to get excluded if its not 2.15.0 or greater. searchTransitive is by default true so it will check transitive dependencies and apply this rule for them.
 
-On gradle there are constraints that can help to do similar rule enforcement for excluding vulnerable dependencies from project.
+On gradle there are constraints that can help to do similar rule enforcement for excluding vulnerable dependencies from project. That i learned from [@CedricChampeau](https://twitter.com/CedricChampeau) tweet.
 
 ```gradle
 dependencies {
