@@ -14,11 +14,11 @@ image = ""
 relative = false
 
 +++
-Last week **CVE** (Common Vulnerabilities and Exposures) -2021-44228 in Apache Log4J logging library which is a **RCE** (Remote Code Execution) class vulnerability was reported.   
-Log4J is a popular logging library which is open sourced and used by many projects all over the tech space. 
+Last week **CVE** (Common Vulnerabilities and Exposures) -2021-44228 in Apache Log4J logging library which is a **RCE** (Remote Code Execution) class vulnerability was reported.  
+Log4J is a popular logging library which is open sourced and used by many projects all over the tech space.
 
-Patch and resolvable techniques are already provided in many blogs and websites.   
-  
+Patch and resolvable techniques are already provided in many blogs and websites.
+
 Recently i learned about from banned dependencies from [@gunnarmorling's](https://twitter.com/gunnarmorling) tweet . Maven's enforcer plugin can ban certain dependencies using rules.
 
 ```xml
@@ -46,4 +46,6 @@ Recently i learned about from banned dependencies from [@gunnarmorling's](https:
         </execution>
       </executions>
     </plugin>
- ```
+```
+
+here
