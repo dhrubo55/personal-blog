@@ -28,7 +28,7 @@ Recently i learned about from banned dependencies from [@gunnarmorling's](https:
       <version>3.0.0</version>
       <executions>
         <execution>
-          <id>ban-bad-log4j-versions</id>
+          <id>ban-vulnerable-log4j2-versions</id>
           <phase>validate</phase>
           <goals>
             <goal>enforce</goal>
@@ -39,6 +39,7 @@ Recently i learned about from banned dependencies from [@gunnarmorling's](https:
                 <excludes>
                   <exclude>org.apache.logging.log4j:log4j-core:(,2.15.0)</exclude>
                 </excludes>
+                <message>Maven error because -> log4j is vulnerable to remote code execution</message>
               </bannedDependencies>
             </rules>
             <fail>true</fail>
@@ -48,4 +49,7 @@ Recently i learned about from banned dependencies from [@gunnarmorling's](https:
     </plugin>
 ```
 
-here
+here `<bannedDependencies>` rule enforces to exclude any log4j dependency to get excluded if its not 2.15.0 or greater. searchTransitive is by default true so it will check transitive dependencies and apply this rule for them.
+
+On gradle there are constraints that can help to do similar rule enforcement for excluding vulnerable dependencies from project. 
+
