@@ -2,7 +2,6 @@
 category = []
 date = 2022-01-05T00:00:00Z
 description = "How to enable disable features for paid and unpaid users using feature toggle pattern"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day37"
 summary = "Feature toggle service to enable disable any feature for paid and unpaid users"
