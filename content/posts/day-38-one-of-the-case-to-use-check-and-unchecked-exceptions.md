@@ -24,8 +24,8 @@ File file = new File("/path/of/a/non/existing/file);
 FileInputStream fileInputStream = new FileInputStream(file);
 ```
 
+    
 
-    In this case when a File object is tried to get initialized and the file does not exist it throws FileNotFoundException
 Unchecked Exceptions:
 
 ![Java Exception Hierarchy](https://www.oracleimg.com/technetwork/articles/entarch/javaexceptions-107916.jpg)
