@@ -41,9 +41,9 @@ I faced some issues while working with `LocalDateTime` and converting localdatet
 
 in this `getTimeZoneOffset()` using the `LocalDateTime` and `TimeZone.getDefault()` which in turns will get the default timezone from the jvm instance. `zone.getRawOffset()` of TimeZone class will return the raw offset.
 
-#### Raw Offset:
-
-Returns the amount of time in milliseconds to add to UTC to get standard time in this time zone. Because this value is not affected by daylight saving time, it is called raw offset.
+> #### Raw Offset:
+>
+> Returns the amount of time in milliseconds to add to UTC to get standard time in this time zone. Because this value is not affected by daylight saving time, it is called raw offset.
 
 > #### DST Savings:
 >
