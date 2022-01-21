@@ -41,9 +41,9 @@ I faced some issues while working with `LocalDateTime` and converting localdatet
 
 in this `getTimeZoneOffset()` using the `LocalDateTime` and `TimeZone.getDefault()` which in turns will get the default timezone from the jvm instance. `zone.getRawOffset()` of TimeZone class will return the raw offset.
 
-> #### Raw Offset:
->
-> Returns the amount of time in milliseconds to add to UTC to get standard time in this time zone. Because this value is not affected by daylight saving time, it is called raw offset.
+#### Raw Offset:
+
+Returns the amount of time in milliseconds to add to UTC to get standard time in this time zone. Because this value is not affected by daylight saving time, it is called raw offset.
 
 > #### DST Savings:
 >
@@ -72,4 +72,4 @@ Then using the `getTimeZoneOffset()` to calculate the local to UTC also UTC to l
 > Returns a copy of this OffsetDateTime with the specified offset ensuring that the result is at the same instant.
 > This method returns an object with the specified ZoneOffset and a LocalDateTime adjusted by the difference between the two offsets. This will result in the old and new objects representing the same instant. This is useful for finding the local time in a different offset. For example, if this time represents 2007-12-03T10:30+02:00 and the offset specified is +03:00, then this method will return 2007-12-03T11:30+03:00
 
-in `localToUTCViceVersa()` which takes a LocalDateTime and ZoneOffset and a switcher to switch to local -> UTC or UTC -> local. which takes the offset and makes the `OffsetDateTime` and then using the `withOffsetSameInstant()` we get local date time in the local time zone or in UTC
+in `localToUTCViceVersa()` which takes a LocalDateTime and ZoneOffset and a switcher to switch to local -> UTC or UTC -> local. which takes the offset and makes the `OffsetDateTime` and then using the `withOffsetSameInstant()` we get local date time in the local time zone or in UTC.
