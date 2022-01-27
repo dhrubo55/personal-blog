@@ -14,6 +14,8 @@ image = ""
 relative = false
 
 +++
-In one of my previous [post](https://www.linkedin.com/posts/mohibulhassan_100daysofjava-100daysofcode-coding-activity-6862015601217536000-iRvw) i tired to make python like generator in java using `Supplier` function and `IntStream`. That didnt fully behaved like a generator. So tried implementing this time using custom `Iterator` for lazy evaluation of the items in the collections and using a `Thread` to produce the items that will be `yeild` when calling the generator.
+In one of my previous [post](https://www.linkedin.com/posts/mohibulhassan_100daysofjava-100daysofcode-coding-activity-6862015601217536000-iRvw) i tired to make python like generator in java using `Supplier` function and `IntStream`. That didnt fully behaved like a generator. So tried implementing this time using custom `Iterator` for lazy evaluation of the items in the collections and using a `Thread` to produce the items that will be `yield` when calling the generator.
 
 {{<replit src="https://replit.com/@dhrubo55/IdealLankySymbol">}}
+
+in this repl you can execute the generator named `InfiniteGenerator` which extended an `abstract` class `Generator<T>` which in turn implements `Iterable<T>` to implement a custom iterator of a given type. Any class implementing `Generator<T>` class will be able to act like an generator if a given implementation that provides with items.
