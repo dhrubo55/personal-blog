@@ -94,3 +94,4 @@ pages:
 - content/posts/day-37-feature-toggle-to-enable-disable-features-for-paid-and-unpaid-user.md
 - content/posts/day-38-one-of-the-case-to-use-check-and-unchecked-exceptions.md
 - content/posts/day-39-local-date-time-to-utc-date-time-and-vice-versa-with-respect-to-timezone-and-day-light-saving.md
+- content/posts/day-40-generator-implementation-using-custom-iterator-and-threads..md
