@@ -2,7 +2,6 @@
 category = []
 date = 2022-01-27T00:00:00Z
 description = "A python like generator implementation using custom Iterator, Thread and ThreadGroup"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day40"
 summary = "A python like generator implementation using custom Iterator, Thread and ThreadGroup"
