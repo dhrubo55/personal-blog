@@ -14,4 +14,6 @@ image = ""
 relative = false
 
 +++
-[https://www.linkedin.com/posts/mohibulhassan_100daysofjava-100daysofcode-coding-activity-6862015601217536000-iRvw](https://www.linkedin.com/posts/mohibulhassan_100daysofjava-100daysofcode-coding-activity-6862015601217536000-iRvw "Generator in Java using Supplier function and IntStream")
+In one of my previous [post](https://www.linkedin.com/posts/mohibulhassan_100daysofjava-100daysofcode-coding-activity-6862015601217536000-iRvw) i tired to make python like generator in java using `Supplier` function and `IntStream`. That didnt fully behaved like a generator. So tried implementing this time using custom `Iterator` for lazy evaluation of the items in the collections and using a `Thread` to produce the items that will be `yeild` when calling the generator.
+
+{{<replit src="https://replit.com/@dhrubo55/IdealLankySymbol">}}
