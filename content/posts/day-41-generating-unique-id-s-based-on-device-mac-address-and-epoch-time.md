@@ -106,7 +106,7 @@ The one remaining sign bit is remained and its set to 0
             long currentTimestamp = timestamp(CUSTOM_EPOCH);
 
             if(currentTimestamp < lastTimestamp) {
-                throw new IllegalStateException("Invalid System Clock!");
+                throw new IllegalStateException("Invalid TimeStamp!");
             }
 
             if (currentTimestamp == lastTimestamp) {
