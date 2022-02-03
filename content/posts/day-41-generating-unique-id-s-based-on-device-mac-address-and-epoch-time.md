@@ -14,8 +14,8 @@ image = ""
 relative = false
 
 +++
-Generating unique id's based on device MAC address and default timezone epoch time of given or a default time. These id's can be generated in multiple machines as device mac address is used to create the id.  
-  
+Generating unique id's based on device MAC address and default timezone epoch time of given or a default time. These id's can be generated in multiple machines as device mac address is used to create the id.
+
 64 bit Id format is  
 **Epoch Time** - (**41 bits**) is used of epoch time and added to the id creation process. Max timestamp that can be represented is 2^41
 
@@ -127,4 +127,5 @@ The one remaining sign bit is remained and its set to 0
             id |= sequence;
             return id;
         }
-    }```
+    }
+```
