@@ -24,3 +24,107 @@ Generating unique id's based on device MAC address and default timezone epoch ti
 **Local counter per machine**: **sequence bits** (**12 bits**) are a local counter for each machines. Max value would be 2 ^ 12.
 
 The one remaining sign bit is remained and its set to 0
+
+`CustomUIDSupplier` class is a `Supplier<Long>` that provides the long id's.
+
+```java
+`class CustomUIDSupplier implements Supplier<Long> {
+        private static final int MACHINE_MAC_ID_BITS = 10;
+        private static final int SEQUENCE_BITS = 12;
+
+        private static final int maxMachineID = (int)(Math.pow(2, MACHINE_MAC_ID_BITS) - 1);
+        private static final int maxSequence = (int)(Math.pow(2, SEQUENCE_BITS) - 1);
+
+        private static final long CUSTOM_EPOCH =
+                LocalDateTime.parse("2012-01-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                        .atZone(ZoneId.systemDefault())
+                        .toInstant()
+                        .toEpochMilli();
+
+        private final int machineMacId;
+
+        private volatile long lastTimestamp = -1L;
+        private volatile long sequence = 0L;
+
+        public CustomUIDSupplier(int machineMacId) {
+            if(machineMacId < 0 || machineMacId > maxMachineID) {
+                throw new IllegalArgumentException(String.format("NodeId must be between %d and %d", 0, maxMachineID));
+            }
+            this.machineMacId = machineMacId;
+        }
+
+        public CustomUIDSupplier() {
+            this.machineMacId = createNodeId();
+        }
+
+        // Get current timestamp in milliseconds, adjust for the custom epoch.
+        private static long timestamp(long customEpoch) {
+            long epochInThisMoment = Instant.now().toEpochMilli();
+            if (customEpoch != 0)
+                return  epochInThisMoment - customEpoch;
+            else
+                return epochInThisMoment;
+        }
+
+        // Block and wait till next millisecond
+        private long waitNextMillis(long currentTimestamp) {
+            while (currentTimestamp == lastTimestamp) {
+                currentTimestamp = timestamp(CUSTOM_EPOCH);
+            }
+            return currentTimestamp;
+        }
+
+        private int createNodeId() {
+            int machineMacId;
+            try {
+                StringBuilder sb = new StringBuilder();
+                Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+                while (networkInterfaces.hasMoreElements()) {
+                    NetworkInterface networkInterface = networkInterfaces.nextElement();
+                    byte[] mac = networkInterface.getHardwareAddress();
+                    if (mac != null) {
+                        for(int i = 0; i < mac.length; i++) {
+                            sb.append(String.format("%02X", mac[i]));
+                        }
+                    }
+                }
+                machineMacId = sb.toString().hashCode();
+            } catch (Exception ex) {
+                machineMacId = (new SecureRandom().nextInt());
+            }
+            machineMacId = machineMacId & maxMachineID;
+            return machineMacId;
+        }
+
+
+        @Override
+        public Long get() {
+            return nextId();
+        }
+
+        public synchronized long nextId() {
+            long currentTimestamp = timestamp(CUSTOM_EPOCH);
+
+            if(currentTimestamp < lastTimestamp) {
+                throw new IllegalStateException("Invalid System Clock!");
+            }
+
+            if (currentTimestamp == lastTimestamp) {
+                sequence = (sequence + 1) & maxSequence;
+                if(sequence == 0) {
+                    // Sequence Exhausted, wait till next millisecond.
+                    currentTimestamp = waitNextMillis(currentTimestamp);
+                }
+            } else {
+                // reset sequence to start with zero for the next millisecond
+                sequence = 0;
+            }
+
+            lastTimestamp = currentTimestamp;
+
+            long id = currentTimestamp << (MACHINE_MAC_ID_BITS + SEQUENCE_BITS);
+            id |= ((long) machineMacId << SEQUENCE_BITS);
+            id |= sequence;
+            return id;
+        }
+    }```
