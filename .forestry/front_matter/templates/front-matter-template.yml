@@ -95,3 +95,4 @@ pages:
 - content/posts/day-38-one-of-the-case-to-use-check-and-unchecked-exceptions.md
 - content/posts/day-39-local-date-time-to-utc-date-time-and-vice-versa-with-respect-to-timezone-and-day-light-saving.md
 - content/posts/day-40-generator-implementation-using-custom-iterator-and-threads..md
+- content/posts/day-41-generating-unique-id-s-based-on-device-mac-address-and-epoch-time.md
