@@ -129,3 +129,5 @@ The one remaining sign bit is remained and its set to 0
         }
     }
 ```
+
+In `CustomerUIDSupplier` class custom epoch is passed or calculated along with machine id that can also be passed in the constructior. `SecureRandom` is used in case the machine id 
