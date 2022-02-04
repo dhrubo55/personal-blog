@@ -143,4 +143,4 @@ class Day41 {
    }
 }
 ```
-in the `main()` a stream is generated from supplier that will in turn provide the unique id's and print them in console
+in the `main()` a stream is generated from supplier that will in turn provide the unique id's and then 10 of the id's are taken and printed
