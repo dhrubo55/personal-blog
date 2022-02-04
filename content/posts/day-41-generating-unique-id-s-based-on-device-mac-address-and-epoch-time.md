@@ -27,18 +27,21 @@ The one remaining sign bit is remained and its set to 0
 `CustomUIDSupplier` class is a `Supplier<Long>` that provides the long id's.
 
 ```java
-`class CustomUIDSupplier implements Supplier<Long> {
+class CustomUIDSupplier implements Supplier<Long> {
         private static final int MACHINE_MAC_ID_BITS = 10;
         private static final int SEQUENCE_BITS = 12;
 
-        private static final int maxMachineID = (int)(Math.pow(2, MACHINE_MAC_ID_BITS) - 1);
-        private static final int maxSequence = (int)(Math.pow(2, SEQUENCE_BITS) - 1);
+        private static final int maxMachineID 
+        = (int)(Math.pow(2, MACHINE_MAC_ID_BITS) - 1);
+        private static final int maxSequence 
+        = (int)(Math.pow(2, SEQUENCE_BITS) - 1);
 
         private static final long CUSTOM_EPOCH =
-                LocalDateTime.parse("2012-01-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant()
-                        .toEpochMilli();
+                LocalDateTime
+                .parse("2012-01-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+				.toEpochMilli();
 
         private final int machineMacId;
 
@@ -129,7 +132,7 @@ The one remaining sign bit is remained and its set to 0
     }
 ```
 
-In `CustomerUIDSupplier` class custom epoch is passed or calculated along with machine id that can also be passed in the constructor. `SecureRandom` is used in case the machine id can not be calculated. 
+In `CustomerUIDSupplier` class custom epoch is passed or calculated along with machine id that can also be passed in the constructor. `SecureRandom` is used in case the machine id can not be calculated.
 
 `nextId()` which in turn is called inside `get()` of the supplier is calculated based on the sequence and timestamps and machine's mac based id
 
@@ -142,4 +145,5 @@ class Day41 {
    }
 }
 ```
+
 in the `main()` a stream is generated from supplier that will in turn provide the unique id's and then 10 of the id's are taken and printed
