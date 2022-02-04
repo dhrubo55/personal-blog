@@ -130,4 +130,17 @@ The one remaining sign bit is remained and its set to 0
     }
 ```
 
-In `CustomerUIDSupplier` class custom epoch is passed or calculated along with machine id that can also be passed in the constructior. `SecureRandom` is used in case the machine id 
+In `CustomerUIDSupplier` class custom epoch is passed or calculated along with machine id that can also be passed in the constructor. `SecureRandom` is used in case the machine id can not be calculated. 
+
+`nextId()` which in turn is called inside `get()` of the supplier is calculated based on the sequence and timestamps and machine's mac based id
+
+```java
+class Day41 {
+    public static void main(String[] args) {
+        CustomUIDSupplier customUIDSupplier = new CustomUIDSupplier();
+        Stream<Long> longStream = Stream.generate(customUIDSupplier);
+        longStream.limit(10).forEach(System.out::println);
+   }
+}
+```
+in the `main()` a stream is generated from supplier that will in turn provide the unique id's and print them in console
