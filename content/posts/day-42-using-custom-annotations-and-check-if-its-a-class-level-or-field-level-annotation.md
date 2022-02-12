@@ -59,13 +59,13 @@ class Day42 {
     }
 }
 
-private static boolean isAnnotatedField(Class clasz, String fieldName) throws NoSuchFieldException {
+private static boolean isAnnotatedField(Class<?> clasz, String fieldName) throws NoSuchFieldException {
       return clasz.getDeclaredField(fieldName).isAnnotationPresent(FieldLevelAnnotation.class);
     }
 
-private static boolean isAnnotatedClass(Class clasz) {
+private static boolean isAnnotatedClass(Class<?> clasz) {
       return clasz.isAnnotationPresent(ClassLevelAnnotation.class);
     }
 ```
 
-in 
+in `isAnnotatedField()` it takes a `class` and the `fieldName` that needs to be checked if it had annotation on it. `isAnnotatedClass()` takes a class and checks if any annotations are present on that class using the `java.lang.Class`  
