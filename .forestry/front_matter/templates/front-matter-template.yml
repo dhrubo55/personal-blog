@@ -97,3 +97,4 @@ pages:
 - content/posts/day-40-generator-implementation-using-custom-iterator-and-threads..md
 - content/posts/day-41-generating-unique-id-s-based-on-device-mac-address-and-epoch-time.md
 - content/posts/day-42-using-custom-annotations-and-check-if-its-a-class-level-or-field-level-annotation.md
+- content/posts/day-43-learning-about-the-internals-of-jre-jvm-part-1.md
