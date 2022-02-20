@@ -56,7 +56,7 @@ There are many type of VM and many layers where virtualization can be done and t
 
 There are five layers where virtualization can be possible. For understanding JVM (Java virtual Machine) that is a application level vm.
 
-### Appplication Level Virtualization:
+### Application Level Virtualization:
 
 Virtualization at the application level virtualizes an application as a VM. On a OS, an application often runs as a process. Therefore, application-level virtualization is also known as process-level virtualization. The most popular approach is to deploy high level language (HLL)VMs.
 
@@ -64,4 +64,8 @@ In this scenario, the virtualization layer sits as an application program on top
 
 Other forms of application level virtualization are known as application isolation, application sandboxing, or application streaming. This process involves wrapping up the application in a layer that is isolated from the host OS and other applications. The result is an application that is much easier to distribute and remove from user workstations.
 
-So now as JVM is an application that behaves like a virtual machine it has its own architecture and that is
+So now as JVM is an application that behaves like a virtual machine it has its own architecture.
+
+### JVM:
+
+Java virtual machine (JVM) is a virtual machine that enables a computer to run Java programs as well as programs written in other languages that are also compiled to bytecode. The JVM is detailed by a specification that formally describes what is required in a JVM implementation. Having a specification ensures interoperability of Java programs across different implementations so that program authors using the Java Development Kit (JDK) need not worry about idiosyncrasies of the underlying hardware platform. 
