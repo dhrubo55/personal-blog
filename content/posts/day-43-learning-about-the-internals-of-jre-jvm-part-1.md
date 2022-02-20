@@ -43,6 +43,8 @@ If the virtual machine is stored on a virtual disk, this is often referred to as
 
 There are many type of VM and many layers where virtualization can be done and they are
 
+![](https://img.brainkart.com/imagebk12/oJDo3bd.jpg)
+
 There are five layers where virtualization can be possible. For understanding JVM (Java virtual Machine) that is a application level vm.
 
 ### Application Level Virtualization:
