@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-![](/images-from-blog/v1645377066/images-from-blog/JVM-Architecture_fm7xka.jpg)Inside out strategy
+Inside out strategy
 
 1. explain what a vm is then what is ALV and how jvm is a application level ALV
 2. explain what is a runtime enviornment and how it interacts with underlying os and jvm
@@ -77,4 +77,8 @@ JVM has some important tasks to perform and those are
 3. Executing Code
 4. Providing Runtime Environment
 
-**JVM Architecuture**
+**JVM Architecuture  
+  
+**![The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
+
+In Part 2 details discussion about JVM will be posted
