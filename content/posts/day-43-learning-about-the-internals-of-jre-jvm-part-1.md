@@ -68,8 +68,8 @@ JVM has some important tasks to perform and those are
 3. Executing Code
 4. Providing Runtime Environment
 
-\**JVM Architecuture
+**JVM Architecuture**
 
-\**![The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
+![The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
 
 In Part 2 details discussion about JVM will be posted
