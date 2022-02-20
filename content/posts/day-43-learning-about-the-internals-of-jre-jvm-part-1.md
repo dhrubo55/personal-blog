@@ -18,6 +18,10 @@ Inside out strategy
 
 1. explain what a vm is then what is ALV and how jvm is a application level ALV
 2. explain what is a runtime enviornment and how it interacts with underlying os and jvm
-3. how does jre compiles bytecode and what is byte code 
+3. how does jre compiles bytecode and what is byte code
 4. execution model of java and how a program gets executed
 5. model diagrams and explain
+
+When we talk about JVM aka java virtual machine. So lets first understand what is virtual machine.  
+  
+### Virtual Machine:
