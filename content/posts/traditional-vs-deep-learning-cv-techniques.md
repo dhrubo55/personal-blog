@@ -18,6 +18,7 @@ cover:
   caption: Photo by Glenn Carstens-Peters on Unsplash
   relative: false
 showtoc: true
+draft: true
 
 ---
 [Deep Learning](https://en.wikipedia.org/wiki/Deep_learning) (DL) is undeniably one of the most popular tools used in the field of [Computer Vision](https://en.wikipedia.org/wiki/Computer_vision) (CV). It’s popular enough to be deemed as the current de facto standard for training models to be later deployed in CV applications. But is DL the only available option for us to develop CV applications? What about Traditional techniques that have served the CV community for an eternity? Has the time to move ahead & drop working on Traditional CV techniques all together in favour of DL arrived already? In this article, we try to answer some of these questions with comprehensive use-case scenarios in support of both DL & Traditional CV implementations.
