@@ -22,6 +22,10 @@ Inside out strategy
 4. execution model of java and how a program gets executed
 5. model diagrams and explain
 
+First of all here inside out approach is followed to understand JVM then JRE and then JDK and along the path will try to explain Virtualization, Hypervisor, VM, various kind of VM, runtime, java program execution model and memory model.
+
+*N.B JVM is a specification and it have many implementations.*
+
 When we talk about JVM aka java virtual machine. So lets first understand what is virtual machine. To undestand whats a virtual machine is we need to have some basic knowledge of key techonologies like virtualization and hypervisor.
 
 ### Virtualization:
