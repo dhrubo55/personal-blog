@@ -79,4 +79,4 @@ JVM has some important tasks to perform and those are
 
 **JVM Architecuture**
 
-![](/images-from-blog/v1645376871/images-from-blog/image_2022-02-20_230805_j53zfy.png)
+![](/images-from-blog/v1645376947/images-from-blog/JVM-Architecture_a5mooz.png)
