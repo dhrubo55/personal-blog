@@ -69,3 +69,14 @@ So now as JVM is an application that behaves like a virtual machine it has its o
 ### JVM:
 
 Java virtual machine (JVM) is a virtual machine that enables a computer to run Java programs as well as programs written in other languages that are also compiled to bytecode. The JVM is detailed by a specification that formally describes what is required in a JVM implementation. Having a specification ensures interoperability of Java programs across different implementations so that program authors using the Java Development Kit (JDK) need not worry about idiosyncrasies of the underlying hardware platform. 
+
+JVM has some important tasks to perform and those are
+
+1. Loading Code
+2. Verifying Code
+3. Executing Code
+4. Providing Runtime Environment
+
+**JVM Architecuture** 
+
+
