@@ -80,3 +80,18 @@ After a class is located and its initial in-memory representation created in the
 Initialization expects a prepared and verified class. It runs the class’s `initializer`. During initialization, the static fields are initialized to whatever values are specified in the code. The static initializer method that combines the code from all the static initialization blocks is also run. The initialization process should be run only once for every loaded class, so it is synchronized, especially because the initialization of the class can trigger the initialization of other classes and should be performed with care to avoid deadlocks.
 
 ### Runtime Data Areas:
+
+Runtime data areas consist of
+
+1. Heap Area
+2. Method Area
+3. Stack Area
+4. PC Registers
+5. Native Method Stack
+
+#### Heap Area:
+The Java Virtual Machine has a heap that is shared among all Java Virtual Machine threads. The heap is the run-time data area from which memory for all class instances and arrays is allocated. The heap is created on virtual machine start-up. Heap storage for objects is reclaimed by an automatic storage management system (known as a garbage collector); objects are never explicitly deallocated.
+
+Heap Memory can be accessed by any thread is further divided into three generations **Young Generation**, **Old** & **PermGen(Permanent Generation)**. When object is created then it first go to Young generation(especially Eden space) when objects get old then it moves to Old/tenured Generation. In PermGen space all static & instance variables name-value pairs(name-references for object) are stored. Below is image showing heap structure of java.
+
+
