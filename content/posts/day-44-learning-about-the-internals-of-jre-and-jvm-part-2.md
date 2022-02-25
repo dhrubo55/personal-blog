@@ -14,3 +14,11 @@ image = ""
 relative = false
 
 +++
+![The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
+
+JVM has 4 major parts 
+
+1. Class Loader
+2. Runtime Data areas
+3. Execution engine
+4. Native interface and method libraries
