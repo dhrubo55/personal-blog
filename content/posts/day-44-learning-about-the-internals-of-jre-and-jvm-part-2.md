@@ -90,8 +90,9 @@ Runtime data areas consist of
 5. Native Method Stack
 
 #### Heap Area:
+
 The Java Virtual Machine has a heap that is shared among all Java Virtual Machine threads. The heap is the run-time data area from which memory for all class instances and arrays is allocated. The heap is created on virtual machine start-up. Heap storage for objects is reclaimed by an automatic storage management system (known as a garbage collector); objects are never explicitly deallocated.
 
 Heap Memory can be accessed by any thread is further divided into three generations **Young Generation**, **Old** & **PermGen(Permanent Generation)**. When object is created then it first go to Young generation(especially Eden space) when objects get old then it moves to Old/tenured Generation. In PermGen space all static & instance variables name-value pairs(name-references for object) are stored. Below is image showing heap structure of java.
 
-
+[ppt_img.gif?w=700&h=500](https://hackthejava.files.wordpress.com/2015/01/ppt_img.gif?w=700&h=500 "ppt_img.gif?w=700&h=500")
