@@ -103,9 +103,18 @@ You can manually increase heap size by some JVM parameters as shown in images. S
   
   
  #### Stack Area:
- Stack is generated with each thread created by program. It is associated by thread. Each Thread has its own stack. All local variables & function calls are stored in stack. It’s life depends upon Thread’s life as thread will be alive it will also and vice-versa. It can also be increased by manually:-
+ 
+Stack is generated with each thread created by program. It is associated by thread. Each Thread has its own stack. All local variables & function calls are stored in stack. It’s life depends upon Thread’s life as thread will be alive it will also and vice-versa. It can also be increased by manually:-
 
 ```
 java -Xss=512M HackTheJava
 ```
 It throws StackOverFlow error when stack get full.
+
+#### Method Area:
+
+It is memory which is shared among all Threads like Heap. It is created on Java Virtual Machine startup. It contains the code actually a compiled code, methods and its data and fields. **Runtime constant pool** is also a part of Method Area. Runtime Constant pool is per class representation of constant Table. It contains all literals defined at compiled time and references which is going to be solved at runtime. Memory for it is by default allotted by JVM and can be increased if needed.
+
+#### Native Method Stack:
+
+An implementation of the Java Virtual Machine may use conventional stacks, also called "C stacks," to support native methods (methods written in a language other than the Java programming language). Native method stacks may also be used by the implementation of an interpreter for the Java Virtual Machine's instruction set in a language such as C. Java Virtual Machine implementations that cannot load native methods and that do not themselves rely on conventional stacks need not supply native method stacks. If supplied, native method stacks are typically allocated per thread when each thread is created. 
