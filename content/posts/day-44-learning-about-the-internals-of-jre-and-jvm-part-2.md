@@ -95,4 +95,11 @@ The Java Virtual Machine has a heap that is shared among all Java Virtual Machin
 
 Heap Memory can be accessed by any thread is further divided into three generations **Young Generation**, **Old** & **PermGen(Permanent Generation)**. When object is created then it first go to Young generation(especially Eden space) when objects get old then it moves to Old/tenured Generation. In PermGen space all static & instance variables name-value pairs(name-references for object) are stored. Below is image showing heap structure of java.
 
-[ppt_img.gif?w=700&h=500](https://hackthejava.files.wordpress.com/2015/01/ppt_img.gif?w=700&h=500 "ppt_img.gif?w=700&h=500")
+![JVM HEAP architecture](/images-from-blog/v1645799959/images-from-blog/ppt_img_shlgwn.gif)
+
+You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class HackTheJava then increasing its memory by following parameters:-
+
+```java -Xms=1M -XmX=2M HackTheJava 
+```
+
+Similarly increase PermGen or NewSize.
