@@ -99,4 +99,13 @@ Heap Memory can be accessed by any thread is further divided into three generati
 
 You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class Day44 then increasing its memory by following parameters:-
 
-    java -Xms=1M -XmX=2M Day44 
+    java -Xms=1M -XmX=2M Day44
+  
+  
+ #### Stack Area:
+ Stack is generated with each thread created by program. It is associated by thread. Each Thread has its own stack. All local variables & function calls are stored in stack. It’s life depends upon Thread’s life as thread will be alive it will also and vice-versa. It can also be increased by manually:-
+
+```
+java -Xss=512M HackTheJava
+```
+It throws StackOverFlow error when stack get full.
