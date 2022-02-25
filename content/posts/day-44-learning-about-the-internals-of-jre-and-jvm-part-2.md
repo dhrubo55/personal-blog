@@ -100,15 +100,13 @@ Heap Memory can be accessed by any thread is further divided into three generati
 You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class Day44 then increasing its memory by following parameters:-
 
     java -Xms=1M -XmX=2M Day44
-  
-  
- #### Stack Area:
- 
+
+#### Stack Area:
+
 Stack is generated with each thread created by program. It is associated by thread. Each Thread has its own stack. All local variables & function calls are stored in stack. It’s life depends upon Thread’s life as thread will be alive it will also and vice-versa. It can also be increased by manually:-
 
-```
-java -Xss=512M HackTheJava
-```
+    java -Xss=512M HackTheJava
+
 It throws StackOverFlow error when stack get full.
 
 #### Method Area:
@@ -117,4 +115,23 @@ It is memory which is shared among all Threads like Heap. It is created on Java 
 
 #### Native Method Stack:
 
-An implementation of the Java Virtual Machine may use conventional stacks, also called "C stacks," to support native methods (methods written in a language other than the Java programming language). Native method stacks may also be used by the implementation of an interpreter for the Java Virtual Machine's instruction set in a language such as C. Java Virtual Machine implementations that cannot load native methods and that do not themselves rely on conventional stacks need not supply native method stacks. If supplied, native method stacks are typically allocated per thread when each thread is created. 
+An implementation of the Java Virtual Machine may use conventional stacks, also called "C stacks," to support native methods (methods written in a language other than the Java programming language). Native method stacks may also be used by the implementation of an interpreter for the Java Virtual Machine's instruction set in a language such as C. Java Virtual Machine implementations that cannot load native methods and that do not themselves rely on conventional stacks need not supply native method stacks. If supplied, native method stacks are typically allocated per thread when each thread is created.
+
+### Execution Engine
+
+Execution Engine helps in executing the byte code by converting it into machine code and also interact with the memory area. So here are the components involved in executing:
+
+* **Interpreter**: 
+
+  It is responsible to read, interpret, and execute java program line by line. So if any method is called multiple times new interpretation required which is the main disadvantage of it.
+* **JIT Compiler (Just In Time):** 
+
+  The concept of the JIT compiler works only for a repeated method not for every method. To overcome the problem that the interpreter faced while interpreting the byte code, whenever it finds the repeated code, JIT Compiler compiles the entire bytecode and changes it to machine code. This machine code will be used directly for repeated method calls.
+* Intermediate Code Generator
+* Code Optimizer
+* Target Code Generator
+* Profiler
+
+Note: Profiler is there to identify hotspot repeated methods inside JIT.
+
+In order to provide native libraries to the Execution Engine, we have JNI that connects with Native libraries and the Execution Engine.
