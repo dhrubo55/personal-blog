@@ -99,7 +99,9 @@ Heap Memory can be accessed by any thread is further divided into three generati
 
 You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class HackTheJava then increasing its memory by following parameters:-
 
-```java -Xms=1M -XmX=2M HackTheJava 
+```
+java -Xms=1M -XmX=2M HackTheJava 
+
 ```
 
 Similarly increase PermGen or NewSize.
