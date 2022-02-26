@@ -142,3 +142,5 @@ C1 is designed to run faster and produce less optimized code, while C2, on the o
 Note: Profiler is there to identify hotspot repeated methods inside JIT.
 
 In order to provide native libraries to the Execution Engine, we have JNI that connects with Native libraries and the Execution Engine.
+
+In the next part will discuss about what is runtime and java runtime environment
