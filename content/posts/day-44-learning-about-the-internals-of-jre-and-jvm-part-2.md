@@ -99,6 +99,8 @@ Heap Memory can be accessed by any thread is further divided into three generati
 
 You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class Day44 then increasing its memory by following parameters:-
 
+There are types of heap memory spaces like eden , tenured and old spaces
+
     java -Xms=1M -XmX=2M Day44
 
 #### Stack Area:
