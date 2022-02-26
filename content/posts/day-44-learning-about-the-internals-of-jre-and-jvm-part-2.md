@@ -2,6 +2,7 @@
 category = []
 date = 2022-02-24T00:00:00Z
 description = "learning about jvm internals and its architecture"
+draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day44"
 summary = "learning about jvm  architecture"
@@ -94,7 +95,7 @@ The Java Virtual Machine has a heap that is shared among all Java Virtual Machin
 
 Heap Memory can be accessed by any thread is further divided into three generations **Young Generation**, **Old** & **PermGen(Permanent Generation)**. When object is created then it first go to Young generation(especially Eden space) when objects get old then it moves to Old/tenured Generation. In PermGen space all static & instance variables name-value pairs(name-references for object) are stored. Below is image showing heap structure of java.
 
-![](/images-from-blog/v1645799959/images-from-blog/ppt_img_shlgwn.gif)
+![](https://i.stack.imgur.com/ZzVu5.png)![](https://www.jvmhost.com/articles/how-can-i-monitor-memory-usage-of-my-tomcat-jvm/jvm_memory_diagram1.png)
 
 You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class Day44 then increasing its memory by following parameters:-
 
@@ -104,7 +105,7 @@ You can manually increase heap size by some JVM parameters as shown in images. S
 
 Stack is generated with each thread created by program. It is associated by thread. Each Thread has its own stack. All local variables & function calls are stored in stack. It’s life depends upon Thread’s life as thread will be alive it will also and vice-versa. It can also be increased by manually:-
 
-    java -Xss=512M HackTheJava
+    java -Xss=512M Day44
 
 It throws StackOverFlow error when stack get full.
 
