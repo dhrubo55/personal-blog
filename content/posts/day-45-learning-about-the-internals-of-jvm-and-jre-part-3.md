@@ -14,3 +14,7 @@ image = ""
 relative = false
 
 +++
+1. What is Runtime
+2. Different runtime nouns
+3. Runtime environment
+4. JRE
