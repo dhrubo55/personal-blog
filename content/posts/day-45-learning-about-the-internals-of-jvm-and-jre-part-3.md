@@ -58,3 +58,15 @@ After developing a hunger  for a chicken cheese pizza, you decide to hop on Goog
 Unfortunately, a recipe on its own is useless. The recipe you found on Google isn’t actually going to get you your pizza, you need a kitchen! The pizza recipe’s runtime environment is your kitchen.
 
 Your code is just code. Whatever code you write, in whatever language you choose, needs to eventually execute on a computer. Runtime environments enable this execution.
+
+### Common Runtime Environment ( The Operating System )
+
+The universal runtime environment for any kind of programmatic execution is the operating system. The operating system is the only way you can get the CPU to execute your code. The OS is the silent hero that ensures your program gets some memory, gets scheduled fairly, and doesn’t disturb its neighbors. It doesn’t matter if you’re using C, Python, or Node.js—at the end of the day, the operating system is everyone’s runtime environment.
+
+#### Executable File format
+
+Every operating system defines a binary file format for executable code. In Unix-Like operating systems, this is the [ELF file format](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format) (.so) . For windows its executable (.exe) 
+
+#### Executable's Runtime Environment
+
+An executable’s runtime environment is the operating system. In addition, operating systems ship with programs that are able to take these files and give them to the hardware to be executed. In Linux, one example is the [_execve()_](https://man7.org/linux/man-pages/man2/execve.2.html) program. For all other operating systems, there will be a similar set of file formats and loader programs.
