@@ -2,7 +2,6 @@
 category = ["100 Days Of Java"]
 date = 2022-03-01T00:00:00Z
 description = "learning what is Runtime and Runtime environment and Java Runtime"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day45"
 summary = "learning what is Runtime and Runtime environment and Java Runtime"
