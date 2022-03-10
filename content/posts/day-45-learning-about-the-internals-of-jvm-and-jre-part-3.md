@@ -14,11 +14,6 @@ image = ""
 relative = false
 
 +++
-1. What is Runtime
-2. Different runtime nouns
-3. Runtime environment
-4. JRE
-
 `Runtime` and `Runtime Environment` are some of the most overloaded terms in software development. It’s confusing for everyone; this word means many different things in many different contexts. This post’s goal is to provide you with an intuition behind the many use-cases of `Runtime`
 
 Runtime is used both as adjective and noun in most of the time.
@@ -65,8 +60,40 @@ The universal runtime environment for any kind of programmatic execution is the 
 
 #### Executable File format
 
-Every operating system defines a binary file format for executable code. In Unix-Like operating systems, this is the [ELF file format](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format) (.so) . For windows its executable (.exe) 
+Every operating system defines a binary file format for executable code. In Unix-Like operating systems, this is the [ELF file format](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format) (.so) . For windows its executable (.exe)
 
 #### Executable's Runtime Environment
 
 An executable’s runtime environment is the operating system. In addition, operating systems ship with programs that are able to take these files and give them to the hardware to be executed. In Linux, one example is the [_execve()_](https://man7.org/linux/man-pages/man2/execve.2.html) program. For all other operating systems, there will be a similar set of file formats and loader programs.
+
+### Higher-Level Runtime Environments
+
+As programming languages evolved, people wanted an environment that could handle additional tasks that felt cumbersome for developers.Wouldn’t some kind of automatic reference counting and garbage collection be extremely convenient? Some people say **yes** and this is how fancier runtime environments like the JRE developed.
+
+Another popular higher-level runtime environment is Node.js. Many developers refer to this as the “Node.js Runtime” or simply just “Node.” Node is a runtime environment for the Javascript language, similar to how the JRE is a runtime environment for the Java language. Node comes with fancy features like a callback queue, an event loop, and a thread pool. Just like the JRE, these bells and whistles exist to make our lives easier as developers.
+
+With higher-level runtime environments, features can become blurred across the language and its environment. Within the Java ecosystem, the automatic garbage collection feature is not technically a feature of the Java language itself, but is actually a feature of the JRE. 95% of developers won’t bother making this distinction. The statement “_Java has automatic memory management_” can more precisely be stated as, “_The Java Runtime Environment has automatic memory management_.” As a warning, you’ll get some unpleasant glares if you ever decide to correct someone over these kind of semantics.
+
+### Runtime Environment Layers
+
+Runtime environments have their own runtime environments. If you download the Node binary for Linux, you’ll find that it’s just another ELF executable waiting to be run by the OS. So we could say—Javascript’s runtime environment is Node, and Node’s runtime environment is the operating system. Or you could also say—Javascript’s runtime environment is a combination of Node and the operating system. Again, dive deep enough and everyone’s runtime environment ends up being the operating system.
+
+### Interpreting Languages
+
+Code does not always have to be compiled to OS/architecture-specific binaries. A common pattern is to execute your programs via interpreters. For example, a Python interpreter can read your Python source and produce corresponding machine instructions for your computer to execute. This conveniently makes Python source very portable. However, the Python interpreter itself is a compiled executable, built for a specific OS/architecture, who’s runtime environment is the operating system.
+
+> There is no such thing as interpreted languages or non-interpreted languages. A programming language is just a syntax. Python interpreters are the most popular way to execute Python source, but it’s not the only way. Programmers are creative. I’m sure developers have found ways to compile Python/Javascript into executables or have even created ways to interpret C.
+
+### Java Program’s Runtime Environment
+
+![](https://www.tutorialandexample.com/wp-content/uploads/2019/11/Difference-between-JDK-JRE-JVM.png)
+
+What does it take to execute a Java program on your computer? This is very close to an executable’s runtime environment; all we need to do is to make sure our java  source can turn into a proper bytecode.
+
+This step is familiar to everyone. Java compiler takes your java code and create a properly formatted bytecode (.class) file, targeted for jvm.
+
+A subtler part of java compilers is that they also provide a collection of java [runtime library](https://en.wikipedia.org/wiki/Runtime_library) that is automatically compiled into your program. The purpose of these libraries is to provide you—the programmer—with basic facilities to interact with the runtime environment. For a compiled java program as an bytecode executable in jvm, this environment is the jvm. For example, the java runtime library provides useful systems like _JIT_ and _java bytecode interpreter_ that allow you to manage memory and to help prepare it for execution, and many, many other things.
+
+Any library that allows a program to interact with the operating system will be heavily tailored to that operating system.Java by using JVM talks with operating system and executes the program in jvm and jvm facilitates all the necessary library and function calls. For java, the runtime libraries and functions we just discussed are part of a larger umbrella library referred to as JRE. This is an official standard.
+
+A Java program’s runtime environment is the jvm's runtime environment,  which in turn operating system. The important point to remember is that **all** code—from assembly to Javascript—needs some kind of environment in order execute, just like all recipes need some kind of kitchen to turn into food.
