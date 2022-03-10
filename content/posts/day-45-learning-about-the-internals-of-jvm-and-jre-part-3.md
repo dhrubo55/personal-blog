@@ -2,6 +2,7 @@
 category = ["100 Days Of Java"]
 date = 2022-03-01T00:00:00Z
 description = "learning what is Runtime and Runtime environment and Java Runtime"
+draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day45"
 summary = "learning what is Runtime and Runtime environment and Java Runtime"
@@ -53,7 +54,7 @@ Unfortunately, a recipe on its own is useless. The recipe you found on Google is
 
 Your code is just code. Whatever code you write, in whatever language you choose, needs to eventually execute on a computer. Runtime environments enable this execution.
 
-### Common Runtime Environment ( The Operating System )
+### **Common Runtime Environment ( The Operating System )**
 
 The universal runtime environment for any kind of programmatic execution is the operating system. The operating system is the only way you can get the CPU to execute your code. The OS is the silent hero that ensures your program gets some memory, gets scheduled fairly, and doesn’t disturb its neighbors. It doesn’t matter if you’re using C, Python, or Node.js—at the end of the day, the operating system is everyone’s runtime environment.
 
