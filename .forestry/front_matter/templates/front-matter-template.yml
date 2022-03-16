@@ -100,3 +100,4 @@ pages:
 - content/posts/day-43-learning-about-the-internals-of-jre-jvm-part-1.md
 - content/posts/day-44-learning-about-the-internals-of-jre-and-jvm-part-2.md
 - content/posts/day-45-learning-about-the-internals-of-jvm-and-jre-part-3.md
+- content/posts/day-46-writing-a-generic-objectpool-to-enable-pooling-for-any-type.md
