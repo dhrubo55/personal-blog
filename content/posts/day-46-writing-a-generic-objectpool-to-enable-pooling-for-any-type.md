@@ -23,3 +23,32 @@ To do that at first created a generic `ObjectPool<T>` where to create an Object 
 `create()` method will create the instance and there are two sets to manage the instances. `available` set stores currently available instances from the pool and `in use` set stores in uses instances of the pool. By calling the `getInstance()` and `releaseInstance()` method we can get and release an instance to object pool.
 
 ```java
+abstract class ObjectPool<T> {
+
+        private final Set<T> available = new HashSet<>();
+        private final Set<T> inUse = new HashSet<>();
+
+        protected abstract T create();
+
+        public synchronized T getInstance() {
+            if (available.isEmpty()) {
+                available.add(create());
+            }
+            var instance = available.iterator().next();
+            available.remove(instance);
+            inUse.add(instance);
+            return instance;
+        }
+
+        public synchronized void releaseInstance(T instance) {
+            inUse.remove(instance);
+            available.add(instance);
+        }
+
+        @Override
+        public synchronized String toString() {
+            return String.format("Pool available=%d inUse=%d", available.size(), inUse.size());
+        }
+    }```
+    
+ 
