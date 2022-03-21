@@ -103,3 +103,21 @@ class Day46 {
    }
 }
 ```
+
+here the output is
+```Pool available=0 inUse=0
+Get Instance jdk.internal.net.http.HttpClientImpl@75c072cb(1)
+Pool available=0 inUse=1
+Get Instance jdk.internal.net.http.HttpClientImpl@e50a6f6(2)
+Pool available=0 inUse=2
+Get Instance jdk.internal.net.http.HttpClientImpl@53ca01a2(3)
+Pool available=0 inUse=3
+Release Instance jdk.internal.net.http.HttpClientImpl@75c072cb(1)
+Pool available=1 inUse=2
+Release Instance jdk.internal.net.http.HttpClientImpl@e50a6f6(2)
+Pool available=2 inUse=1
+Get Instance jdk.internal.net.http.HttpClientImpl@e50a6f6(2)
+Pool available=1 inUse=2
+Get Instance jdk.internal.net.http.HttpClientImpl@75c072cb(1)
+Pool available=0 inUse=3
+```
