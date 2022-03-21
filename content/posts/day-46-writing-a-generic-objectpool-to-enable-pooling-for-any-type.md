@@ -62,4 +62,43 @@ class HttpClientPool extends ObjectPool<HttpClient> {
         }
     }
  ```
+ to see how the ObjectPool works now we use it in a class.
+ 
+ ```java
+ class Day46 {
+    public static void main(String[] args) {
+        HttpClientPool httpClientPool = new HttpClientPool();
+
+        System.out.println(httpClientPool.toString());
+        HttpClient httpClient1 = httpClientPool.getInstance();
+        String releaseInstance = "Release Instance ";
+        String getInstance = "Get Instance ";
+        System.out.println(getInstance+ httpClient1);
+        System.out.println(httpClientPool.toString());
+
+        HttpClient httpClient2 = httpClientPool.getInstance();
+        System.out.println(getInstance+ httpClient2);
+        System.out.println(httpClientPool.toString());
+
+        HttpClient httpClient3 = httpClientPool.getInstance();
+        System.out.println(getInstance+httpClient3);
+        System.out.println(httpClientPool.toString());
+
+        System.out.println(releaseInstance+httpClient1);
+        httpClientPool.releaseInstance(httpClient1);
+        System.out.println(httpClientPool.toString());
+
+        System.out.println(releaseInstance+httpClient2);
+        httpClientPool.releaseInstance(httpClient2);
+        System.out.println(httpClientPool.toString());
+
+        HttpClient httpClient4 = httpClientPool.getInstance();
+        System.out.println(getInstance+ httpClient4);
+        System.out.println(httpClientPool.toString());
+
+        HttpClient httpClient5 = httpClientPool.getInstance();
+        System.out.println(getInstance+ httpClient5);
+        System.out.println(httpClientPool.toString());
+    }
+ }```
  
