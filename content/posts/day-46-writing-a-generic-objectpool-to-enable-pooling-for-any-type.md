@@ -121,3 +121,6 @@ Pool available=1 inUse=2
 Get Instance jdk.internal.net.http.HttpClientImpl@75c072cb(1)
 Pool available=0 inUse=3
 ```
+at first pool does not have any instances then it creates and tag it as a in use instance1. then it does the same for instance2 and instance3 then it releases instance and thus the available set shows it have one instance then instance2 is released
+
+so inuse = 1 and available = 2 and then again calling `etInstance()` gives instance from the `available` set, thus not creating any new instances of HttpClient
