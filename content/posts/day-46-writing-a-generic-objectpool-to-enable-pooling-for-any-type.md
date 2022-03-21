@@ -15,3 +15,11 @@ relative = false
 
 +++
 When objects are expensive to create and they are needed only for short periods of time it is advantageous to utilize the Object Pool pattern. The Object Pool provides a cache for instantiated objects tracking which ones are in use and which are available.
+
+Here creating a `HttpClient` object pool to create `HttpClientPool` to get avaialbe and in use instances
+
+To do that at first created a generic `ObjectPool<T>` where to create an Object pool we have to pass the type of the object and then extend a class to implement the abstraced behavior of the Object pools createing instance method `create()`. 
+
+`create()` method will create the instance and there are two sets to manage the instances. `available` set stores currently available instances from the pool and `in use` set stores in uses instances of the pool. By calling the `getInstance()` and `releaseInstance()` method we can get and release an instance to object pool.
+
+```java
