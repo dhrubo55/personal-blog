@@ -2,7 +2,6 @@
 category = []
 date = 2022-03-28T00:00:00Z
 description = "Using ThreadMXBean get thread execution and monitoring related information for running threads in jvm"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day47"
 summary = "Using ThreadMXBean get thread execution and monitoring related information for running threads in jvm"
