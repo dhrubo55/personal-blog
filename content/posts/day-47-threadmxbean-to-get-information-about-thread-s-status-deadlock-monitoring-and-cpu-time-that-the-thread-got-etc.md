@@ -15,8 +15,7 @@ relative = false
 +++
 Java Management Extension  or **JMX** framwork provides an easily configurable, scalable, reliable and more or less friendly infrastructure for managing Java application either locally or remotely. The framework introduces the concept of MBeans for real-time management of applications.
 
-####   
-MXBean:
+#### MXBean:
 
 An MXBean is **a type of MBean that references only a predefined set of data types**. In this way, you can be sure that your MBean will be usable by any client, including remote clients, without any requirement that the client have access to model-specific classes representing the types of your MBeans
 
@@ -49,4 +48,4 @@ So now using `ThreadMXBean` get thread count, currentThreadCpuTime, currentThrea
         }
       }
 
-Here getting total thread count running in jvm, current thread cpu time (if JVM supports it) it returns in nano second so using `TimeUnit.MILISECONDS.convert()` to convert it to Miliseconds also current thread user time. After that dumping all the threads and getting the name and id of the threads. 
+Here getting total thread count running in jvm, current thread cpu time (if JVM supports it) it returns in nano second so using `TimeUnit.MILISECONDS.convert()` to convert it to Miliseconds also current thread user time. After that dumping all the threads and getting the name and id of the threads.
