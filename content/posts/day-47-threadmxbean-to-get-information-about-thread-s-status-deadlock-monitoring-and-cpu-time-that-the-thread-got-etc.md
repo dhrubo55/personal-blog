@@ -48,6 +48,7 @@ class Day47 {
             }
         }
       }
+```
 
 Here getting total thread count running in jvm, current thread cpu time (if JVM supports it) it returns in nano second so using `TimeUnit.MILISECONDS.convert()` to convert it to Miliseconds also current thread user time. After that dumping all the threads and getting the name and id of the threads.
 ```
