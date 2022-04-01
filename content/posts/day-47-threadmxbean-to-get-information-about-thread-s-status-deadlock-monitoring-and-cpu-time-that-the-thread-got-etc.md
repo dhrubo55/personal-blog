@@ -34,7 +34,8 @@ Using `ThreadMXBean` we can get information about
 
 So now using `ThreadMXBean` get thread count, currentThreadCpuTime, currentThreadUserTime
 
-    class Day47 {
+```java    
+class Day47 {
         public static void main(String[] args) {
             ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
             System.out.println("Thread count is "+threadMXBean.getThreadCount());
@@ -46,6 +47,6 @@ So now using `ThreadMXBean` get thread count, currentThreadCpuTime, currentThrea
                 System.out.println(MessageFormat.format("Thread Name is {0} | Thread id -> {1}",threadInfo.getThreadName(),threadInfo.getThreadId()));
             }
         }
-      }
+      }```
 
 Here getting total thread count running in jvm, current thread cpu time (if JVM supports it) it returns in nano second so using `TimeUnit.MILISECONDS.convert()` to convert it to Miliseconds also current thread user time. After that dumping all the threads and getting the name and id of the threads.
