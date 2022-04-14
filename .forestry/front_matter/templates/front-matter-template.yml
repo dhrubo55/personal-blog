@@ -102,3 +102,4 @@ pages:
 - content/posts/day-45-learning-about-the-internals-of-jvm-and-jre-part-3.md
 - content/posts/day-46-writing-a-generic-objectpool-to-enable-pooling-for-any-type.md
 - content/posts/day-47-threadmxbean-to-get-information-about-thread-s-status-deadlock-monitoring-and-cpu-time-that-the-thread-got-etc.md
+- content/posts/day-48-a-utility-class-for-zip-and-unzip-files-using-java-zip-api.md
