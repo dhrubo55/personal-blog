@@ -37,4 +37,8 @@ In java when used ZipInputStream and ZipOutputStream we  can create zip file and
 
 ![](https://s1.o7planning.com/en/10195/images/18542.png)
 
-Now to create a zip file of any particular file an utility class is created `ZipUtils` which will use `ZipInputStream` along with `ZipOutputStream` to zip and unzip any files.
+Now to create a zip file of any particular file an utility class is created `ZipUtils` which will use `ZipInputStream` along with `ZipOutputStream` to zip and unzip any files. In this `ZipUtils` class the `zipIt()` method will take the file path for
+
+```java
+
+```
