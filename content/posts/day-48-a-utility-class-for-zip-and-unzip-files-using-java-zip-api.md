@@ -79,12 +79,12 @@ class Day48 {
        }
     }
 ```
-in this case the new zip file that will be created would be inside /home/mohibulhasan/Documents/ and as Folder.zip
 
+in this case the new zip file that will be created would be inside /home/mohibulhasan/Documents/ and as Folder.zip
 
 #### Zip a folder:
 
-In case of a directory in ZipUtils class there is a method `zipFolder()` which will use a source directory as path to zip all the contents of that directory 
+In case of a directory in ZipUtils class there is a method `zipFolder()` which will use a source directory as path to zip all the contents of that directory
 
 ```java
 public static void zipFolder(Path source) throws IOException {
@@ -141,7 +141,6 @@ public static void zipFolder(Path source) throws IOException {
 ```
 
 in this method `Files.walkFileTree()` is used for to visit all the files in the directory and take each file and put them inside the zipEntry. Then ZipOutputStream is used to create the zipEntry's and the added.
-
 
 #### Unzip a .zip File:
 
@@ -202,10 +201,11 @@ public static void unzipIt(Path sourceFilePath, Path destFilePath) {
             }
         }
 ```
+
 while doing the unzip all the zipEntry are checked and until all of them are processed the mehtod will check if that zip entry is a file or a folder and if its a folder it will create a folder in the desitantion folder for that particular entry. Some file will have `relative path` so it will also make the parent folders.
 
 While trying to unzip a `.zip` in this case the zip file it may cause ZipSlip Attack,
 
 #### Zip Slip Attack:
 
-The zip slip attack
+The [zip slip attack](https://www.infoq.com/news/2018/06/zip-slip/ "Zip Slip attack")
