@@ -141,3 +141,9 @@ public static void zipFolder(Path source) throws IOException {
 ```
 
 in this method `Files.walkFileTree()` is used for to visit all the files in the directory and take each file and put them inside the zipEntry. Then ZipOutputStream is used to create the zipEntry's and the added.
+
+
+#### Unzip a .zip File:
+
+If need to unzip a `.zip` file and extract the files and folder of that zip file, we need to give the zip file path and destiantion path where the .zip file will be extracted.
+
