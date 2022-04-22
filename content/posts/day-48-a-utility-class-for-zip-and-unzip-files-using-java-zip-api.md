@@ -37,6 +37,8 @@ In java when used ZipInputStream and ZipOutputStream we  can create zip file and
 
 ![](https://s1.o7planning.com/en/10195/images/18542.png)
 
+#### Zip Single File:
+
 Now to create a zip file of any particular file an utility class is created `ZipUtils` which will use `ZipInputStream` along with `ZipOutputStream` to zip and unzip any files. In this `ZipUtils` class the `zipSingleFile()` method will take the file path for
 
 ```java
@@ -77,4 +79,64 @@ class Day48 {
        }
     }
 ```
-in this case the new zip file that will be created would be inside /home/mohibulhasan/Documents/ and as Folder.zip 
+in this case the new zip file that will be created would be inside /home/mohibulhasan/Documents/ and as Folder.zip
+
+
+#### Zip a folder:
+
+In case of a directory in ZipUtils class there is a method `zipFolder()` which will use a source directory as path to zip all the contents of that directory 
+
+```java
+public static void zipFolder(Path source) throws IOException {
+
+            // get folder name as zip file name
+            String zipFileName = source.toFile().getAbsolutePath() + ".zip";
+
+            try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFileName))) {
+
+                Files.walkFileTree(source, new SimpleFileVisitor<>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
+
+                        // only copy files, no symbolic links
+                        if (attributes.isSymbolicLink()) {
+                            return FileVisitResult.CONTINUE;
+                        }
+
+                        try (FileInputStream fis = new FileInputStream(file.toFile())) {
+
+                            Path targetFile = source.relativize(file);
+                            zos.putNextEntry(new ZipEntry(targetFile.toString()));
+
+                            byte[] buffer = new byte[1024];
+                            int len;
+                            while ((len = fis.read(buffer)) > 0) {
+                                zos.write(buffer, 0, len);
+                            }
+
+                            // if large file, throws out of memory
+                            //byte[] bytes = Files.readAllBytes(file);
+                            //zos.write(bytes, 0, bytes.length);
+
+                            zos.closeEntry();
+
+                            System.out.printf("Zip file : %s%n", file);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult visitFileFailed(Path file, IOException exc) {
+                        System.err.printf("Unable to zip : %s%n%s%n", file, exc);
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+
+            }
+
+        }
+```
+
