@@ -37,8 +37,29 @@ In java when used ZipInputStream and ZipOutputStream we  can create zip file and
 
 ![](https://s1.o7planning.com/en/10195/images/18542.png)
 
-Now to create a zip file of any particular file an utility class is created `ZipUtils` which will use `ZipInputStream` along with `ZipOutputStream` to zip and unzip any files. In this `ZipUtils` class the `zipIt()` method will take the file path for
+Now to create a zip file of any particular file an utility class is created `ZipUtils` which will use `ZipInputStream` along with `ZipOutputStream` to zip and unzip any files. In this `ZipUtils` class the `zipSingleFile()` method will take the file path for
 
 ```java
+ public static class ZipUtils {
 
+        public static void zipSingleFile(Path source, Path zipFileName) throws IOException {
+
+            if (!Files.isRegularFile(source)) {
+                System.err.println("Please provide a file.");
+                return;
+            }
+
+            try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFileName.toString())); FileInputStream fis = new FileInputStream(source.toFile())) {
+
+                ZipEntry zipEntry = new ZipEntry(source.getFileName().toString());
+                zos.putNextEntry(zipEntry);
+
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = fis.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+                zos.closeEntry();
+            }
+        }
 ```
