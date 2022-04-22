@@ -2,7 +2,6 @@
 category = []
 date = 2022-04-11T00:00:00Z
 description = "A utility class to zip and unzip files and directories"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day48"
 summary = "A utility class to zip and unzip files and directories"
