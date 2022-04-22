@@ -235,4 +235,4 @@ To avoid this a method `zipSlipProtect()` method is implemented which will check
         }
 ```
 
-in this method by using the [Path.resolve()](https://www.geeksforgeeks.org/path-resolve-method-in-java-with-examples/ "Path resolve")  and [Path.normalize() ](https://www.geeksforgeeks.org/path-normalize-method-in-java-with-examples/ "Path.normalize()")to check if the normalize file path still has the destiantion direcotry as its prefix or not.
+in this method by using the [Path.resolve()](https://www.geeksforgeeks.org/path-resolve-method-in-java-with-examples/ "Path resolve")  and [Path.normalize()](https://www.geeksforgeeks.org/path-normalize-method-in-java-with-examples/) to check if the normalize file path still has the destiantion direcotry as its prefix or not.
