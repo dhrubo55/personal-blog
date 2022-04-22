@@ -208,4 +208,6 @@ While trying to unzip a `.zip` in this case the zip file it may cause ZipSlip At
 
 #### Zip Slip Attack:
 
-The [zip slip attack](https://www.infoq.com/news/2018/06/zip-slip/ "Zip Slip attack")
+The [zip slip attack](https://www.infoq.com/news/2018/06/zip-slip/ "Zip Slip attack") is  an attack that adds entries to a zip file that will be unzipped, entries consisting relative file paths with one or more `/..` sections in the path the final path of the file could end up being outside the directory into which the ZipFile is requested unzipped to. Let's look at an example:
+
+Zip file to be unzipped to the directory `/apps/example/data/unzipped-file`. An entry in the Zip file has the relative path `../../../../etc/hosts` . The final path of that entry becomes: `/apps/example/data/unzipped-file/../../../../etc/hosts` which is equivalent of `/etc/hosts` .
