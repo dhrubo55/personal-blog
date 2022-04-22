@@ -211,3 +211,7 @@ While trying to unzip a `.zip` in this case the zip file it may cause ZipSlip At
 The [zip slip attack](https://www.infoq.com/news/2018/06/zip-slip/ "Zip Slip attack") is  an attack that adds entries to a zip file that will be unzipped, entries consisting relative file paths with one or more `/..` sections in the path the final path of the file could end up being outside the directory into which the ZipFile is requested unzipped to. Let's look at an example:
 
 Zip file to be unzipped to the directory `/apps/example/data/unzipped-file`. An entry in the Zip file has the relative path `../../../../etc/hosts` . The final path of that entry becomes: `/apps/example/data/unzipped-file/../../../../etc/hosts` which is equivalent of `/etc/hosts` .
+
+In the case of linux  based systems unzipping this file could potentially overwrite our hosts file,enabling the attacker to point e.g. www.facebook.com to an IP address of their own choice. The next time you try to access Facebook from that computer, it won't be the real Facebook you are accessing, but the attacker's spoofed version. Once you login, the attacker now has your username and password, and your Facebook account can be hacked.
+
+To avoid this a method `zipSlipProtect()` method is implemented which will check if the path of the zip entry is outside of the destination directory or not.
