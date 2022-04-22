@@ -62,4 +62,19 @@ Now to create a zip file of any particular file an utility class is created `Zip
                 zos.closeEntry();
             }
         }
+    }
 ```
+
+this `zipSingleFile()` takes two arguments one is the source file path and another is for where to store the created zip file and its name.
+
+```java
+class Day48 {
+    public static void main(String[] args) throws IOException {
+        final Path OUTPUT_ZIP_FILE = Path.of("/home/mohibulhasan/Documents/Folder.zip");
+        final Path SOURCE_FILE = Path.of("/home/mohibulhasan/Documents/example.txt");
+        
+        ZipUtils.zipSingleFile(Path.of("/home/mohibulhasan/Documents/example.txt"),OUTPUT_ZIP_FILE);
+       }
+    }
+```
+in this case the new zip file that will be created would be inside /home/mohibulhasan/Documents/ and as Folder.zip 
