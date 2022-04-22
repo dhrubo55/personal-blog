@@ -147,3 +147,64 @@ in this method `Files.walkFileTree()` is used for to visit all the files in the 
 
 If need to unzip a `.zip` file and extract the files and folder of that zip file, we need to give the zip file path and destiantion path where the .zip file will be extracted.
 
+```java
+public static void unzipIt(Path sourceFilePath, Path destFilePath) {
+            try (ZipInputStream zis = new ZipInputStream(new FileInputStream(sourceFilePath.toFile()))) {
+
+                // list files in zip
+                ZipEntry zipEntry = zis.getNextEntry();
+
+                while (zipEntry != null) {
+
+                    boolean isDirectory = false;
+                    // some zip stored files and folders separately
+                    // e.g data/
+                    //     data/folder/
+                    //     data/folder/file.txt
+                    if (zipEntry.getName().endsWith(File.separator)) {
+                        isDirectory = true;
+                    }
+
+                    Path newPath = zipSlipProtect(zipEntry, destFilePath);
+
+                    if (isDirectory) {
+                        Files.createDirectories(newPath);
+                    } else {
+
+                        // some zip stored file path only, need create parent directories
+                        // e.g data/folder/file.txt
+                        if (newPath.getParent() != null) {
+                            if (Files.notExists(newPath.getParent())) {
+                                Files.createDirectories(newPath.getParent());
+                            }
+                        }
+
+                        // copy files, nio
+                        Files.copy(zis, newPath, StandardCopyOption.REPLACE_EXISTING);
+
+                        // copy files, classic
+                    /*try (FileOutputStream fos = new FileOutputStream(newPath.toFile())) {
+                        byte[] buffer = new byte[1024];
+                        int len;
+                        while ((len = zis.read(buffer)) > 0) {
+                            fos.write(buffer, 0, len);
+                        }
+                    }*/
+                    }
+
+                    zipEntry = zis.getNextEntry();
+
+                }
+                zis.closeEntry();
+
+            } catch (IOException e) {
+
+            }
+        }
+```
+while doing the unzip all the zipEntry are checked and until all of them are processed the mehtod will check if that zip entry is a file or a folder and if its a folder it will create a folder in the desitantion folder for that particular entry. Some file will have `relative path` so it will also make the parent folders.
+
+While trying to unzip a `.zip` in this case the zip file it may cause ZipSlip Attack,
+
+#### Zip Slip Attack:
+
