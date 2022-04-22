@@ -215,3 +215,24 @@ Zip file to be unzipped to the directory `/apps/example/data/unzipped-file`. An 
 In the case of linux  based systems unzipping this file could potentially overwrite our hosts file,enabling the attacker to point e.g. www.facebook.com to an IP address of their own choice. The next time you try to access Facebook from that computer, it won't be the real Facebook you are accessing, but the attacker's spoofed version. Once you login, the attacker now has your username and password, and your Facebook account can be hacked.
 
 To avoid this a method `zipSlipProtect()` method is implemented which will check if the path of the zip entry is outside of the destination directory or not.
+
+```java
+ private static Path zipSlipProtect(ZipEntry zipEntry, Path destinationDirectory) throws IOException {
+
+            // test zip slip vulnerability
+            // Path targetDirResolved = targetDir.resolve("../../" + zipEntry.getName());
+
+            Path targetDirResolved = destinationDirectory.resolve(zipEntry.getName());
+
+            // make sure normalized file still has targetDir as its prefix
+            // else throws exception
+            Path normalizePath = targetDirResolved.normalize();
+            if (!normalizePath.startsWith(destinationDirectory)) {
+                throw new IOException("Bad zip entry: " + zipEntry.getName());
+            }
+
+            return normalizePath;
+        }
+```
+
+in this method by using the `Path.resolve()` and `Path.normalize()` to check if the normalize file path still has the destiantion direcotry as its prefix or not.
