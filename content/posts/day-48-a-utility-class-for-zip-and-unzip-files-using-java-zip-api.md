@@ -139,3 +139,5 @@ public static void zipFolder(Path source) throws IOException {
 
         }
 ```
+
+in this method `Files.walkFileTree()` is used for to visit all the files in the directory and take each file and put them inside the zipEntry. Then ZipOutputStream is used to create the zipEntry's and the added.
