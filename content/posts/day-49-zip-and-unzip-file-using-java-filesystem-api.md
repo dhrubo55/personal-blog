@@ -14,4 +14,4 @@ image = ""
 relative = false
 
 +++
-In previous post we have explored and wrote a utility class 
+In previous post we have explored and wrote a utility class for zipping and unzipping files and folders using java Zip api. Now we will see another api provided by java named `FileSystem` under `java.nio.file`.
