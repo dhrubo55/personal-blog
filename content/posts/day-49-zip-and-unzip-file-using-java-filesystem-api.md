@@ -120,3 +120,5 @@ public static void zipFolder(Path source) throws IOException {
 
 }
 ```
+
+In this case by accessing and then copying the file from the `Folder,zip` file to and external folder will behave like unzip.
