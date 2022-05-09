@@ -22,3 +22,7 @@ FileSystem api of java non-blocking io's file is an interface to underlying file
 
 The default file system, obtained by invoking the `FileSystems.getDefault()` method, provides access to the file system that is accessible to the Java virtual machine. The `FileSystems` class defines methods to create file systems that provide access to other types of (custom) file systems.
 
+In java there are 3 file system providers. 
+
+#### FileSystemProviders:
+
