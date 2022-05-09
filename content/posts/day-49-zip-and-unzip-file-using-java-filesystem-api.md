@@ -32,3 +32,91 @@ A Service-provider class for file systems. A file system provider is a concrete 
 
 #### ZipFileSystemProvider:
 The zip file system provider treats a zip or JAR file as a file system and provides the ability to manipulate the contents of the file. The zip file system provider creates multiple file systems — one file system for each zip or JAR file.
+
+ZipFileSystemProvider to create a `Folder.zip` and archive a single file and a direcotry/folder
+
+
+##### Single File to Zip file
+
+```java
+public static void ZipSingleFile(Path source, String fileName) {
+            if (!Files.isRegularFile(source)) {
+                System.err.println("Please provide a file.");
+                return;
+            }
+
+            Map<String, String> env = new HashMap<>();
+            // Create the zip file if it doesn't exist
+            env.put("create", "true");
+
+            URI uri = URI.create("jar:file:/home/mohibulhasan/Documents/" + fileName);
+
+            try (FileSystem zipFileSystem = FileSystems.newFileSystem(uri, env)) {
+                Path pathInZipfile = zipFileSystem.getPath(source.getFileName().toString());
+
+                // Copy a file into the zip file path
+                Files.copy(source, pathInZipfile, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+```
+
+##### Folder to Zip:
+
+```java
+public static void zipFolder(Path source) throws IOException {
+
+    // get current working directory
+    String currentPath = System.getProperty("user.dir") + File.separator;
+
+    // get folder name as zip file name
+    // can be other extension, .foo .bar .whatever
+    String zipFileName = source.getFileName().toString() + ".zip";
+    URI uri = URI.create("jar:file:" + currentPath + zipFileName);
+
+    Files.walkFileTree(source, new SimpleFileVisitor<>() {
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
+
+            // don't copy symboliclink as its not supported
+            if (attributes.isSymbolicLink()) {
+                return FileVisitResult.CONTINUE;
+            }
+
+            Map<String, String> env = new HashMap<>();
+            env.put("create", "true");
+
+            try (FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
+
+                Path targetFile = source.relativize(file);
+                Path pathInZipfile = zipfs.getPath(targetFile.toString());
+
+                // NoSuchFileException, need create parent directories in zip path
+                if (pathInZipfile.getParent() != null) {
+                    Files.createDirectories(pathInZipfile.getParent());
+                }
+
+                // copy file attributes
+                CopyOption[] options = {StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES, LinkOption.NOFOLLOW_LINKS};
+                // Copy a file into the zip file path
+                Files.copy(file, pathInZipfile, options);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return FileVisitResult.CONTINUE;
+        }
+
+        @Override
+        public FileVisitResult visitFileFailed(Path file, IOException exc) {
+            System.err.printf("Unable to zip : %s%n%s%n", file, exc);
+            return FileVisitResult.CONTINUE;
+        }
+
+    });
+
+}
+```
