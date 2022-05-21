@@ -104,3 +104,4 @@ pages:
 - content/posts/day-47-threadmxbean-to-get-information-about-thread-s-status-deadlock-monitoring-and-cpu-time-that-the-thread-got-etc.md
 - content/posts/day-48-a-utility-class-for-zip-and-unzip-files-using-java-zip-api.md
 - content/posts/day-49-zip-and-unzip-file-using-java-filesystem-api.md
+- content/posts/day-50-marker-interface-and-it-s-uses.md
