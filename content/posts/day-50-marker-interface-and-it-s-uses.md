@@ -40,4 +40,4 @@ java.io.Serializable interface is defined into java.io classes
 
 Marker Interfaces provide runtime information about Object. So the compiler and the JVM have additional information about the Object.
 
-*As we can see clonable and serialization implementes marker type interface so lets see example of both*
+**As we can see clonable and serialization implementes marker type interface so lets see example of both**
