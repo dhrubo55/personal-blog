@@ -84,6 +84,5 @@ public class Day50 {
         System.out.println(example.number);
         System.out.println(example.str);
     }
-}```
-
-asd
+}
+```
