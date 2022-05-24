@@ -41,3 +41,47 @@ java.io.Serializable interface is defined into java.io classes
 Marker Interfaces provide runtime information about Object. So the compiler and the JVM have additional information about the Object.
 
 **As we can see clonable and serialization implementes marker type interface so lets see example of both**
+
+### Clonable:
+
+Cloneable interface is implemented by a class to make `Object.clone()` method valid thereby making field-for-field copy. This interface allows the implementing class to have its objects to be cloned instead of using a new operator.
+
+```java
+class Example implements Cloneable {
+    int number;
+    String str;
+  
+    // Example class constructor
+    public Example(int i, String s)
+    {
+        this.number = number;
+        this.str = str;
+    }
+  
+    // Overriding clone() method
+    // by simply calling Object class
+    // clone() method.
+    @Override
+    protected Object clone()
+        throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+}
+  
+public class Day50 {
+    public static void main(String[] args)
+        throws CloneNotSupportedException
+    {
+        Example anotherExample = new Example(20, "Example");
+  
+        // cloning 'anotherExample'is holding
+        // new cloned object reference in example
+  
+        // down-casting as clone() return type is Object
+        Example example = (Example) anotherExample.clone();
+  
+        System.out.println(example.number);
+        System.out.println(example.str);
+    }
+}```
