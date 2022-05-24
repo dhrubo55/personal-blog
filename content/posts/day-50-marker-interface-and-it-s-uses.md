@@ -42,7 +42,7 @@ Marker Interfaces provide runtime information about Object. So the compiler and 
 
 **As we can see clonable and serialization implementes marker type interface so lets see example of both**
 
-### Clonable:
+#### Clonable:
 
 Cloneable interface is implemented by a class to make `Object.clone()` method valid thereby making field-for-field copy. This interface allows the implementing class to have its objects to be cloned instead of using a new operator.
 
@@ -86,3 +86,18 @@ public class Day50 {
     }
 }
 ```
+
+
+#### Serializable:
+
+It is a marker interface in Java that is defined in the `java.io` package. If we want to make the class serializable, we must implement the Serializable interface. If a class implements the Serializable interface, we can serialize or deserialize the state of an object of that class.
+
+###### Serialization:
+it is the action of converting an object into a byte stream. A mechanism in which the object state is read from the memory and written into a file or database. Deserialization (converting byte stream into an object) is the opposite of serialization means that object state reading from a file or database and written back into memory is called deserialization of object.
+
+**Serialization (writing) can be achieved with the ObjectOutputStream class and deserialization (reading) can be achieved with the ObjectInputStream class.**
+
+Example:
+
+ 
+
