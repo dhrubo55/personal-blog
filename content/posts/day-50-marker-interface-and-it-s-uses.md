@@ -29,7 +29,9 @@ Market Interface is an interface that has no method declarations or fields in it
 `java. lang.Cloneable`
 `java.io.Serializable`
 
-these both interfaces are Marker Interfaces because it has no members. Marker interfaces are used to mark a class for a purpose. Purpose does not require any additional functionality.
+these both interfaces are Marker Interfaces because it has no members. Marker interfaces are used to mark a class for a purpose. Purpose does not require any additional functionality. 
+
+`Use of Clonable & Serialization Marker interfaces are shown below.`
 
 ##### For Example
 
