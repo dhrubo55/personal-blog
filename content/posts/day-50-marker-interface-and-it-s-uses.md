@@ -113,3 +113,47 @@ public class User implements Serializable
     }
 }
 ```
+ now to write the user object in a file / database by serializing the data.
+ 
+ ```java
+ public class Day50 {
+
+    public static void main(String args[])
+    {
+        try
+        {
+            //Creating the object
+            User user = new User(000001,"Kasun");
+            //Creating stream and writing the object
+            FileOutputStream fos=new FileOutputStream("Users.txt");
+            ObjectOutputStream out=new ObjectOutputStream(fos);
+            out.writeObject(emp);
+            out.flush();
+            //closing the stream
+            out.close();
+            System.out.println("Data has been written to the file.");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+}
+ ```
+now to deserialize the object from the file
+
+```java
+public class Day50 {
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        FileInputStream fis =  new FileInputStream("Users.txt");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        User user =  (User)ois.readObject();
+
+        System.out.println("User Name: "+ user.name);
+        System.out.println("User ID: "+ user.id);
+        ois.close();
+    }
+}
+```
+reading data and deserialize the data to a `User` object from the **Users.txt** file.
