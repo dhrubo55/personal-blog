@@ -28,7 +28,7 @@ Market Interface is an interface that has no method declarations or fields in it
 `java. lang.Cloneable`
 `java.io.Serializable`
 
-these both interfaces are Marker Interfaces because it has no members. Marker interfaces are used to mark a class for a purpose. Purpose does not require any additional functionality. 
+these both interfaces are Marker Interfaces because it has no members. Marker interfaces are used to mark a class for a purpose. Purpose does not require any additional functionality.
 
 `Use of Clonable & Serialization Marker interfaces are shown below.`
 
@@ -114,33 +114,35 @@ public class User implements Serializable
     }
 }
 ```
- now to write the user object in a file / database by serializing the data.
- 
- ```java
- public class Day50 {
 
-    public static void main(String args[])
-    {
-        try
-        {
-            //Creating the object
-            User user = new User(000001,"Kasun");
-            //Creating stream and writing the object
-            FileOutputStream fos=new FileOutputStream("Users.txt");
-            ObjectOutputStream out=new ObjectOutputStream(fos);
-            out.writeObject(emp);
-            out.flush();
-            //closing the stream
-            out.close();
-            System.out.println("Data has been written to the file.");
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+now to write the user object in a file / database by serializing the data.
+
+```java
+public class Day50 {
+
+   public static void main(String args[])
+   {
+       try
+       {
+           //Creating the object
+           User user = new User(000001,"Kasun");
+           //Creating stream and writing the object
+           FileOutputStream fos=new FileOutputStream("Users.txt");
+           ObjectOutputStream out=new ObjectOutputStream(fos);
+           out.writeObject(user);
+           out.flush();
+           //closing the stream
+           out.close();
+           System.out.println("Data has been written to the file.");
+       }
+       catch(Exception e)
+       {
+           e.printStackTrace();
+       }
+   }
 }
- ```
+```
+
 now to deserialize the object from the file
 
 ```java
@@ -157,4 +159,5 @@ public class Day50 {
     }
 }
 ```
+
 reading data and deserialize the data to a `User` object from the **Users.txt** file.
