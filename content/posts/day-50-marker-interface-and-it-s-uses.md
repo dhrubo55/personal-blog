@@ -87,17 +87,29 @@ public class Day50 {
 }
 ```
 
-
 #### Serializable:
 
 It is a marker interface in Java that is defined in the `java.io` package. If we want to make the class serializable, we must implement the Serializable interface. If a class implements the Serializable interface, we can serialize or deserialize the state of an object of that class.
 
 ###### Serialization:
-it is the action of converting an object into a byte stream. A mechanism in which the object state is read from the memory and written into a file or database. Deserialization (converting byte stream into an object) is the opposite of serialization means that object state reading from a file or database and written back into memory is called deserialization of object.
+
+it is the action of converting an object into a byte stream. A mechanism in which the object state is read from the memory and written into a file or database. Deserialization (converting byte stream into an object) is the opposite of serialization means that object state reading from a file , database or over the network sending request and response and written back into memory is called deserialization of object.
 
 **Serialization (writing) can be achieved with the ObjectOutputStream class and deserialization (reading) can be achieved with the ObjectInputStream class.**
 
 Example:
 
- 
+```java
+import java.io.Serializable;
 
+public class User implements Serializable
+{
+    int id;
+    String name;
+    public User(int id, String name)
+    {
+        this.id = id;
+        this.name = name;
+    }
+}
+```
