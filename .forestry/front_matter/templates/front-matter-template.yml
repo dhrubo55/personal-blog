@@ -105,3 +105,4 @@ pages:
 - content/posts/day-48-a-utility-class-for-zip-and-unzip-files-using-java-zip-api.md
 - content/posts/day-49-zip-and-unzip-file-using-java-filesystem-api.md
 - content/posts/day-50-marker-interface-and-it-s-uses.md
+- content/posts/day-51-creating-stream-using-streamsupport-api-from-iterator-and-splitting-by-group-and-partitioning.md
