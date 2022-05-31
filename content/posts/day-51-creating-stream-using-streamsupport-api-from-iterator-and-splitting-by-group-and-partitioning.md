@@ -24,3 +24,11 @@ The features of Java stream are –
 - A stream is not a data structure instead it takes input from the Collections, Arrays or I/O channels.
 - Streams don’t change the original data structure, they only provide the result as per the pipelined methods.
 - Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined. Terminal operations mark the end of the stream and return the result.
+
+To make a Stream from `Iterator` We first need to make a `Spliterator` first. So lets first understand what is `Iterator` and `Spliterator` is.
+
+#### Iterator:
+
+#### Spliterator:
+
+### Iterator to Spliterator:
