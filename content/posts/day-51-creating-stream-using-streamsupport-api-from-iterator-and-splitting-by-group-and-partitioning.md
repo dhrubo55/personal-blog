@@ -28,7 +28,25 @@ The features of Java stream are –
 To make a Stream from `Iterator` We first need to make a `Spliterator` first. So lets first understand what is `Iterator` and `Spliterator` is.
 
 #### Iterator:
+A Java Cursor is an Iterator, which is used to iterate or traverse or retrieve a Collection or Stream object’s elements one by one. There are three cursors in Java. `Spliterator` is also a special type of `Iterator` so its also a cursor.
+
+1. Iterator
+2. Enumeration
+3. ListIterator
+4. Spliterator 
+
+Iterators in Java are used in the Collection framework to retrieve elements one by one lazily. It is a universal iterator as we can apply it to any Collection object. By using Iterator, we can perform both read/update and remove operations. It is an improved version of `Enumeration` with the additional functionality of removing an element.
+
+Iterator must be used whenever we want to enumerate elements in all Collection framework implemented interfaces like `Set`, `List`, `Queue`, `Deque`, and all implemented classes of `Map` interface.
 
 #### Spliterator:
+
+Besides traversing sequences of data, like an `Iterator<T>` a `Spliterator<T>` can also partition it:
+
+```Iterator + Splitting => Spliterator```
+
+The `trySplit()` method allows it to partition off some elements of the sequence as another `Spliterator<T>.`
+
+This particular advantage over Iterator makes it the core component of the Stream API. By splitting up data into apt sub-sequences, it allows parallel processing.
 
 ### Iterator to Spliterator:
