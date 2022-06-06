@@ -21,19 +21,20 @@ Creating a Stream using Java `StreamSupport` api and iterator, spliterator and t
 Introduced in Java 8, the `Stream` API is used to process collections of objects. A stream is a sequence of objects that supports various methods which can be pipelined to produce the desired result.
 The features of Java stream are –
 
-- A stream is not a data structure instead it takes input from the Collections, Arrays or I/O channels.
-- Streams don’t change the original data structure, they only provide the result as per the pipelined methods.
-- Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined. Terminal operations mark the end of the stream and return the result.
+* A stream is not a data structure instead it takes input from the Collections, Arrays or I/O channels.
+* Streams don’t change the original data structure, they only provide the result as per the pipelined methods.
+* Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined. Terminal operations mark the end of the stream and return the result.
 
 To make a Stream from `Iterator` We first need to make a `Spliterator` first. So lets first understand what is `Iterator` and `Spliterator` is.
 
 #### Iterator:
+
 A Java Cursor is an Iterator, which is used to iterate or traverse or retrieve a Collection or Stream object’s elements one by one. There are three cursors in Java. `Spliterator` is also a special type of `Iterator` so its also a cursor.
 
 1. Iterator
 2. Enumeration
 3. ListIterator
-4. Spliterator 
+4. Spliterator
 
 Iterators in Java are used in the Collection framework to retrieve elements one by one lazily. It is a universal iterator as we can apply it to any Collection object. By using Iterator, we can perform both read/update and remove operations. It is an improved version of `Enumeration` with the additional functionality of removing an element.
 
@@ -43,10 +44,14 @@ Iterator must be used whenever we want to enumerate elements in all Collection f
 
 Besides traversing sequences of data, like an `Iterator<T>` a `Spliterator<T>` can also partition it:
 
-```Iterator + Splitting => Spliterator```
+`Iterator + Splitting => Spliterator`
 
 The `trySplit()` method allows it to partition off some elements of the sequence as another `Spliterator<T>.`
 
 This particular advantage over Iterator makes it the core component of the Stream API. By splitting up data into apt sub-sequences, it allows parallel processing.
 
 ### Iterator to Spliterator:
+
+To convert an Iterator to Spliterator there is two api's. One is for `unknownsized` collection and another is for known `sized` collections. In the known sized `Spliterators.spliterator()` requires the size whereas the unknownsized doesnt required the size.
+
+There is another parameter that is needed to be provided to the method, and that is characterstics, which is an integer that defines the characterstics of the spliterator.
