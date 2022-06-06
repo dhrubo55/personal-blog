@@ -54,4 +54,10 @@ This particular advantage over Iterator makes it the core component of the Strea
 
 To convert an Iterator to Spliterator there is two api's. One is for `unknownsized` collection and another is for known `sized` collections. In the known sized `Spliterators.spliterator()` requires the size whereas the unknownsized doesnt required the size.
 
-There is another parameter that is needed to be provided to the method, and that is `characterstics`, which is an integer that defines the characterstics of the spliterator.
+There is another parameter that is needed to be provided to the method, and that is `characterstics`, which is an integer that defines the characterstics of the spliterator. 
+
+Type of spliterator's
+
+1. Empty Spliterator
+2. Sized Spliterator
+3. Unknownsized Spliterator
