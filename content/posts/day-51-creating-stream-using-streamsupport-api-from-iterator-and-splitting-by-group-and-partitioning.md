@@ -61,3 +61,10 @@ Type of spliterator's
 1. Empty Spliterator \[Spliterators.emptySpliterator();\]
 2. Sized Spliterator \[Spliterators.spliterator();\]
 3. Unknownsized Spliterator \[Spliterators.spliteratorUnknownSize();\]
+
+Now creating a unknownsized spliterator from and Iterator
+
+```java
+ Iterator<Node> nodeIterator = Iterators.nodes(result);
+Spliterator<Node> nodeSpliterator = Spliterators.spliteratorUnknownSize(nodeIterator,Spliterator.CONCURRENT);
+```
