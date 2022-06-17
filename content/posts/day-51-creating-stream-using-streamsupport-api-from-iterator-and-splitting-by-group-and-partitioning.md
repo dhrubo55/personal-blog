@@ -68,3 +68,11 @@ Now creating a unknownsized spliterator from and Iterator
  Iterator<Node> nodeIterator = Iterators.nodes(result);
 Spliterator<Node> nodeSpliterator = Spliterators.spliteratorUnknownSize(nodeIterator,Spliterator.CONCURRENT);
 ```
+
+Now `StreamSupport.stream()` method can take that `Spliterator` Object and a boolean option to enable parallel processing of stream elements. This method Creates a new sequential or parallel Stream from a Spliterator. 
+
+```java
+Stream<Node> nodeStream = StreamSupport.stream(nodeSpliterator,true);
+```
+
+The spliterator is only traversed, split, or queried for estimated size after the terminal operation of the stream pipeline commences.
