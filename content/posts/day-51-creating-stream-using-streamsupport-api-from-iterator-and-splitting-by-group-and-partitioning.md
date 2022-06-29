@@ -1,7 +1,7 @@
 +++
 category = []
 date = 2022-05-28T00:00:00Z
-description = "Creating Stream using StreamSupport and splitting it using partitioning and grouping"
+description = "Creating Stream (using StreamSupport API)  from Spliterator by converting Iterator to Spliterator"
 showtoc = false
 slug = "/java/100DaysOfJava/day51"
 summary = "Creating Stream using StreamSupport and splitting it using partitioning and grouping"
