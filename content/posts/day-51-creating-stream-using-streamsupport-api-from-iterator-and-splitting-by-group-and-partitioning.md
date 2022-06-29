@@ -6,7 +6,7 @@ draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day51"
 summary = "Creating Stream using StreamSupport and splitting it using partitioning and grouping"
-title = "Day 51: Creating Stream (using StreamSupport API)  from Iterator and splitting ( by group and partitioning)"
+title = "Day 51: Creating Stream (using StreamSupport API)  from Iterator and Spliterator"
 [cover]
 alt = "Day51"
 caption = "Day51"
