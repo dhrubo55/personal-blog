@@ -79,4 +79,4 @@ The spliterator is only traversed, split, or queried for estimated size after th
 
 If parallel option is enabled then the returned stream will be parallel and if false then it will return a sequential stream.
 
-This is a great stackoverflow article to understand if we should use parallel everywhere possible? 
+This is a great [stackoverflow](https://stackoverflow.com/questions/20375176/should-i-always-use-a-parallel-stream-when-possible "Stackoverflow") article to understand if we should use parallel everywhere possible? 
