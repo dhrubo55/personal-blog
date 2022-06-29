@@ -76,3 +76,7 @@ Stream<Node> nodeStream = StreamSupport.stream(nodeSpliterator,false);
 ```
 
 The spliterator is only traversed, split, or queried for estimated size after the terminal operation of the stream pipeline commences.
+
+If parallel option is enabled then the returned stream will be parallel and if false then it will return a sequential stream.
+
+This is a great stackoverflow article to understand if we should use parallel everywhere possible? 
