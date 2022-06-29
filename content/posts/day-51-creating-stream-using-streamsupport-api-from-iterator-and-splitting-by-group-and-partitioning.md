@@ -2,7 +2,6 @@
 category = []
 date = 2022-05-28T00:00:00Z
 description = "Creating Stream using StreamSupport and splitting it using partitioning and grouping"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day51"
 summary = "Creating Stream using StreamSupport and splitting it using partitioning and grouping"
