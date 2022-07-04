@@ -106,3 +106,4 @@ pages:
 - content/posts/day-49-zip-and-unzip-file-using-java-filesystem-api.md
 - content/posts/day-50-marker-interface-and-it-s-uses.md
 - content/posts/day-51-creating-stream-using-streamsupport-api-from-iterator-and-splitting-by-group-and-partitioning.md
+- content/posts/day-52-forkjoinpool-and-parallel-processing-using-stream-and-spliterator.md
