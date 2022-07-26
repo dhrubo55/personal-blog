@@ -6,11 +6,17 @@ draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day52"
 summary = "Implementing a basic bloom filter to understand its concepts and usages using Java BitSet api"
-title = "Day 52: Implementing a basic Bloom Filter Using Java BitSet api"
+title = "Day 54: Implementing a basic Bloom Filter Using Java BitSet api"
 [cover]
-alt = "Day52"
-caption = "Day52"
+alt = "Day54"
+caption = "Day54"
 image = ""
 relative = false
 
 +++
+1,
+
+
+
+
+First of all lets understand what is a Bloom Filter and how does it work and what are its usages.
