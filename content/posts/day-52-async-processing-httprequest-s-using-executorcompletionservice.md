@@ -45,3 +45,9 @@ With CompletionService, this is pretty much automated. Imagine you have a list o
 
 Completion service provides functions to get completed tasks from its internal queue in the order they have completed.
 
+### ExecutorCompletionService:
+
+A CompletionService that **uses a supplied Executor** to execute tasks. This class arranges that submitted tasks are, upon completion, placed on a queue accessible using take. The class is lightweight enough to be suitable for transient use when processing groups of tasks.
+
+
+
