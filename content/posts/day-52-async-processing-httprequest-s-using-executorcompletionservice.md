@@ -36,8 +36,8 @@ A `CompletionService` can be used to manage asynchronous IO, in which tasks that
 
 Let’s understand in layman language.
 
-Suppose you want to execute n number of tasks in parallel, you will think of using threads, now how will you manage all threads execution? okay one may say with the help of Executor Service we can handle those threads.
-Completion service also solves the same thing for you but give you a advantage when tasks are completed.
+Suppose you want to execute n number of tasks in parallel, you will think of using threads, now how will you manage all threads execution? okay one may say with the help of **Executor Service** we can handle those threads.
+**Completion service also solves the same thing for you but give you a advantage when tasks are completed.
 
 With ExecutorService, once you have submitted the tasks to run, you need to manually code for efficiently getting the results of the tasks completed.
 
