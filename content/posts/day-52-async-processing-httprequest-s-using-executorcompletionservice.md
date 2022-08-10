@@ -32,12 +32,12 @@ In addition to `Runnable` interface (which is used to just execute tasks but doe
 
 A `CompletionService` can be used to manage asynchronous IO, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested(in the order of completion).
 
-**CompletionService manages an internal completion queue.
+\**CompletionService manages an internal completion queue.
 
 Let’s understand in layman language.
 
 Suppose you want to execute n number of tasks in parallel, you will think of using threads, now how will you manage all threads execution? okay one may say with the help of **Executor Service** we can handle those threads.
-**Completion service also solves the same thing for you but give you a advantage when tasks are completed.
+\**Completion service also solves the same thing for you but give you a advantage when tasks are completed.
 
 With ExecutorService, once you have submitted the tasks to run, you need to manually code for efficiently getting the results of the tasks completed.
 
@@ -49,5 +49,4 @@ Completion service provides functions to get completed tasks from its internal q
 
 A CompletionService that **uses a supplied Executor** to execute tasks. This class arranges that submitted tasks are, upon completion, placed on a queue accessible using take. The class is lightweight enough to be suitable for transient use when processing groups of tasks.
 
-
-
+Using a `ExecutorCompletionService` to call http get requests to a jokes api to get response concurrently and completes each request as it completes and then we poll from the service to take the outputs of the get request.
