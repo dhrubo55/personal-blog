@@ -30,5 +30,18 @@ In addition to `Runnable` interface (which is used to just execute tasks but doe
 
 ### CompletionService:
 
-A service that decouples the production of new asynchronous tasks from the consumption of the results of completed tasks. Producers submit tasks for execution. Consumers take completed tasks and process their results in the order they complete. A CompletionService can for example be used to manage asynchronous I/O, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested.
-Typically, a CompletionService relies on a separate Executor to actually execute the tasks, in which case the CompletionService only manages an internal completion queue. The ExecutorCompletionService class provides an implementation of this approach.
+A CompletionService can be used to manage asynchronous IO, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested(in the order of completion).
+
+CompletionService manages an internal completion queue.
+
+Let’s understand in layman language.
+
+Suppose you want to execute n number of tasks in parallel, you will think of using threads, now how will you manage all threads execution? okay one may say with the help of Executor Service we can handle those threads.
+Completion service also solves the same thing for you but give you a advantage when tasks are completed.
+
+With ExecutorService, once you have submitted the tasks to run, you need to manually code for efficiently getting the results of the tasks completed.
+
+With CompletionService, this is pretty much automated. Imagine you have a list of tasks to be submitted. Then, instead of trying to find out which task has completed (to get the results), it just asks the CompletionService instance to return the results as they become available.
+
+Completion service provides functions to get completed tasks from its internal queue in the order they have completed.
+
