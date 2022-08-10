@@ -69,3 +69,5 @@ class HttpCallable implements Callable<String> {
         }
     }
 ```
+
+this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. 
