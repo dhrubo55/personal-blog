@@ -50,3 +50,22 @@ Completion service provides functions to get completed tasks from its internal q
 A CompletionService that **uses a supplied Executor** to execute tasks. This class arranges that submitted tasks are, upon completion, placed on a queue accessible using take. The class is lightweight enough to be suitable for transient use when processing groups of tasks.
 
 Using a `ExecutorCompletionService` to call http get requests to a jokes api to get response concurrently and completes each request as it completes and then we poll from the service to take the outputs of the get request.
+
+Firstly creating a custom `HttpCallable` class to send, process http get response
+
+```java
+class HttpCallable implements Callable<String> {
+
+        HttpClient httpClient;
+        HttpRequest httpRequest;
+
+        HttpCallable(HttpClient httpClient, HttpRequest request) {
+            this.httpClient = httpClient;
+            this.httpRequest = request;
+        }
+
+        public String call() {
+               return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).join().body() + "\n" + "Thread " + Thread.currentThread().getName() + " current time " + System.currentTimeMillis();
+        }
+    }
+```
