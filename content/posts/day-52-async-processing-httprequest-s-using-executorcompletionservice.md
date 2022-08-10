@@ -28,4 +28,7 @@ There are a couple of ways in which you can make asynchronous calls in Java depe
 
 In addition to `Runnable` interface (which is used to just execute tasks but doesn't return anything to caller) ,you can read about `Callable` interface and Future objects in java. (Which can return data to the caller)
 
-Completion
+### CompletionService:
+
+A service that decouples the production of new asynchronous tasks from the consumption of the results of completed tasks. Producers submit tasks for execution. Consumers take completed tasks and process their results in the order they complete. A CompletionService can for example be used to manage asynchronous I/O, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested.
+Typically, a CompletionService relies on a separate Executor to actually execute the tasks, in which case the CompletionService only manages an internal completion queue. The ExecutorCompletionService class provides an implementation of this approach.
