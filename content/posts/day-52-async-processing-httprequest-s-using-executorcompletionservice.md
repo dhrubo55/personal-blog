@@ -72,7 +72,7 @@ class HttpCallable implements Callable<String> {
 
 this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. `httpClient.send().body()` returns a string body as the response is handled with BodyHandlers.ofString()
 
-Now to use this callable 
+Now to use this callable
 
 ```java
 static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRequest> requests) {
@@ -93,4 +93,4 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
             }
         } catch (ExecutionException | InterruptedException ex) { }
     }
-    ```
+```
