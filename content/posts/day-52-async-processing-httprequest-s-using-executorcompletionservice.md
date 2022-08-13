@@ -41,7 +41,7 @@ Suppose you want to execute n number of tasks in parallel, you will think of usi
 
 With ExecutorService, once you have submitted the tasks to run, you need to manually code for efficiently getting the results of the tasks completed.
 
-With CompletionService, this is pretty much automated. Imagine you have a list of tasks to be submitted. Then, instead of trying to find out which task has completed (to get the results), it just asks the CompletionService instance to return the results as they become available.
+With CompletionService, this is pretty much automated. Imagine you have a list of tasks to be subdraftmitted. Then, instead of trying to find out which task has completed (to get the results), it just asks the CompletionService instance to return the results as they become available.
 
 Completion service provides functions to get completed tasks from its internal queue in the order they have completed.
 
@@ -94,3 +94,4 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
         } catch (ExecutionException | InterruptedException ex) { }
     }
 ```
+here to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`
