@@ -70,4 +70,27 @@ class HttpCallable implements Callable<String> {
     }
 ```
 
-this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. `httpClient.sendAsync()` returns a compleatablefuture
+this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. `httpClient.send().body()` returns a string body as the response is handled with BodyHandlers.ofString()
+
+Now to use this callable 
+
+```java
+static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRequest> requests) {
+        final ExecutorService pool = Executors.newFixedThreadPool(3);
+        final CompletionService<String> service = new ExecutorCompletionService<>(pool);
+
+
+        final List<? extends Callable<String>> callables = requests.stream().map(request -> new HttpCallable(httpClient,request)).collect(Collectors.toList());
+
+        for (final Callable<String> callable : callables) {
+            service.submit(callable);
+        }
+        pool.shutdown();
+        try {
+            while (!pool.isTerminated()) {
+                final Future<String> future = service.take();
+                System.out.println(future.get());
+            }
+        } catch (ExecutionException | InterruptedException ex) { }
+    }
+    ```
