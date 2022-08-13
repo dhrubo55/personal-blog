@@ -64,10 +64,10 @@ class HttpCallable implements Callable<String> {
             this.httpRequest = request;
         }
 
-        public String call() {
-               return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).join().body() + "\n" + "Thread " + Thread.currentThread().getName() + " current time " + System.currentTimeMillis();
+       public String call() throws IOException, InterruptedException {
+               return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString()).body()+ "\n" + "Thread " + Thread.currentThread().getName() + " current time " + System.currentTimeMillis();
         }
     }
 ```
 
-this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. 
+this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. `httpClient.sendAsync()` returns a compleatablefuture
