@@ -72,7 +72,26 @@ class HttpCallable implements Callable<String> {
 
 this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. `httpClient.send().body()` returns a string body as the response is handled with BodyHandlers.ofString()
 
-Now to use this callable
+To create the Http requests. 
+
+```java
+static List<HttpRequest> getHttpRequests(String url, int requestInstances) {
+            return IntStream.range(0,requestInstances).mapToObj(value -> {
+                try {
+                    return HttpRequest
+                            .newBuilder()
+                            .uri(new URI(url))
+                            .GET()
+                            .build();
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }).collect(Collectors.toList());
+    }
+
+```
+
+Now to use the callables and submit to ExecutorCompletionService
 
 ```java
 static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRequest> requests) {
@@ -94,5 +113,7 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
         } catch (ExecutionException | InterruptedException ex) { }
     }
 ```
-here to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`. Then taking each Callables and submitting them to the ExecutorCompletionService to process. As the pool will terminate after processing all callables I check that and take `Future` response from the inner queue of ExecutionCompleitonService and then get the value.
+to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`. Then taking each Callables and submitting them to the ExecutorCompletionService to process. As the pool will terminate after processing all callables I check that and take `Future` response from the inner queue of ExecutionCompleitonService and then get the value.
+
+   
 
