@@ -13,7 +13,6 @@ image = ""
 relative = false
 
 +++
-1. CompletableFuture to do http request among 3 threads
 
 ### What is Synchronous and Asynchronous:
 
@@ -29,7 +28,7 @@ In addition to `Runnable` interface (which is used to just execute tasks but doe
 
 A `CompletionService` can be used to manage asynchronous IO, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested(in the order of completion).
 
-\**CompletionService manages an internal completion queue.
+\****CompletionService manages an internal completion queue.**
 
 Let’s understand in layman language.
 
