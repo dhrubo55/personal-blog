@@ -14,9 +14,7 @@ image = ""
 relative = false
 
 +++
-1. Synchronous and Async
-2. ExecutorCompletionService to do http request among 3 threads
-3. CompletableFuture to do http request among 3 threads
+1. CompletableFuture to do http request among 3 threads
 
 ### What is Synchronous and Asynchronous:
 
@@ -114,6 +112,3 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
     }
 ```
 to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`. Then taking each Callables and submitting them to the ExecutorCompletionService to process. As the pool will terminate after processing all callables I check that and take `Future` response from the inner queue of ExecutionCompleitonService and then get the value.
-
-   
-
