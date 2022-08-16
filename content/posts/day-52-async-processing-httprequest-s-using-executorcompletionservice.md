@@ -111,3 +111,5 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
 ```
 
 to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`. Then taking each Callables and submitting them to the ExecutorCompletionService to process. As the pool will terminate after processing all callables I check that and take `Future` response from the inner queue of ExecutionCompleitonService and then get the value.
+
+In the next part will do the exact thing using CompletableFuture and its functionality to asynchronous execution of http get requests.
