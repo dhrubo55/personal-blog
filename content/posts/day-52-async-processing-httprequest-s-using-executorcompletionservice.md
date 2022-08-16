@@ -34,8 +34,7 @@ A `CompletionService` can be used to manage asynchronous IO, in which tasks that
 
 Let’s understand in layman language.
 
-Suppose you want to execute n number of tasks in parallel, you will think of using threads, now how will you manage all threads execution? okay one may say with the help of **Executor Service** we can handle those threads.
-**Completion service also solves the same thing for you but give you a advantage when tasks are completed.
+Suppose you want to execute n number of tasks in parallel, you will think of using threads, now how will you manage all threads execution? okay one may say with the help of **Executor Service** we can handle those threads. **Completion service also solves the same thing for you but gives you an advantage when tasks are completed.**
 
 With ExecutorService, once you have submitted the tasks to run, you need to manually code for efficiently getting the results of the tasks completed.
 
@@ -70,7 +69,7 @@ class HttpCallable implements Callable<String> {
 
 this classes `call()` method executes httpclient sendAsync method, which takes HttpRequest object. `httpClient.send().body()` returns a string body as the response is handled with BodyHandlers.ofString()
 
-To create the Http requests. 
+To create the Http requests.
 
 ```java
 static List<HttpRequest> getHttpRequests(String url, int requestInstances) {
@@ -86,7 +85,6 @@ static List<HttpRequest> getHttpRequests(String url, int requestInstances) {
                 }
             }).collect(Collectors.toList());
     }
-
 ```
 
 Now to use the callables and submit to ExecutorCompletionService
@@ -111,4 +109,5 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
         } catch (ExecutionException | InterruptedException ex) { }
     }
 ```
+
 to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`. Then taking each Callables and submitting them to the ExecutorCompletionService to process. As the pool will terminate after processing all callables I check that and take `Future` response from the inner queue of ExecutionCompleitonService and then get the value.
