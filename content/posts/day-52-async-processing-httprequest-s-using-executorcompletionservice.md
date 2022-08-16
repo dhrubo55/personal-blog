@@ -109,4 +109,27 @@ static void httpDispatcherExecutionCompletion(HttpClient httpClient, List<HttpRe
 
 to process the request's first create a `ExecutorService`. Passing that pool to `ExecutorCompletionService`. Then taking each Callables and submitting them to the ExecutorCompletionService to process. As the pool will terminate after processing all callables I check that and take `Future` response from the inner queue of ExecutionCompleitonService and then get the value.
 
+Now to connect it all   
+  
+```java
+class Day52 {
+    public static void main(String[] args) throws URISyntaxException, ExecutionException, InterruptedException {
+        String apiURL = "https://api.chucknorris.io/jokes/random";
+        String method = "GET";
+
+        List<HttpRequest> httpRequests = getHttpRequests(apiURL,3);
+
+        HttpClient httpClient = HttpClient
+                .newBuilder()
+//                .executor(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()))
+                .connectTimeout(Duration.ofMinutes(2))
+                .build();
+                
+                System.out.println("---------------------- ExecutorCompletionService-------------");
+
+        httpDispatcherExecutionCompletion(httpClient, httpRequests);
+    }
+ }
+```
+
 In the next part will do the exact thing using CompletableFuture and its functionality to asynchronous execution of http get requests.
