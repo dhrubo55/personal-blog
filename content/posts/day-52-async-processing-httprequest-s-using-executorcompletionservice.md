@@ -13,7 +13,6 @@ image = ""
 relative = false
 
 +++
-
 ### What is Synchronous and Asynchronous:
 
 Java code executes line by line."**Synchronously"** means "using the same clock" so when two instructions are synchronous they use the same clock and must happen one after the other. "Asynchronous" means "not using the same clock" so the instructions are not concerned with being in step with each other. That's why it looks backwards, the term is not referring to the instructions relationship to each other. It's referring to each instructions relationship to the clock
@@ -28,7 +27,7 @@ In addition to `Runnable` interface (which is used to just execute tasks but doe
 
 A `CompletionService` can be used to manage asynchronous IO, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested(in the order of completion).
 
-\****CompletionService manages an internal completion queue.**
+**CompletionService manages an internal completion queue.**
 
 Let’s understand in layman language.
 
