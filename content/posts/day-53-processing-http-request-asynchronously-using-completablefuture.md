@@ -1,7 +1,7 @@
 +++
 category = []
 date = 2022-08-17T00:00:00Z
-description = "Using CompletableFuture's allOf() method to combine all http request and process them asynchronously using the fork-join pool"
+description = "Using CompletableFuture's allOf() method to combine all http request and process them asynchronously using custom Executor"
 draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day53"
