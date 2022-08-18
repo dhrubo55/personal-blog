@@ -109,3 +109,4 @@ pages:
 - content/posts/day-52-async-processing-httprequest-s-using-executorcompletionservice.md
 - content/posts/day-52-forkjoinpool-and-parallel-processing-using-stream-and-spliterator.md
 - content/posts/day-52-implementing-a-basic-bloom-filter-using-java-bitset-api.md
+- content/posts/day-53-processing-http-request-asynchronously-using-completablefuture.md
