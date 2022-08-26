@@ -6,7 +6,7 @@ draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day53"
 summary = "Using CompletableFuture's allOf() method to combine all http request and process them asynchronously"
-title = "Day 53: Processing Http Request Asynchronously using CompletableFuture"
+title = "Day 53: Processing Http Request Asynchronously using CompletableFutures"
 [cover]
 alt = "Day53"
 caption = "Day53"
