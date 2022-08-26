@@ -1,11 +1,11 @@
 +++
 category = []
 date = 2022-08-17T00:00:00Z
-description = "Using CompletableFuture's allOf() method to combine all http request and process them asynchronously using custom Executor"
+description = "Using CompletableFuture's execution to process http request asynchronously"
 draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day53"
-summary = "Using CompletableFuture's allOf() method to combine all http request and process them asynchronously"
+summary = "Using CompletableFuture's execution to process http request asynchronously"
 title = "Day 53: Processing Http Request Asynchronously using CompletableFutures"
 [cover]
 alt = "Day53"
