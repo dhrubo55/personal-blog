@@ -14,4 +14,4 @@ image = ""
 relative = false
 
 +++
-Java HttpClient can send asynchronous request using HttpClient.sendAsync() which returns a CompletableFuture. By collecting all the request and then executing them with `CompletableFuture.allOf()` also using Stream
+Java HttpClient can send asynchronous request using `HttpClient.sendAsync()` which returns a `CompletableFuture<HttpResponse<T>>`. By collecting all the request and then executing them with with a stream to get list of `HttpResponse<T>` and partition the result with status code. 
