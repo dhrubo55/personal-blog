@@ -28,7 +28,4 @@ CompletableFuture is used for composing, combining, and executing asynchronous c
 
 ### HttpClient.sendAsync():
 
-Sends the given request asynchronously using this client with the given response body handler. Returns a CompletableFuture<HttpResponse<T>> 
-  
-
-
+Sends the given request asynchronously using this client with the given response body handler. Returns a CompletableFuture<HttpResponse<T>>
