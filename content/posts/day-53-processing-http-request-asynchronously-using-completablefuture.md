@@ -28,4 +28,29 @@ CompletableFuture is used for composing, combining, and executing asynchronous c
 
 ### HttpClient.sendAsync():
 
-Sends the given request asynchronously using this client with the given response body handler. Returns a CompletableFuture<HttpResponse<T>>
+Sends the given request asynchronously using this client with the given response body handler. This returns a CompletableFuture of HttpResponse.
+  
+Now by sending http request from http client asynchronously we get all the CompletableFuture's in a list and then process the list. Partitioning the list by HTTP code 200. That means if the GET request completes successfully the returned Map's `map.get(true)` will list all the successfully executed HttpResponse, and `map.get(false)` will return the failed get request which didn't returend HTTP 200. 
+
+```java
+static Map<Boolean,List<HttpResponse<String>>> httpRequestDispatcher(List<HttpRequest> requests) throws URISyntaxException {
+
+        HttpClient httpClient = HttpClient
+                .newBuilder()
+                .connectTimeout(Duration.ofMinutes(2))
+                .build();
+
+          List<CompletableFuture<HttpResponse<String>>> list  = requests
+                .stream()
+                .map(request -> httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString()))
+                .map(future -> future.thenApplyAsync(response -> {
+                    System.out.println("Thread " + Thread.currentThread().getName() + " current time " + System.currentTimeMillis());
+                    return response;
+                })).collect(Collectors.toList());
+
+        return list.stream()
+                .map(future -> future.exceptionally(throwable -> null))
+                .map(CompletableFuture::join)
+                .collect(Collectors.partitioningBy(httpResponse -> httpResponse.statusCode() == 200));
+    }
+```
