@@ -25,3 +25,6 @@ The Future interface was added in Java 5 to serve as a result of an asynchronous
 Java 8 introduced the CompletableFuture class. Along with the `Future` interface, it also implemented the `CompletionStage` interface. This interface defines the contract for an asynchronous computation step that we can combine with other steps.
 
 CompletableFuture is used for composing, combining, and executing asynchronous computation steps and handling errors.
+
+### HttpClient.sendAsync():
+
