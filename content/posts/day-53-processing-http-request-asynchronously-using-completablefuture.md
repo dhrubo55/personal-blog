@@ -98,3 +98,5 @@ static List<HttpRequest> getHttpRequests(String url, int requestInstances) {
     }
 }
 ```
+
+After getting all the requests sorted into success and failed list we can check out the body of the requests for the joke and the error response the API returns.
