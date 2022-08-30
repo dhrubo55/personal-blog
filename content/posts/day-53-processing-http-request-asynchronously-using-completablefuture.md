@@ -13,11 +13,9 @@ image = ""
 relative = false
 
 +++
-Java HttpClient can send asynchronous request using `HttpClient.sendAsync()` which returns a `CompletableFuture<HttpResponse<T>>`. By collecting all the request and then executing them with with a stream to get list of `HttpResponse<T>` and partition the result with status code. 
-
+Java HttpClient can send asynchronous request using `HttpClient.sendAsync()` which returns a `CompletableFuture<HttpResponse<T>>`. By collecting all the request and then executing them with with a stream to get list of `HttpResponse<T>` and partition the result with status code.
 
 ### CompletableFuture:
-
 
 The Future interface was added in Java 5 to serve as a result of an asynchronous computation, but it did not have any methods to combine computations or handle possible errors.
 
@@ -28,8 +26,8 @@ CompletableFuture is used for composing, combining, and executing asynchronous c
 ### HttpClient.sendAsync():
 
 Sends the given request asynchronously using this client with the given response body handler. This returns a CompletableFuture of HttpResponse.
-  
-Now by sending http request from http client asynchronously we get all the CompletableFuture's in a list and then process the list. Partitioning the list by HTTP code 200. That means if the GET request completes successfully the returned Map's `map.get(true)` will list all the successfully executed HttpResponse, and `map.get(false)` will return the failed get request which didn't returend HTTP 200. 
+
+Now by sending http request from http client asynchronously we get all the CompletableFuture's in a list and then process the list. Partitioning the list by HTTP code 200. That means if the GET request completes successfully the returned Map's `map.get(true)` will list all the successfully executed HttpResponse, and `map.get(false)` will return the failed get request which didn't returend HTTP 200.
 
 ```java
 static Map<Boolean,List<HttpResponse<String>>> httpRequestDispatcher(List<HttpRequest> requests) throws URISyntaxException {
@@ -55,7 +53,6 @@ static Map<Boolean,List<HttpResponse<String>>> httpRequestDispatcher(List<HttpRe
 ```
 
 After getting the map and extracting the list out of it we can check HttpResponse.body for the response. For this instance its a String output for chuck norris api's joke.
-
 
 ```java
 class Day53 {
@@ -99,4 +96,4 @@ static List<HttpRequest> getHttpRequests(String url, int requestInstances) {
 }
 ```
 
-After getting all the requests sorted into success and failed list we can check out the body of the requests for the joke and the error response the API returns.
+After getting all the requests sorted into success and failed list we can check out the body of the requests for the joke and the error response the API returns. 
