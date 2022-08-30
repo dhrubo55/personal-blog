@@ -23,7 +23,7 @@ Java HttpClient can send asynchronous request using `HttpClient.sendAsync()` whi
 
 The Future interface was added in Java 5 to serve as a result of an asynchronous computation, but it did not have any methods to combine computations or handle possible errors.
 
-Java 8 introduced the CompletableFuture class. Along with the Future interface, it also implemented the `CompletionStage` interface. This interface defines the contract for an asynchronous computation step that we can combine with other steps.
+Java 8 introduced the CompletableFuture class. Along with the `Future` interface, it also implemented the `CompletionStage` interface. This interface defines the contract for an asynchronous computation step that we can combine with other steps.
 
 CompletableFuture is at the same time a building block and a framework, with about 50 different methods for composing, combining, and executing asynchronous computation steps and handling errors.
 
