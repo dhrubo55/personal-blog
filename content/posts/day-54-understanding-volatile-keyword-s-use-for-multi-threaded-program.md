@@ -14,3 +14,7 @@ image = ""
 relative = false
 
 +++
+1. how java stores a object
+2. obj or primitive level caching
+3. how variables are cached in cpu cache / memory
+4. what does volatile do in this case
