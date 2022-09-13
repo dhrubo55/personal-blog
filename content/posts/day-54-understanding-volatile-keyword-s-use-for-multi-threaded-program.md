@@ -23,4 +23,6 @@ relative = false
 
 Processors execute program instructions. So, they need to retrieve both the program instructions and required data from RAM.As CPU's are capable of carrying out a significant number of instructions per second (IOPS), fetching from RAM isn't that ideal for them. As its an expensive call. So to mitigate this issue there are some techniques and `caching` is one of them.
 
+Here in the below diagram we can see that 
+
 ![cpu](https://www.baeldung.com/wp-content/uploads/2017/08/cpu.png)
