@@ -60,3 +60,12 @@ public class SharedClass {
 
 }
 ```
+
+Declaring a variable volatile thus guarantees the visibility for other threads of writes to that variable.
+
+In the scenario given above, where `Thread 1` modifies the value, and another `Thread 2` reads the value **(but never modifies it)**, declaring the mutableNumber variable volatile is enough to guarantee visibility for Thread 2 of writes to the variable.
+
+
+### Where Volatile is Not Enough:
+
+If, however, both T1 and T2 were incrementing the counter variable, then declaring the counter variable volatile would not have been enough. More on that later.
