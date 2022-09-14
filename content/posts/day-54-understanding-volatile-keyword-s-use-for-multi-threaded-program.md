@@ -50,3 +50,13 @@ public class SharedClass {
 In this case mutableNumber variable is not declared volatile so there is no guarantee about when the value of the counter variable is written from the CPU cache back to main memory. This means, that the mutableNumber variable value in the CPU cache may not be the same as in main memory.
 
 Its not guaranteed when cpu cache will write to memory or vice versa no thread is sure about the state of mutableNumber. Thus having a visibility issue. This is called [Visibility Problem](https://wiki.sei.cmu.edu/confluence/display/java/Concurrency%2C+Visibility%2C+and+Memory)
+
+The Java **volatile** keyword is intended to address variable visibility problems. By declaring the mutableNumber variable volatile, all writes to the mutableNumber variable will be written back to main memory immediately. Also, all reads of the mutableNumber variable will be read directly from main memory.
+
+```java
+public class SharedClass {
+
+    public volatile double mutableNumber = 3.141529;
+
+}
+```
