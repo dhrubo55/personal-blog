@@ -35,11 +35,12 @@ Simply it would be best to think about what would happen if a thread changes a c
 
 First for understanding `volatile` lets understand what is non-volatile varialbe. Non volatile variables have no particular guarantee when JVM  will read data from the main memory into cpu caches or when will cpu caches writes those data in main memory. This particular issue can cause lots of issues.
 
-Simplest example would be something like incrementing a number. 
+Simplest example would be something like incrementing a number.
 
 ```java
 public class SharedClass {
 
     public int mutableNumber = 0;
 
-}```
+}
+```
