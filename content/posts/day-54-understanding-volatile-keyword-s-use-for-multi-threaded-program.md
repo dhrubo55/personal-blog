@@ -25,10 +25,21 @@ Processors execute program instructions. So, they need to retrieve both the prog
 
 Here in the below diagram we can see that each core of a processor have two level cache (L1, L2) and in L1 there is both `Data` and `Instruction` cache. Where the data and instructions are copied for processing. As different cores execute more instructions and manipulate more data, they fill up their caches with more relevant data and instructions.
 
-![cpu](https://www.baeldung.com/wp-content/uploads/2017/08/cpu.png)
+![cpu](https://www.baeldung.com/wp-content/uploads/2017/08/cpu.png "Cpu Cache")
+
+Source: Baeldung
 
 Simply it would be best to think about what would happen if a thread changes a cached value and at the same time other thread trying to read it
 
 ### What is Volatile
 
 First for understanding `volatile` lets understand what is non-volatile varialbe. Non volatile variables have no particular guarantee when JVM  will read data from the main memory into cpu caches or when will cpu caches writes those data in main memory. This particular issue can cause lots of issues.
+
+Simplest example would be something like incrementing a number. 
+
+```java
+public class SharedClass {
+
+    public int mutableNumber = 0;
+
+}```
