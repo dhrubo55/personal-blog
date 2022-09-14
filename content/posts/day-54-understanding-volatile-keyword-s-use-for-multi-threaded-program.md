@@ -40,7 +40,13 @@ Simplest example would be something like incrementing a number.
 ```java
 public class SharedClass {
 
-    public int mutableNumber = 0;
+    public double mutableNumber = 3.141529;
 
 }
 ```
+
+`Thread 1` increments the `mutableNumber` variable, but both `Thread 1` and `Thread 2` may read the mutableNumber variable.
+
+In this case mutableNumber variable is not declared volatile so there is no guarantee about when the value of the counter variable is written from the CPU cache back to main memory. This means, that the mutableNumber variable value in the CPU cache may not be the same as in main memory. 
+
+Its not guaranteed when cpu cache will write to memory or vice versa no thread is sure about the state of mutableNumber. Thus having a visibility issue. This is called 
