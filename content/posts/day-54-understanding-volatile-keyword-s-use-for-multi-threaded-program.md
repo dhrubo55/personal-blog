@@ -68,4 +68,6 @@ In the scenario given above, where `Thread 1` modifies the value, and another `T
 
 ### Where Volatile is Not Enough:
 
-If, however, both T1 and T2 were incrementing the counter variable, then declaring the counter variable volatile would not have been enough. More on that later.
+If, however, both `Thread 1` and `Thread 2` were incrementing the variable, then declaring the variable volatile would not have been enough.
+
+In a recent comment of mine on this question made in linkedin
