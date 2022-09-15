@@ -65,9 +65,14 @@ Declaring a variable volatile thus guarantees the visibility for other threads o
 
 In the scenario given above, where `Thread 1` modifies the value, and another `Thread 2` reads the value **(but never modifies it)**, declaring the mutableNumber variable volatile is enough to guarantee visibility for Thread 2 of writes to the variable.
 
-
 ### Where Volatile is Not Enough:
 
 If, however, both `Thread 1` and `Thread 2` were incrementing the variable, then declaring the variable volatile would not have been enough.
 
-In a recent comment of mine on this question made in linkedin
+In a recent comment of mine on this [question](https://www.linkedin.com/feed/update/urn:li:activity:6965702117483307008/?commentUrn=urn%3Ali%3Acomment%3A(activity%3A6965702117483307008%2C6972607832986644480)&dashCommentUrn=urn%3Ali%3Afsd_comment%3A(6972607832986644480%2Curn%3Ali%3Aactivity%3A6965702117483307008)) made in linkedin answered the question and now will try to expand on that. In the comment i have mentioned increment operation is not thread safe. As a simple `mutableNumber++` is broken into 3 steps. 
+
+1. Reading the current value from memory
+2. Update the value by adding 1 with it
+3. Write the value in memory
+
+So while doing these operations threads context can switch and can cause issues for the thread who is trying to read the value while it wasnt fully committed yet in the memory by another thread. In this case the operations needs to be `Atomic` or the incrementing operation be behind a lock.
