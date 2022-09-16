@@ -43,7 +43,7 @@ In these above mentioned case we can do something to fix.
 
 * To undo any commit pass the commit hash id
 
-`git revert <commit-hash-id>`
+```git revert <commit-hash-id>```
 
 ### Switch branch and save current uncommited work
 
@@ -57,7 +57,17 @@ is optional in the above command, it stands for message and adds more descriptio
 
 - If by mistake you added all files in a single commit and want to split into multiple commits then use:
 
-git rebase HEAD~
+```git rebase HEAD~```
 
 - Now, as usual, choose each file and commit them individually
+
+### Recover lost file
+
+- To recover any accidentally deleted files
+
+```git restore -- <file-path>```
+
+- This will also get you those files which are even removed from recycle bin
+
+
 
