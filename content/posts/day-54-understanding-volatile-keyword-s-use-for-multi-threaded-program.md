@@ -83,4 +83,4 @@ Now to achieve the solution of the above mentione problem we can you solutions
 1. Using synchronize
 2. Using AtomicDouble
 3. Using AtomicFieldUpdater (Field Updater classes can be used to perform atomic operation on a selected volatile field of a selected class.  
-   `AtomicReferenceFieldUpdater`, `AtomicIntegerFieldUpdater`, and `AtomicLongFieldUpdater` are reflection-based utilities that provide access to the associated field types.)
+   `AtomicReferenceFieldUpdater`, `AtomicIntegerFieldUpdater`, and `AtomicLongFieldUpdater` are reflection-based utilities that provide access to the associated field types)
