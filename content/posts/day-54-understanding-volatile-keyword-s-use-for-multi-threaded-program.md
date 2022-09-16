@@ -35,7 +35,7 @@ Simplest example would be something like incrementing a number.
 ```java
 public class SharedClass {
 
-    public double mutableNumber = 3.141529;
+    public long mutableNumber = 999990;
 
 }
 ```
@@ -51,8 +51,7 @@ The Java **volatile** keyword is intended to address variable visibility problem
 ```java
 public class SharedClass {
 
-    public volatile double mutableNumber = 3.141529;
-
+    public volatile long mutableNumber = 999990;
 }
 ```
 
@@ -81,17 +80,6 @@ On a single-processor machine, that's a stronger guarantee than you need. On a m
 Now to achieve the solution of the above mentione problem we can you solutions
 
 1. Using synchronize
-2. Using AtomicDouble
+2. Using AtomicLong and convert the double value to long and viceversa
 3. Using AtomicFieldUpdater (Field Updater classes can be used to perform atomic operation on a selected volatile field of a selected class.  
    `AtomicReferenceFieldUpdater`, `AtomicIntegerFieldUpdater`, and `AtomicLongFieldUpdater` are reflection-based utilities that provide access to the associated field types)
-   
-### Using synchronize
-
-Using synchronize in the increment method will let it be accessed one at a time by the threads.
-
-```java
-```
-
-### Using AtomicDouble
-
-Using AtomicDouble to `
