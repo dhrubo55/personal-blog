@@ -35,9 +35,7 @@ In these above mentioned case we can do something to fix.
 
 * Or, revert your work and undo the last commit as well
 
-```
-git reset --hard HEAD~1
-```
+    git reset --hard HEAD~1
 
 ### Commit needs to be reverted after push
 
