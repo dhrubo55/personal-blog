@@ -77,17 +77,15 @@ In a recent comment of mine on this [question](https://www.linkedin.com/feed/upd
 
 So while doing these operations threads context can switch and can cause issues for the thread who is trying to read the value while it wasnt fully committed yet in the memory by another thread. In this case the operations needs to be `Atomic` or the incrementing operation be behind a lock.
 
-
 ### Atomicity
 
 **Atom** comes from greek `atomos` = `uncuttable`, and has been used in the sense `indivisible smallest unit`. In concurrent programming, it means that **there will be no context switch during it - nothing can affect the execution of atomic command.
 
 On a single-processor machine, that's a stronger guarantee than you need. On a multi-processor machine, it isn't strong enough. **What atomic really means is, no other thread will be able to see the operation in a partially-completed state
 
-
 Now to achieve the solution of the above mentione problem we can you solutions
 
-1. Using synchronize 
+1. Using synchronize
 2. Using AtomicDouble
-3. Using AtomicFieldUpdater (Provides 
-
+3. Using AtomicFieldUpdater (Field Updater classes can be used to perform atomic operation on a selected volatile field of a selected class.  
+   `AtomicReferenceFieldUpdater`, `AtomicIntegerFieldUpdater`, and `AtomicLongFieldUpdater` are reflection-based utilities that provide access to the associated field types.)
