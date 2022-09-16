@@ -24,3 +24,13 @@ While commiting in git we sometimes face some issues after commiting or pushing 
 6. Commit in the wrong branch
 
 In these above mentioned case we can do something to fix. 
+
+### Commit needs to be reverted before push
+
+- To only undo the last commit command but keep the work
+
+git reset --soft HEAD~1
+
+- Or, revert your work and undo the last commit as well
+
+git reset --hard HEAD~1
