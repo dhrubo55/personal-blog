@@ -35,7 +35,10 @@ In these above mentioned case we can do something to fix.
 
 * Or, revert your work and undo the last commit as well
 
-    git reset --hard HEAD~1
+```git
+git reset --hard HEAD~1
+```
+
 
 ### Commit needs to be reverted after push
 
@@ -55,7 +58,9 @@ git revert <commit-hash-id>
 
 * To only stash a selected file
 
-`git stash push -m "stash-message" <file-path> - "-m stash-message"`
+```git
+git stash push -m "stash-message" <file-path> - "-m stash-message"
+```
 
 is optional in the above command, it stands for message and adds more description to your stash
 
