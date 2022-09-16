@@ -2,7 +2,6 @@
 category = []
 date = 2022-09-01T00:00:00Z
 description = "Understanding volatile keyword's use in incrementing a double variable and see how it behaves in multi threaded env"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day54"
 summary = "Understanding volatile keyword's use in incrementing a double variable and see how it behaves in multi threaded env"
