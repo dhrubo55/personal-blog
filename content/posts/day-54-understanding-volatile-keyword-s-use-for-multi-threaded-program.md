@@ -14,7 +14,6 @@ image = ""
 relative = false
 
 +++
-### Understanding Processor Caching
 
 Processors execute program instructions. So, they need to retrieve both the program instructions and required data from RAM.As CPU's are capable of carrying out a significant number of instructions per second (IOPS), fetching from RAM isn't that ideal for them. As its an expensive call. So to mitigate this issue there are some techniques and `caching` is one of them.
 
