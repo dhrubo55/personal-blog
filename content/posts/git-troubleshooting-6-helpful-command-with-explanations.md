@@ -29,29 +29,29 @@ In these above mentioned case we can do something to fix.
 
 * To only undo the last commit command but keep the work
 
-```
-git reset --soft HEAD~1
-```
+    git reset --soft HEAD~1
 
 * Or, revert your work and undo the last commit as well
 
-```git reset --hard HEAD~1```
+```
+git reset --hard HEAD~1
+```
 
 ### Commit needs to be reverted after push
 
 * To undo the last commit which is already pushed on the remote branch
 
-```git revert HEAD~1```
+`git revert HEAD~1`
 
 * To undo any commit pass the commit hash id
 
-```git revert <commit-hash-id>```
+`git revert <commit-hash-id>`
 
 ### Switch branch and save current uncommited work
 
 * To only stash a selected file
 
-```git stash push -m "stash-message" <file-path> - "-m stash-message"```
+`git stash push -m "stash-message" <file-path> - "-m stash-message"`
 
 is optional in the above command, it stands for message and adds more description to your stash
 
@@ -59,7 +59,7 @@ is optional in the above command, it stands for message and adds more descriptio
 
 * If by mistake you added all files in a single commit and want to split into multiple commits then use:
 
-```git rebase HEAD~```
+`git rebase HEAD~`
 
 * Now, as usual, choose each file and commit them individually
 
@@ -67,7 +67,7 @@ is optional in the above command, it stands for message and adds more descriptio
 
 * To recover any accidentally deleted files
 
-```git restore -- <file-path>```
+`git restore -- <file-path>`
 
 This will also get you those files which are even removed from recycle bin
 
