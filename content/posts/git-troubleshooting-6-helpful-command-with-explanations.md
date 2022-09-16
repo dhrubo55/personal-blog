@@ -69,5 +69,13 @@ is optional in the above command, it stands for message and adds more descriptio
 
 This will also get you those files which are even removed from recycle bin
 
+### Commit in the wrong branch
 
+- Suppose you committed last two commits in "master" instead of "feature" branch
 
+- Perform the following series of commands (currently you're on master)
+
+git reset HEAD~2
+git stash
+git checkout feature
+git stash pop
