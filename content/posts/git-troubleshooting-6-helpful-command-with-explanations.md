@@ -67,7 +67,7 @@ is optional in the above command, it stands for message and adds more descriptio
 
 ```git restore -- <file-path>```
 
-- This will also get you those files which are even removed from recycle bin
+This will also get you those files which are even removed from recycle bin
 
 
 
