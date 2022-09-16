@@ -69,10 +69,25 @@ In the scenario given above, where `Thread 1` modifies the value, and another `T
 
 If, however, both `Thread 1` and `Thread 2` were incrementing the variable, then declaring the variable volatile would not have been enough.
 
-In a recent comment of mine on this [question](https://www.linkedin.com/feed/update/urn:li:activity:6965702117483307008/?commentUrn=urn%3Ali%3Acomment%3A(activity%3A6965702117483307008%2C6972607832986644480)&dashCommentUrn=urn%3Ali%3Afsd_comment%3A(6972607832986644480%2Curn%3Ali%3Aactivity%3A6965702117483307008)) made in linkedin answered the question and now will try to expand on that. In the comment i have mentioned increment operation is not thread safe. As a simple `mutableNumber++` is broken into 3 steps. 
+In a recent comment of mine on this [question](https://www.linkedin.com/feed/update/urn:li:activity:6965702117483307008/?commentUrn=urn%3Ali%3Acomment%3A(activity%3A6965702117483307008%2C6972607832986644480)&dashCommentUrn=urn%3Ali%3Afsd_comment%3A(6972607832986644480%2Curn%3Ali%3Aactivity%3A6965702117483307008)) made in linkedin answered the question and now will try to expand on that. In the comment i have mentioned increment operation is not thread safe. As a simple `mutableNumber++` is broken into 3 steps.
 
 1. Reading the current value from memory
 2. Update the value by adding 1 with it
 3. Write the value in memory
 
 So while doing these operations threads context can switch and can cause issues for the thread who is trying to read the value while it wasnt fully committed yet in the memory by another thread. In this case the operations needs to be `Atomic` or the incrementing operation be behind a lock.
+
+
+### Atomicity
+
+**Atom** comes from greek `atomos` = `uncuttable`, and has been used in the sense `indivisible smallest unit`. In concurrent programming, it means that **there will be no context switch during it - nothing can affect the execution of atomic command.
+
+On a single-processor machine, that's a stronger guarantee than you need. On a multi-processor machine, it isn't strong enough. **What atomic really means is, no other thread will be able to see the operation in a partially-completed state
+
+
+Now to achieve the solution of the above mentione problem we can you solutions
+
+1. Using synchronize 
+2. Using AtomicDouble
+3. Using AtomicFieldUpdater (Provides 
+
