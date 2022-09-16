@@ -29,7 +29,9 @@ In these above mentioned case we can do something to fix.
 
 * To only undo the last commit command but keep the work
 
-    git reset --soft HEAD~1
+```git
+ git reset --soft HEAD~1
+```
 
 * Or, revert your work and undo the last commit as well
 
