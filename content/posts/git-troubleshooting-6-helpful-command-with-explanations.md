@@ -43,11 +43,15 @@ git reset --hard HEAD~1
 
 * To undo the last commit which is already pushed on the remote branch
 
-`git revert HEAD~1`
+```git
+git revert HEAD~1
+```
 
 * To undo any commit pass the commit hash id
 
-`git revert <commit-hash-id>`
+```git
+git revert <commit-hash-id>
+```
 
 ### Switch branch and save current uncommited work
 
