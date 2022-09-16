@@ -25,7 +25,7 @@ While commiting in git we sometimes face some issues after commiting or pushing 
 
 In these above mentioned case we can do something to fix.
 
-
+<br>
 
 ### Commit needs to be reverted before push
 
