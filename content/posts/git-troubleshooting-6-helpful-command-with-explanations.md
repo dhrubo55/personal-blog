@@ -45,8 +45,19 @@ In these above mentioned case we can do something to fix.
 
 `git revert <commit-hash-id>`
 
+### Switch branch and save current uncommited work
+
 - To only stash a selected file 
 
 ```git stash push -m "stash-message" <file-path> - "-m stash-message"```
 
 is optional in the above command, it stands for message and adds more description to your stash
+
+### Splitting a large commit into smaller understandable commit
+
+- If by mistake you added all files in a single commit and want to split into multiple commits then use:
+
+git rebase HEAD~
+
+- Now, as usual, choose each file and commit them individually
+
