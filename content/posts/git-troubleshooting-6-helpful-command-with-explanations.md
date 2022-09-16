@@ -23,28 +23,30 @@ While commiting in git we sometimes face some issues after commiting or pushing 
 5. Recovering lost file
 6. Commit in the wrong branch
 
-In these above mentioned case we can do something to fix. 
-
-
+In these above mentioned case we can do something to fix.
 
 ### Commit needs to be reverted before push
 
-- To only undo the last commit command but keep the work
+* To only undo the last commit command but keep the work
 
-```git reset --soft HEAD~1```
+`git reset --soft HEAD~1`
 
-- Or, revert your work and undo the last commit as well
+* Or, revert your work and undo the last commit as well
 
-```git reset --hard HEAD~1```
-
+`git reset --hard HEAD~1`
 
 ### Commit needs to be reverted after push
 
-- To undo the last commit which is already pushed on the remote branch
+* To undo the last commit which is already pushed on the remote branch
 
-```git revert HEAD~1```
+`git revert HEAD~1`
 
-- To undo any commit pass the commit hash id
+* To undo any commit pass the commit hash id
 
-```git revert <commit-hash-id>```
+`git revert <commit-hash-id>`
 
+- To only stash a selected file 
+
+```git stash push -m "stash-message" <file-path> - "-m stash-message"```
+
+is optional in the above command, it stands for message and adds more description to your stash
