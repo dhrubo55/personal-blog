@@ -25,6 +25,8 @@ While commiting in git we sometimes face some issues after commiting or pushing 
 
 In these above mentioned case we can do something to fix. 
 
+
+
 ### Commit needs to be reverted before push
 
 - To only undo the last commit command but keep the work
@@ -34,3 +36,15 @@ In these above mentioned case we can do something to fix.
 - Or, revert your work and undo the last commit as well
 
 ```git reset --hard HEAD~1```
+
+
+### Commit needs to be reverted after push
+
+- To undo the last commit which is already pushed on the remote branch
+
+```git revert HEAD~1```
+
+- To undo any commit pass the commit hash id
+
+```git revert <commit-hash-id>```
+
