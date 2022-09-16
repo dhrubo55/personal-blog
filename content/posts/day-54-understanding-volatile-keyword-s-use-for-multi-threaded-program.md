@@ -14,12 +14,7 @@ image = ""
 relative = false
 
 +++
-1. how java stores a object
-2. obj or primitive level caching
-3. how variables are cached in cpu cache / memory
-4. what does volatile do in this case
-
-### What is V
+### Understanding Processor Caching
 
 Processors execute program instructions. So, they need to retrieve both the program instructions and required data from RAM.As CPU's are capable of carrying out a significant number of instructions per second (IOPS), fetching from RAM isn't that ideal for them. As its an expensive call. So to mitigate this issue there are some techniques and `caching` is one of them.
 
@@ -89,4 +84,3 @@ Now to achieve the solution of the above mentione problem we can you solutions
 2. Using AtomicDouble
 3. Using AtomicFieldUpdater (Field Updater classes can be used to perform atomic operation on a selected volatile field of a selected class.  
    `AtomicReferenceFieldUpdater`, `AtomicIntegerFieldUpdater`, and `AtomicLongFieldUpdater` are reflection-based utilities that provide access to the associated field types.)
-   
