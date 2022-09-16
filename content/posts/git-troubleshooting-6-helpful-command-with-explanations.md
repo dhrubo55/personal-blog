@@ -14,3 +14,13 @@ image = ""
 relative = false
 
 +++
+While commiting in git we sometimes face some issues after commiting or pushing commits to remote repository. Some of the common scenairos are like
+
+1. Commit needs to be reverted before push
+2. Commit needs to be reverted after push
+3. Switch branch and save current uncommited work
+4. Splitting a large commit into smaller understandable commit
+5. Recovering lost file
+6. Commit in the wrong branch
+
+In these above mentioned case we can do something to fix. 
