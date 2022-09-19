@@ -24,6 +24,7 @@ While commiting in git we sometimes face some issues after commiting or pushing 
 6. Commit in the wrong branch
 
 In these above mentioned case we can do something to fix.
+&nbsp;
 
 ### Commit needs to be reverted before push
 
