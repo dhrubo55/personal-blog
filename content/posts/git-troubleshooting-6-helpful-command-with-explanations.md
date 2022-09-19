@@ -33,12 +33,14 @@ In these above mentioned case we can do something to fix.
 ```git
  git reset --soft HEAD~1
 ```
+&nbsp;
 
 * Or, revert your work and undo the last commit as well
 
 ```git
 git reset --hard HEAD~1
 ```
+&nbsp;
 
 ### Commit needs to be reverted after push
 
@@ -47,12 +49,14 @@ git reset --hard HEAD~1
 ```git
 git revert HEAD~1
 ```
+&nbsp;
 
 * To undo any commit pass the commit hash id
 
 ```git
 git revert <commit-hash-id>
 ```
+&nbsp;
 
 ### Switch branch and save current uncommited work
 
@@ -63,6 +67,8 @@ git stash push -m "stash-message" <file-path> - "-m stash-message"
 ```
 
 is optional in the above command, it stands for message and adds more description to your stash
+&nbsp;
+
 
 ### Splitting a large commit into smaller understandable commit
 
@@ -71,6 +77,7 @@ is optional in the above command, it stands for message and adds more descriptio
     git rebase HEAD~
 
 * Now, as usual, choose each file and commit them individually
+&nbsp;
 
 ### Recover lost file
 
@@ -79,7 +86,8 @@ is optional in the above command, it stands for message and adds more descriptio
     git restore -- <file-path>
 
 This will also get you those files which are even removed from recycle bin
-
+&nbsp;
+  
 ### Commit in the wrong branch
 
 * Suppose you committed last two commits in "master" instead of "feature" branch
