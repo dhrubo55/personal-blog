@@ -77,16 +77,20 @@ is optional in the above command, it stands for message and adds more descriptio
 
 * If by mistake you added all files in a single commit and want to split into multiple commits then use:
 
-      git rebase HEAD~
+ ```git
+git rebase HEAD~
+```
 
-  Now, as usual, choose each file and commit them individually
+Now, as usual, choose each file and commit them individually
    
 
 ### Recover lost file
 
 * To recover any accidentally deleted files
 
-      git restore -- <file-path>
+ ```git
+git restore -- <file-path>
+```
 
 This will also get you those files which are even removed from recycle bin
  
