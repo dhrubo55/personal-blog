@@ -69,6 +69,7 @@ git revert <commit-hash-id>
 ```git
 git stash push -m "stash-message" <file-path> - "-m stash-message"
 ```
+&nbsp;
 
 is optional in the above command, it stands for message and adds more description to your stash
  
@@ -80,9 +81,9 @@ is optional in the above command, it stands for message and adds more descriptio
  ```git
 git rebase HEAD~
 ```
-
 Now, as usual, choose each file and commit them individually
-   
+&nbsp;
+
 
 ### Recover lost file
 
@@ -91,9 +92,9 @@ Now, as usual, choose each file and commit them individually
  ```git
 git restore -- <file-path>
 ```
-
 This will also get you those files which are even removed from recycle bin
- 
+&nbsp;
+
 
 ### Commit in the wrong branch
 
