@@ -18,7 +18,7 @@ relative = false
 
 ## 
 
-In Java, **a static block executes code before the object initialization**. A static block is a block of code with a [_static_](https://www.baeldung.com/java-static) keyword:
+In Java, **a static block executes code before the object initialization**. A static block is a block of code with a _static_ keyword:
 
     static {
         // definition of the static block
