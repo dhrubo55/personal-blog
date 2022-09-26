@@ -111,4 +111,5 @@ pages:
 - content/posts/day-52-implementing-a-basic-bloom-filter-using-java-bitset-api.md
 - content/posts/day-53-processing-http-request-asynchronously-using-completablefuture.md
 - content/posts/day-54-understanding-volatile-keyword-s-use-for-multi-threaded-program.md
+- content/posts/day-55-understanding-static-and-instance-initializer-in-java-classes-and.md
 - content/posts/git-troubleshooting-6-helpful-command-with-explanations.md
