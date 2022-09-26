@@ -67,12 +67,12 @@ The instance initializer block looks just like the static initializer block, but
             System.out.println("Instance initializer block 2");
         }
         
-        public InstanceBlockExample() {
+        public Day55() {
             System.out.println("Class constructor");
         }
     
         public static void main(String[] args) {
-            InstanceBlockExample iib = new InstanceBlockExample();
+            Day55 iib = new Day55();
             System.out.println("Main Method");
         }
     }
