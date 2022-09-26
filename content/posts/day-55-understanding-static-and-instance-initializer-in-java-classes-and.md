@@ -28,14 +28,14 @@ Static initializer block or static initialization block, or static clause are so
 
 A class can have multiple static blocks, and they will execute in the same order as they appear in the class:
 
-    public class StaticBlockExample {
+    public class Day55 {
     
         static {
-            System.out.println("static block 1");
+            System.out.println("block 1");
         }
         
         static {
-            System.out.println("static block 2");
+            System.out.println("block 2");
         }
     
         public static void main(String[] args) {
