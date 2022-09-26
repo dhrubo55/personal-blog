@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-## **Static Block**
+## **Static** initializer **Block**
 
 ## 
 
