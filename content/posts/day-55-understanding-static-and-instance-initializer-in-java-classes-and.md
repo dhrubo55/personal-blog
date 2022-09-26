@@ -57,7 +57,7 @@ The instance initializer block looks just like the static initializer block, but
 
 **Static initializer blocks always execute before the instance initialization blocks because static blocks run at the time of class loading. However, the instance block runs at the time of instance creation.** The Java compiler copies initializer blocks into every constructor. Therefore, multiple constructors can use this approach to share a block of code:
 
-    public class InstanceBlockExample {
+    public class Day55 {
     
         {
             System.out.println("Instance initializer block 1");
