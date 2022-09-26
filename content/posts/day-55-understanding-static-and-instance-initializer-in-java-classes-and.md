@@ -18,13 +18,13 @@ relative = false
 
 ## 
 
-In Java, **a static block executes code before the object initialization**. A static block is a block of code with a _static_ keyword:
+In Java, **a static initializer block executes code before the object instance initialization**. A static block is a block of code with a _static_ keyword
 
     static {
         // definition of the static block
     }
 
-Static initializer block or static initialization block, or static clause are some other names for the static block. **Static block code executes only once during the class loading**. The static blocks always execute first before the _main()_ method in Java because the compiler stores them in memory at the time of class loading and before the object creation.
+Static initializer block or static initialization block, or static clause are some other names for the static block. **Static block code executes only once during the class loading**. The static blocks always **execute first** before the **_main() _** in Java because the compiler stores them in memory at the time of class loading and before the object creation.
 
 A class can have multiple static blocks, and they will execute in the same order as they appear in the class:
 
