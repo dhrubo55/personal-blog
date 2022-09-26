@@ -49,7 +49,7 @@ A class can have multiple static blocks, and they will execute in the same order
 
 As the name suggests, **the purpose of the instance initializer block is to initialize the instance data members.**
 
-The instance initializer block looks just like the static initializer block, but without the [_static_](https://www.baeldung.com/java-static) keyword:
+The instance initializer block looks just like the static initializer block, but without the _static_ keyword:
 
     {
          // definition of the Instance initialization block
