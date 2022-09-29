@@ -76,5 +76,10 @@ The instance initializer block looks just like the static initializer block, but
             System.out.println("Main Method");
         }
     }
-    
- So now using both to create a `DateTimeFormatter` 
+
+So now using both to create a `DateTimeFormatter` for `DateTimeFormatterBuilder()` to get a customized `DateTimeFormatter` intance and initialize it in static block and then use it to calculate today's date in the instance initializer block and printing todays date just by creating an instance of the class.
+
+
+```java
+
+```
