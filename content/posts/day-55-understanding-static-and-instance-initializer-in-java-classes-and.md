@@ -79,7 +79,38 @@ The instance initializer block looks just like the static initializer block, but
 
 So now using both to create a `DateTimeFormatter` for `DateTimeFormatterBuilder()` to get a customized `DateTimeFormatter` intance and initialize it in static block and then use it to calculate today's date in the instance initializer block and printing todays date just by creating an instance of the class.
 
-
 ```java
+class Day56 {
 
+
+    private final static DateTimeFormatter DATE_TIME_FORMATTER;
+
+    private static Scratch scratch;
+
+    public String today;
+
+    // static initializer
+    static {
+        DATE_TIME_FORMATTER = new DateTimeFormatterBuilder()
+                .appendLiteral("Day value -> ")
+                .appendValue(ChronoField.DAY_OF_MONTH)
+                .appendLiteral(" Month value -> ")
+                .appendValue(ChronoField.MONTH_OF_YEAR)
+                .appendLiteral(" Year value -> ")
+                .appendValue(ChronoField.YEAR)
+                .toFormatter();
+        scratch = new Scratch();
+
+    }
+
+    // Instance Initializer
+    {
+        today = DATE_TIME_FORMATTER.format(LocalDateTime.now());
+
+    }
+
+    public static Scratch getInstance() {
+        return scratch;
+    }
+}
 ```
