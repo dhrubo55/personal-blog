@@ -85,7 +85,7 @@ class Day56 {
 
     private final static DateTimeFormatter DATE_TIME_FORMATTER;
 
-    private static Scratch scratch;
+    private static Day55 instance;
 
     public String today;
 
@@ -99,7 +99,7 @@ class Day56 {
                 .appendLiteral(" Year value -> ")
                 .appendValue(ChronoField.YEAR)
                 .toFormatter();
-        scratch = new Scratch();
+        instance = new Day55();
 
     }
 
@@ -109,8 +109,8 @@ class Day56 {
 
     }
 
-    public static Scratch getInstance() {
-        return scratch;
+    public static Day55 getInstance() {
+        return instance;
     }
 }
 ```
