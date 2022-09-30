@@ -123,3 +123,5 @@ now the main method
         System.out.println(day55FromStaticInitialization.today);
     }
 ```
+
+By initializing the instance as static and then making the class as Singleton to get already initialized instance when classloader loaded the classes
