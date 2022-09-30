@@ -118,7 +118,7 @@ now the main method
 
 ```java
    public static void main(String[] args) {
-        Day55 day55 = Day55.getInstance();
+        Day55 day55FromStaticInitialization = Day55.getInstance();
         System.out.println(day55.today);
     }
 ```
