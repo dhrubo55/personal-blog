@@ -88,6 +88,7 @@ fields:
 pages:
 - content/posts/advent-of-code-day-01.md
 - content/posts/advent-of-code-day-02.md
+- content/posts/blue-green-deployment-using-dns.md
 - content/posts/day-26-using-timertask-s-schedule-and-scheduleatfixedrate-to-check-uptime-and-keep-alive.md
 - content/posts/day-35-emulating-pair-in-java-using-abstractmap.simpleentry-and-new-object-implementation.md
 - content/posts/day-36-learned-about-banned-dependencies-and-how-to-ban-transitive-dependency-in-a-maven-or-gradle-project.md
