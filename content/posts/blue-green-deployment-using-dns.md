@@ -14,3 +14,12 @@ image = ""
 relative = false
 
 +++
+Blue-green deployment
+
+what is DNS 
+
+what is CNAME and A record
+
+How they work
+
+Deployment structure
