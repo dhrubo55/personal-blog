@@ -37,7 +37,7 @@ There are many uses of zero length array. Few of them are listed below
 
 ##### String.getBytes() return:
 
-When calling getBytes() which will return a `byte[]` on empty string `""` what should be it's output? I will return a zero sized byte array.
+When calling getBytes() which will return a `byte[]` on empty string `""` what should be it's output? It will return a zero sized byte array.
 
 ```java
 System.out.println(("".getBytes(StandardCharsets.UTF_8)).length);
