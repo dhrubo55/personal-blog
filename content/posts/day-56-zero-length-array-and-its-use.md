@@ -14,3 +14,14 @@ image = ""
 relative = false
 
 +++
+Recently from one of my senior colleagues LinkedIn post I learned about zero sized array in java. This raised some curiosity. So in this post I am going to share about the learning and findings i have found about zero length array in java. 
+
+#### Zero Sized Array:
+
+Not only java but also many other languages have zero sized array. In C its call variable length array as the array can have initialization using zero length. In the struct it can have the size initialized.
+
+A zero length array is simply an array with nothing in it. It is an advantage to have such an array, especially in Java. So you can return a valid array and guarantee that your length check never fails. 
+
+In Java, an array even of primitive types (i.e. int[]) is still an object. It has a length property. An array in Java can be null and it is easier to return null. But to have a method return a null and then checking it from the method caller is cumbersome. 
+
+Thus a zero length array guarantees non-null returns. Which will also insure the call to `array.length` doesnt creates null pointer exception.
