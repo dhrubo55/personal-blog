@@ -57,10 +57,8 @@ When calling a method who have a varargs parameter if we dont provide the vararg
 and when calling the caller is passing a single argument.
 
 ```java
-  public static void main(String[] args) {
         printer("bar");
         printer("foo", new String[0]); // here passing the new String[0] will show a redundant warning
 ```
 
 ##### Null Object Pattern:
-
