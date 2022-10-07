@@ -84,3 +84,10 @@ when executed from main
 ```
 
 ##### Empty array from empty list:
+
+Converting an empty array from empty list one can do it using `List.toArray()` which will take the element of the list and create an array with those element. But if the list is empty then? By passing an zero sized array with type will convert it to a zero sized array or empty array of that type.
+
+```java
+List<String> list = new ArrayList<>();
+String [] array =  list.toArray(new String[0]); //passing type information without it needed to cast
+```
