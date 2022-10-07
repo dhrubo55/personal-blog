@@ -25,3 +25,12 @@ A zero length array is simply an array with nothing in it. It is an advantage to
 In Java, an array even of primitive types (i.e. int[]) is still an object. It has a length property. An array in Java can be null and it is easier to return null. But to have a method return a null and then checking it from the method caller is cumbersome. 
 
 Thus a zero length array guarantees non-null returns. Which will also insure the call to `array.length` doesnt creates null pointer exception.
+
+#### Use of Zero Sized Array:
+
+There are many uses of zero length array. Few of them are listed below
+
+1. String.getBytes() return
+2. Calling a method with varargs parameter
+3. Null object pattern ( Sending a empty object rather than null)
+4. Empty Array from an empty  list
