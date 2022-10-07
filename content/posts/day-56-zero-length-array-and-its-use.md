@@ -31,7 +31,7 @@ Thus a zero length array guarantees non-null returns. Which will also insure the
 There are many uses of zero length array. Few of them are listed below
 
 1. String.getBytes() return
-2. Calling a method with varargs parameter
+2. Calling a method of varargs parameter
 3. Null object pattern ( Sending a empty object rather than null)
 4. Empty Array from an empty  list
 
@@ -42,3 +42,25 @@ When calling getBytes() which will return a `byte[]` on empty string `""` what s
 ```java
 System.out.println(("".getBytes(StandardCharsets.UTF_8)).length);
 ```
+
+##### Calling a method of vargargs parameter:
+
+When calling a method who have a varargs parameter if we dont provide the varargs parameter with any value what will happen? It will still work. In this case the compiler is implicitly passing a zero sized array. For example the method is 
+
+```java
+    public static void printer(String s1, String ... s2) {
+        System.out.println(s1);
+        Arrays.stream(s2).forEach(System.out::println);
+    }
+```
+
+and when calling the caller is passing a single argument.
+
+```java
+  public static void main(String[] args) {
+        printer("bar");
+        printer("foo", new String[0]); // here passing the new String[0] will show a redundant warning
+```
+
+##### Null Object Pattern:
+
