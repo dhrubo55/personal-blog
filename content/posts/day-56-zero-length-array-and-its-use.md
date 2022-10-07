@@ -34,3 +34,11 @@ There are many uses of zero length array. Few of them are listed below
 2. Calling a method with varargs parameter
 3. Null object pattern ( Sending a empty object rather than null)
 4. Empty Array from an empty  list
+
+##### String.getBytes() return:
+
+When calling getBytes() which will return a `byte[]` on empty string `""` what should be it's output? I will return a zero sized byte array.
+
+```java
+System.out.println(("".getBytes(StandardCharsets.UTF_8)).length);
+```
