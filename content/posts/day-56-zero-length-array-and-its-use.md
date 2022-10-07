@@ -82,3 +82,5 @@ when executed from main
         File[] files = getFileNames("/home/mohibulhassan/Downloads");
         System.out.println(files.length);
 ```
+
+##### Empty array from empty list:
