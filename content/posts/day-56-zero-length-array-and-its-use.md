@@ -62,3 +62,23 @@ and when calling the caller is passing a single argument.
 ```
 
 ##### Null Object Pattern:
+
+Instead of using a null reference to convey absence of an object (for instance, a non-existent file), one uses an object which implements the expected interface, but whose method body is empty. The advantage of this approach over a working default implementation is that a null object is very predictable and has no side effects: it does nothing.
+
+For example, a function may retrieve a list of files in a folder and perform some action on each. In the case of an empty folder, one response may be to throw an exception or return a null reference rather than a list. Thus, the code which expects a list must verify that it in fact has one before continuing, which can complicate the design.
+
+
+```java
+    public static File[] getFileNames(String path) {
+        File folder = Paths.get(path).toFile();
+        return folder.listFiles() == null ? new File[0] : folder.listFiles();
+    }
+```
+
+when executed from main 
+
+```java
+        //Replacement of nulls
+        File[] files = getFileNames("/home/mohibulhassan/Downloads");
+        System.out.println(files.length);
+```
