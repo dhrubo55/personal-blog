@@ -33,6 +33,8 @@ Isolated Environments:
   
 Blue/green deployments provide a level of isolation between your blue and green application environments. This helps ensure spinning up a parallel green environment which does not affect resources underpinning your blue environment. This isolation reduces your deployment risk.
 
+Canary Testing and release:
+
 what is DNS
 
 what is CNAME and A record
