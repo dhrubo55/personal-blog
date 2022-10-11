@@ -24,18 +24,21 @@ The blue environment represents the current application version serving producti
 
 Pro's and Con's of Blue/Green Deployment:
 
-In place application upgradation: 
+In place application upgradation:
 
 Traditional deployments which upgrades the application in place makes it hard to validate your new application version in a production deployment while continuing to run the earlier version of the application.
 
-Isolated Environments: 
+Isolated Environments:
 
-  
 Blue/green deployments provide a level of isolation between your blue and green application environments. This helps ensure spinning up a parallel green environment which does not affect resources underpinning your blue environment. This isolation reduces your deployment risk.
 
 Canary Testing and release:
 
-After you deploy the green environment, you have the opportunity to validate it. You might do that with test traffic before sending production traffic to the green environment. Also you can use a very small fraction of production traffic, to better reflect real user traffic. This is called _canary analysis_ or _canary testing_. If you discover the green environment is not operating as expected, there is no impact on the blue environment. You can route traffic back to it, minimizing impaired operation or downtime and limiting the blast radius of impact. 
+After you deploy the green environment, you have the opportunity to validate it. You might do that with test traffic before sending production traffic to the green environment. Also you can use a very small fraction of production traffic, to better reflect real user traffic. This is called _canary analysis_ or _canary testing_. If you discover the green environment is not operating as expected, there is no impact on the blue environment. You can route traffic back to it, minimizing impaired operation or downtime and limiting the blast radius of impact.
+
+Rollback:
+
+This ability to simply roll traffic back to the existing production environment is a key benefit of blue/green deployments. You can roll back to the blue environment at any time during the deployment process. Impaired operation or downtime is minimized because impact is limited to the window of time between green environment issue detection and shift of traffic back to the blue environment. Additionally, impact is limited to the subset of traffic going to the green environment, not all traffic. If the blast radius of deployment errors is reduced, so is the deployment risk.
 
 what is DNS
 
