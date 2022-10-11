@@ -35,6 +35,8 @@ Blue/green deployments provide a level of isolation between your blue and green 
 
 Canary Testing and release:
 
+After you deploy the green environment, you have the opportunity to validate it. You might do that with test traffic before sending production traffic to the green environment. Also you can use a very small fraction of production traffic, to better reflect real user traffic. This is called _canary analysis_ or _canary testing_. If you discover the green environment is not operating as expected, there is no impact on the blue environment. You can route traffic back to it, minimizing impaired operation or downtime and limiting the blast radius of impact. 
+
 what is DNS
 
 what is CNAME and A record
