@@ -48,7 +48,7 @@ All computers on the Internet, from your smart phone or laptop to the servers th
 
 what is CNAME and A record
 
-There are 
+So to understand what is CNAME and A record we first need to understand what is a DNS record. 
 
 How they work
 
