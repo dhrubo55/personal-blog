@@ -60,7 +60,8 @@ A records only hold IPv4 addresses. If a website has an IPv6 address, it will in
 
 Here is an example of an A record:
 
-example.comrecord type:value:TTL@A192.0.2.114400
+|example.com | record type | value | TTL
+|@|A|192.0.2.1|14400
 
 The "@" symbol in this example indicates that this is a record for the root domain, and the "14400" value is the TTL (time to live), listed in seconds. The default TTL for A records is 14,400 seconds. This means that if an A record gets updated, it takes 240 minutes (14,400 seconds) to take effect.
 
