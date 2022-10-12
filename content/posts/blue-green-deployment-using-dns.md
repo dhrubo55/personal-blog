@@ -48,7 +48,7 @@ All computers on the Internet, from your smart phone or laptop to the servers th
 
 what is CNAME and A record
 
-So to understand what is CNAME and A record we first need to understand what is a DNS record. 
+So to understand what is CNAME and A record we first need to understand what is a DNS record. DNS records (aka zone files) are instructions that live in authoritative DNS servers . Authoritative servers provide information about a domain. Including what IP address associates with that domain and how to handle requests for that domain. These records consist of a series of text files written in what is known as DNS syntax. DNS syntax is a string of characters used as commands that tell the DNS server what to do. All DNS records also have a ‘TTL’, which stands for time-to-live. This indicates how often a DNS server will refresh that record.
 
 How they work
 
