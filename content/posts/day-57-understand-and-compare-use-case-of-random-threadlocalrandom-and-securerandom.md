@@ -45,23 +45,16 @@ Instances of `Random are thread–safe`. Although, if the same instances are use
 ```java
 public class Day57 {
   public static void main(String[] args) {
-  	  int seed = 5;
-      //creating a random int
-      System.out.println("-- single random int --");
-      Random rng = new Random(seed)
+  	  long seed = 5;
+      
+      Random rng1 = new Random(seed)
+      System.out.println(rng.nextInt());
+      Random rng2 = new Random(seed)
       System.out.println(rng.nextInt());
       
       
-     
-      //creating stream of ints
-      System.out.println("-- stream --");
-      new Random().ints(5, 10, 100)
+      new Random(seed).ints(5, 10, 100)
                   .forEach(System.out::println);
   }
 }
 ```
-
-
-
-
-
