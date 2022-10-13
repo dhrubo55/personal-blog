@@ -14,3 +14,9 @@ image = ""
 relative = false
 
 +++
+Random class
+
+ThreadLocalRandom
+
+* how it works
+* where to use 
