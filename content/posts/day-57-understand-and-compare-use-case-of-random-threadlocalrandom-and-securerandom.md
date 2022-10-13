@@ -38,5 +38,9 @@ To generate random numbers in java there are 4 given ways by the api. In java 17
 
 The Random Class of the java.util package is used for generating a stream of pseudorandom numbers. It uses a 48-bit seed, and using a `Linear Congruential Formula`.
 
-If we create two instances of the Random class with the same seed value and call the same sequence of methods for each . They both will return identical sequences of numbers. This property is enforced by specific algorithms defined for this class. The algorithms use a protected utility method which upon invocation can give up to 32 pseudorandomly generated bits. Instances of Random are thread–safe. Although, if the same instances are used across threads they may suffer from `contention` and result in poor performance. The Instances of Random are not cryptographically safe. So should not be used for security-sensitive applications.
+If we create two instances of the Random class with the same seed value and call the same sequence of methods for each . They both will return identical sequences of numbers. This property is enforced by specific algorithms defined for this class. The algorithms use a protected utility method which upon invocation can give up to 32 pseudorandomly generated bits. 
+
+Instances of `Random are thread–safe`. Although, if the same instances are used across threads they may suffer from `contention` and result in poor performance. The Instances of Random are `not cryptographically safe`. So should not be used for security-sensitive applications.
+
+
 
