@@ -68,4 +68,6 @@ The "@" symbol in this example indicates that this is a record for the root doma
 
 The vast majority of websites only have one A record, but it is possible to have several. Some higher profile websites will have several different A records as part of a technique called round robin load balancing. Which can distribute request traffic to one of several IP addresses, each hosting identical content.
 
+CNAME:
+
 Deployment structure
