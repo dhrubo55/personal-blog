@@ -17,6 +17,10 @@ relative = false
 Random class
 
 ThreadLocalRandom
-
 * how it works
-* where to use 
+* where to use
+
+
+SecureRandom
+* how it works
+* where to use
