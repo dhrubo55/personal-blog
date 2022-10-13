@@ -42,5 +42,26 @@ If we create two instances of the Random class with the same seed value and call
 
 Instances of `Random are thread–safe`. Although, if the same instances are used across threads they may suffer from `contention` and result in poor performance. The Instances of Random are `not cryptographically safe`. So should not be used for security-sensitive applications.
 
+```java
+public class Day57 {
+  public static void main(String[] args) {
+  	  int seed = 5;
+      //creating a random int
+      System.out.println("-- single random int --");
+      Random rng = new Random(seed)
+      System.out.println(rng.nextInt());
+      
+      
+     
+      //creating stream of ints
+      System.out.println("-- stream --");
+      new Random().ints(5, 10, 100)
+                  .forEach(System.out::println);
+  }
+}
+```
+
+
+
 
 
