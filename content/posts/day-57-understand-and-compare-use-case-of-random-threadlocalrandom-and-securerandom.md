@@ -33,7 +33,7 @@ To generate random numbers in java there are 4 given ways by the api. In java 17
 3. SecureRandom Class
 4. SplitabbleRandom Class
 
-![](https://www.baeldung.com/wp-content/uploads/2022/01/2022-01-02-09_17_03-rng_old_api.png-_-Fotografije.png)
+![](https://www.baeldung.com/wp-content/uploads/2022/01/2022-01-02-09_17_03-rng_old_api.png-_-Fotografije.png)Fig: Java 17 new RandomGenerator Interface
 
 ### Random:
 
