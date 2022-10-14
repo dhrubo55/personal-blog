@@ -67,3 +67,6 @@ ThreadLocalRandom is a combination of the `ThreadLocal` and `Random` classes. It
 The random number obtained by one thread is not affected by the other thread. Whereas java.util.Random provides random numbers globally.
 
 Also, unlike Random, ThreadLocalRandom doesn't support setting the seed explicitly. Instead, it overrides the `setSeed(long seed)` method. Its inherited from Random and always throw an UnsupportedOperationException if called.
+
+
+So now we will take a detour and try to understand what is `Thread contention` which is the reason behind `Random classes result in poor performance while being in multi-threaded env`
