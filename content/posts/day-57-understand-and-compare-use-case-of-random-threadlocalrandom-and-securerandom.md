@@ -75,3 +75,9 @@ So now we will take a detour and try to understand what is `Thread contention` w
 #### Thread Contention:
 
 when two threads try to access either the same resource or related resources. At least one of the contending threads runs slower than it would if the other thread(s) were not running. This situation is called thread contention.
+
+The most obvious example of contention is on a lock. If thread A has a lock and thread B wants to acquire that same lock, thread B will have to wait until thread A releases the lock.
+
+For example, consider a thread that acquires a lock, modifies an object, then releases the lock and does some other things. If two threads are doing this, even if they never fight for the lock, the threads may run much slower than they would if only one thread was running.
+
+Why? Say each thread is running on its own core on a modern x86 CPU and the cores don't share an L2 cache. With just one thread, the object may remain in the L2 cache most of the time. With both threads running, each time one thread modifies the object, the other thread will find the data is not in its L2 cache because the other CPU invalidated the cache line.
