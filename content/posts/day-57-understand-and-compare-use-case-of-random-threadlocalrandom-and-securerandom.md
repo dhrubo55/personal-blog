@@ -70,3 +70,8 @@ Also, unlike Random, ThreadLocalRandom doesn't support setting the seed explicit
 
 
 So now we will take a detour and try to understand what is `Thread contention` which is the reason behind `Random classes result in poor performance while being in multi-threaded env`
+
+
+#### Thread Contention:
+
+when two threads try to access either the same resource or related resources. At least one of the contending threads runs slower than it would if the other thread(s) were not running. This situation is called thread contention.
