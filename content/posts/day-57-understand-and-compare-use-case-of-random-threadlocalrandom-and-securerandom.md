@@ -59,3 +59,11 @@ public class Day57 {
   }
 }
 ```
+
+### ThreadLocalRandom:
+
+ThreadLocalRandom is a combination of the `ThreadLocal` and `Random` classes. Its isolated to the current thread. So it achieves better performance in a multi-threaded environment. It avoids any concurrent access to instances of Random.
+
+The random number obtained by one thread is not affected by the other thread. Whereas java.util.Random provides random numbers globally.
+
+Also, unlike Random, ThreadLocalRandom doesn't support setting the seed explicitly. Instead, it overrides the `setSeed(long seed)` method. Its inherited from Random and always throw an UnsupportedOperationException if called.
