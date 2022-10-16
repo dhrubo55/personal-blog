@@ -14,18 +14,6 @@ image = ""
 relative = false
 
 +++
-Random class
-
-ThreadLocalRandom
-
-* how it works
-* where to use
-
-SecureRandom
-
-* how it works
-* where to use
-
 To generate random numbers in java there are 4 given ways by the api. In java 17 new generic api and some other api's was introduced.
 
 1. Random Class
@@ -68,9 +56,7 @@ The random number obtained by one thread is not affected by the other thread. Wh
 
 Also, unlike Random, ThreadLocalRandom doesn't support setting the seed explicitly. Instead, it overrides the `setSeed(long seed)` method. Its inherited from Random and always throw an UnsupportedOperationException if called.
 
-
 So now we will take a detour and try to understand what is `Thread contention` which is the reason behind `Random classes result in poor performance while being in multi-threaded env`
-
 
 #### Thread Contention:
 
@@ -82,48 +68,48 @@ For example, consider a thread that acquires a lock, modifies an object, then re
 
 Why? Say each thread is running on its own core on a modern x86 CPU and the cores don't share an L2 cache. With just one thread, the object may remain in the L2 cache most of the time. With both threads running, each time one thread modifies the object, the other thread will find the data is not in its L2 cache because the other CPU invalidated the cache line.
 
- So far, we can see that the Random class performs poor in highly concurrent environments. To better understand this, let's see how one of its primary operations, `next(int)`, is implemented
- 
- ```java
-     /**
-     * Generates the next pseudorandom number. Subclasses should
-     * override this, as this is used by all other methods.
-     *
-     * <p>The general contract of {@code next} is that it returns an
-     * {@code int} value and if the argument {@code bits} is between
-     * {@code 1} and {@code 32} (inclusive), then that many low-order
-     * bits of the returned value will be (approximately) independently
-     * chosen bit values, each of which is (approximately) equally
-     * likely to be {@code 0} or {@code 1}. The method {@code next} is
-     * implemented by class {@code Random} by atomically updating the seed to
-     *  <pre>{@code (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1)}</pre>
-     * and returning
-     *  <pre>{@code (int)(seed >>> (48 - bits))}.</pre>
-     *
-     * This is a linear congruential pseudorandom number generator, as
-     * defined by D. H. Lehmer and described by Donald E. Knuth in
-     * <i>The Art of Computer Programming,</i> Volume 2:
-     * <i>Seminumerical Algorithms</i>, section 3.2.1.
-     *
-     * @param  bits random bits
-     * @return the next pseudorandom value from this random number
-     *         generator's sequence
-     * @since  1.1
-     */
-    protected int next(int bits) {
-        long oldseed, nextseed;
-        AtomicLong seed = this.seed;
-        do {
-            oldseed = seed.get();
-            nextseed = (oldseed * multiplier + addend) & mask;
-        } while (!seed.compareAndSet(oldseed, nextseed));
-        return (int)(nextseed >>> (48 - bits));
-    }
- ```
- 
- This portion of code is copied from openJDK and here we can see it implements `Linear Congruential Generator` algo to generate pseudo random numbers.It's obvious that all threads are sharing the same seed instance variable.
- 
- To generate the next random set of bits, it first tries to change the shared seed value atomically via `compareAndSet` or `CAS` for short.
+So far, we can see that the Random class performs poor in highly concurrent environments. To better understand this, let's see how one of its primary operations, `next(int)`, is implemented
+
+```java
+    /**
+    * Generates the next pseudorandom number. Subclasses should
+    * override this, as this is used by all other methods.
+    *
+    * <p>The general contract of {@code next} is that it returns an
+    * {@code int} value and if the argument {@code bits} is between
+    * {@code 1} and {@code 32} (inclusive), then that many low-order
+    * bits of the returned value will be (approximately) independently
+    * chosen bit values, each of which is (approximately) equally
+    * likely to be {@code 0} or {@code 1}. The method {@code next} is
+    * implemented by class {@code Random} by atomically updating the seed to
+    *  <pre>{@code (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1)}</pre>
+    * and returning
+    *  <pre>{@code (int)(seed >>> (48 - bits))}.</pre>
+    *
+    * This is a linear congruential pseudorandom number generator, as
+    * defined by D. H. Lehmer and described by Donald E. Knuth in
+    * <i>The Art of Computer Programming,</i> Volume 2:
+    * <i>Seminumerical Algorithms</i>, section 3.2.1.
+    *
+    * @param  bits random bits
+    * @return the next pseudorandom value from this random number
+    *         generator's sequence
+    * @since  1.1
+    */
+   protected int next(int bits) {
+       long oldseed, nextseed;
+       AtomicLong seed = this.seed;
+       do {
+           oldseed = seed.get();
+           nextseed = (oldseed * multiplier + addend) & mask;
+       } while (!seed.compareAndSet(oldseed, nextseed));
+       return (int)(nextseed >>> (48 - bits));
+   }
+```
+
+This portion of code is copied from openJDK and here we can see it implements `Linear Congruential Generator` algo to generate pseudo random numbers.It's obvious that all threads are sharing the same seed instance variable.
+
+To generate the next random set of bits, it first tries to change the shared seed value atomically via `compareAndSet` or `CAS` for short.
 
 When multiple threads attempt to update the seed concurrently using CAS, one thread wins and updates the seed, and the rest lose. Losing threads will try the same process over and over again until they get a chance to update the value and ultimately generate the random number.
 
@@ -179,14 +165,13 @@ class TestTask extends ForkJoinTask<String> {
 }
 ```
 
- In the example there is a ForkJoinTask implementation. Also inside exec() method of ForkJoinTask, we obtained the random number by ThreadLocalRandom. We have run two ForkJoinTask to test the random number generation. Run the example many time and every time you will get random numbers. Sample output is as below. 
- 
+In the example there is a ForkJoinTask implementation. Also inside exec() method of ForkJoinTask, we obtained the random number by ThreadLocalRandom. We have run two ForkJoinTask to test the random number generation. Run the example many time and every time you will get random numbers. Sample output is as below.
 
 ### SecureRandom
 
 Standard JDK implementations of java.util.Random use a Linear Congruential Generator (LCG) algorithm for providing random numbers. The problem with this algorithm is that it’s not cryptographically strong. In other words, the generated values are much more predictable, therefore attackers could use it to compromise our system.
 
-The `java.security.SecureRandom` class does not actually implement a pseudorandom number generator (PRNG) itself. It uses PRNG implementations in other classes to generate random numbers. So the randomness of the random numbers and security and performance of SecureRandom depends on the algorithm chosen. If you want **cryptographically strong** randomness, then you need a strong entropy source. **Entropy** here refers to the randomness collected by an operating system or application. The entropy source is one which collects random data and supplies to destination. 
+The `java.security.SecureRandom` class does not actually implement a pseudorandom number generator (PRNG) itself. It uses PRNG implementations in other classes to generate random numbers. So the randomness of the random numbers and security and performance of SecureRandom depends on the algorithm chosen. If you want **cryptographically strong** randomness, then you need a strong entropy source. **Entropy** here refers to the randomness collected by an operating system or application. The entropy source is one which collects random data and supplies to destination.
 
 The file which controls the configuration of the SecureRandom API is located at:  `$JAVA_HOME/lib/security/java.security`
 
