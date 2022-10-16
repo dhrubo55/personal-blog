@@ -184,4 +184,13 @@ class TestTask extends ForkJoinTask<String> {
 
 ### SecureRandom
 
+Standard JDK implementations of java.util.Random use a Linear Congruential Generator (LCG) algorithm for providing random numbers. The problem with this algorithm is that it’s not cryptographically strong. In other words, the generated values are much more predictable, therefore attackers could use it to compromise our system.
+
 The `java.security.SecureRandom` class does not actually implement a pseudorandom number generator (PRNG) itself. It uses PRNG implementations in other classes to generate random numbers. So the randomness of the random numbers and security and performance of SecureRandom depends on the algorithm chosen. If you want **cryptographically strong** randomness, then you need a strong entropy source. **Entropy** here refers to the randomness collected by an operating system or application. The entropy source is one which collects random data and supplies to destination. 
+
+The file which controls the configuration of the SecureRandom API is located at:  `$JAVA_HOME/lib/security/java.security`
+
+We can select the source of seed data for SecureRandom by using the entropy gathering device specified in securerandom.source property in java.security file.
+
+E.g. securerandom.source=file:/dev/urandom
+OR securerandom.source=file:/dev/random
