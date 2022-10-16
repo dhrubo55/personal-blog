@@ -196,12 +196,10 @@ Or maybe your question isn't related to this project, then check out my [*Ask Me
 
 <!-- * Reference links -->
 <!-- ? Personal Related Links -->
-[Personal Website]: https://jarmos.netlify.app
-[My Twitter]: https://twitter.com/Jarmosan
-[My LinkedIn]: https://www.linkedin.com/in/jarmos/
-[My AMA]: https://github.com/Jarmos-san/Jarmos-san/discussions/categories/q-a
-[My Quora]: https://www.quora.com/profile/Somraj-Saha-3
-[Buy Me a Coffee]: https://www.buymeacoffee.com/jarmos
+[Personal Website]: https://mohibulsblog.netlify.app
+[My Twitter]: https://twitter.com/dhrubo555
+[My LinkedIn]: https://www.linkedin.com/in/mohibulhassan/
+[Buy Me a Coffee]: https://www.buymeacoffee.com/celurian92c
 <!-- ? Hugo Related Links -->
 [Hugo-PaperMod]: https://adityatelange.github.io/hugo-PaperMod/
 [Install Hugo]: https://gohugo.io/getting-started/installing/
@@ -222,9 +220,8 @@ Or maybe your question isn't related to this project, then check out my [*Ask Me
 [Cloudflare vs Google Analytics]: https://community.cloudflare.com/t/gap-between-cloudflare-analytics-and-google-analytics-reporting/33326
 [Cloudflare Analytics Dashboard]: https://dash.cloudflare.com/?to=/:account/:zone/analytics/traffic
 <!-- ? Project Related Links -->
-[Project Discussion Threads]: https://github.com/Jarmos-san/blog/discussions
-[Project Contributors]: https://github.com/Jarmos-san/blog/graphs/contributors
-[Issue #40]: https://github.com/Jarmos-san/blog/issues/40
+[Project Discussion Threads]: https://github.com/dhurbo55/personal-blog/discussions
+[Project Contributors]: https://github.com/dhrubo55/personal-blog/graphs/contributors
 <!-- ? Miscellaneous Related Links -->
 [Netlify Deploy]: https://github.com/Jarmos-san/blog/actions?query=workflow%3A%22Netlify+Deploy%22
 [Git Checkout Action License]: https://github.com/actions/checkout/blob/main/LICENSE
@@ -232,12 +229,12 @@ Or maybe your question isn't related to this project, then check out my [*Ask Me
 [Automerge Action License]: https://github.com/pascalgn/automerge-action/blob/master/LICENSE
 [GA 4 Doesn't Work]: https://github.com/gohugoio/hugo/issues/7954
 <!-- ? Shield Badges -->
-[Website]: https://img.shields.io/website?down_color=Red&down_message=Down&label=Website&style=flat-square&up_color=Green&up_message=Up&url=https%3A%2F%2Fjarmos.netlify.app%2F
-[Netlify Deploy Badge]: https://github.com/Jarmos-san/blog/workflows/Netlify%20Deploy/badge.svg?branch=dev
+[Website]: https://img.shields.io/website?down_color=Red&down_message=Down&label=Website&style=flat-square&up_color=Green&up_message=Up&url=https%3A%2F%2Fmohibulsblog.netlify.app%2F
+[Netlify Deploy Badge]: https://github.com/dhrubo55/personal-blog/workflows/Netlify%20Deploy/badge.svg?branch=dev
 [My LinkedIn Badge]: https://img.shields.io/static/v1?label=LinkedIn&message=Connect&color=0077B5&style=flat-square&logo=linkedin
 [My Quora Badge]: https://img.shields.io/static/v1?label=Quora&message=QnA&color=B92B27&style=flat-square&logo=quora
 [My AMA Badge]: https://img.shields.io/badge/Ask%20Me-Anything!-1abc9c.svg
-[My Twitter Badge]: https://img.shields.io/twitter/follow/Jarmosan?style=social
+[My Twitter Badge]: https://img.shields.io/twitter/follow/dhrubo555?style=social
 <!-- ? Documentations -->
 [Forestry Docs]: https://forestry.io/docs/welcome/
 [GitHub Encrypted Secrets]: https://docs.github.com/en/actions/reference/encrypted-secrets
