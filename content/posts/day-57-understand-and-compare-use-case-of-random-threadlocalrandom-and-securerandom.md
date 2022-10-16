@@ -122,3 +122,9 @@ Why? Say each thread is running on its own core on a modern x86 CPU and the core
  ```
  
  This portion of code is copied from openJDK and here we can see it implements `Linear Congruential Generator` algo to generate pseudo random numbers.It's obvious that all threads are sharing the same seed instance variable.
+ 
+ To generate the next random set of bits, it first tries to change the shared seed value atomically via `compareAndSet` or `CAS` for short.
+
+When multiple threads attempt to update the seed concurrently using CAS, one thread wins and updates the seed, and the rest lose. Losing threads will try the same process over and over again until they get a chance to update the value and ultimately generate the random number.
+
+This algorithm is `lock-free` , and different threads can progress concurrently. However, when the contention is high, the number of CAS failures and retries will hurt the overall performance significantly.
