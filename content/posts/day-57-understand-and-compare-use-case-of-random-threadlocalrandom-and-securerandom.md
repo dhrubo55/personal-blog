@@ -180,3 +180,8 @@ class TestTask extends ForkJoinTask<String> {
 ```
 
  In the example there is a ForkJoinTask implementation. Also inside exec() method of ForkJoinTask, we obtained the random number by ThreadLocalRandom. We have run two ForkJoinTask to test the random number generation. Run the example many time and every time you will get random numbers. Sample output is as below. 
+ 
+
+### SecureRandom
+
+The `java.security.SecureRandom` class does not actually implement a pseudorandom number generator (PRNG) itself. It uses PRNG implementations in other classes to generate random numbers. So the randomness of the random numbers and security and performance of SecureRandom depends on the algorithm chosen. If you want **cryptographically strong** randomness, then you need a strong entropy source. **Entropy** here refers to the randomness collected by an operating system or application. The entropy source is one which collects random data and supplies to destination. 
