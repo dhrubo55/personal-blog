@@ -128,3 +128,6 @@ Why? Say each thread is running on its own core on a modern x86 CPU and the core
 When multiple threads attempt to update the seed concurrently using CAS, one thread wins and updates the seed, and the rest lose. Losing threads will try the same process over and over again until they get a chance to update the value and ultimately generate the random number.
 
 This algorithm is `lock-free` , and different threads can progress concurrently. However, when the contention is high, the number of CAS failures and retries will hurt the overall performance significantly.
+
+**On the other hand, the ThreadLocalRandom completely removes this contention, as each thread has its own instance of Random and, consequently, its own confined seed.**
+
