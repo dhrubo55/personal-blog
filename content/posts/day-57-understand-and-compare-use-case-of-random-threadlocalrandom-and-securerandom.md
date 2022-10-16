@@ -131,3 +131,50 @@ This algorithm is `lock-free` , and different threads can progress concurrently.
 
 **On the other hand, the ThreadLocalRandom completely removes this contention, as each thread has its own instance of Random and, consequently, its own confined seed.**
 
+### current() in ThreadLocalRandom
+
+This method returns ThreadLocalRandom instance for the current thread. ThreadLocalRandom can be initialized as below.
+
+```java
+ThreadLocalRandom  random = ThreadLocalRandom.current();
+```
+
+nextInt(int least,int bound) returns the next pseudo number . We can pass the least limit and max limit. There are more method like nextDouble, nextLong. So finally we can get random number as below
+
+```java
+int i = ThreadLocalRandom.current().nextInt(1, 10);
+```
+
+now writing a simple implementation of ThreadLocalRandom.
+
+```java
+public class Day57 {
+	public static void main(String[] args) {
+		ForkJoinPool pool = new ForkJoinPool();
+		TestTask task1 = new TestTask("Task one");
+		TestTask task2 = new TestTask("Task two");
+		pool.invoke(task1);
+		pool.invoke(task2);
+    }
+}	
+class TestTask extends ForkJoinTask<String> {
+	private String str = "";
+	public TestTask(String str){
+		this.str = str;
+	}
+	private static final long serialVersionUID = 1L;
+	@Override
+	protected boolean exec() {
+	   int i = ThreadLocalRandom.current().nextInt(1, 10);		
+	   System.out.println("ThreadLocalRandom for "+str+":"+i);
+	   return true;
+	}
+	@Override
+	public String getRawResult() {
+		return "";
+	}
+	@Override
+	protected void setRawResult(String value) {
+	}
+}
+```
