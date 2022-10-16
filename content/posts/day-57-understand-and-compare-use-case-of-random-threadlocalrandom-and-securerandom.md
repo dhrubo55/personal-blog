@@ -178,3 +178,5 @@ class TestTask extends ForkJoinTask<String> {
 	}
 }
 ```
+
+ In the example there is a ForkJoinTask implementation. Also inside exec() method of ForkJoinTask, we obtained the random number by ThreadLocalRandom. We have run two ForkJoinTask to test the random number generation. Run the example many time and every time you will get random numbers. Sample output is as below. 
