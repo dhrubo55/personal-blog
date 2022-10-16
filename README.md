@@ -1,6 +1,6 @@
 # :man_technologist: Dhrubo's Blog
 
-[![Website][Website]][Personal Website] [![Netlify Deploy][Netlify Deploy Badge]][Netlify Deploy] [![LinkedIn][My LinkedIn Badge]][My LinkedIn] [![Quora profile][My Quora Badge]][My Quora] [![Ask Me Anything !][My AMA Badge]][My AMA] [![Twitter Follow][My Twitter Badge]][My Twitter]
+[![Website][Website]][Personal Website] [![Netlify Deploy][Netlify Deploy Badge]][Netlify Deploy] [![LinkedIn][My LinkedIn Badge]][My LinkedIn] [![Twitter Follow][My Twitter Badge]][My Twitter]
 
 This repository hosts the tools, assets & themes for my [personal website][Personal Website]. The site is statically generated with [Hugo][Hugo Landing Page] & the [PaperMod][Hugo-PaperMod] theme. Hugo which is a Static Site Generator(SSG) built with [Golang][Go Landing Page] generates the static contents for the site to be deployed to [Netlify][Netlify Landing Page].
 
