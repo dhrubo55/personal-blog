@@ -223,7 +223,7 @@ Or maybe your question isn't related to this project, then check out my [*Ask Me
 [Project Discussion Threads]: https://github.com/dhurbo55/personal-blog/discussions
 [Project Contributors]: https://github.com/dhrubo55/personal-blog/graphs/contributors
 <!-- ? Miscellaneous Related Links -->
-[Netlify Deploy]: https://github.com/Jarmos-san/blog/actions?query=workflow%3A%22Netlify+Deploy%22
+[Netlify Deploy]: https://github.com/dhrubo55/personal-blog/actions?query=workflow%3A%22Netlify+Deploy%22
 [Git Checkout Action License]: https://github.com/actions/checkout/blob/main/LICENSE
 [Hugo Action License]: https://github.com/peaceiris/actions-hugo/blob/main/LICENSE
 [Automerge Action License]: https://github.com/pascalgn/automerge-action/blob/master/LICENSE
