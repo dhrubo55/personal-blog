@@ -219,9 +219,7 @@ SplittableRandom is a really interesting class, that was added in the scope of J
 
 The differences with a Random class are:
 
-it passes a Diehard test, that means it can generate more quality pseudorandom numbers.
-it’s not thread-safe, but faster than Random.
-method split creates a new SplittableRandom instance that shares no mutable state with the current instance. It’s useful for parallel streams.
+It passes a `Diehard` test, that means it can generate more quality pseudorandom numbers. it’s not thread-safe, but faster than Random and method split creates a new SplittableRandom instance that shares no mutable state with the current instance. It’s useful for parallel streams.
 it doesn’t extend a Random class like SecureRandom and ThreadLocalRandom.
 Let’s take a look at code examples.
 
@@ -235,4 +233,4 @@ Generate an array of random ints in the range:
 ```java
 new SplittableRandom().ints(5, 1, 10).toArray()
 ```
-As you see this class has stream-friendly API. Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well.
+As you see this class has stream-friendly API. Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well. Java 17 
