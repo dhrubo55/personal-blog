@@ -213,4 +213,24 @@ SecureRandom secureRandom = SecureRandom.getInstance("NativePRNG");
 IntStream secureRandomInts = secureRandom.getInts(streamSize);
 ```
 
-### Splitab
+### SplittableRandom
+
+SplittableRandom is a really interesting class, that was added in the scope of Java 8.
+
+The differences with a Random class are:
+
+it passes a Diehard test, that means it can generate more quality pseudorandom numbers.
+it’s not thread-safe, but faster than Random.
+method split creates a new SplittableRandom instance that shares no mutable state with the current instance. It’s useful for parallel streams.
+it doesn’t extend a Random class like SecureRandom and ThreadLocalRandom.
+Let’s take a look at code examples.
+
+The most common task is to generate a random number in the range:
+
+new SplittableRandom().nextInt(1, 5)
+Generate an array of random ints in the range:
+
+new SplittableRandom().ints(5, 1, 10).toArray()
+As you see this class has stream-friendly API. Personally, I really like it!
+
+Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well.
