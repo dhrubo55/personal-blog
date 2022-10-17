@@ -70,4 +70,10 @@ The vast majority of websites only have one A record, but it is possible to have
 
 CNAME:
 
+The `canonical name` (CNAME) record is used in lieu of an A record, when a domain or subdomain is an alias of another domain. All CNAME records must point to a domain, never to an IP address. Imagine a game where each level points to another level of game. So final level points to the game boss. A domain with a CNAME record is like a level that can point you to another level (another domain with a CNAME record) or to the boss (a domain with an A record).
+
+For example, suppose blog.example.com has a CNAME record with a value of ‘example.com’ (without the ‘blog’). This means when a DNS server hits the DNS records for blog.example.com, it actually triggers another DNS lookup to example.com. It returns example.com’s IP address via its A record. In this case we would say that example.com is the canonical name (or true name) of blog.example.com.
+
+Sometimes, when sites have subdomains such as blog.example.com or shop.example.com, those subdomains will have CNAME records. Those CNAME point to a root domain (example.com). This way if the IP address of the host changes, only the DNS A record for the root domain needs to be updated. So all the CNAME records will follow along with whatever changes are made to the root.
+
 Deployment structure
