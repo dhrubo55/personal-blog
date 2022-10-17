@@ -190,3 +190,11 @@ SecureRandom random = new SecureRandom();
 byte[] values = new byte[20];
 random.nextBytes(values);
 ```
+another way of creating instance will be
+
+```java
+SecureRandom random = SecureRandom.getInstanceStrong();
+byte[] values = new byte[20];
+random.nextBytes(values);
+```
+this `getInstanceStrong()` is a blocking call.
