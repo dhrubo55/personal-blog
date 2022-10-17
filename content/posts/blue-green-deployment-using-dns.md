@@ -94,5 +94,9 @@ GUI DNS application will help us to write DNS query. But we can easily use a cmd
 
 So the total Blue Green deployment process will be something like this
 
-1. Deploy a version of our application using `A` Record
-2. 
+1. Deploy a version of our application in a container (Blue) using `A` Record
+2. Create a `CNAME` record for our application in this case Blue container
+3. Deploy the new version of our application in a container (Green) using `A` record
+4. Do testing and regression on green deployment
+5. Point our `CNAME` record to new `A` (green container) record
+6. Destroy the blue container
