@@ -88,9 +88,9 @@ For test purpose we are going to do blue green deployment using docker container
 2. Blue deployment
 3. Green Deployment
 
-GUI DNS application will help us to write DNS query. But we can easily use a cmd application which can be automated through docker compose for easiers blue-green switching.
+GUI DNS application will help us to write DNS query. But we can easily use a cmd application which can be automated through docker compose for easier blue-green switching.
 
-![Deplyoment Structure](/images-from-blog/v1666002261/images-from-blog/Untitled_Diagram.drawio_fnp9cp.png)
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1666002261/images-from-blog/Untitled_Diagram.drawio_fnp9cp.png)
 
 So the total Blue Green deployment process will be something like this
 
