@@ -186,4 +186,7 @@ securerandom.source=file:/dev/random
 Way of initializing a SecureRandom and get a cryptographycally strong secure random numbers.
 
 ```java
+SecureRandom random = new SecureRandom();
+byte[] values = new byte[20];
+random.nextBytes(values);
 ```
