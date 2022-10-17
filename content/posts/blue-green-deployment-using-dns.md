@@ -104,4 +104,4 @@ So the total Blue Green deployment process will be something like this
 
 #### Deploy a version of our application in a container (Blue) using `A` Record
 
-In order to make use of blue-green deployment via DNS we first need to deploy a running version of our software. We can deploy a single host or many and create a DNS Record pointing their IP addresses. This will let us access our service without needing to know the hosts IP addresses. 
+In order to make use of blue-green deployment via DNS we first need to deploy a running version of our software. We can deploy a single container or many and create a DNS Record pointing their IP addresses. This will let us access our service without needing to know the container IP addresses. 
