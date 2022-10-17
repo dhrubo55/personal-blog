@@ -190,6 +190,7 @@ SecureRandom random = new SecureRandom();
 byte[] values = new byte[20];
 random.nextBytes(values);
 ```
+
 another way of creating instance will be
 
 ```java
@@ -197,9 +198,10 @@ SecureRandom random = SecureRandom.getInstanceStrong();
 byte[] values = new byte[20];
 random.nextBytes(values);
 ```
+
 this `getInstanceStrong()` is a blocking call.
 
- Difference between them : the first instance uses `/dev/urandom`. The second instance uses `/dev/random`. /dev/random blocks the thread if there isn't enough randomness available. Whereas /dev/urandom will never block.
+Difference between them : the first instance uses `/dev/urandom`. The second instance uses `/dev/random`. /dev/random blocks the thread if there isn't enough randomness available. Whereas /dev/urandom will never block.
 
 Believe it or not, there is no advantage in using /dev/random over /dev/urandom. They use the same pool of randomness under the hood. They are equally secure. If you want to safely generate random numbers, you should use /dev/urandom.
 
@@ -228,9 +230,11 @@ The most common task is to generate a random number in the range:
 ```java
 new SplittableRandom().nextInt(1, 5)
 ```
+
 Generate an array of random ints in the range:
 
 ```java
 new SplittableRandom().ints(5, 1, 10).toArray()
 ```
-As you see this class has stream-friendly API. Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well. Java 17 
+
+As you see this class has stream-friendly API. Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well. Java 17 added `RandomGenerator` interface and SplittableRandom now extends that as we can see from the Figure.
