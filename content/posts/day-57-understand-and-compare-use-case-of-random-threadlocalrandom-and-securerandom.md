@@ -5,7 +5,7 @@ description = "Understanding details and compare use cases  of Random, ThreadLoc
 showtoc = false
 slug = "/java/100DaysOfJava/day57"
 summary = "Understanding details and compare use cases  of Random, ThreadLocalRandom and SecureRandom"
-title = "Day 57: Understand and compare use case of Random, ThreadLocalRandom and SecureRandom"
+title = "Day 57: All about Random in Java ( Random, SecureRandom,ThreadLocalRandom and SplittableRandom)"
 [cover]
 alt = "day57"
 caption = "day57"
