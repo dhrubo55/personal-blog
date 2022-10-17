@@ -177,7 +177,13 @@ The file which controls the configuration of the SecureRandom API is located at:
 
 We can select the source of seed data for SecureRandom by using the entropy gathering device specified in securerandom.source property in java.security file.
 
-E.g. 
+E.g.
+
 ```securerandom.source=file:/dev/urandom
-OR securerandom.source=file:/dev/random
+securerandom.source=file:/dev/random
+```
+
+Way of initializing a SecureRandom and get a cryptographycally strong secure random numbers.
+
+```java
 ```
