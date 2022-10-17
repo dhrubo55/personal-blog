@@ -76,4 +76,8 @@ For example, suppose blog.example.com has a CNAME record with a value of ‘exam
 
 Sometimes, when sites have subdomains such as blog.example.com or shop.example.com, those subdomains will have CNAME records. Those CNAME point to a root domain (example.com). This way if the IP address of the host changes, only the DNS A record for the root domain needs to be updated. So all the CNAME records will follow along with whatever changes are made to the root.
 
+| green.example.com | record type | value | TTL |
+| --- | --- | --- | --- |
+|  | CNAME | example.com | 3600 |
+
 Deployment structure
