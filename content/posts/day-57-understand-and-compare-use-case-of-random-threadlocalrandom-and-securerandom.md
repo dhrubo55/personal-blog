@@ -227,10 +227,12 @@ Let’s take a look at code examples.
 
 The most common task is to generate a random number in the range:
 
+```java
 new SplittableRandom().nextInt(1, 5)
+```
 Generate an array of random ints in the range:
 
+```java
 new SplittableRandom().ints(5, 1, 10).toArray()
-As you see this class has stream-friendly API. Personally, I really like it!
-
-Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well.
+```
+As you see this class has stream-friendly API. Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well.
