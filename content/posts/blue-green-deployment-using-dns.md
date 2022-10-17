@@ -82,12 +82,10 @@ Sometimes, when sites have subdomains such as blog.example.com or shop.example.c
 
 Deployment structure
 
-For test purpose we are going to do blue green deployment using docker containers. Here we will create 3 containers. 
+For test purpose we are going to do blue green deployment using docker containers. Here we will create 3 containers.
 
 1. GUI DNS server application
 2. Blue deployment
 3. Green Deployment
 
 GUI DNS application will help us to write DNS query. But we can easily use a cmd application which can be automated through docker compose for easiers blue-green switching.
-
-
