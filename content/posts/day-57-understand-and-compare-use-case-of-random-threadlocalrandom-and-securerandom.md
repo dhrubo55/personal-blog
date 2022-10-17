@@ -238,3 +238,5 @@ new SplittableRandom().ints(5, 1, 10).toArray()
 ```
 
 As you see this class has stream-friendly API. Since Java 10 was added SplittableRandom.nextBytes, so you can use it as well. Java 17 added `RandomGenerator` interface and SplittableRandom now extends that as we can see from the Figure.
+
+Will post another blog post for SplittableRandom and how its used in parallel context.
