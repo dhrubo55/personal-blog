@@ -198,3 +198,11 @@ byte[] values = new byte[20];
 random.nextBytes(values);
 ```
 this `getInstanceStrong()` is a blocking call.
+
+ Difference between them : the first instance uses `/dev/urandom`. The second instance uses `/dev/random`. /dev/random blocks the thread if there isn't enough randomness available. Whereas /dev/urandom will never block.
+
+Believe it or not, there is no advantage in using /dev/random over /dev/urandom. They use the same pool of randomness under the hood. They are equally secure. If you want to safely generate random numbers, you should use /dev/urandom.
+
+The only time you would want to call /dev/random is when the machine is first booting and entropy has not yet accumulated. Most systems will save off entropy before shutting down. so that some is available when booting. so this is not an issue if you run directly on hardware.
+
+But, it might be an issue if you don't run directly on hardware. If you are using a `container` based solution like Docker or CoreOS. You might start off from an initial image, and so may not be able to save state between reboots. And in a multi-tenant container solution, there is only one shared /dev/random which may block.But the work around in these cases is to seed /dev/random with a userspace solution, either using an `entropy server for pollinate`, or a `CPU time stamp` counter for haveged. Either way, by the time the JVM starts, the system's entropy pool should already be up to the job.
