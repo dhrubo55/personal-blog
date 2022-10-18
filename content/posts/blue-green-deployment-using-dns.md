@@ -141,3 +141,9 @@ In this phase the green deployment is completed and we can proceed to change the
 
 After deployment we can do integration, functional and regression testing on the application to gain confidence whethere its working properly. If we run test on production data then we need to be very careful. Otherwise if there is dummy data to run those test and see functionaly then its ok to do. 
 
+
+
+#### Point our `CNAME` record to new `A` (green container) record
+
+To change and point users to the new  application version. we need to update our CNAME record to point at the new A record. This should be quick but depending on the time to live (TTL) of the DNS record may take some time to propagate. since DNS is cached in multiple places based on the TTL provided.
+
