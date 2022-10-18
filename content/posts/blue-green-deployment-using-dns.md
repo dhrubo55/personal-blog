@@ -113,9 +113,11 @@ The next DNS record we need to create is a CNAME. A CNAME is an alias from one h
  
  | CNAME | A |
  | ----- | ---- |
- | app.mohibulsblog.com | blue-app.mohibulsblog.com |
+ | app.mohibul.com | blue-app.mohibul.com |
 
 
 Where `blue-webapp.mohibulsblog.com` is an `A` record of something like
 
-| 
+| app.mohibul.com | record type | value | TTL |
+| --- | --- | --- | --- |
+| @ | A | 192.0.2.1 | 3600 |
