@@ -108,3 +108,10 @@ In order to make use of blue-green deployment via DNS we first need to deploy a 
 #### Create a `CNAME` record for our application in this case Blue container
 
 The next DNS record we need to create is a CNAME. A CNAME is an alias from one hostname to another. This means it can be used for redirects or to provide many names for a single service. We should provision a CNAME that our customers use for accessing our service. So that can we have control of the routing.
+
+ Here is an example of what the initial CNAME and A record might look like:
+ 
+ | CNAME | A |
+ | ----- | ---- |
+ | webapp.mohibulsblog.com | blue-webapp.mohibulsblog.com |
+
