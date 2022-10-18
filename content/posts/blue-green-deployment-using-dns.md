@@ -146,4 +146,7 @@ After deployment we can do integration, functional and regression testing on the
 #### Point our `CNAME` record to new `A` (green container) record
 
 To change and point users to the new  application version. we need to update our CNAME record to point at the new A record. This should be quick but depending on the time to live (TTL) of the DNS record may take some time to propagate. since DNS is cached in multiple places based on the TTL provided.
-
+ 
+ | CNAME | A |
+ | ----- | ---- |
+ | app.mohibul.com | green-app.mohibul.com |
