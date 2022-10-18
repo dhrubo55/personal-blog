@@ -128,3 +128,7 @@ Where `blue-webapp.mohibulsblog.com` is an `A` record of something like
 #### Deploy the new version of our application in a container (Green) using `A` record
 
 After our system is running and users are using the `CNAME` for accessing our service. we can deploy a new version of the software. It can be deployed right next to our current version. once deployed we should be able to access it via its own A record.
+
+After deployment we can do integration, functional and regression testing on the application to gain confidence whethere its working properly. If we run test on production data then we need to be very careful. Otherwise if there is dummy data to run those test and see functionaly then its ok to do. 
+
+In this phase the green deployment is completed and we can proceed to change the dns records to do blue-green deployment.
