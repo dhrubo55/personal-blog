@@ -118,7 +118,7 @@ The next DNS record we need to create is a CNAME. A CNAME is an alias from one h
 
 Where `blue-webapp.mohibulsblog.com` is an `A` record of something like
 
-| app.mohibul.com | record type | value | TTL |
+| blue-app.mohibul.com | record type | value | TTL |
 | --- | --- | --- | --- |
 | @ | A | 192.0.2.1 | 3600 |
 
@@ -131,4 +131,8 @@ After our system is running and users are using the `CNAME` for accessing our se
 
 After deployment we can do integration, functional and regression testing on the application to gain confidence whethere its working properly. If we run test on production data then we need to be very careful. Otherwise if there is dummy data to run those test and see functionaly then its ok to do. 
 
-In this phase the green deployment is completed and we can proceed to change the dns records to do blue-green deployment.
+In this phase the green deployment is completed and we can proceed to change the dns records to do blue-green deployment. In this phase we assign the new container's ip an `A` record.
+
+| green-app.mohibul.com | record type | value | TTL |
+| --- | --- | --- | --- |
+| @ | A | 192.0.2.5 | 3600 |
