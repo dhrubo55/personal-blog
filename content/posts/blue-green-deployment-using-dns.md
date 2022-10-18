@@ -126,3 +126,5 @@ Where `blue-webapp.mohibulsblog.com` is an `A` record of something like
 
 
 #### Deploy the new version of our application in a container (Green) using `A` record
+
+After our system is running and users are using the `CNAME` for accessing our service. we can deploy a new version of the software. It can be deployed right next to our current version. once deployed we should be able to access it via its own A record.
