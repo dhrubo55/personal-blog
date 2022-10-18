@@ -121,3 +121,8 @@ Where `blue-webapp.mohibulsblog.com` is an `A` record of something like
 | app.mohibul.com | record type | value | TTL |
 | --- | --- | --- | --- |
 | @ | A | 192.0.2.1 | 3600 |
+
+
+
+
+#### Deploy the new version of our application in a container (Green) using `A` record
