@@ -101,7 +101,10 @@ So the total Blue Green deployment process will be something like this
 5. Point our `CNAME` record to new `A` (green container) record
 6. Destroy the blue container
 
-
 #### Deploy a version of our application in a container (Blue) using `A` Record
 
-In order to make use of blue-green deployment via DNS we first need to deploy a running version of our software. We can deploy a single container or many and create a DNS Record pointing their IP addresses. This will let us access our service without needing to know the container IP addresses. 
+In order to make use of blue-green deployment via DNS we first need to deploy a running version of our software. We can deploy a single container or many and create a DNS Record pointing their IP addresses. This will let us access our service without needing to know the container IP addresses.
+
+#### Create a `CNAME` record for our application in this case Blue container
+
+The next DNS record we need to create is a CNAME. A CNAME is an alias from one hostname to another. This means it can be used for redirects or to provide many names for a single service. We should provision a CNAME that our customers use for accessing our service. So that can we have control of the routing.
