@@ -50,8 +50,6 @@ The Domain Name System (DNS) is the phonebook of the Internet. DNS translates hu
 
 All computers on the Internet, from your smart phone or laptop to the servers that serve content for massive retail websites find and communicate with one another by using numbers. These numbers are known as **IP addresses**. When you open a web browser and go to a website, you don't have to remember and enter a long number. Instead, you can enter a **domain name** like example.com and still end up in the right place.
 
-
-
 ### What is CNAME and A record
 
 So to understand what is CNAME and A record we first need to understand what is a DNS record. DNS records (aka zone files) are instructions that live in authoritative DNS servers . Authoritative servers provide information about a domain. Including what IP address associates with that domain and how to handle requests for that domain. These records consist of a series of text files written in what is known as DNS syntax. DNS syntax is a string of characters used as commands that tell the DNS server what to do. All DNS records also have a ‘TTL’, which stands for time-to-live. This indicates how often a DNS server will refresh that record.
@@ -115,21 +113,17 @@ In order to make use of blue-green deployment via DNS we first need to deploy a 
 
 The next DNS record we need to create is a CNAME. A CNAME is an alias from one hostname to another. This means it can be used for redirects or to provide many names for a single service. We should provision a CNAME that our customers use for accessing our service. So that can we have control of the routing.
 
- Here is an example of what the initial CNAME and A record might look like:
- 
- | CNAME | A |
- | ----- | ---- |
- | app.mohibul.com | blue-app.mohibul.com |
+Here is an example of what the initial CNAME and A record might look like:
 
+| CNAME | A |
+| --- | --- |
+| app.mohibul.com | blue-app.mohibul.com |
 
 Where `blue-webapp.mohibulsblog.com` is an `A` record of something like
 
 | blue-app.mohibul.com | record type | value | TTL |
 | --- | --- | --- | --- |
 | @ | A | 192.0.2.1 | 3600 |
-
-
-
 
 #### Deploy the new version of our application in a container (Green) using `A` record
 
@@ -141,28 +135,20 @@ In this phase the green deployment is completed and we can proceed to change the
 | --- | --- | --- | --- |
 | @ | A | 192.0.2.5 | 3600 |
 
-
-
 #### Do testing and regression on green deployment
 
-After deployment we can do integration, functional and regression testing on the application to gain confidence whethere its working properly. If we run test on production data then we need to be very careful. Otherwise if there is dummy data to run those test and see functionaly then its ok to do. 
-
-
+After deployment we can do integration, functional and regression testing on the application to gain confidence whethere its working properly. If we run test on production data then we need to be very careful. Otherwise if there is dummy data to run those test and see functionaly then its ok to do.
 
 #### Point our `CNAME` record to new `A` (green container) record
 
 To change and point users to the new  application version. we need to update our CNAME record to point at the new A record. This should be quick but depending on the time to live (TTL) of the DNS record may take some time to propagate. since DNS is cached in multiple places based on the TTL provided.
- 
- | CNAME | A |
- | ----- | ---- |
- | app.mohibul.com | green-app.mohibul.com |
- 
+
+| CNAME | A |
+| --- | --- |
+| app.mohibul.com | green-app.mohibul.com |
 
 #### Destroy the blue container
 
 After successful deployment and switching we can safely destroy the previous environment by deleting it or uninstalling any software that is left running. This can happen immediately or after some time but should be done as needed based on specific requirements.
 
-
-
-
-**In my next blog post will show a demo by running these containers and switching
+In my next blog post will show a demo by running these containers and switching
