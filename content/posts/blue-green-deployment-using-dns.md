@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-### TLDR (Too Long Didn't Read)
+##### TLDR (Too Long Didn't Read)
 
 Blue-green deployments is a process to minimizing risk and downtime of software releases. DNS based enviorment switching is one of the way. There are many variations of this process but it is important to keep the process simple.
 
