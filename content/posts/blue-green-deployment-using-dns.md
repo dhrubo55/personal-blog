@@ -48,6 +48,8 @@ This ability to simply roll traffic back to the existing production environment 
 
 The Domain Name System (DNS) is the phonebook of the Internet. DNS translates human readable domain names (for example, www.amazon.com) to machine readable IP addresses (for example, 192.0.2.44) .
 
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1666160051/images-from-blog/Feo0RvAXEAIpBmK_flbann.jpg)
+
 All computers on the Internet, from your smart phone or laptop to the servers that serve content for massive retail websites find and communicate with one another by using numbers. These numbers are known as **IP addresses**. When you open a web browser and go to a website, you don't have to remember and enter a long number. Instead, you can enter a **domain name** like example.com and still end up in the right place.
 
 ### What is CNAME and A record
