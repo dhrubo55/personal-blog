@@ -150,3 +150,8 @@ To change and point users to the new  application version. we need to update our
  | CNAME | A |
  | ----- | ---- |
  | app.mohibul.com | green-app.mohibul.com |
+ 
+
+#### Destroy the blue container
+
+After successful deployment and switching we can safely destroy the
