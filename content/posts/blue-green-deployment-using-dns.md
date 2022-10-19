@@ -154,4 +154,4 @@ To change and point users to the new  application version. we need to update our
 
 #### Destroy the blue container
 
-After successful deployment and switching we can safely destroy the
+After successful deployment and switching we can safely destroy the previous environment by deleting it or uninstalling any software that is left running. This can happen immediately or after some time but should be done as needed based on specific requirements.
