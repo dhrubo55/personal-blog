@@ -50,6 +50,8 @@ The Domain Name System (DNS) is the phonebook of the Internet. DNS translates hu
 
 All computers on the Internet, from your smart phone or laptop to the servers that serve content for massive retail websites find and communicate with one another by using numbers. These numbers are known as **IP addresses**. When you open a web browser and go to a website, you don't have to remember and enter a long number. Instead, you can enter a **domain name** like example.com and still end up in the right place.
 
+
+
 ### What is CNAME and A record
 
 So to understand what is CNAME and A record we first need to understand what is a DNS record. DNS records (aka zone files) are instructions that live in authoritative DNS servers . Authoritative servers provide information about a domain. Including what IP address associates with that domain and how to handle requests for that domain. These records consist of a series of text files written in what is known as DNS syntax. DNS syntax is a string of characters used as commands that tell the DNS server what to do. All DNS records also have a ‘TTL’, which stands for time-to-live. This indicates how often a DNS server will refresh that record.
