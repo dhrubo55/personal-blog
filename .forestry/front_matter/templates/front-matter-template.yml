@@ -115,4 +115,5 @@ pages:
 - content/posts/day-55-understanding-static-and-instance-initializer-in-java-classes-and.md
 - content/posts/day-56-zero-length-array-and-its-use.md
 - content/posts/day-57-understand-and-compare-use-case-of-random-threadlocalrandom-and-securerandom.md
+- content/posts/day-58-mocking-void-methods-using-argumentcapture-and-answering.md
 - content/posts/git-troubleshooting-6-helpful-command-with-explanations.md
