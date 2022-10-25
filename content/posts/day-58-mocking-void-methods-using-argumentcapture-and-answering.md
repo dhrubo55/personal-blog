@@ -31,5 +31,6 @@ when using doNothing() as its name suggest it does nothing. So when verifying we
 
 So before going into how this helps mocking void method. Let us learn about what is `ArgumentCaptor`
 
-#### ArugmentCaptor 
+#### ArugmentCaptor
 
+ArgumentCaptor allows us to capture an argument passed to a method to inspect it. This is useful when we can't access the argument outside of the method we'd like to test.
