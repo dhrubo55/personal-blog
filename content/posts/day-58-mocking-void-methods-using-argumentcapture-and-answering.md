@@ -42,4 +42,4 @@ To see it in action first we need to setup a method and test.
 ```
 
 
-**This use case is well suited when the arguments is manipulated in the void method we are mocking.** 
+**This use case is well suited when the arguments is manipulated in the void method we are mocking.**
