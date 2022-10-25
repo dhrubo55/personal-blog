@@ -34,3 +34,12 @@ So before going into how this helps mocking void method. Let us learn about what
 #### ArugmentCaptor
 
 ArgumentCaptor allows us to capture an argument passed to a method to inspect it. This is useful when we can't access the argument outside of the method we'd like to test. 
+
+To see it in action first we need to setup a method and test. 
+
+```java
+
+```
+
+
+**This use case is well suited when the arguments is manipulated in the void method we are mocking.** 
