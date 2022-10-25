@@ -14,3 +14,22 @@ image = ""
 relative = false
 
 +++
+When unit testing any java class which have void methods inside it and also needed to be mocked. Then we mock them in 4 ways using mockito's mocking method's and they are -
+
+1. doNothing() & ArgumentCapture
+2. doThrow()
+3. doAnswer()
+4. doCallRealMethod()
+
+### doNothing() :
+
+when using doNothing() as its name suggest it does nothing. So when verifying we need to verify if the method is called or not.
+
+
+
+### doNothing() + ArgumentCaptor :
+
+So before going into how this helps mocking void method. Let us learn about what is `ArgumentCaptor`
+
+#### ArugmentCaptor 
+
