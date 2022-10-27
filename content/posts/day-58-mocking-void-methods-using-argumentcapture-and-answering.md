@@ -46,7 +46,7 @@ public class Day58 {
     @Override
     public void printBookById(long id, Book book) {
         BookMeta meta = new BookMeta(id);
-        book.addBookMetaInfo(meta);
+        meta.addBookMetaInfo(book);
         System.out.println(book.toString());
     }
 ```
