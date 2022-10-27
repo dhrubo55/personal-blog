@@ -39,7 +39,17 @@ To see it in action first we need to setup a method and test.
 
 ```java
 
-```
+public class Day58 {
 
+    private final BookMeta bookMeta;
+    
+    @Override
+    public void printBookById(long id, Book book) {
+        BookMeta meta = new BookMeta(id);
+        book.addBookMetaInfo(meta);
+        System.out.println(book.toString());
+    }
+```
+in this code we can see there is an implementation of a `BookService`. In that a method is implemented named `findBookById` which uses another 2 services named `BookEntityService` and `BookMetaEntityService` each provides some book and some related information.
 
 **This use case is well suited when the arguments is manipulated in the void method we are mocking.**
