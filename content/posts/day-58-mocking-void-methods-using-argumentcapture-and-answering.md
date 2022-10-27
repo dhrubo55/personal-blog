@@ -77,3 +77,5 @@ in this code we can see there is an implementation of a `BookService`. In that a
 we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture it while verifying the call `addBookMetaInfo` call and then verify the value with assertion.
 
 **This use case is well suited when the arguments is manipulated in the void method we are mocking.**
+
+So by using `doNothing()` rather `verify()` we can get the void method unit covered
