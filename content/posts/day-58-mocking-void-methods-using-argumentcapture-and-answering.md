@@ -78,4 +78,3 @@ we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture i
 
 **This use case is well suited when the arguments is manipulated in the void method we are mocking.**
 
-So by using `doNothing()` rather `verify()` we can get the void method unit covered
