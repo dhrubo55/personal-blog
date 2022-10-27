@@ -69,10 +69,11 @@ public class BookTest {
   
     Mockito.verify(bookMeta).addBookMetaInfo(bookCap.capture());
     Book capturedBook = bookCap.getValue();
-    assertThat(capturedBook.getTitle()).isEqualTo(bookTitle);
+    assertEquals(capturedBook.getTitle(), bookTitle);
 }
 ```
-
 in this code we can see there is an implementation of a `BookService`. In that a method is implemented named `findBookById` which uses another 2 services named `BookEntityService` and `BookMetaEntityService` each provides some book and some related information.
+
+we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture it while verifying the call `addBookMetaInfo` call and then verify the value with assertion.
 
 **This use case is well suited when the arguments is manipulated in the void method we are mocking.**
