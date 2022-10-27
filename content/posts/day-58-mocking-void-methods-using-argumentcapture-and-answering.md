@@ -64,6 +64,8 @@ public class BookTest {
     
     @Captor
 	ArgumentCaptor<Book> bookCap;
+    
+    bookService.printBook(1, new Book(bookTitle));
   
     Mockito.verify(bookMeta).addBookMetaInfo(bookCap.capture());
     Book capturedBook = bookCap.getValue();
