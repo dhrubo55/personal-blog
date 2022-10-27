@@ -39,7 +39,7 @@ To see it in action first we need to setup a method and test.
 
 ```java
 
-public class Day58 {
+public class BookService {
 
     private final BookMeta bookMeta;
     
@@ -50,6 +50,27 @@ public class Day58 {
         System.out.println(book.toString());
     }
 ```
+So now to test this printBook method we need to setup a test
+
+```java
+@RunWith(MockitoJUnitRunner.class)
+public class BookTest {
+	String bookTitle = "Kill It With Fire"
+    @Mock
+    BookMeta bookMeta;
+
+    @InjectMocks
+    BookService bookService;
+    
+    @Captor
+	ArgumentCaptor<Book> bookCap;
+  
+    Mockito.verify(bookMeta).addBookMetaInfo(bookCap.capture());
+    Book capturedBook = bookCap.getValue();
+    assertThat(capturedBook.getTitle()).isEqualTo(bookTitle);
+}
+```
+
 in this code we can see there is an implementation of a `BookService`. In that a method is implemented named `findBookById` which uses another 2 services named `BookEntityService` and `BookMetaEntityService` each provides some book and some related information.
 
 **This use case is well suited when the arguments is manipulated in the void method we are mocking.**
