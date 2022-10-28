@@ -115,3 +115,4 @@ public void givenNull_addThrows() {
     scratch.add(1, null);
 }
 ```
+
