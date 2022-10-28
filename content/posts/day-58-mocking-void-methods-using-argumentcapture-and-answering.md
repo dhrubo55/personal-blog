@@ -104,7 +104,7 @@ we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture i
 
 This method can help to verify if a method throws any exception and based on that we can test some execution path.
 
-In the `add()` method we can check for addition overflow and throw a custom exception so that we can verify the execution path.
+In the `add()` method we can check for addition overflow and throw a exception so that we can verify the execution path.
 
 ```java
 @Test(expected = Exception.class)
