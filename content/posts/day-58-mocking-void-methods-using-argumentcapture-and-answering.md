@@ -34,8 +34,8 @@ when using doNothing() as its name suggest it does nothing. So when verifying we
         }
     }
 ```
-if this add() method is tested with doNothing() it will just invoke it and then verify whether it was invoked or not. So the test would be
 
+if this add() method is tested with doNothing() it will just invoke it and then verify whether it was invoked or not. So the test would be
 
 ```java
 @Test
@@ -47,16 +47,15 @@ public void whenAddCalledVerified() {
 }
 ```
 
-
 ### doNothing() + ArgumentCaptor :
 
 So before going into how this helps mocking void method. Let us learn about what is `ArgumentCaptor`
 
 #### ArugmentCaptor
 
-ArgumentCaptor allows us to capture an argument passed to a method to inspect it. This is useful when we can't access the argument outside of the method we'd like to test. 
+ArgumentCaptor allows us to capture an argument passed to a method to inspect it. This is useful when we can't access the argument outside of the method we'd like to test.
 
-To see it in action first we need to setup a method and test. 
+To see it in action first we need to setup a method and test.
 
 ```java
 
@@ -71,6 +70,7 @@ public class BookService {
         System.out.println(book.toString());
     }
 ```
+
 So now to test this printBook method we need to setup a test
 
 ```java
@@ -93,6 +93,7 @@ public class BookTest {
     assertEquals(capturedBook.getTitle(), bookTitle);
 }
 ```
+
 in this code we can see there is an implementation of a `BookService`. In that a method is implemented named `findBookById` which uses another 2 services named `BookEntityService` and `BookMetaEntityService` each provides some book and some related information.
 
 we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture it while verifying the call `addBookMetaInfo` call and then verify the value with assertion.
@@ -101,3 +102,6 @@ we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture i
 
 ### doThrow():
 
+This method can help to verify if a method throws any exception and based on that we can test some execution path.
+
+In the `add()` method we can check for addition overflow and throw a custom exception so that we can verify the execution path.
