@@ -26,6 +26,7 @@ When unit testing any java class which have void methods inside it and also need
 when using doNothing() as its name suggest it does nothing. So when verifying we need to verify if the method is called or not.
 
 ```java
+
 ```
 
 
