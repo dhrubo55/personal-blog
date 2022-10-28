@@ -107,5 +107,4 @@ This method can help to verify if a method throws any exception and based on tha
 In the `add()` method we can check for addition overflow and throw a custom exception so that we can verify the execution path.
 
 ```java
-
 ```
