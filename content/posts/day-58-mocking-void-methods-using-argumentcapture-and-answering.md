@@ -26,9 +26,26 @@ When unit testing any java class which have void methods inside it and also need
 when using doNothing() as its name suggest it does nothing. So when verifying we need to verify if the method is called or not.
 
 ```java
-
+  void add(Number a, Number b) {
+        if (a instanceof Integer && b instanceof  Integer) {
+            addInt(a.intValue(), b.intValue());
+        } else if (a instanceof Double && b instanceof Double) {
+            addDouble(a.doubleValue(), b.doubleValue());
+        }
+    }
 ```
+if this add() method is tested with doNothing() it will just invoke it and then verify whether it was invoked or not. So the test would be
 
+
+```java
+@Test
+public void whenAddCalledVerified() {
+    Scratch scratch = mock(Scratch.class);
+    doNothing().when(scratch).add(anyInt(), anyInt());
+ 
+    verify(scratch, times(1)).add(1, 1);
+}
+```
 
 
 ### doNothing() + ArgumentCaptor :
@@ -81,4 +98,3 @@ in this code we can see there is an implementation of a `BookService`. In that a
 we define an `ArgumentCaptor<Book>` with annotation `@Captor`. then we capture it while verifying the call `addBookMetaInfo` call and then verify the value with assertion.
 
 **This use case is well suited when the arguments is manipulated in the void method we are mocking.**
-
