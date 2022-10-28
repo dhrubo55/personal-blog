@@ -110,8 +110,8 @@ In the `add()` method we can check for addition overflow and throw a custom exce
 @Test(expected = Exception.class)
 public void givenNull_addThrows() {
     Scratch scratch = mock(Scratch.class);
-    doThrow().when(myList).add(isA(Integer.class), isNull());
+    doThrow().when(scratch).add(any(), null);
  
-    myList.add(0, null);
+    scratch.add(1, null);
 }
 ```
