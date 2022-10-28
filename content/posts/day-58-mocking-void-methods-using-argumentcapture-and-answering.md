@@ -109,7 +109,7 @@ In the `add()` method we can check for addition overflow and throw a custom exce
 ```java
 @Test(expected = Exception.class)
 public void givenNull_addThrows() {
-    MyList myList = mock(MyList.class);
+    Scratch scratch = mock(Scratch.class);
     doThrow().when(myList).add(isA(Integer.class), isNull());
  
     myList.add(0, null);
