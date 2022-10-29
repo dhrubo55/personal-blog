@@ -163,3 +163,16 @@ public void testOnSuccess() {
 
 ### doCallRealMethod() 
 
+By calling this method we can achive partial mocking of method. When we Mock an object and then make a reference to any method using mocked object reference. java never makes a call to that method and looks for mocked value to be returned or null if none specified. But If we want that to be overridden and want java to make actual method call upon using mocked object reference, this method can be used.
+
+
+```java
+@Test
+public void whenAddCalledRealMethodCalled() {
+    Scratch scratch = mock(Scratch.class);
+    doCallRealMethod().when(scratch).add(anyInt(), anyInt());
+    scratch.add(1,1);
+ 
+    verify(scratch, times(1)).add(1, 1);
+}
+```
