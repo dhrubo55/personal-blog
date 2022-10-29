@@ -116,3 +116,12 @@ public void givenNull_addThrows() {
 }
 ```
 
+### doAnswer()
+
+Answer is used when you need to do additional actions when a mocked method is invoked, e.g. when you need to compute the return value based on the parameters of this method call. So Use doAnswer() when we want to stub a void method with generic Answer. Answer specifies an action that is executed and a return value that is returned when you interact with the mock.
+
+so a simple example 
+
+```java
+
+Also another common usage of Answer is to stub asynchronous methods that have callbacks. For example, we have mocked the interface below:
