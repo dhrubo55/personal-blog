@@ -149,4 +149,17 @@ public interface BookService {
 Here you’ll find that `when-thenReturn` is not that helpful anymore. Answer is the replacement. For example, we can emulate a success by calling the `onSuccess` function of the callback.
 
 ```java
+@Test
+public void testOnSuccess_givenBookService_get() {
+    Scratch scratch = mock(Scratch.class);
+    doAnswer(invocation -> {
+        Object arg0 = invocation.getArgument(0);
+        Object arg1 = invocation.getArgument(1);
+        
+        assertEquals(1, arg0);
+        assertEquals(1, arg1);
+        return null;
+    }).when(scratch).add(anyInt(), anyInt());
+    scratch.add(1,1);
+}
 ```
