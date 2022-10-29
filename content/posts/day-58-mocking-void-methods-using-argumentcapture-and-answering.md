@@ -150,16 +150,13 @@ Here you’ll find that `when-thenReturn` is not that helpful anymore. Answer is
 
 ```java
 @Test
-public void testOnSuccess_get() {
-    Scratch scratch = mock(Scratch.class);
+public void testOnSuccess() {
+    BookService bookService = mock(BookService.class);
     doAnswer(invocation -> {
-        Object arg0 = invocation.getArgument(0);
-        Object arg1 = invocation.getArgument(1);
-        
-        assertEquals(1, arg0);
-        assertEquals(1, arg1);
-        return null;
-    }).when(scratch).add(anyInt(), anyInt());
-    scratch.add(1,1);
+         Callback callback = (Callback) invocation.getArguments(0);
+       	 callback.onSuccess(data);
+         return null;
+    }).when(bookService).get(any(Callback.class));
+    
 }
 ```
