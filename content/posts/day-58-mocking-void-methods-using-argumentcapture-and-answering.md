@@ -150,7 +150,7 @@ Here you’ll find that `when-thenReturn` is not that helpful anymore. Answer is
 
 ```java
 @Test
-public void testOnSuccess_callingBookService_get() {
+public void testOnSuccess_get() {
     Scratch scratch = mock(Scratch.class);
     doAnswer(invocation -> {
         Object arg0 = invocation.getArgument(0);
