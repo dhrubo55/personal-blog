@@ -147,3 +147,6 @@ public interface BookService {
 ```
 
 Here you’ll find that `when-thenReturn` is not that helpful anymore. Answer is the replacement. For example, we can emulate a success by calling the `onSuccess` function of the callback.
+
+```java
+```
