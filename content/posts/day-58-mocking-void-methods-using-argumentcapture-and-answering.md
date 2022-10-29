@@ -2,7 +2,6 @@
 category = []
 date = 2022-10-23T00:00:00Z
 description = "Mocking void methods using ArgumentCapture and Answering"
-draft = true
 showtoc = false
 slug = "/java/100daysofjava/day58"
 summary = "Mocking void methods using ArgumentCapture and Answering"
