@@ -139,3 +139,9 @@ public void whenAddCalledAnswered() {
 ```
 
 Also another common usage of Answer is to stub asynchronous methods that have callbacks. For example, we have mocked the interface below:
+
+```java
+public interface BookService {
+  void get(Callback callback);
+}
+```
