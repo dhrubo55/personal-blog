@@ -176,3 +176,5 @@ public void whenAddCalledRealMethodCalled() {
     verify(scratch, times(1)).add(1, 1);
 }
 ```
+
+Although I found only these way's of mocking void methods in junit and mockito. There might be many other ways we can achive mocking the void method calls.
