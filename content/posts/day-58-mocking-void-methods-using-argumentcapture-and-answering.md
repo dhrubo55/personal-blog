@@ -16,7 +16,7 @@ relative = false
 +++
 When unit testing any java class which have void methods inside it and also needed to be mocked. Then we mock them in 4 ways using mockito's mocking method's and they are -
 
-
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1667032140/images-from-blog/mockito-mocking-void-method.drawio_e1afrl.png)
 
 1. doNothing() & ArgumentCapture
 2. doThrow()
@@ -163,10 +163,9 @@ public void testOnSuccess() {
 }
 ```
 
-### doCallRealMethod() 
+### doCallRealMethod()
 
 By calling this method we can achive partial mocking of method. When we Mock an object and then make a reference to any method using mocked object reference. java never makes a call to that method and looks for mocked value to be returned or null if none specified. But If we want that to be overridden and want java to make actual method call upon using mocked object reference, this method can be used.
-
 
 ```java
 @Test
