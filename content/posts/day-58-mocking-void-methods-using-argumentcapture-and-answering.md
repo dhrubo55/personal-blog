@@ -108,7 +108,7 @@ In the `add()` method we can check for addition overflow and throw a exception s
 
 ```java
 @Test(expected = Exception.class)
-public void givenNull_addThrows() {
+public void givenNull_addThrowsException() {
     Scratch scratch = mock(Scratch.class);
     doThrow().when(scratch).add(any(), null);
  
@@ -120,8 +120,22 @@ public void givenNull_addThrows() {
 
 Answer is used when you need to do additional actions when a mocked method is invoked, e.g. when you need to compute the return value based on the parameters of this method call. So Use doAnswer() when we want to stub a void method with generic Answer. Answer specifies an action that is executed and a return value that is returned when you interact with the mock.
 
-so a simple example 
+so we can make answer to `add()` method and to verfiy execution.
 
 ```java
+@Test
+public void whenAddCalledAnswered() {
+    MyList myList = mock(MyList.class);
+    doAnswer(invocation -> {
+        Object arg0 = invocation.getArgument(0);
+        Object arg1 = invocation.getArgument(1);
+        
+        assertEquals(3, arg0);
+        assertEquals("answer me", arg1);
+        return null;
+    }).when(myList).add(any(Integer.class), any(String.class));
+    myList.add(3, "answer me");
+}
+```
 
 Also another common usage of Answer is to stub asynchronous methods that have callbacks. For example, we have mocked the interface below:
