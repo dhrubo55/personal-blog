@@ -125,16 +125,16 @@ so we can make answer to `add()` method and to verfiy execution.
 ```java
 @Test
 public void whenAddCalledAnswered() {
-    MyList myList = mock(MyList.class);
+    Scratch scratch = mock(Scratch.class);
     doAnswer(invocation -> {
         Object arg0 = invocation.getArgument(0);
         Object arg1 = invocation.getArgument(1);
         
-        assertEquals(3, arg0);
-        assertEquals("answer me", arg1);
+        assertEquals(1, arg0);
+        assertEquals(1, arg1);
         return null;
-    }).when(myList).add(any(Integer.class), any(String.class));
-    myList.add(3, "answer me");
+    }).when(scratch).add(anyInt(), anyInt());
+    scratch.add(1,1);
 }
 ```
 
