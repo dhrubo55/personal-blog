@@ -14,3 +14,12 @@ image = ""
 relative = false
 
 +++
+What is Proxy
+
+What is Proxy design pattern.
+
+Types of Proxy in java
+
+Static proxy
+
+dynamic proxy and its use case
