@@ -196,3 +196,11 @@ Dynamic proxies are known to be used for at least the following purposes:
 2. Dynamic Mock Objects for Unit Testing
 3. Adaptation of DI Container to Custom Factory Interfaces
 4. AOP-like Method Interception
+
+#### Advantages
+
+It can be used as decorator to provide some extra ability to proxied objects and all the other benifits of static proxy and not its disadvantages.
+
+#### Disadvantages
+
+It uses the java Reflection Api which tends to be slow in performance.
