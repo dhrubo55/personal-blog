@@ -105,3 +105,17 @@ In the example above through proxy, we are counting method invocation using a si
 
 ### Dynamic proxy 
 
+Dynamic proxy is the proxy design pattern, in which the proxy object is created dynamically during runtime.
+
+Proxy design pattern uses a proxy. which acts as a mediator between client and underlying real object. Programmer can perform access control, validation and additional action in proxy before delegating the request to real object.
+
+Form the disadvantages of the `static` proxy, if we somehow at runtime we are able to create a proxy object based on the client's call and then perform generic action(logging action in our case) before delegating the call to the real object? Well, that is what dynamic proxies does.
+
+The process in case of dynamic proxy is as following:
+
+1. client calls some action on an object.
+2. system creates a proxy object at runtime based on client's call.
+3. proxy object calls a generic method to perform a generic action in case of each call.
+4. after the action, proxy object delegates the call to real object.
+
+So in a nutshell, if you have some generic action to perform, use dynamic proxy, but if you want each class to be treated differenlty (in some classes perform logging, in some don't, in some access control etc.) use simple proxy.
