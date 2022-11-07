@@ -126,6 +126,6 @@ Dynamic proxies can be used for many different purposes, e.g. database connectio
 
 We create dynamic proxies using the `Proxy.newProxyInstance()` method. The newProxyInstance() methods takes 3 parameters:
 
-1. The ClassLoader that is to "load" the dynamic proxy class.
+1. The ClassLoader that is to **load** the dynamic proxy class.
 2. An array of interfaces to implement.
 3. An InvocationHandler to forward all methods calls on the proxy to.
