@@ -152,3 +152,17 @@ public interface InvocationHandler{
          throws Throwable;
 }
 ```
+
+The proxy parameter passed to the `invoke()` method is the dynamic proxy object implementing the interface. Most often you don't need this object.
+
+The `Method` object passed into the invoke() method represents the method called on the interface the dynamic proxy implements. From the Method object you can obtain the method name, parameter types, return type, etc. 
+
+The `Object[]` args array contains the parameter values passed to the proxy when the method in the interface implemented was called. Note: Primitives (int, long etc) in the implemented interface are wrapped in their object counterparts (Integer, Long etc.).
+
+#### Known Use Cases
+Dynamic proxies are known to be used for at least the following purposes:
+
+1. Database Connection and Transaction Management
+2. Dynamic Mock Objects for Unit Testing
+3. Adaptation of DI Container to Custom Factory Interfaces
+4. AOP-like Method Interception
