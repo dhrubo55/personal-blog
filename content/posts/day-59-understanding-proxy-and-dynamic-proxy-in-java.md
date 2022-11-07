@@ -83,4 +83,9 @@ public class Day59 {
 }
 ```
 
+
+#### Usage 
+
+Proxy pattern is used when we need to create a wrapper to cover the main object’s complexity from the client. Furthermore we can add additional behavior on the proxy object that can augment the proxied object.
+
 dynamic proxy and its use case
