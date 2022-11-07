@@ -121,3 +121,13 @@ The process in case of dynamic proxy is as following:
 So in a nutshell, if you have some generic action to perform, use dynamic proxy, but if you want each class to be treated differenlty (in some classes perform logging, in some don't, in some access control etc.) use simple proxy.
 
 Now to create a dynamic proxy in java we can use Java Reflection to create dynamic implementations of interfaces at runtime. By using the class `java.lang.reflect.Proxy`.
+
+Dynamic proxies can be used for many different purposes, e.g. database connection and transaction management, dynamic mock objects for unit testing, and other AOP-like method intercepting purposes.
+
+We create dynamic proxies using the `Proxy.newProxyInstance()` method. The newProxyInstance() methods takes 3 parameters:
+
+1. The ClassLoader that is to "load" the dynamic proxy class.
+
+2. An array of interfaces to implement.
+
+3. An InvocationHandler to forward all methods calls on the proxy to.
