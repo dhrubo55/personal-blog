@@ -33,8 +33,43 @@ There are mainly 2 types of Proxy in Java
 
 #### Static Proxy
 
-Proxies that are written manually are referred to as static proxies.
+Proxies that are written manually are referred to as static proxies. The following example is for a statc proxy
 
+At first we can create an interface to be shared among the proxy and the real class. 
 
+```java
+public interface User {
+	String getType();
+}
+```
+now that we have an interface we can have its implementation of a particular user.
+
+```java
+public class FreeUser implements User {
+	public String getType() {
+    	return "free";
+    }
+}
+```
+
+Now we can create a `Proxy` interface that will extend User interface to get its behaviors which can be proxied by its implementations. 
+
+```java
+public interface ProxyUser extends User {
+}
+```
+So `FreeUserProxy` can be implemented by implementing `ProxyUser`
+
+```java
+public class FreeUserProxy implements ProxyUser {
+	private FreeUser freeUser = new FreeUser();
+    private static final Logger log = LoggerFactory.getLogger(FreeUserProxy.class);
+    
+    public String getType() {
+    	log.info("getType() called");
+        return freeUser.getType();
+    }
+}
+```
 
 dynamic proxy and its use case
