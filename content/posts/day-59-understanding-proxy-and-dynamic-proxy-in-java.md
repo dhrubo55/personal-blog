@@ -105,5 +105,5 @@ Consider a scenario where you have to implement a proxy to count method invocati
 In the example above through proxy, we are counting method invocation using a single line. If a proxy had 100 lines of code to persist a data in the database, and a bug was found in just one line, you would have to remember to change that line in each bit of duplicated code, throughout tens, or even hundreds, of additional proxies.
 
 
+### Dynamic proxy 
 
-dynamic proxy and its use case
