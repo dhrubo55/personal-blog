@@ -134,8 +134,21 @@ For example
 
 ```java
 InvocationHandler handler = new VehicleInvocationHandler();
-MyInterface proxy = (Vehicle) Proxy.newProxyInstance(
+Vehicle proxy = (Vehicle) Proxy.newProxyInstance(
                             Vehicle.class.getClassLoader(),
                             new Class[] { Vehicle .class },
                             handler);
+```
+
+After running this code the proxy variable contains a dynamic implementation of the `Vehicle` interface. All calls to the proxy will be forwarded to the handler implementation of the general InvocationHandler interface. 
+
+#### InvocationHandler
+
+As mentioned earlier you must pass an InvocationHandler implementation to the `Proxy.newProxyInstance()` method. All method calls to the dynamic proxy are forwarded to this InvocationHandler implementation. Here is how the InvocationHandler interface looks:
+
+```java
+public interface InvocationHandler{
+  Object invoke(Object proxy, Method method, Object[] args)
+         throws Throwable;
+}
 ```
