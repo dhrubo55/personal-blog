@@ -175,7 +175,19 @@ Now for example writing a `GenericLogger` class that will log method invocation 
  	}
  }
 ```
+now to invoke the proxy from main class
 
+```java
+public class Day59 {
+    public static void main(String[] args) {
+        User user = new FreeUser();
+        ClassLoader cl = User.class.getClassLoader();
+        User u = (User) Proxy.newProxyInstance(cl,
+                new Class[] {User.class}, new GenericLogger(c));
+        u.getType();
+    }
+}
+```
 
 #### Known Use Cases
 Dynamic proxies are known to be used for at least the following purposes:
