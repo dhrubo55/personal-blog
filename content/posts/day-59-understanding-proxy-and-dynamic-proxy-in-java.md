@@ -88,4 +88,18 @@ public class Day59 {
 
 Proxy pattern is used when we need to create a wrapper to cover the main object’s complexity from the client. Furthermore we can add additional behavior on the proxy object that can augment the proxied object.
 
+#### Advantages 
+
+1. A proxy can hide complex tasks such as making network communication, transaction management without changing the implementation.
+
+2. Proxies can be used to insert custom behaviour/code on top of and without changing the implementation object. Sometimes the code of an external library is inaccessible to edit, custom behaviour can be inserted pre/post-execution of the method provided by such library. For example, you can write a proxy for java.net.HttpUrlConnection class to log all the external service call request without changing the implementation of HttpUrlConnection.
+
+3. One of the other advantages of the proxy pattern is security. A remote proxy can be used to provide a proxy stub in client and call the implementation on the server.
+
+#### Disadvantages
+
+Sometimes static proxy can violate the dry principle.
+
+
+
 dynamic proxy and its use case
