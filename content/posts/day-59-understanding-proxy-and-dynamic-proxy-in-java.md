@@ -161,6 +161,20 @@ The `Object[]` args array contains the parameter values passed to the proxy when
 
 Now for example writing a `GenericLogger` class that will log method invocation by intercepting the method invocation.
 
+```java
+
+ public class GenericLogger implements InvocationHandler {
+ 	private Object target;
+ 	public GenericLogger(Object target) {
+    	this.target = target;
+    }
+ 	public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
+ 		System.out.println("Generic Logger Entry: Invoking " +
+ 		m.getName());
+ 		return m.invoke(target, args);
+ 	}
+ }
+```
 
 
 #### Known Use Cases
