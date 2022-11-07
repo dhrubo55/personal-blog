@@ -133,10 +133,10 @@ We create dynamic proxies using the `Proxy.newProxyInstance()` method. The newPr
 For example
 
 ```java
-InvocationHandler handler = new VehicleInvocationHandler();
-Vehicle proxy = (Vehicle) Proxy.newProxyInstance(
-                            Vehicle.class.getClassLoader(),
-                            new Class[] { Vehicle .class },
+InvocationHandler handler = new UserInvocationHandler();
+User proxy = (User) Proxy.newProxyInstance(
+                            User.class.getClassLoader(),
+                            new Class[] { User.class },
                             handler);
 ```
 
@@ -158,6 +158,10 @@ The proxy parameter passed to the `invoke()` method is the dynamic proxy object 
 The `Method` object passed into the invoke() method represents the method called on the interface the dynamic proxy implements. From the Method object you can obtain the method name, parameter types, return type, etc. 
 
 The `Object[]` args array contains the parameter values passed to the proxy when the method in the interface implemented was called. Note: Primitives (int, long etc) in the implemented interface are wrapped in their object counterparts (Integer, Long etc.).
+
+Now for example writing a `GenericLogger` class that will log method invocation by intercepting the method invocation.
+
+
 
 #### Known Use Cases
 Dynamic proxies are known to be used for at least the following purposes:
