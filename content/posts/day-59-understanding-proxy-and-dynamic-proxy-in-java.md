@@ -203,4 +203,4 @@ It can be used as decorator to provide some extra ability to proxied objects and
 
 #### Disadvantages
 
-It uses the java Reflection Api which tends to be slow in performance and object creation.
+It uses the java Reflection Api which tends to be slow in performance and object creation. Will also feel magical if not have a good understanding how dynamic proxy is working and creating proxy in the runtime
