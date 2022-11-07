@@ -2,7 +2,6 @@
 category = []
 date = 2022-11-04T00:00:00Z
 description = "Understanding Proxy and Dynamic Proxy in Java"
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day59"
 summary = "Understanding Proxy and Dynamic Proxy in Java"
