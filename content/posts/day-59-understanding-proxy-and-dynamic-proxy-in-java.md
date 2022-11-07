@@ -72,4 +72,15 @@ public class FreeUserProxy implements ProxyUser {
 }
 ```
 
+Now running the code from main class
+
+```java
+public class Day59 {
+	public static void main(String [] args) {
+    	User user = new FreeUserProxy();
+        System.out.println(user.getType());
+    }
+}
+```
+
 dynamic proxy and its use case
