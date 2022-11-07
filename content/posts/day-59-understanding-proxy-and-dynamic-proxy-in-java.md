@@ -98,7 +98,11 @@ Proxy pattern is used when we need to create a wrapper to cover the main objectâ
 
 #### Disadvantages
 
-Sometimes static proxy can violate the dry principle.
+Sometimes static proxy can violate the dry principle, e.x The static proxy class defined is very specific to an implementation which means for every implementation a proxy needs to be explicitly defined and is a repeated work.
+
+Consider a scenario where you have to implement a proxy to count method invocation for multiple class. If you are using a static proxy you will be defining multiple proxy class with duplicate logic over and over again.
+
+In the example above through proxy, we are counting method invocation using a single line. If a proxy had 100 lines of code to persist a data in the database, and a bug was found in just one line, you would have to remember to change that line in each bit of duplicated code, throughout tens, or even hundreds, of additional proxies.
 
 
 
