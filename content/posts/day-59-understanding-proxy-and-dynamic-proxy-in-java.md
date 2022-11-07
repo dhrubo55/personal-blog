@@ -129,3 +129,13 @@ We create dynamic proxies using the `Proxy.newProxyInstance()` method. The newPr
 1. The ClassLoader that is to **load** the dynamic proxy class.
 2. An array of interfaces to implement.
 3. An InvocationHandler to forward all methods calls on the proxy to.
+
+For example
+
+```java
+InvocationHandler handler = new VehicleInvocationHandler();
+MyInterface proxy = (Vehicle) Proxy.newProxyInstance(
+                            Vehicle.class.getClassLoader(),
+                            new Class[] { Vehicle .class },
+                            handler);
+```
