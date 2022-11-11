@@ -14,3 +14,11 @@ image = ""
 relative = false
 
 +++
+What is Heap 
+What is Used For
+Why dump it
+What is JMX
+What is MBeanServer and MBean
+Process of calling api to get HeapDump
+Arguments of the api desigend
+
