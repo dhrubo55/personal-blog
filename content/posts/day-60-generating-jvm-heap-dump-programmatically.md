@@ -22,3 +22,7 @@ What is MBeanServer and MBean
 Process of calling api to get HeapDump
 Arguments of the api desigend
 
+
+### Heap in JVM
+
+At first before we dump the heap we should unnderstand what is the Heap and why should we dump it. In JVM The Java heap is the area of memory used to store objects instantiated by applications running on the JVM. When the JVM is started, heap memory is created and any objects in the heap can be shared between threads as long as the application is running. The size of the heap can vary, so many users restrict the Java heap size to 2-8 GB in order to minimize garbage collection pauses.
