@@ -1,7 +1,7 @@
 +++
 category = ["100DaysOfJava"]
 date = 2022-11-11T00:00:00Z
-description = "Generating Heap dumps for analyzing programatically by using MBeanServer and PlatformBeans to get Management information from JVM"
+description = "Generating Heap dumps programatically by using MBeanServer and PlatformBeans to get Management information from JVM"
 draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day60"
