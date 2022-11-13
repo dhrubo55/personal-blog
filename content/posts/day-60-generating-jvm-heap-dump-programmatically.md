@@ -43,3 +43,16 @@ JMX gives developers a standard and simple way to manage resources. Including se
 
 ### What is MBean and MBeanServer
 
+With Java Management Extensions technology, a resource is represented by Managed Beans or mBeans.  These are registered on the mBean server. It is a core-managed object server  that acts as an agent and can be used on a majority of devices that  support Java.
+
+In simpler terms, mBeans acts like Java wrappers for 
+1. services
+2. components
+3. devices
+4. applications
+ 
+in a distributed network. 
+
+MBean server provides the actual management, as it is where you would  find all the manageable resources. This server then becomes the central  focus of the architectural frame. which allow the server components to plug  in and find manageable objects.
+
+A JMX agent, would consist of the mBean server, and the services needed to handle the mBeans (you’ll also want an APM solution  that includes application framework metrics like mBeans and performance  counters). This means that the resources are independent and apart from  the management infrastructure. while these resources are manageable no  matter how the management applications are deployed.
