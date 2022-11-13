@@ -43,8 +43,3 @@ JMX gives developers a standard and simple way to manage resources. Including se
 
 ### What is MBean and MBeanServer
 
-
-
-
-
-
