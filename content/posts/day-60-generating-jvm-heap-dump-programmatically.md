@@ -41,6 +41,10 @@ Java Management Extensions (JMX) is a standard component of the Java Platform.  
 
 JMX gives developers a standard and simple way to manage resources. Including services, devices, and applications. It is dynamic, making it  possible to manage and monitor resources as soon as they are created,  implemented or installed.
 
+### What is MBean and MBeanServer
+
+
+
 
 
 
