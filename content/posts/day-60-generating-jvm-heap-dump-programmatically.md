@@ -49,7 +49,7 @@ MBean server provides the actual management, as it is where you would  find all 
 
 A JMX agent, would consist of the mBean server, and the services needed to handle the mBeans (you’ll also want an APM solution  that includes application framework metrics like mBeans and performance  counters). This means that the resources are independent and apart from  the management infrastructure. while these resources are manageable no  matter how the management applications are deployed.
 
-\**So now by using these MBeans and MBeanServer's we can get many inforamtions about the JVM and the application that its hosting.
+**So now by using these MBeans and MBeanServer's we can get many inforamtions about the JVM and the application that its hosting.**
 
 ### Doing Heap Dump Programatically
 
