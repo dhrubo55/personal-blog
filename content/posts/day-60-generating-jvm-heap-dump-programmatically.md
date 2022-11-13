@@ -64,4 +64,12 @@ A JMX agent, would consist of the mBean server, and the services needed to handl
 
 At first we need to call the `PlatformMBeanServer` to get the platform informations of JVM and then with those information need to access `HotSpotDiagnosticMXBean` whic is an Management Extension Bean different from typical MBean.
 
-By Using this MXBean we
+So let us understand what is and MXBean
+
+#### MXBean
+
+MXBeans are just a special kind of MBeans. The main difference is that MXBean restrict the data types, so that they are "more compatible" with potential clients.
+
+As example: a MBean can expose attributes of a data type Foo. Now the client also needs to have this type Foo to make sense of the attribute.
+
+The MXBean tries to restrict the data types to those "already available" - java.lang.* etc.  
