@@ -14,15 +14,6 @@ image = ""
 relative = false
 
 +++
-What is Heap 
-What is Used For
-Why dump it
-What is JMX
-What is MBeanServer and MBean
-Process of calling api to get HeapDump
-Arguments of the api desigend
-
-
 ### Heap in JVM
 
 At first before we dump the heap we should unnderstand what is the Heap and why should we dump it. In JVM The Java heap is the area of memory used to store objects instantiated by applications running on the JVM. When the JVM is started, heap memory is created and any objects in the heap can be shared between threads as long as the application is running. The size of the heap can vary, so many users restrict the Java heap size to 2-8 GB in order to minimize garbage collection pauses.
@@ -45,20 +36,20 @@ JMX gives developers a standard and simple way to manage resources. Including se
 
 With Java Management Extensions technology, a resource is represented by Managed Beans or mBeans.  These are registered on the mBean server. It is a core-managed object server  that acts as an agent and can be used on a majority of devices that  support Java.
 
-In simpler terms, mBeans acts like Java wrappers for 
+In simpler terms, mBeans acts like Java wrappers for
 
 1. services
 2. components
 3. devices
 4. applications
- 
-in a distributed network. 
+
+in a distributed network.
 
 MBean server provides the actual management, as it is where you would  find all the manageable resources. This server then becomes the central  focus of the architectural frame. which allow the server components to plug  in and find manageable objects.
 
 A JMX agent, would consist of the mBean server, and the services needed to handle the mBeans (you’ll also want an APM solution  that includes application framework metrics like mBeans and performance  counters). This means that the resources are independent and apart from  the management infrastructure. while these resources are manageable no  matter how the management applications are deployed.
 
-**So now by using these MBeans and MBeanServer's we can get many inforamtions about the JVM and the application that its hosting.
+\**So now by using these MBeans and MBeanServer's we can get many inforamtions about the JVM and the application that its hosting.
 
 ### Doing Heap Dump Programatically
 
@@ -72,7 +63,7 @@ MXBeans are just a special kind of MBeans. The main difference is that MXBean re
 
 As example: a MBean can expose attributes of a data type `Foo`. Now the client also needs to have this type `Foo` to make sense of the attribute.
 
-The `MXBean` tries to restrict the data types to those `already available` e.g. - java.lang.* etc.  
+The `MXBean` tries to restrict the data types to those `already available` e.g. - java.lang.* etc.
 
 #### procedure
 
@@ -82,9 +73,8 @@ To extract a heap dump
 2. From that need to get the specific MXBean in this case `HotSpotDiagnotsicMXBean`
 3. As the procedure is not thread safe we need to sychronize it
 4. Now we need to call the `dumpHeap` method on HotSpotDiagnotic
-5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap. 
+5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap.
 6. It will return the file in the specified locaiton
-
 
 #### Code
 
