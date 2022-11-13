@@ -82,5 +82,4 @@ To extract a heap dump
 2. From that need to get the specific MXBean in this case HotSpotDiagnotsicMXBean
 3. As the procedure is not thread safe we need to sychronize it
 4. Now we need to call the `dumpHeap` method on HotSpotDiagnotic
-5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap
-6. It will return the file in the specified locaiton
+5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap. It will return the file in the specified locaiton
