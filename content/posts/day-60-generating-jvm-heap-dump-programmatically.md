@@ -73,3 +73,14 @@ MXBeans are just a special kind of MBeans. The main difference is that MXBean re
 As example: a MBean can expose attributes of a data type Foo. Now the client also needs to have this type Foo to make sense of the attribute.
 
 The MXBean tries to restrict the data types to those "already available" - java.lang.* etc.  
+
+#### procedure
+
+To extract a heap dump
+
+1. At first need to get PlatformMXBeanServer
+2. From that need to get the specific MXBean in this case HotSpotDiagnotsicMXBean
+3. As the procedure is not thread safe we need to sychronize it
+4. Now we need to call the `dumpHeap` method on HotSpotDiagnotic
+5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap
+6. It will return the file in the specified locaiton
