@@ -78,8 +78,40 @@ The MXBean tries to restrict the data types to those "already available" - java.
 
 To extract a heap dump
 
-1. At first need to get PlatformMXBeanServer
+1. At first need to get PlatformMXBeanServer.
 2. From that need to get the specific MXBean in this case HotSpotDiagnotsicMXBean
 3. As the procedure is not thread safe we need to sychronize it
 4. Now we need to call the `dumpHeap` method on HotSpotDiagnotic
-5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap. It will return the file in the specified locaiton
+5. To call this method we need to pass file name (with `.hprof` extension) and boolean option to get information about live objects in the heap. 
+6. It will return the file in the specified locaiton
+
+
+#### Code
+
+```java
+class Day60 {
+    private static final String HotSpotBeanName = "com.sun.management:type=HotSpotDiagnostic";
+    private static volatile HotSpotDiagnosticMXBean hotSpotDiagnosticMXBean;
+
+    public static void main(String[] args) throws IOException {
+        String timestamp = LocalDateTime.now().toString();
+        System.out.println("Dumping heap");
+        generateHeapDump("/home/mohibul/Documents/heapdump_"+timestamp+".hprof", true);
+    }
+
+    private static void generateHeapDump(String fileName, boolean isLive) throws IOException {
+        if (hotSpotDiagnosticMXBean == null) {
+            synchronized (Day60.class) {
+                hotSpotDiagnosticMXBean = getHotSpotDiagnosticMXBean();
+            }
+        }
+
+        hotSpotDiagnosticMXBean.dumpHeap(fileName,isLive);
+    }
+
+    private static HotSpotDiagnosticMXBean getHotSpotDiagnosticMXBean() throws IOException {
+        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+        return ManagementFactory.newPlatformMXBeanProxy(mBeanServer, HotSpotBeanName, HotSpotDiagnosticMXBean.class);
+    }
+}
+```
