@@ -27,4 +27,12 @@ Arguments of the api desigend
 
 At first before we dump the heap we should unnderstand what is the Heap and why should we dump it. In JVM The Java heap is the area of memory used to store objects instantiated by applications running on the JVM. When the JVM is started, heap memory is created and any objects in the heap can be shared between threads as long as the application is running. The size of the heap can vary, so many users restrict the Java heap size to 2-8 GB in order to minimize garbage collection pauses.
 
+### Why dump Heap Memory
+
+A heap dump is a snapshot of all the objects that are in memory in the JVM at a certain moment. They are very useful to troubleshoot memory-leak problems and optimize memory usage in Java applications.
+
+Heap dumps are usually stored in `binary format hprof files`. We can open and analyze these files using tools like `JVisualVM` and `Eclipse Memory Analyzing Tool`
+
+
+
 
