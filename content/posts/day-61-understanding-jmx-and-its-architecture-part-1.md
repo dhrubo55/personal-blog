@@ -14,3 +14,12 @@ image = ""
 relative = false
 
 +++
+What is JMX
+
+JMX overview  
+  
+JMX's layerd architecture
+
+First layer
+
+First layer details 
