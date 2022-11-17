@@ -1,7 +1,7 @@
 +++
 category = []
 date = 2022-11-15T00:00:00Z
-description = "Understanding JMX architecture and how it works. In part 1 will learn about the first layer of JMX and how does it work and its usage"
+description = "Understanding JMX architecture and how it works. In part 1 will learn about the first layer of JMX"
 draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day61"
