@@ -21,11 +21,8 @@ The Java Management Extensions (JMX) API is a standard for managing and monitori
 It defines -
 
 1. management architecture
-
 2. design patterns
-
 3. APIs
-
 4. services
 
 for building web-based, distributed, dynamic, and modular solutions to manage Java-enabled resources. The JMX APIs make it possible to add manageability to Java-enabled applications, from web phones to set-top boxes to network devices and servers.
@@ -49,11 +46,11 @@ The API provides access to information such as:
 * On-demand deadlock detection
 * Operating system information
 
-The API includes [logging monitoring and management](https://docs.oracle.com/javase/1.5.0/docs/guide/management/overview.html#loggingmxbean) capabilities. The [java.util.logging.LoggingMXBean](https://docs.oracle.com/javase/1.5.0/docs/api/java/util/logging/LoggingMXBean.html) interface provides for management of the logging facility.
+The API includes logging monitoring and management capabilities. The java.util.logging.LoggingMXBean interface provides for management of the logging facility.
 
 As a result, it offers natural, efficient, and lightweight management extensions to Java-based apps. It consists of a set of specifications and development tools for managing Java environments and developing state-of-the-art management solutions for applications and services. It provides Java developers with the means to instrumet Java code, create smart Java agents, implement distributed management middleware and managers, and integrate these solutions into existing management and monitoring systems (eg. APM)
 
- The dynamics of the JMX technology architecture enables you to use it to monitor and manage resources as they are implemented and installed. It can also be used to monitor and manage the [Java Virtual Machine (JVM machine)](https://www.oracle.com/technical-resources/articles/javase/jmx.html#jvm).
+The dynamics of the JMX technology architecture enables you to use it to monitor and manage resources as they are implemented and installed. It can also be used to monitor and manage the jvm
 
 JMX Usage:
 
@@ -65,6 +62,6 @@ First layer details
 
 how to connect to jvisualvm
 
-what metrics it show's 
+what metrics it show's
 
 how
