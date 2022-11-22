@@ -6,7 +6,7 @@ draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day61"
 summary = "Understanding JMX and its architecture"
-title = "Day 61: Understanding JMX and its architecture (part 1) "
+title = "Day 61: Understanding JMX and its architecture (Remote Management Level) "
 [cover]
 alt = "day61"
 caption = "day61"
@@ -39,3 +39,9 @@ JMX's layerd architecture
 First layer
 
 First layer details
+
+how to connect to jvisualvm
+
+what metrics it show's 
+
+how 
