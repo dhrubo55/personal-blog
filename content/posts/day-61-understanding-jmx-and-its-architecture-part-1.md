@@ -20,13 +20,13 @@ The Java Management Extensions (JMX) API is a standard for managing and monitori
 
 It defines -
 
-1\. management architecture
+1. management architecture
 
-2\. design patterns
+2. design patterns
 
-3\. APIs
+3. APIs
 
-4\. services
+4. services
 
 for building web-based, distributed, dynamic, and modular solutions to manage Java-enabled resources. The JMX APIs make it possible to add manageability to Java-enabled applications, from web phones to set-top boxes to network devices and servers.
 
@@ -67,4 +67,4 @@ how to connect to jvisualvm
 
 what metrics it show's 
 
-how 
+how
