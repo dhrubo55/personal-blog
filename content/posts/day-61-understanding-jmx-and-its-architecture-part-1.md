@@ -6,7 +6,7 @@ draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day61"
 summary = "Understanding JMX and its architecture"
-title = "Day 61: Understanding JMX and its architecture (Remote Management Level) "
+title = "Day 61: Understanding JMX and its architecture (Management Level) "
 [cover]
 alt = "day61"
 caption = "day61"
