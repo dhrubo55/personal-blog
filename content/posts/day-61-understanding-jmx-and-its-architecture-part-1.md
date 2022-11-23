@@ -58,6 +58,10 @@ JMX technology provides a tiered architecture where managed resources and manage
 
 ![](https://web.archive.org/web/20120609111042im_/http://java.sun.com/developer/technicalArticles/J2SE/fig1.gif)
 
+So in this part the topic of discussion will be the Manager Level.
+
+Manager level:
+
 First layer
 
 First layer details
