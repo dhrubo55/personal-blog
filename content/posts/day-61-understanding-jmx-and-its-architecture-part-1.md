@@ -52,8 +52,6 @@ As a result, it offers natural, efficient, and lightweight management extensions
 
 The dynamics of the JMX technology architecture enables you to use it to monitor and manage resources as they are implemented and installed. It can also be used to monitor and manage the jvm
 
-JMX Usage:
-
 JMX's layerd architecture
 
 First layer
