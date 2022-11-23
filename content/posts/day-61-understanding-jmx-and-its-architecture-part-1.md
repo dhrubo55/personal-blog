@@ -60,19 +60,17 @@ JMX technology provides a tiered architecture where managed resources and manage
 
 So in this part the topic of discussion will be the Manager Level. But before going into it let's get a overview of all the levels
 
-
 | Level | Description |
-|-------|-------------|
-|   Instrumentation    |  Resources, such as applications, devices, or services, are instrumented using Java objects called Managed Beans (MBeans). MBeans expose their management interfaces, composed of attributes and operations, through a JMX agent for remote management and monitoring.|
-|   Agent    | The main component of a JMX agent is the MBean server. This is a core managed object server in which MBeans are registered. A JMX agent also includes a set of services for handling MBeans. The JMX agent directly controls resources and makes them available to remote management agents.             |
-| Manager     |   Protocol adaptors and standard connectors make a JMX agent accessible from remote management applications outside the agent’s Java Virtual Machine (JVM).          |
-
+| --- | --- |
+| Instrumentation | Resources, such as applications, devices, or services, are instrumented using Java objects called Managed Beans (MBeans). MBeans expose their management interfaces, composed of attributes and operations, through a JMX agent for remote management and monitoring. |
+| Agent | The main component of a JMX agent is the MBean server. This is a core managed object server in which MBeans are registered. A JMX agent also includes a set of services for handling MBeans. The JMX agent directly controls resources and makes them available to remote management agents. |
+| Manager | Protocol adaptors and standard connectors make a JMX agent accessible from remote management applications outside the agent’s Java Virtual Machine (JVM). |
 
 Manager level:
 
 JMX API instrumentation can be accessed through existing management protocols. For example Simple Network Management Protocol (SNMP). Another way is through proprietary protocols. The MBean server relies on protocol adaptors and connectors to make a JMX agent accessible from management applications outside the agent’s JVM.
 
-
+![Java Management Extensions - Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
 
 First layer
 
