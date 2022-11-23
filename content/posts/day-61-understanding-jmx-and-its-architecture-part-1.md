@@ -61,6 +61,12 @@ JMX technology provides a tiered architecture where managed resources and manage
 So in this part the topic of discussion will be the Manager Level. But before going into it let's get a overview of all the levels
 
 
+| Level | Description |
+|-------|-------------|
+|   Instrumentation    |  Resources, such as applications, devices, or services, are instrumented using Java objects called Managed Beans (MBeans). MBeans expose their management interfaces, composed of attributes and operations, through a JMX agent for remote management and monitoring.|
+|       |             |
+|       |             |
+
 
 Manager level:
 
