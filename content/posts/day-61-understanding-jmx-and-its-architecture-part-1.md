@@ -54,6 +54,10 @@ The dynamics of the JMX technology architecture enables you to use it to monitor
 
 JMX's layerd architecture
 
+JMX technology provides a tiered architecture where managed resources and management applications can be integrated in the plug-and-play approach as shown in below image . A given resource is instrumented by one or more Java objects known as `Managed Beans (or MBeans)`, which are registered in a core managed object server known as the `MBean server`. This server acts as a management agent and can run on most Java-enabled devices.
+
+![](https://web.archive.org/web/20120609111042im_/http://java.sun.com/developer/technicalArticles/J2SE/fig1.gif)
+
 First layer
 
 First layer details
