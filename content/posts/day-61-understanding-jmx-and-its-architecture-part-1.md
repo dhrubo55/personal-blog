@@ -70,6 +70,10 @@ So in this part the topic of discussion will be the Manager Level. But before go
 
 Manager level:
 
+JMX API instrumentation can be accessed through existing management protocols. For example Simple Network Management Protocol (SNMP). Another way is through proprietary protocols. The MBean server relies on protocol adaptors and connectors to make a JMX agent accessible from management applications outside the agent’s JVM.
+
+
+
 First layer
 
 First layer details
