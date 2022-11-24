@@ -72,9 +72,9 @@ JMX API instrumentation can be accessed through existing management protocols. F
 
 ![Java Management Extensions - Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
 
-Each adaptor provides a view through a specific protocol of all MBeans registered in the MBean server. For example, an HTML adaptor could display an MBean in a browser.
+Each **adaptor** provides a view through a specific protocol of all MBeans registered in the MBean server. For example, an HTML adaptor could display an MBean in a browser.
 
-Connectors provide a manager-side interface that handles the communication between the manager and the JMX agent. Each connector provides the same remote management interface though a different protocol. When a remote management application uses this interface, it can connect to a JMX agent transparently through the network, regardless of the protocol.
+**Connectors** provide a manager-side interface that handles the communication between the manager and the JMX agent. Each connector provides the same remote management interface though a different protocol. When a remote management application uses this interface, it can connect to a JMX agent transparently through the network, regardless of the protocol.
 
 First layer
 
