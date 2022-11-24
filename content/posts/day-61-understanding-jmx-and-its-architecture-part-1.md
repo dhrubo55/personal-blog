@@ -82,4 +82,6 @@ Now we are going to explore one of the connectors which will be used by `VisualV
 
 VisualVM helps to get lot of information out about the JVM and how it's performing. But we will only look into the jmx connection in VisualVM
 
-VisualVM
+### Setup VisualVM with JMX :
+
+After downloading VisualVM when starting it will look for all the local JVM instances 
