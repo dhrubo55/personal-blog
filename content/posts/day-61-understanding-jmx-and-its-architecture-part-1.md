@@ -76,6 +76,8 @@ Each **adaptor** provides a view through a specific protocol of all MBeans regis
 
 **Connectors** provide a manager-side interface that handles the communication between the manager and the JMX agent. Each connector provides the same remote management interface though a different protocol. When a remote management application uses this interface, it can connect to a JMX agent transparently through the network, regardless of the protocol.
 
+Now we are going to explore one of the connectors which 
+
 First layer
 
 First layer details
