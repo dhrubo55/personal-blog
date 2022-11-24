@@ -76,14 +76,10 @@ Each **adaptor** provides a view through a specific protocol of all MBeans regis
 
 **Connectors** provide a manager-side interface that handles the communication between the manager and the JMX agent. Each connector provides the same remote management interface though a different protocol. When a remote management application uses this interface, it can connect to a JMX agent transparently through the network, regardless of the protocol.
 
-Now we are going to explore one of the connectors which 
+A graphical JMX monitoring tool, `jconsole`, enables us to monitor the performance of a JVM and instrumented applications, providing information to help you optimize performance.
 
-First layer
+Now we are going to explore one of the connectors which will be used by `VisualVM` which is different from Jconsole. JConsole uses only JMX, but VisualVM uses other monitoring technologies like Jvmstat, Attach API and SA in addition to JMX. It can merge data from all those monitoring technologies in one place and the user does not need to think which technology he should use in particular situation.
 
-First layer details
+VisualVM helps to get lot of information out about the JVM and how it's performing. But we will only look into the jmx connection in VisualVM
 
-how to connect to jvisualvm
-
-what metrics it show's
-
-how
+VisualVM
