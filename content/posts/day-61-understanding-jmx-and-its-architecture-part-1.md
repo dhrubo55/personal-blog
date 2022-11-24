@@ -84,4 +84,4 @@ VisualVM helps to get lot of information out about the JVM and how it's performi
 
 ### Setup VisualVM with JMX :
 
-After downloading VisualVM when starting it will look for all the local JVM instances 
+After downloading VisualVM when starting it will look for all the local JVM instances. 
