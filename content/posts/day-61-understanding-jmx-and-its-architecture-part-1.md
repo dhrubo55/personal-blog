@@ -84,4 +84,13 @@ VisualVM helps to get lot of information out about the JVM and how it's performi
 
 ### Setup VisualVM with JMX :
 
-After downloading VisualVM when starting it will look for all the local JVM instances. 
+After downloading VisualVM when starting it will look for all the local JVM instances. Remote connections need to be added by specifying host and jmx port which needs to be setup while running the application as system property. 
+
+```java
+-Dcom.sun.management.jmxremote
+-Dcom.sun.management.jmxremote.port=5555
+-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false
+```
+
+this configuration is for non-production use case as the port is open withou any SSL security
