@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-What is JMX
+### What is JMX
 
 The Java Management Extensions (JMX) API is a standard for managing and monitoring applications and services.
 
@@ -29,7 +29,7 @@ for building web-based, distributed, dynamic, and modular solutions to manage Ja
 
 The JVM gives you a set of MBeans through which you can access runtime data like **memory consumption**, **GC stats** and some more data. You can also invoke many operations. Your app server will also give you many MBeans which you can use to control the server and installed applications.
 
-JMX overview
+### JMX overview
 
 The JMX technology is native to the Java programming language.
 
@@ -52,7 +52,7 @@ As a result, it offers natural, efficient, and lightweight management extensions
 
 The dynamics of the JMX technology architecture enables you to use it to monitor and manage resources as they are implemented and installed. It can also be used to monitor and manage the jvm
 
-JMX's layerd architecture
+### JMX's layerd architecture
 
 JMX technology provides a tiered architecture where managed resources and management applications can be integrated in the plug-and-play approach as shown in below image . A given resource is instrumented by one or more Java objects known as `Managed Beans (or MBeans)`, which are registered in a core managed object server known as the `MBean server`. This server acts as a management agent and can run on most Java-enabled devices.
 
@@ -66,7 +66,7 @@ So in this part the topic of discussion will be the Manager Level. But before go
 | Agent | The main component of a JMX agent is the MBean server. This is a core managed object server in which MBeans are registered. A JMX agent also includes a set of services for handling MBeans. The JMX agent directly controls resources and makes them available to remote management agents. |
 | Manager | Protocol adaptors and standard connectors make a JMX agent accessible from remote management applications outside the agent’s Java Virtual Machine (JVM). |
 
-Manager level:
+### Manager level:
 
 JMX API instrumentation can be accessed through existing management protocols. For example Simple Network Management Protocol (SNMP). Another way is through proprietary protocols. The MBean server relies on protocol adaptors and connectors to make a JMX agent accessible from management applications outside the agent’s JVM.
 
