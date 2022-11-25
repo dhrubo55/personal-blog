@@ -93,5 +93,7 @@ After downloading VisualVM when starting it will look for all the local JVM inst
 -Dcom.sun.management.jmxremote.ssl=false
 ```
 
-this configuration is for non-production use case as the port is open withou any SSL security. Here the jmx port will be 5555 and then we will need to connect to this port from visualvm.
+this configuration is for non-production use case as the port is open withou any SSL security. Here the jmx port will be 9875 and then we will need to connect to this port from visualvm. This port is by default given.
+
+
 
