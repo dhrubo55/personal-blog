@@ -111,7 +111,7 @@ where there is tabs like monitor , threads, sampler, profiler and many more exte
 6. Check Platform and Custom MBeans for JVM and applications
 7. VisualGC which helps to visualize GC
 
-!\[\](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-34-28.png)
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-34-28_pvax9m.png)
 
 here we can see the memory and cpu usage of intellij IDE.
 
