@@ -114,3 +114,5 @@ where there is tabs like monitor , threads, sampler, profiler and many more exte
 ![](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-34-28.png)
 
 here we can see the memory and cpu usage of intellij IDE.
+
+**In the next part will try to discuss about the Agent level of JMX**
