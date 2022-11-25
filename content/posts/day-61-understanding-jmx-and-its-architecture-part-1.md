@@ -112,3 +112,5 @@ where there is tabs like monitor , threads, sampler, profiler and many more exte
 7. VisualGC which helps to visualize GC
 
 ![](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-34-28.png)
+
+here we can see the memory and cpu usage of intellij IDE.
