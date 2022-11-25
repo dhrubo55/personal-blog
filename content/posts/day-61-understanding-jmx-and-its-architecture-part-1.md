@@ -101,7 +101,7 @@ now after connecting with jmx port in visualvm we will get to see something like
 
 ![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-28-12_qtvwcv.png)
 
-where there is tabs like monitor , threads, sampler, profiler and many more extensions. By using these we can monitor
+where there is tabs like **monitor** ,**threads**, **sampler**, **profiler** and many more extensions. By using these we can monitor
 
 1. Cpu Usage
 2. Heap Size
