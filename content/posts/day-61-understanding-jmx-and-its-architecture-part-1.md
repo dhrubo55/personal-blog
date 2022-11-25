@@ -96,3 +96,7 @@ After downloading VisualVM when starting it will look for all the local JVM inst
 this configuration is for non-production use case as the port is open withou any SSL security. Here the jmx port will be 9875 and then we will need to connect to this port from visualvm. This port is by default given.
 
 ![](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-22-24.png)
+
+now after connecting with jmx port in visualvm we will get to see something like this
+
+![](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-28-12.png)
