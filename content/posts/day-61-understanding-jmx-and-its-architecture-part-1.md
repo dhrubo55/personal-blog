@@ -110,3 +110,5 @@ where there is tabs like monitor , threads, sampler, profiler and many more exte
 5. Profiling
 6. Check Platform and Custom MBeans for JVM and applications
 7. VisualGC which helps to visualize GC
+
+![](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-34-28.png)
