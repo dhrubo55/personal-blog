@@ -88,7 +88,7 @@ After downloading VisualVM when starting it will look for all the local JVM inst
 
 ```java
 -Dcom.sun.management.jmxremote
--Dcom.sun.management.jmxremote.port=5555
+-Dcom.sun.management.jmxremote.port=9875
 -Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.ssl=false
 ```
