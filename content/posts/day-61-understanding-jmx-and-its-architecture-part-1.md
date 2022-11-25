@@ -95,11 +95,11 @@ After downloading VisualVM when starting it will look for all the local JVM inst
 
 this configuration is for non-production use case as the port is open withou any SSL security. Here the jmx port will be 9875 and then we will need to connect to this port from visualvm. This port is by default given.
 
-!\[\](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-22-24.png)![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-22-24_ack8y7.png)
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-22-24_ack8y7.png)
 
 now after connecting with jmx port in visualvm we will get to see something like this
 
-!\[\](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-28-12.png)![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-28-12_qtvwcv.png)
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-28-12_qtvwcv.png)
 
 where there is tabs like monitor , threads, sampler, profiler and many more extensions. By using these we can monitor
 
