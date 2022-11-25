@@ -107,3 +107,6 @@ where there is tabs like monitor , threads, sampler, profiler and many more exte
 2. Heap Size
 3. Threads and states of them
 4. Sample CPU and Memory usage
+5. Profiling
+6. Check Platform and Custom MBeans for JVM and applications
+7. VisualGC which helps to visualize GC
