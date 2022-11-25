@@ -100,3 +100,10 @@ this configuration is for non-production use case as the port is open withou any
 now after connecting with jmx port in visualvm we will get to see something like this
 
 ![](file:///home/mohibul/Pictures/Screenshots/Screenshot%20from%202022-11-25%2007-28-12.png)
+
+where there is tabs like monitor , threads, sampler, profiler and many more extensions. By using these we can monitor 
+
+1. Cpu Usage 
+2. Heap Size
+3. Threads and states of them
+4. Sample CPU and Memory usage
