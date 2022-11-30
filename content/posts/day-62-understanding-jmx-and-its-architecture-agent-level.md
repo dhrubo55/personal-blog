@@ -26,7 +26,7 @@ A JMX agent is a management entity that runs in a JVM and acts as the liaison be
 
 MBean Server:
 
-The MBean server is the core component of a JMX agent. It’s a registry for objects in a JMX agent which does management operations. An object that registers with the MBean server is visible to management applications. The MBean server exposes only the management interface of an MBean.
+The MBean server AKA MBean Agent is the core component of a JMX agent. It’s a registry for objects in a JMX agent which does management operations. An object that registers with the MBean server is visible to management applications. The MBean server exposes only the management interface of an MBean.
 
 Any resource that you want to manage from outside the agent’s JVM must be registered as an MBean with the server. The MBean server provides a standardized interface for accessing MBeans within the same JVM. Thus giving local objects all the benefits of manipulating manageable resources. MBeans can be instantiated and registered by:
 
