@@ -20,9 +20,9 @@ A JMX agent is a standard management agent that directly controls resources. And
 
 A JMX agent is a management entity that runs in a JVM and acts as the liaison between the managed beans (MBeans) and the management application. The various components of a JMX agent are outlined in the following sections:
 
-- MBean Server
-- Agent Services
-- Protocol Adaptors and Connectors
+1. MBean Server
+2. Agent Services
+3. Protocol Adaptors and Connectors
 
 Architecture
 
