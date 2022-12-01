@@ -44,3 +44,13 @@ When you register an MBean, you must assign it a unique object name. A managemen
 * Architecture
 * What is MBean
 * MBean Server
+
+### MBean 
+
+MBeans are managed beans, Java objects that represent resources to be managed. MBeans can be standard or dynamic. Standard MBeans are Java objects that conform to design patterns derived from the JavaBeans component model. Dynamic MBeans define their management interface at runtime.
+
+A standard MBean exposes the resource to be managed directly through its attributes and operations. Attributes are exposed through "getter" and "setter" methods. Operations are the other methods of the class that are available to managers. All these methods are defined statically in the MBean interface and are visible to a JMX agent through introspection. This is the most straightforward way of making a new resource manageable.
+
+A dynamic MBean is an MBean that defines its management interface at runtime. For example, a configuration MBean could determine the names and types of the attributes it exposes by parsing an XML file.
+
+
