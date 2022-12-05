@@ -87,6 +87,18 @@ When you register an MBean, `you must assign it a unique object name`. A managem
 Agent services are objects that can perform management operations on the MBeans that are registered with the MBean server. By including management intelligence within the agent, JMX enables you to build more powerful management solutions. Agent services can be provides by MBeans as well, allowing them and their functionality to be controlled through the MBean server. Java Management Extensions (JMX) Specification, version 1.4 defines the following agent services:
 
 * Dynamic Class loader: Dynamic class loading through the management applet (m-let) service retrieves and instantiates new classes and native libraries that are dynamically downloaded from the network.
-Monitors: Monitors the numerical or string value of MBean attributes and can notify other objects of several types of changes.
+* Monitors: Monitors the numerical or string value of MBean attributes and can notify other objects of several types of changes.
+* Timers: Timers provide a scheduling mechanism and can send notifications at predetermined intervals.
+* Relation service: The relation service defines associations between MBeans and maintains the consistency of the relation.
+
+### Agent Services
+
+Agent services are objects that can perform management operations on the MBeans that registers with the MBean server. Agent services can be provided by MBeans as well, allowing them and their functionality to be controlled through the MBean server. Java Management Extensions (JMX) Specification, version 1.4 defines the following agent services:
+
+Dynamic Class loader: Dynamic class loading through the management service fetches and instantiates new classes and native libraries. That are dynamically downloaded from the network.
+
+Monitors: Monitors the numerical or string value of MBean attributes. They can notify other objects of several types of changes.
+
 Timers: Timers provide a scheduling mechanism and can send notifications at predetermined intervals.
-Relation service: The relation service defines associations between MBeans and maintains the consistency of the relation.
+
+Relation service: The relation service lets the MBeans communicate with each other.
