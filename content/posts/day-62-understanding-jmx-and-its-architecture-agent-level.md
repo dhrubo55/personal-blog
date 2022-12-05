@@ -105,3 +105,34 @@ Get or set attributes of existing MBeans
 Perform operations on existing MBeans
 Instantiate and register new MBeans
 Register for and receive notifications emitted by MBeans
+
+
+Platform MBeans
+A platform MBean (also called an MXBean) is an MBean for monitoring and managing the Java Virtual Machine (JVM).  Each MXBean encapsulates a part of JVM functionality such as the JVM's class loading system, JIT compilation system, garbage collector, and so on.  The java.lang.management package defines the platform MXBeans.
+
+Table 1 lists all the platform MBeans and the aspect of the VM that they manage. Each platform MXBean has a unique javax.management.ObjectName for registration in the platform MBeanServer.  A JVM may have zero, one, or more than one instance of each MXBean, depending on its function, as shown in the table. 
+
+| Platform MBeans |
+Interface | Manages	| Object Name | Instances Per VM |
+| ----- | ----- | ----- | ----- | ---- |
+ClassLoadingMXBean	Class loading system	java.lang:type=ClassLoading	One
+CompilationMXBean	Compilation system	java.lang:type=Compilation	Zero or one
+GarbageCollectorMXBean	Garbage collector	java.lang:type=GarbageCollector,
+name=collectorName	One or more
+MemoryManagerMXBean
+(sub-interface of GarbageCollectorMXBean)	Memory pool	java.lang:type=MemoryManager,
+name=managerName	One or more
+MemoryPoolMXBean	Memory
+java.lang:type=MemoryPool,
+name=poolName	One or more
+MemoryMXBean	Memory system	java.lang:type=Memory	One
+OperatingSystemMXBean	Underlying operating system	java.lang:type=OperatingSystem	One
+RuntimeMXBean	Runtime system	java.lang:type=Runtime	One
+ThreadMXBean	Thread system	java.lang:type=Threading	One
+Platform MBean Server
+The Platform MBean Server can be shared by different managed components running within the same Java Virtual Machine. You can access the Platform MBean Server with the method ManagementFactory.getPlatformMBeanServer(). The first call to this method, creates the platform MBeanServer and registers the platform MXBeans using their unique ObjectNames. Subsequently, it returns the initially created platform MBeanServer.
+
+MXBeans that get created and destroyed dynamically, for example, memory pools and managers, will automatically be registered and deregistered into the platform MBeanServer.  If the system property javax.management.builder.initial is set, the platform MBeanServer creation will be done by the specified MBeanServerBuilder.
+
+Use the platform MBeanServer to register other MBeans besides the platform MXBeans. This enables all MBeans to be published through the same MBeanServer and makes network publishing and discovery easier.
+
