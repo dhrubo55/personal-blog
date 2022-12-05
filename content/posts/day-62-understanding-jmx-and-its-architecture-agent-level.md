@@ -88,10 +88,20 @@ When you register an MBean, `you must assign it a unique object name`. A managem
 
 Agent services are objects that can perform management operations on the MBeans that registers with the MBean server. Agent services can be provided by MBeans as well, allowing them and their functionality to be controlled through the MBean server. Java Management Extensions (JMX) Specification, version 1.4 defines the following agent services:
 
-Dynamic Class loader: Dynamic class loading through the management service fetches and instantiates new classes and native libraries. That are dynamically downloaded from the network.
+* **Dynamic Class loader** : Dynamic class loading through the management service fetches and instantiates new classes and native libraries. That are dynamically downloaded from the network.
 
-Monitors: Monitors the numerical or string value of MBean attributes. They can notify other objects of several types of changes.
+* **Monitors** : Monitors the numerical or string value of MBean attributes. They can notify other objects of several types of changes.
 
 Timers: Timers provide a scheduling mechanism and can send notifications at predetermined intervals.
 
 Relation service: The relation service lets the MBeans communicate with each other.
+
+
+
+### Protocol Adaptors and Connectors
+Protocol adaptors and connectors make agents accessible from remote management applications. They provide a view through a specific protocol of the MBeans that are instantiated and registered with the MBean server. They enable a management application outside the JVM to:
+
+Get or set attributes of existing MBeans
+Perform operations on existing MBeans
+Instantiate and register new MBeans
+Register for and receive notifications emitted by MBeans
