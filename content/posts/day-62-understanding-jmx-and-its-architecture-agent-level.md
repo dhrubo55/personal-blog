@@ -126,6 +126,6 @@ Table 1 lists all the platform MBeans and the aspect of the VM that they manage.
 
 The Platform MBean Server can be shared by different managed components running within the same Java Virtual Machine. You can access the Platform MBean Server with the method ManagementFactory.getPlatformMBeanServer(). The first call to this method, creates the platform MBeanServer and registers the platform MXBeans using their unique ObjectNames. Subsequently, it returns the initially created platform MBeanServer.
 
-MXBeans that get created and destroyed dynamically, for example, memory pools and managers, will automatically be registered and deregistered into the platform MBeanServer.  If the system property javax.management.builder.initial is set, the platform MBeanServer creation will be done by the specified MBeanServerBuilder.
+MXBeans that get created and destroyed dynamically, for example, memory pools and managers, will automatically be registered and deregistered into the platform MBeanServer.  If the system property `javax.management.builder.initial` is set, the platform MBeanServer creation will be done by the specified MBeanServerBuilder.
 
 Use the platform MBeanServer to register other MBeans besides the platform MXBeans. This enables all MBeans to be published through the same MBeanServer and makes network publishing and discovery easier.
