@@ -115,10 +115,10 @@ Table 1 lists all the platform MBeans and the aspect of the VM that they manage.
 | Platform MBeans |
 Interface | Manages	| Object Name | Instances Per VM |
 | ----- | ----- | ----- | ----- | ---- |
-ClassLoadingMXBean	Class loading system	java.lang:type=ClassLoading	One
-CompilationMXBean	Compilation system	java.lang:type=Compilation	Zero or one
-GarbageCollectorMXBean	Garbage collector	java.lang:type=GarbageCollector,
-name=collectorName	One or more
+| ClassLoadingMXBean |	Class loading system | java.lang:type=ClassLoading	| One |
+| CompilationMXBean |	Compilation system |	java.lang:type=Compilation	| Zero or one |
+| GarbageCollectorMXBean |	Garbage collector | java.lang:type=GarbageCollector,
+name=collectorName	| One or more |
 MemoryManagerMXBean
 (sub-interface of GarbageCollectorMXBean)	Memory pool	java.lang:type=MemoryManager,
 name=managerName	One or more
@@ -135,4 +135,3 @@ The Platform MBean Server can be shared by different managed components running 
 MXBeans that get created and destroyed dynamically, for example, memory pools and managers, will automatically be registered and deregistered into the platform MBeanServer.  If the system property javax.management.builder.initial is set, the platform MBeanServer creation will be done by the specified MBeanServerBuilder.
 
 Use the platform MBeanServer to register other MBeans besides the platform MXBeans. This enables all MBeans to be published through the same MBeanServer and makes network publishing and discovery easier.
-
