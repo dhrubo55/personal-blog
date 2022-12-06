@@ -114,6 +114,8 @@ Table 1 lists all the platform MBeans and the aspect of the VM that they manage.
 
 | Platform MBeans | Interface | Manages	| Object Name | Instances Per VM |
 | ----- | ----- | ----- | ----- | ---- |
+
+
 | ClassLoadingMXBean |	Class loading system | java.lang:type=ClassLoading	| One |
 | CompilationMXBean |	Compilation system |	java.lang:type=Compilation	| Zero or one |
 | GarbageCollectorMXBean |	Garbage collector | java.lang:type=GarbageCollector,name=collectorName	| One or more |
