@@ -113,11 +113,9 @@ Platform MBeans
 |--- |--- |--- |--- |
 |ClassLoadingMXBean|Class loading system|java.lang:type=ClassLoading|One|
 |CompilationMXBean|Compilation system|java.lang:type=Compilation|Zero or one|
-|GarbageCollectorMXBean|Garbage collector|java.lang:type=GarbageCollector,
-name=collectorName|One or more|
+|GarbageCollectorMXBean|Garbage collector|java.lang:type=GarbageCollector name=collectorName|One or more|
 |MemoryManagerMXBean
-(sub-interface of GarbageCollectorMXBean)|Memory pool|java.lang:type=MemoryManager,
-name=managerName|One or more|
+(sub-interface of GarbageCollectorMXBean)|Memory pool|java.lang:type=MemoryManager name=managerName|One or more|
 |MemoryPoolMXBean|Memory|java.lang:type=MemoryPool,
 name=poolName|One or more|
 |MemoryMXBean|Memory system|java.lang:type=Memory|One|
