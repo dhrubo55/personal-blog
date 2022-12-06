@@ -112,8 +112,7 @@ A platform MBean (also called an MXBean) is an MBean for monitoring and managing
 
 Table 1 lists all the platform MBeans and the aspect of the VM that they manage. Each platform MXBean has a unique javax.management.ObjectName for registration in the platform MBeanServer.  A JVM may have zero, one, or more than one instance of each MXBean, depending on its function, as shown in the table. 
 
-| Platform MBeans |
-Interface | Manages	| Object Name | Instances Per VM |
+| Platform MBeans | Interface | Manages	| Object Name | Instances Per VM |
 | ----- | ----- | ----- | ----- | ---- |
 | ClassLoadingMXBean |	Class loading system | java.lang:type=ClassLoading	| One |
 | CompilationMXBean |	Compilation system |	java.lang:type=Compilation	| Zero or one |
