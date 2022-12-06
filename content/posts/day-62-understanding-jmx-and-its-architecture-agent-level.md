@@ -116,8 +116,7 @@ Table 1 lists all the platform MBeans and the aspect of the VM that they manage.
 | ----- | ----- | ----- | ----- | ---- |
 | ClassLoadingMXBean |	Class loading system | java.lang:type=ClassLoading	| One |
 | CompilationMXBean |	Compilation system |	java.lang:type=Compilation	| Zero or one |
-| GarbageCollectorMXBean |	Garbage collector | java.lang:type=GarbageCollector,
-name=collectorName	| One or more |
+| GarbageCollectorMXBean |	Garbage collector | java.lang:type=GarbageCollector,name=collectorName	| One or more |
 | MemoryManagerMXBean
 (sub-interface of GarbageCollectorMXBean) |	Memory pool | java.lang:type=MemoryManager,
 name=managerName | One or more |
