@@ -14,6 +14,10 @@ image = ""
 relative = false
 
 +++
+In part one we disscussed about JMX and its remote management layer. In this one we are going to understand its second layer which is Agent layer.
+
+
+
 ### Agent Overview
 
 A JMX agent is a standard management agent that directly controls resources. And it makes them available to remote management applications. A JMX agent is usually located on the same system as the resources that it controls, but this is not a need.
