@@ -128,3 +128,7 @@ The Platform MBean Server can be shared by different managed components running 
 MXBeans that get created and destroyed dynamically, for example, memory pools and managers, will automatically be registered and deregistered into the platform MBeanServer.  If the system property `javax.management.builder.initial` is set, the platform MBeanServer creation will be done by the specified MBeanServerBuilder.
 
 Use the platform MBeanServer to register other MBeans besides the platform MXBeans. This enables all MBeans to be published through the same MBeanServer and makes network publishing and discovery easier.
+
+
+#### Now in this Java code we create a MBean and see it In visualVm 
+
