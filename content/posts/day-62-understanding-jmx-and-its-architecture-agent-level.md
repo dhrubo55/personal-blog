@@ -134,8 +134,13 @@ Use the platform MBeanServer to register other MBeans besides the platform MXBea
 
 in step 1
 
-lets create a `SystemConfigurationMBean` to get some system related information
+lets create a `SystemStatusMBean` to get some system related information
 
 ```java
-
+public interface SystemStatusMBean {
+       Integer getNumberOfSecondsRunning();
+       String getProgramName();
+       Long getNumberOfUnixSecondsRunning();
+       Boolean getSwitchStatus();
+    }
 ```
