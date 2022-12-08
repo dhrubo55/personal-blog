@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-Agent Overview
+### Agent Overview
 
 A JMX agent is a standard management agent that directly controls resources. And it makes them available to remote management applications. A JMX agent is usually located on the same system as the resources that it controls, but this is not a need.
 
@@ -24,7 +24,7 @@ A JMX agent is a management entity that runs in a JVM and acts as the liaison be
 2. Agent Services
 3. Protocol Adaptors and Connectors
 
-MBean Server:
+### MBean Server:
 
 The MBean server AKA MBean Agent is the core component of a JMX agent. It’s a registry for objects in a JMX agent which does management operations. An object that registers with the MBean server is visible to management applications. The MBean server exposes only the management interface of an MBean.
 
@@ -109,18 +109,17 @@ Table 1 lists all the platform MBeans and the aspect of the VM that they manage.
 
 ### Platform MBeans
 
-|Interface|Manages|Object Name|Instances Per VM|
-|--- |--- |--- |--- |
-|ClassLoadingMXBean|Class loading system|java.lang:type=ClassLoading|One|
-|CompilationMXBean|Compilation system|java.lang:type=Compilation|Zero or one|
-|GarbageCollectorMXBean|Garbage collector|java.lang:type=GarbageCollector name=collectorName|One or more|
-|MemoryManagerMXBean (sub-interface of GarbageCollectorMXBean)|Memory pool|java.lang:type=MemoryManager name=managerName|One or more|
-|MemoryPoolMXBean|Memory|java.lang:type=MemoryPool name=poolName|One or more|
-|MemoryMXBean|Memory system|java.lang:type=Memory|One|
-|OperatingSystemMXBean|Underlying operating system|java.lang:type=OperatingSystem|One|
-|RuntimeMXBean|Runtime system|java.lang:type=Runtime|One|
-|ThreadMXBean|Thread system|java.lang:type=Threading|One|
-
+| Interface | Manages | Object Name | Instances Per VM |
+| --- | --- | --- | --- |
+| ClassLoadingMXBean | Class loading system | java.lang:type=ClassLoading | One |
+| CompilationMXBean | Compilation system | java.lang:type=Compilation | Zero or one |
+| GarbageCollectorMXBean | Garbage collector | java.lang:type=GarbageCollector name=collectorName | One or more |
+| MemoryManagerMXBean (sub-interface of GarbageCollectorMXBean) | Memory pool | java.lang:type=MemoryManager name=managerName | One or more |
+| MemoryPoolMXBean | Memory | java.lang:type=MemoryPool name=poolName | One or more |
+| MemoryMXBean | Memory system | java.lang:type=Memory | One |
+| OperatingSystemMXBean | Underlying operating system | java.lang:type=OperatingSystem | One |
+| RuntimeMXBean | Runtime system | java.lang:type=Runtime | One |
+| ThreadMXBean | Thread system | java.lang:type=Threading | One |
 
 ### Platform MBean Server
 
