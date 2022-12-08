@@ -145,3 +145,45 @@ public interface SystemStatusMBean {
     }
 ```
 
+This tells the MBeansServer by using dependency injection that this object will export 1 metrics:
+
+   * uptime
+
+Let’s write the actual object that implements this behaviour:
+
+```java
+public class SystemStatus implements SystemStatusMBean {
+   private Long uptime;
+   private Thread backgroundThread;
+
+   public SystemStatus() {
+       // First we initialize all the metrics
+       this.backgroundThread = new Thread();
+       this.uptime = 0;
+
+       // We will use a background thread to update the metrics
+       this.backgroundThread = new Thread(() -> {
+           try {
+               while (true) {
+                   // Every second we update the metrics
+                   uptime += 1;
+                   Thread.sleep(1000L);
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+       });
+       this.backgroundThread.setName("backgroundThread");
+       this.backgroundThread.start();
+   }
+
+
+   // Through this getters, defined in the interface SystemStatusMBean,
+   // all the metrics will be automatically retrieved
+
+   @Override
+   public Long getUptime() {
+       return uptime;
+   }
+}
+```
