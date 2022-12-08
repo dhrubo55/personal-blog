@@ -132,3 +132,10 @@ Use the platform MBeanServer to register other MBeans besides the platform MXBea
 
 #### Now in this Java code we create a MBean and see it In visualVm 
 
+in step 1
+
+lets create a `SystemConfigurationMBean` to get some system related information
+
+```java
+
+```
