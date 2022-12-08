@@ -187,3 +187,10 @@ public class SystemStatus implements SystemStatusMBean {
    }
 }
 ```
+
+
+
+From the previous piece of code, you can see that you are simply creating an object that implements all the metrics from the interface, and will update them every second using a background thread.
+
+Finally, we create an instance of the MBean object and register it in the MBeanServer:
+
