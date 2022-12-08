@@ -16,7 +16,7 @@ relative = false
 +++
 In part one we disscussed about JMX and its remote management layer. In this one we are going to understand its second layer which is Agent layer.
 
-
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
 
 ### Agent Overview
 
@@ -133,8 +133,7 @@ MXBeans that get created and destroyed dynamically, for example, memory pools an
 
 Use the platform MBeanServer to register other MBeans besides the platform MXBeans. This enables all MBeans to be published through the same MBeanServer and makes network publishing and discovery easier.
 
-
-#### Now in this Java code we create a MBean and see it In visualVm 
+#### Now in this Java code we create a MBean and see it In visualVm
 
 in step 1
 
