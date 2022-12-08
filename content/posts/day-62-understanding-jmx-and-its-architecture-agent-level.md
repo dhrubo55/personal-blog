@@ -141,9 +141,8 @@ lets create a `SystemStatusMBean` to get some system related information
 
 ```java
 public interface SystemStatusMBean {
-       Integer getNumberOfSecondsRunning();
+       Long uptime();
        String getProgramName();
-       Long getNumberOfUnixSecondsRunning();
        Boolean getSwitchStatus();
     }
 ```
