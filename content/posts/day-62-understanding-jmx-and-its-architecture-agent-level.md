@@ -206,7 +206,7 @@ public class Day62 {
 
            // Register the object in the MBeanServer
            MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
-           ObjectName objectName = new ObjectName("com.simple.app:name=SystemStatusExample");
+           ObjectName objectName = new ObjectName("com.simple.app:name=SystemStatus");
            platformMBeanServer.registerMBean(systemStatus, objectName);
 
        } catch (Exception e) {
@@ -216,4 +216,4 @@ public class Day62 {
 }
 ```
 
-The MBean needs a `ObjectName` to identify it within the MBeanServer. The name must contain a `domain` to avoid collisions and keys. In this example, the domain would be `com.simple.app` and the key would be `name=SystemStatusExample`.
+The MBean needs a `ObjectName` to identify it within the MBeanServer. The name must contain a `domain` to avoid collisions and keys. In this example, the domain would be `com.simple.app` and the key would be `name=SystemStatus`.
