@@ -141,7 +141,7 @@ lets create a `SystemStatusMBean` to get some system related information
 
 ```java
 public interface SystemStatusMBean {
-       Long uptime();
+       Long getuptime();
     }
 ```
 
@@ -194,3 +194,26 @@ From the previous piece of code, you can see that you are simply creating an obj
 
 Finally, we create an instance of the MBean object and register it in the MBeanServer:
 
+```java
+import javax.management.*;
+import java.lang.management.ManagementFactory;
+
+public class Day62 {
+   public static void main(String[] args) {
+       try {
+           // Initialize the object
+           SystemStatus systemStatus = new SystemStatus();
+
+           // Register the object in the MBeanServer
+           MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+           ObjectName objectName = new ObjectName("com.simple.app:name=SystemStatusExample");
+           platformMBeanServer.registerMBean(systemStatus, objectName);
+
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
+}
+```
+
+The MBean needs a `ObjectName` to identify it within the MBeanServer. The name must contain a `domain` to avoid collisions and keys. In this example, the domain would be `com.simple.app` and the key would be `name=SystemStatusExample`.
