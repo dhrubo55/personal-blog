@@ -147,7 +147,7 @@ public interface SystemStatusMBean {
 
 This tells the MBeansServer by using dependency injection that this object will export 1 metrics:
 
-   * uptime
+* uptime
 
 Let’s write the actual object that implements this behaviour:
 
@@ -188,8 +188,6 @@ public class SystemStatus implements SystemStatusMBean {
 }
 ```
 
-
-
 From the previous piece of code, you can see that you are simply creating an object that implements all the metrics from the interface, and will update them every second using a background thread.
 
 Finally, we create an instance of the MBean object and register it in the MBeanServer:
@@ -217,3 +215,19 @@ public class Day62 {
 ```
 
 The MBean needs a `ObjectName` to identify it within the MBeanServer. The name must contain a `domain` to avoid collisions and keys. In this example, the domain would be `com.simple.app` and the key would be `name=SystemStatus`.
+
+#### now lets see the MBean from VisualVM
+
+After running the program it will run a thread in the background as `while(true)` so after selecting the running program from visualvm we will get something like this
+
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-34-49_crystz.png)
+
+I have run this program in intellij Scratch so visualVM is registering it as that. Now if i click on the mbean menu i will see something like
+
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-35-09_vwpz8s.png)
+
+where we can see `com.simple.app` which we have given in the `PlafromMBean` registration. After expanding it we will see the name of the object which is `SystemStatus`
+
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-26_loqy0l.png)
+
+after opening the SystemStatus we can see the `uptime` that we have defined for getting the uptime of the program. This metric will be updated as per the program. So if we press `refresh` then we can see the updated value of the uptime metric. 
