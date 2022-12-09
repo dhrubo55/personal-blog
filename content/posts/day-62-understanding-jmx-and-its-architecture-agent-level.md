@@ -231,3 +231,7 @@ where we can see `com.simple.app` which we have given in the `PlafromMBean` regi
 ![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-26_loqy0l.png)
 
 after opening the SystemStatus we can see the `uptime` that we have defined for getting the uptime of the program. This metric will be updated as per the program. So if we press `refresh` then we can see the updated value of the uptime metric. 
+
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-31_mpqgyn.png)
+
+Here the uptime metric changed from 14 to 61 seconds. So we can define metrics using mbeans and get information.
