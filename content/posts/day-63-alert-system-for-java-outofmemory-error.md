@@ -35,6 +35,4 @@ This exception will be thrown when
 5. When Metaspace memory is full
 6. When native memory is not enough to allocate
 
-There are many more reasons OOM can occur.
-
-An OutOfMemoryError (OOME) is bad. It can happen at any time, with any thread. There is little that you can do about it, except to exit the program, change the -Xmx value, and restart the JVM. If you then make the -Xmx value too large, you slow down your application. The secret is to make the maximum heap value _the right size_, neither too small, nor too big. OOME can happen with any thread, and when it does, that thread typically dies. Often, there is not enough memory to build up a stack trace for the OOME, so you cannot even determine where it occurred, or why.
+There are many more reasons OOM can occur. An OutOfMemoryError (OOME) is bad. It can happen at any time, with any thread. There is little that you can do about it, except to exit the program, change the -Xmx value, and restart the JVM. If you then make the -Xmx value too large, you slow down your application. The secret is to make the maximum heap value _the right size_, neither too small, nor too big. OOME can happen with any thread, and when it does, that thread typically dies. Often, there is not enough memory to build up a stack trace for the OOME, so you cannot even determine where it occurred, or why.
