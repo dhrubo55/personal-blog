@@ -39,8 +39,8 @@ There are many more reasons OOM can occur. An OutOfMemoryError (OOME) is bad. It
 
 Once we have downcast the MemoryMXBean to a NotificationEmitter we can add a NotificationListener to the MemoryMXBean. You should verify that the notification is of type MEMORY_THRESHOLD_EXCEEDED. In our OOMAlterService we add listeners to implement the OOMAlertService.Listener interface, with one method alertMemoryLow(**long** usedMemory, **long** maxMemory) that will be called when the threshold is reached.
 
-This notification will be emitted fast.Something to note is that the listener is being called by a special thread, called the Low Memory Detector thread, that is now part of the standard JVM.
+This notification will be emitted fast.Something to note is that the listener is being called by a special thread, called the `Low Memory Detector thread`, that is part of the standard JVM.
 
 What is the threshold? And which of the many pools should we monitor? The only sensible pool to monitor is the Tenured Generation (Old Space). When you set the size of the memory with -Xmx256m, you are setting the maximum memory to be used in the Tenured Generation. Searching in findTenuredGenPool() method, and returning the first one that was of type HEAP to get the Tenured gen memory.
 
-In my setUsageThreshold(**double** threshold) method, I specify when I would like to be notified. This threshold is a global setting. so only one usage threshold per Java Virtual Machine. The threshold value is used to calculate the usage threshold, based on the maximum memory size of the Tenured Generation pool (not the Runtime.getRuntime().maxMemory() value!).
+In  setUsageThreshold(**double** threshold) method, I specify when I would like to be notified. This threshold is a global setting. so only one usage threshold per Java Virtual Machine. The threshold value is used to calculate the usage threshold, based on the maximum memory size of the Tenured Generation pool (not the Runtime.getRuntime().maxMemory() value!).
