@@ -98,7 +98,7 @@ Let us define a `Listener` which will listen for the alert. Then
                     return pool;
                 }
             }
-            throw new AssertionError("Could not find tenured space");
+            throw new Exception("Could not find tenured pool");
         }
     }
 ```
