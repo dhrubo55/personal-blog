@@ -85,10 +85,7 @@ Let us define a `Listener` which will listen for the alert. Then
             tenuredGenPool.setUsageThreshold(warningThreshold);
         }
 
-        /**
-         * Tenured Space Pool can be determined by it being of type
-         * HEAP and by it being possible to set the usage threshold.
-         */
+
         private static MemoryPoolMXBean findTenuredGenPool() {
             for (MemoryPoolMXBean pool : ManagementFactory.getMemoryPoolMXBeans()) {
                 if (pool.getName().contains("Old")
