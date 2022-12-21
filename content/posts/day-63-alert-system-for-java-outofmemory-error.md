@@ -112,3 +112,24 @@ This notification will be emitted fast.Something to note is that the listener is
 What is the threshold? And which of the many pools should we monitor? The only sensible pool to monitor is the Tenured Generation (Old Space). When you set the size of the memory with -Xmx256m, you are setting the maximum memory to be used in the Tenured Generation. Searching in findTenuredGenPool() method, and returning the first one that was of type HEAP to get the Tenured gen memory.
 
 In  `setUsageThreshold(`**`double`**` threshold)` method, I specify when I would like to be notified. This threshold is a global setting. so only one usage threshold per Java Virtual Machine. The threshold value is used to calculate the usage threshold, based on the maximum memory size of the Tenured Generation pool `(not the Runtime.getRuntime().maxMemory() value!)`.
+
+In `findTenuredGenPool()` I am trying to find the `Tenured / Old gen` memory which is a heap memory. At first lets understand about JVM Heap and Non Heap memory.
+
+
+#### Heap memory
+
+The heap memory is the runtime data area from which the Java VM allocates memory for all class instances and arrays. The heap may be of a fixed or variable size. The garbage collector is an automatic memory management system that reclaims heap memory for objects.
+
+1.    Eden Space: The pool from which memory is initially allocated for most objects.
+
+2.    Survivor Space: The pool containing objects that have survived the garbage collection of the Eden space.
+
+3.   Tenured Generation or Old Gen: The pool containing objects that have existed for some time in the survivor space.
+
+#### Non-heap memory
+
+Non-heap memory includes a method area shared among all threads and memory required for the internal processing or optimization for the Java VM. It stores per-class structures such as a runtime constant pool, field and method data, and the code for methods and constructors. The method area is logically part of the heap but, depending on the implementation, a Java VM may not garbage collect or compact it. Like the heap memory, the method area may be of a fixed or variable size. The memory for the method area does not need to be contiguous.
+
+1.    Permanent Generation: The pool containing all the reflective data of the virtual machine itself, such as class and method objects. With Java VMs that use class data sharing, this generation is divided into read-only and read-write areas.
+
+2.    Code Cache: The HotSpot Java VM also includes a code cache, containing memory that is used for compilation and storage of native code.
