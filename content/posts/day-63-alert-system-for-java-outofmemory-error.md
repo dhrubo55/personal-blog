@@ -108,7 +108,7 @@ Once we have downcast the `MemoryMXBean` to a `NotificationEmitter` we can add a
 
 This notification will be emitted fast.Something to note is that the listener is being called by a special thread, called the `Low Memory Detector thread`, that is part of the standard JVM.
 
-What is the threshold? And which of the many pools should we monitor? The only sensible pool to monitor is the Tenured Generation (Old Space). When you set the size of the memory with -Xmx256m, you are setting the maximum memory to be used in the Tenured Generation. Searching in findTenuredGenPool() method, and returning the first one that was of type HEAP to get the Tenured gen memory.
+What is the threshold? And which of the many pools should we monitor? The only sensible pool to monitor is the Tenured Generation (Old Space). When you set the size of the memory with `-Xmx256m`, you are setting the maximum memory to be used in the Tenured Generation. Searching in `findTenuredGenPool()` method, and returning the first one that was of type HEAP to get the Tenured gen memory.
 
 In  `setUsageThreshold(`**`double`**`threshold)` method, I specify when I would like to be notified. This threshold is a global setting. so only one usage threshold per Java Virtual Machine. The threshold value is used to calculate the usage threshold, based on the maximum memory size of the Tenured Generation pool `(not the Runtime.getRuntime().maxMemory() value!)`.
 
@@ -151,3 +151,5 @@ private static MemoryPoolMXBean findTenuredGenPool() {
         }
     }
 ```
+
+in this method we are looking for a pool which is of type HEAP and also in its name contains the word old. This is one way we can find the Tenured gen pool
