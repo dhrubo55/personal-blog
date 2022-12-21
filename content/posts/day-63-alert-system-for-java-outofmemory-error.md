@@ -60,7 +60,7 @@ Let us define a `Listener` which will listen for the alert. Then
                     long maxMemory = tenuredGenPool.getUsage().getMax();
                     long usedMemory = tenuredGenPool.getUsage().getUsed();
                     for (Listener listener : listeners) {
-                        listener.alertMemoryLow(usedMemory, maxMemory);
+                        listener.alertMemoryLow(usedMemory, maxMemory, Thread.getAllStackTrace());
                     }
                 }
             }, null, null);
