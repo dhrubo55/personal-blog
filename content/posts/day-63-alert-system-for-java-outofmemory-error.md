@@ -90,16 +90,14 @@ Let us define a `Listener` which will listen for the alert. Then
          * HEAP and by it being possible to set the usage threshold.
          */
         private static MemoryPoolMXBean findTenuredGenPool() {
-            for (MemoryPoolMXBean pool :
-                    ManagementFactory.getMemoryPoolMXBeans()) {
-                // I don't know whether this approach is better, or whether
-                // we should rather check for the pool name "Tenured Gen"?
-                if (pool.getType() == MemoryType.HEAP &&
-                        pool.isUsageThresholdSupported()) {
+            for (MemoryPoolMXBean pool : ManagementFactory.getMemoryPoolMXBeans()) {
+                if (pool.getName().contains("Old")
+                        && pool.getType() == MemoryType.HEAP
+                        && pool.isUsageThresholdSupported()) {
                     return pool;
                 }
             }
-            throw new Exception("Could not find tenured pool");
+            throw new Exception("Could not find tenured space");
         }
     }
 ```
