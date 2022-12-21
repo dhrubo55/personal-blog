@@ -35,11 +35,77 @@ This exception will be thrown when
 5. When Metaspace memory is full
 6. When native memory is not enough to allocate
 
-There are many more reasons OOM can occur. An OutOfMemoryError (OOME) is bad. It can happen at any time, with any thread. There is little that you can do about it, except to exit the program, change the -Xmx value, and restart the JVM. If you then make the -Xmx value too large, you slow down your application. The secret is to make the maximum heap value _the right size_, neither too small, nor too big. OOME can happen with any thread, and when it does, that thread typically dies. Often, there is not enough memory to build up a stack trace for the OOME, so you cannot even determine where it occurred, or why.
+There are many more reasons OOM can occur. An OutOfMemoryError (OOME) is bad. It can happen at any time, with any thread. There is little that you can do about it, except to exit the program, change the -Xmx value, and restart the JVM. If you then make the -Xmx value too large, you slow down your application. The secret is to make the maximum heap value _the right size_, neither too small, nor too big. OOME can happen with any thread, and when it does, that thread typically stops. Often, there is not enough memory to build up a stack trace for the OOME, so you cannot even determine where it occurred, or why.
 
 Now lets dive into the alert system code. 
 
-Once we have downcast the MemoryMXBean to a NotificationEmitter we can add a NotificationListener to the MemoryMXBean. You should verify that the notification is of type `MEMORY_THRESHOLD_EXCEEDED`. In our OOMAlterService we add listeners to implement the OOMAlertService.Listener interface, with one method alertMemoryLow(**long** usedMemory, **long** maxMemory) that will be called when the threshold is reached.
+```java
+public interface Listener {
+	void alertMemoryLow(long used, long max);
+}
+```
+Let us define a `Listener` which will listen for the alert. Then
+
+```java
+ public static class OOMAlertService {
+        private final List<Listener> listeners = new ArrayList<>();
+        
+        public OOMAlertService() {
+            MemoryMXBean mbean = ManagementFactory.getMemoryMXBean();
+            NotificationEmitter emitter = (NotificationEmitter) mbean;
+            emitter.addNotificationListener((notification, o) -> {
+                if (notification.getType().equals(
+                        MemoryNotificationInfo.MEMORY_THRESHOLD_EXCEEDED)) {
+                    long maxMemory = tenuredGenPool.getUsage().getMax();
+                    long usedMemory = tenuredGenPool.getUsage().getUsed();
+                    for (Listener listener : listeners) {
+                        listener.memoryUsageLow(usedMemory, maxMemory);
+                    }
+                }
+            }, null, null);
+        }
+
+        public boolean addListener(Listener listener) {
+            return listeners.add(listener);
+        }
+
+        public boolean removeListener(Listener listener) {
+            return listeners.remove(listener);
+        }
+
+        private static final MemoryPoolMXBean tenuredGenPool = findTenuredGenPool();
+
+        public static void setUsageThreshold(double threshold) {
+            if (threshold <= 0.0 || threshold > 1.0) {
+                throw new IllegalArgumentException("Threshold Percentage outside range");
+            }
+            long maxMemory = tenuredGenPool.getUsage().getMax();
+            long warningThreshold = (long) (maxMemory * threshold);
+            tenuredGenPool.setUsageThreshold(warningThreshold);
+        }
+
+        /**
+         * Tenured Space Pool can be determined by it being of type
+         * HEAP and by it being possible to set the usage threshold.
+         */
+        private static MemoryPoolMXBean findTenuredGenPool() {
+            for (MemoryPoolMXBean pool :
+                    ManagementFactory.getMemoryPoolMXBeans()) {
+                // I don't know whether this approach is better, or whether
+                // we should rather check for the pool name "Tenured Gen"?
+                if (pool.getType() == MemoryType.HEAP &&
+                        pool.isUsageThresholdSupported()) {
+                    return pool;
+                }
+            }
+            throw new AssertionError("Could not find tenured space");
+        }
+    }
+```
+
+In our OOMAlterService we add listeners to implement the OOMAlertService.Listener interface, with one method alertMemoryLow(**long** used, **long** max) that will be called when the threshold is reached.
+
+Once we have downcast the `MemoryMXBean` to a `NotificationEmitter` we can add a `NotificationListener` to the `MemoryMXBean`. You should verify that the notification is of type `MEMORY_THRESHOLD_EXCEEDED`. 
 
 This notification will be emitted fast.Something to note is that the listener is being called by a special thread, called the `Low Memory Detector thread`, that is part of the standard JVM.
 
