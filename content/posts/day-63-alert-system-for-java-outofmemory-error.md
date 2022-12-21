@@ -14,14 +14,6 @@ image = ""
 relative = false
 
 +++
-What is java out of memory error
-
-when does it happens
-
-what are the common things causes it
-
-the alert system
-
 `java.lang.OutOfMemoryError` exception  is thrown when there is insufficient space to allocate an object in the Java heap. In this case, The garbage collector cannot make space available to accommodate a new object, and the heap cannot be expanded further. Also, this error may be thrown when there is insufficient native memory to support the loading of a Java class. In a rare instance, a `java.lang.OutOfMemoryError` may be thrown when an excessive amount of time is being spent doing garbage collection and little memory is being freed.
 
 When a `java.lang.OutOfMemoryError` exception is thrown, a stack trace is also printed. In that stack trace the cause are mentioned for easier fixing of the issue.
