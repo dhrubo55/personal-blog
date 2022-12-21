@@ -155,3 +155,27 @@ private static MemoryPoolMXBean findTenuredGenPool() {
 in this method we are looking for a pool which is of type HEAP and also in its name contains the word old. This is one way we can find the Tenured gen pool. 
 
 So using this pools size and its threshold we can make alert service that will give us alert when memory is low. That way we can take necessary steps to prevent OOM error.
+
+So now running this service 
+
+```java
+class Day63 {
+
+    public static void main(String[] args) throws Exception {
+        OOMAlertService.setUsageThreshold(60.0/100.0);
+
+        OOMAlertService mws = new OOMAlertService();
+        mws.addListener((usedMemory, maxMemory, stacktrace) -> {
+            System.out.println("Memory usage low!!!");
+            double percentageUsed = ((double) usedMemory) / maxMemory;
+            System.out.println("percentageUsed = " + percentageUsed);
+            OOMAlertService.setUsageThreshold(80.0/100.0);
+            stacktrace.forEach((key, value) -> System.out.println(key + " " + Arrays.toString(value)));
+        });
+
+        List<List<Object>> numbers = new ArrayList<>();
+        while (true) {
+            numbers.add(new ArrayList<>());
+        }
+    }
+```
