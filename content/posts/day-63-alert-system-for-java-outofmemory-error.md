@@ -37,6 +37,8 @@ This exception will be thrown when
 
 There are many more reasons OOM can occur. An OutOfMemoryError (OOME) is bad. It can happen at any time, with any thread. There is little that you can do about it, except to exit the program, change the -Xmx value, and restart the JVM. If you then make the -Xmx value too large, you slow down your application. The secret is to make the maximum heap value _the right size_, neither too small, nor too big. OOME can happen with any thread, and when it does, that thread typically dies. Often, there is not enough memory to build up a stack trace for the OOME, so you cannot even determine where it occurred, or why.
 
+Now lets dive into the alert system code. 
+
 Once we have downcast the MemoryMXBean to a NotificationEmitter we can add a NotificationListener to the MemoryMXBean. You should verify that the notification is of type `MEMORY_THRESHOLD_EXCEEDED`. In our OOMAlterService we add listeners to implement the OOMAlertService.Listener interface, with one method alertMemoryLow(**long** usedMemory, **long** maxMemory) that will be called when the threshold is reached.
 
 This notification will be emitted fast.Something to note is that the listener is being called by a special thread, called the `Low Memory Detector thread`, that is part of the standard JVM.
