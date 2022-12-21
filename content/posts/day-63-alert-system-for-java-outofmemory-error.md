@@ -152,4 +152,6 @@ private static MemoryPoolMXBean findTenuredGenPool() {
     }
 ```
 
-in this method we are looking for a pool which is of type HEAP and also in its name contains the word old. This is one way we can find the Tenured gen pool
+in this method we are looking for a pool which is of type HEAP and also in its name contains the word old. This is one way we can find the Tenured gen pool. 
+
+So using this pools size and its threshold we can make alert service that will give us alert when memory is low. That way we can take necessary steps to prevent OOM error.
