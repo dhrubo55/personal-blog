@@ -14,7 +14,6 @@ image = ""
 relative = false
 
 +++
-
 What is java out of memory error
 
 when does it happens
@@ -137,3 +136,20 @@ Non-heap memory includes a method area shared among all threads and memory requi
 And for the application, the below diagram will give you an idea about how memory is distributed.
 
 ![](http://brucehenry.github.io/blog/public/2018/02/07/JVM-Memory-Structure/JVM-Memory.png)
+
+so now lets go back to the method `findTenuredGenPool()`. 
+
+
+```java
+private static MemoryPoolMXBean findTenuredGenPool() {
+            for (MemoryPoolMXBean pool : ManagementFactory.getMemoryPoolMXBeans()) {
+                if (pool.getName().contains("Old")
+                        && pool.getType() == MemoryType.HEAP
+                        && pool.isUsageThresholdSupported()) {
+                    return pool;
+                }
+            }
+            throw new Exception("Could not find tenured space");
+        }
+    }
+```
