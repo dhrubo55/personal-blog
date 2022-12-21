@@ -132,8 +132,8 @@ Non-heap memory includes a method area shared among all threads and memory requi
 1. Permanent Generation: The pool containing all the reflective data of the virtual machine itself, such as class and method objects. With Java VMs that use class data sharing, this generation is divided into read-only and read-write areas.
 2. Code Cache: The HotSpot Java VM also includes a code cache, containing memory that is used for compilation and storage of native code.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1671625419/images-from-blog/image_2022-12-21_132338828_nj97dd.png)
+![How can I monitor memory usage of my Tomcat/JVM?](https://www.jvmhost.com/articles/how-can-i-monitor-memory-usage-of-my-tomcat-jvm/jvm_memory_diagram1.png)
+
+And for the application, the below diagram will give you an idea about how memory is distributed.
 
 ![](http://brucehenry.github.io/blog/public/2018/02/07/JVM-Memory-Structure/JVM-Memory.png)
-
-This i how memory is structured in an application. 
