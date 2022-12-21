@@ -41,7 +41,7 @@ Now lets dive into the alert system code.
 
 ```java
 public interface Listener {
-	void alertMemoryLow(long used, long max);
+	void alertMemoryLow(long used, long max, Map<Thread, StackTraceElement[]> allThreadStackTrace);
 }
 ```
 
