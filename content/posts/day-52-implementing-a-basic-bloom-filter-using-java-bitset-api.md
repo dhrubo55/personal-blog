@@ -91,7 +91,9 @@ It's a nice property of Bloom filters that you can modify the false positive rat
 
 Your false positive rate will be approximately
 
-$$(1-e^((-kn)/m)))^k$$
+```math
+(1-e^((-kn)/m)))^k
+```
 
 so you can just plug the number n of elements you expect to insert, and try various values of k and m to configure your filter for your application.2
 
