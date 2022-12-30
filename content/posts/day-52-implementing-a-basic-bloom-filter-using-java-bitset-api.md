@@ -178,3 +178,19 @@ BloomFilter<Integer> filter = BloomFilter.create(
 Given a Bloom filter with m bits and k hashing functions, both insertion and membership testing are O(k). That is, each time you want to add an element to the set or check set membership, you just need to run the element through the k hash functions and add it to the set or check those bits.
 
 The space advantages are more difficult to sum up; again it depends on the error rate you're willing to tolerate. It also depends on the potential range of the elements to be inserted; if it is very limited, a deterministic bit vector can do better. If you can't even ballpark estimate the number of elements to be inserted, you may be better off with a hash table or a scalable Bloom filter.
+
+
+#### Where Can I Use It
+
+Bloom filter is all about testing Membership in a set. The classic example of using bloom filters is to reduce expensive disk (or network) lookups for non-existent keys. As we can see that bloom filters can search for a key in O(k) constant time, where k is the number of hash functions, it will be very fast to test non-existence of a key.
+
+If the element is not in the bloom filter, then we know for sure we don’t need to perform the expensive lookup. On the other hand, if it is in the bloom filter, we perform the lookup, and we can expect it to fail some proportion of the time (the false positive rate).
+
+For some more concrete examples:
+
+1. You’ve seen in our given example that we could’ve use it to warn the user for weak passwords.
+2. You can use bloom filter to prevent your users from accessing malicious sites.
+3. Instead of making a query to an SQL database to check if a user with a certain email exists, you could first use a bloom filter for an inexpensive lookup check. If the email doesn’t exist, great! If it does exist, you might have to make an extra query to the database. You can do the same to search for if a ‘Username is already taken’.
+4. You can keep a bloom filter based on the IP address of the visitors to your website to check if a user to your website is a ‘returning user’ or a ‘new user’. Some false positive value for ‘returning user’ won’t hurt you, right?
+5. You can also make a Spell-checker by using bloom filter to track the dictionary words.
+6. Want to know how Medium used bloom filter to decide if a user already read post? Read this mind-blowing, freaking awesome article about it.
