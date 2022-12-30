@@ -95,23 +95,20 @@ Your false positive rate (P) will be approximately
 (1-e^((-kn)/m)))^k
 ```
 
-so you can just plug the number n of elements you expect to insert, and try various values of k and m to configure your filter for your application.  
-  
-Here   
+so you can just plug the number n of elements you expect to insert, and try various values of k and m to configure your filter for your application.
+
+Here  
 m - is the size of the bit array
 n - is the number of elements
 k - is the number hash funtions
 
- 
+This leads to an obvious question
 
-This leads to an obvious question 
-
-#### How many hash functions should I use? 
+#### How many hash functions should I use?
 
 The more hash functions you have, the slower your bloom filter, and the quicker it fills up. If you have too few, however, you may suffer too many false positives.
 
 Since you have to pick k when you create the filter, you'll have to ballpark what range you expect n to be in. Once you have that, you still have to choose a potential m (the number of bits) and k (the number of hash functions).
-
 
 So now we can design a process to build a bloom filter
 
@@ -119,7 +116,6 @@ So now we can design a process to build a bloom filter
 * Choose a value for m
 * Calculate the optimal value of k
 * Calculate the error rate for our chosen values of n, m, and k. If it's unacceptable, return to step 2 and change m; otherwise we're done.
-
 
 Now for the code we will use Java's BitSet API
 
@@ -179,7 +175,6 @@ Given a Bloom filter with m bits and k hashing functions, both insertion and mem
 
 The space advantages are more difficult to sum up; again it depends on the error rate you're willing to tolerate. It also depends on the potential range of the elements to be inserted; if it is very limited, a deterministic bit vector can do better. If you can't even ballpark estimate the number of elements to be inserted, you may be better off with a hash table or a scalable Bloom filter.
 
-
 #### Where Can I Use It
 
 Bloom filter is all about testing Membership in a set. The classic example of using bloom filters is to reduce expensive disk (or network) lookups for non-existent keys. As we can see that bloom filters can search for a key in O(k) constant time, where k is the number of hash functions, it will be very fast to test non-existence of a key.
@@ -194,3 +189,5 @@ For some more concrete examples:
 4. You can keep a bloom filter based on the IP address of the visitors to your website to check if a user to your website is a ‘returning user’ or a ‘new user’. Some false positive value for ‘returning user’ won’t hurt you, right?
 5. You can also make a Spell-checker by using bloom filter to track the dictionary words.
 6. Want to know how Medium used bloom filter to decide if a user already read post? Read this mind-blowing, freaking awesome article about it.
+
+in this wikipedia [link](https://en.wikipedia.org/wiki/Bloom_filter#Examples) there are muliple other usage of bloom filter
