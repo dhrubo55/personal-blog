@@ -54,9 +54,7 @@ Now lets check for another name "Mary"
 ```java
 String name = "Mary"
 h1(name) % 10 = 1;
-
 h2(name) % 10 = 2;
-
 h3(name) % 10 = 5;
 
 ```
