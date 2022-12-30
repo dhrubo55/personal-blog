@@ -101,7 +101,8 @@ Here
 
 ```m - is the size of the bit array
 n - is the number of elements
-k - is the number hash funtions```
+k - is the number hash funtions
+```
 
 This leads to an obvious question
 
