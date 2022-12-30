@@ -33,8 +33,8 @@ So if we use different hash functions and then  update the bit array with 1 wher
 
 So, in a nutshell:
 
-1. If we search for a value and see any of the hashed indexes for this value is ‘0’ then, the value is definitely not on the list.
-2. If all of the hashed indexes is ‘1’ then ‘maybe’ the searched value is on the list.
+- If we search for a value and see any of the hashed indexes for this value is ‘0’ then, the value is definitely not on the list.
+- If all of the hashed indexes is ‘1’ then ‘maybe’ the searched value is on the list.
 
 
 * unlike a standard hash table, a Bloom filter of a fixed size can represent a set with large number of elements.
