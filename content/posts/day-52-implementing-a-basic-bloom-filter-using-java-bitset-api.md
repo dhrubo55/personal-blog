@@ -119,3 +119,56 @@ So now we can design a process to build a bloom filter
 * Choose a value for m
 * Calculate the optimal value of k
 * Calculate the error rate for our chosen values of n, m, and k. If it's unacceptable, return to step 2 and change m; otherwise we're done.
+
+
+Now for the code we will use Java's BitSet API
+
+```java
+public class BloomFilter<T> {
+        private BitSet bitSet;
+        private int n;
+        private int m;
+        private List<Function<T, Integer>> hashFunctions;
+
+        public BloomFilter(final BitSet bitSet, final int n, final int m,
+                           final List<Function<T, Integer>> hashFunctions) {
+            this.bitSet = bitSet;
+            this.n = n;
+            this.m = hashFunctions.size();
+            this.hashFunctions = hashFunctions;
+        }
+
+        public void add(T value) {
+            for (Function<T, Integer> function : hashFunctions) {
+                int hash = mapHashToInt(function.apply(value));
+                bitSet.set(hash, true);
+            }
+        }
+
+        public boolean mightContain(T value) {
+            for (Function<T, Integer> function : hashFunctions) {
+                int hash = mapHashToInt(function.apply(value));
+                if (!bitSet.get(hash)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private int mapHashToInt(int hash) {
+            return hash & (n - 1);
+        }
+
+    }
+```
+
+here `Function<T,Integer> hashFunctions` supplied by the client. And BitSet exactly works like a bit array.
+
+Now we have tried our custom BloomFilter Google guava has a implementation of BloomFilter which can be created like
+
+```java
+BloomFilter<Integer> filter = BloomFilter.create(
+  Funnels.integerFunnel(),
+  500,
+  0.01);
+```
