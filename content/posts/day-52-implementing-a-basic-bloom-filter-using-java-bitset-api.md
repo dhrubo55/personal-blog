@@ -30,8 +30,8 @@ here in this scenario we are searching for the user name `Mary` in the bloom fil
 
 So if we use different hash functions and then  update the bit array with 1 where the index of the array would be number provided by the hash function. Then if we search the name again with those hash functions and check the index's again and if we find 1 there then we can plausibly say that, that name exist in the bloom filter.
 
-1. unlike a standard hash table, a Bloom filter of a fixed size can represent a set with large number of elements.
-2. False positive rate increases steadily as elements are added until all bits in the filter are set to 1, at which point all queries yield a positive result.
+* unlike a standard hash table, a Bloom filter of a fixed size can represent a set with large number of elements.
+* False positive rate increases steadily as elements are added until all bits in the filter are set to 1, at which point all queries yield a positive result.
 
 So let us discuss what is false positive in the case of getting information from a bloom filter.
 
