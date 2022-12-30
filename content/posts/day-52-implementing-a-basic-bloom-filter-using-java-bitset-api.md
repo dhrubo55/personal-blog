@@ -62,7 +62,7 @@ h2(name) % 10 = 2;
 h3(name) % 10 = 5;
 ```
 
-but we know that **“Mary”** was never added to the filter. Bit at index 2 and 5 was set when we added **“Mohibul”** . And if another name made 1 bit true then this bloom filter will say that "Mary" exists in the filter but in real we didnt add Mary.
+but we know that **“Mary”** was never added to the filter. Bit at index `2` and `5` was set when we added **“Mohibul”** . And if another name made 1 bit true then this bloom filter will say that "Mary" exists in the filter but in real we didnt add Mary.
 
 This behavior causes false positives.
 
