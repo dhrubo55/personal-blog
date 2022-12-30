@@ -28,4 +28,6 @@ For example, checking availability of username. In this case its a set membershi
 
 ![Bloom Filters: Visuals for explanation and applied systems | by Brian  Femiano | Level Up Coding](https://miro.medium.com/max/1400/1*hCwivv91BuskNzZ1ebq6jw.png)
 
-here in this scenario we are searching for the user name `Mary` in the bloom filter. So from the picture we can see a bloom filter is a
+here in this scenario we are searching for the user name `Mary` in the bloom filter. So from the picture we can see a bloom filter is a combination of a hash function and a bit array or list. Where after hashing the user name will give us a number in which we will set the bit to true.   
+  
+So if we use 
