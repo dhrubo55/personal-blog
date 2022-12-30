@@ -40,25 +40,26 @@ So let us discuss what is false positive in the case of getting information from
 
 The question is why we said **“Probabilistic”**, why this uncertainty? Let’s understand this with an example. Suppose we want to check whether “Mohibul” is present or not. We’ll calculate hashes using h1, h2 and h3 functions
 
-\`\`\` String name = "Mohibul";
-
-h1(name) % 10 = 5 h2(name) % 10 = 2 h3(name) % 10 = 4
-
-\`\`\`
+```java
+String name = "Mohibul";
+h1(name) % 10 = 5;
+h2(name) % 10 = 2;
+h3(name) % 10 = 4;
+```
 
 If we check the bit array, bits at these indices are set to 1.
 
 Now lets check for another name "Mary"
 
-\`\`\`String name = "Mary"
+```java
+String name = "Mary"
+h1(name) % 10 = 1;
 
-h1(name) % 10 = 1
+h2(name) % 10 = 2;
 
-h2(name) % 10 = 2
+h3(name) % 10 = 5;
 
-h3(name) % 10 = 5
-
-\`\`\`
+```
 
 but we know that “Mary” was never added to the filter. Bit at index 2 and 5 was set when we added “Mohibul” . And if another name made 1 bit true then this bloom filter will say that "Mary" exists in the filter but in real we didnt add Mary.
 
