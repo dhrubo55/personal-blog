@@ -190,4 +190,4 @@ For some more concrete examples:
 5. You can also make a Spell-checker by using bloom filter to track the dictionary words.
 6. Want to know how Medium used bloom filter to decide if a user already read post? Read this mind-blowing, freaking awesome article about it.
 
-in this wikipidia [link]() there are multiple other usage of bloom filter. 
+in this wikipidia [link]() there are multiple other usage of bloom filter.
