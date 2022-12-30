@@ -30,4 +30,6 @@ For example, checking availability of username. In this case its a set membershi
 
 here in this scenario we are searching for the user name `Mary` in the bloom filter. So from the picture we can see a bloom filter is a combination of a hash function and a bit array or list. Where after hashing the user name will give us a number in which we will set the bit to true.   
   
-So if we use 
+So if we use different hash functions and then  update the bit array with 1 where the index of the array would be number provided by the hash function. Then if we search the name again with those hash functions and check the index's again and if we find 1 there then we can plausibly say that, that name exist in the bloom filter.
+
+### Properties of a Bloom Filter
