@@ -83,4 +83,4 @@ Before doing that let us ask some question that will help us better design and u
 
 The hash functions used in a Bloom filter should be independent and uniformly distributed. They should also be as fast as possible (cryptographic hashes such as `sha1`, though widely used thus are not very good choices).
 
-Examples of fast, simple hashes that are independent enough includes [murmur](https://sites.google.com/site/murmurhash/ "murmur hash"), [xxHash](https://github.com/Cyan4973/xxHash "xxHash"), [Fowler–Noll–Vo hash function](https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function "Fowler-Noll-Vo hash ")  
+Examples of fast, simple hashes that are independent enough includes [murmur](https://sites.google.com/site/murmurhash/ "murmur hash"), [xxHash](https://github.com/Cyan4973/xxHash "xxHash"), [Fowler–Noll–Vo hash function](https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function "Fowler-Noll-Vo hash ")  and many others
