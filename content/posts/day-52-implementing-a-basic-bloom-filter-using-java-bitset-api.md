@@ -89,9 +89,9 @@ Examples of fast, simple hashes that are independent enough includes [murmur](ht
 
 It's a nice property of Bloom filters that you can modify the false positive rate of your filter. A larger filter will have less false positives, and a smaller one more.
 
-Your false positive rate will be approximately 
+Your false positive rate will be approximately
 
-```(1-e-kn/m)k```
+$(1-e^((-kn)/m)))^k$`
 
 so you can just plug the number n of elements you expect to insert, and try various values of k and m to configure your filter for your application.2
 
