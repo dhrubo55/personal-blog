@@ -16,7 +16,7 @@ relative = false
 +++
 First of all lets understand what is a Bloom Filter and how does it work and what are its usages.
 
-Bloom Filter :
+### Bloom Filter :
 
 Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
 
@@ -30,12 +30,12 @@ here in this scenario we are searching for the user name `Mary` in the bloom fil
 
 So if we use different hash functions and then  update the bit array with 1 where the index of the array would be number provided by the hash function. Then if we search the name again with those hash functions and check the index's again and if we find 1 there then we can plausibly say that, that name exist in the bloom filter.
 
-So, in a nutshell:
+### So, in a nutshell:
 
 * If we search for a value and see any of the hashed indexes for this value is ‘0’ then, the value is definitely not on the list.
 * If all of the hashed indexes is ‘1’ then ‘maybe’ the searched value is on the list.
 
-Properties :
+### Properties :
 
 * unlike a standard hash table, a Bloom filter of a fixed size can represent a set with large number of elements.
 * False positive rate increases steadily as elements are added until all bits in the filter are set to 1, at which point all queries yield a positive result.
