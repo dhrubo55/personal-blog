@@ -16,7 +16,10 @@ relative = false
 +++
 1,
 
-
-
-
 First of all lets understand what is a Bloom Filter and how does it work and what are its usages.
+
+Bloom Filter :
+
+Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
+
+The price paid for this efficiency is that a Bloom filter is a **probabilistic data structure**: it tells us that the element either _definitely is not_ in the set or _may be_ in the set.
