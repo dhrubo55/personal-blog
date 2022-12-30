@@ -99,7 +99,8 @@ so you can just plug the number n of elements you expect to insert, and try vari
 
 Here 
 
-```m - is the size of the bit array
+```
+m - is the size of the bit array
 n - is the number of elements
 k - is the number hash funtions
 ```
