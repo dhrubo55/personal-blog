@@ -130,10 +130,10 @@ public class BloomFilter<T> {
         private int m;
         private List<Function<T, Integer>> hashFunctions;
 
-        public BloomFilter(final BitSet bitSet, final int n, final int m,
+        public BloomFilter(final int n, final int m,
                            final List<Function<T, Integer>> hashFunctions) {
-            this.bitSet = bitSet;
             this.n = n;
+            this.bitSet = new BitSet(n);
             this.m = hashFunctions.size();
             this.hashFunctions = hashFunctions;
         }
@@ -172,3 +172,9 @@ BloomFilter<Integer> filter = BloomFilter.create(
   500,
   0.01);
 ```
+
+#### Benifits of Bloom Filter
+
+Given a Bloom filter with m bits and k hashing functions, both insertion and membership testing are O(k). That is, each time you want to add an element to the set or check set membership, you just need to run the element through the k hash functions and add it to the set or check those bits.
+
+The space advantages are more difficult to sum up; again it depends on the error rate you're willing to tolerate. It also depends on the potential range of the elements to be inserted; if it is very limited, a deterministic bit vector can do better. If you can't even ballpark estimate the number of elements to be inserted, you may be better off with a hash table or a scalable Bloom filter.
