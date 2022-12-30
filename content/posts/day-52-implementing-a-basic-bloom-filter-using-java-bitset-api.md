@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2022-07-21T00:00:00Z
+date = 2022-12-28T00:00:00Z
 description = "Implementing a basic bloom filter to understand its concepts and usages using Java BitSet api"
 draft = true
 showtoc = false
@@ -8,8 +8,8 @@ slug = "/java/100DaysOfJava/day64"
 summary = "Implementing a basic bloom filter to understand its concepts and usages using Java BitSet api"
 title = "Day 64: Implementing a basic Bloom Filter Using Java BitSet api"
 [cover]
-alt = "Day54"
-caption = "Day54"
+alt = "Day64"
+caption = "Day64"
 image = ""
 relative = false
 
