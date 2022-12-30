@@ -22,4 +22,6 @@ Bloom Filter :
 
 Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
 
-The price paid for this efficiency is that a Bloom filter is a **probabilistic data structure**: it tells us that the element either _definitely is not_ in the set or _may be_ in the set.
+The price paid for this efficiency is that a Bloom filter is a **probabilistic data structure**: it tells us that the element either _definitely is not_ in the set or _may be_ in the set
+
+For example, checking availability of username. In this case its a set membership problem, where the set is the list of all registered username. The price we pay for efficiency is that it is probabilistic in nature. That means, there might be some False Positive results. **False positive means**, it might tell that given username is already taken but actually it’s not. **Interesting Properties of Bloom Filters**
