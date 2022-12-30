@@ -104,4 +104,18 @@ k - is the number hash funtions
 
  
 
-This leads to an obvious question:
+This leads to an obvious question 
+
+#### How many hash functions should I use? 
+
+The more hash functions you have, the slower your bloom filter, and the quicker it fills up. If you have too few, however, you may suffer too many false positives.
+
+Since you have to pick k when you create the filter, you'll have to ballpark what range you expect n to be in. Once you have that, you still have to choose a potential m (the number of bits) and k (the number of hash functions).
+
+
+So now we can design a process to build a bloom filter
+
+* Choose a approx value for n
+* Choose a value for m
+* Calculate the optimal value of k
+* Calculate the error rate for our chosen values of n, m, and k. If it's unacceptable, return to step 2 and change m; otherwise we're done.
