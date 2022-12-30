@@ -97,10 +97,11 @@ Your false positive rate (P) will be approximately
 
 so you can just plug the number n of elements you expect to insert, and try various values of k and m to configure your filter for your application.
 
-Here  
-m - is the size of the bit array
+Here 
+
+```m - is the size of the bit array
 n - is the number of elements
-k - is the number hash funtions
+k - is the number hash funtions```
 
 This leads to an obvious question
 
