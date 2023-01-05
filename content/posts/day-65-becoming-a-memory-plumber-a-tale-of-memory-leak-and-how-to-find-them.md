@@ -14,3 +14,10 @@ image = ""
 relative = false
 
 +++
+1. What is memory leak
+2. What problems it causes
+3. Types 
+4. Analyzing tools
+5. What to analyze and how
+6. What can we do to prevent it
+7. conclusion with example 
