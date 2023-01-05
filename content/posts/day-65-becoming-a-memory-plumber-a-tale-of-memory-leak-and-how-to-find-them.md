@@ -1,7 +1,7 @@
 +++
 category = []
 date = 2023-01-05T00:00:00Z
-description = "Finding memory leak by analyzing GC and memory dump using VisualVM and Eclipse MAT"
+description = "Finding memory leak by analyzing GC and memory dump using VisualVM and Eclipse MAT "
 draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day65"
