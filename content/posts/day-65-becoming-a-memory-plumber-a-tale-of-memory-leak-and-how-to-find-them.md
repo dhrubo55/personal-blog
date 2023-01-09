@@ -24,6 +24,8 @@ relative = false
 
 What is memory leak
 
+Memory leaks are a major issue for software engineers, especially those working with Java. A memory leak occurs when an application continues to use more and more of the computer's RAM without releasing it after it has been used. This can cause serious performance issues as the available RAM decreases and eventually leads to system crashes or outages.
+
 Java has automated memory management system unlike its predecessor C . Java does this using GC. The GC implicitly takes care of allocating and freeing up memory, and thus is capable of handling the majority of memory leak issues.
 
 While the GC effectively handles a good amount of memory, it doesn't guarantee a foolproof solution to memory leaking. The GC is pretty smart, but not flawless. Memory leaks can still happen.
