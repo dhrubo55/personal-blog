@@ -34,7 +34,13 @@ Now let us understand what is Memory Leak
 
 ### Memory Leak
 
-a memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in a way that memory which is no longer needed is not released
+a memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in a way that memory which is no longer needed is not released.
+
+As a software engineer, it’s important to understand the concept of memory leaks in Java. A memory leak is when an application continues to hold onto memory that it no longer needs and this can lead to performance issues or even system crashes. In Java, a common cause of such leaks is objects not being garbage collected as expected due to references still pointing at them from other parts of the code. 
+
+When an object is created in Java, the JVM (Java Virtual Machine) allocates space for it on the heap and then assigns a reference variable which points towards that allocated space. As long as there are any active references pointing towards this object, it will remain alive on heap until all these references are removed and GC (Garbage Collector) reclaims its resources back from Heap Memory Pool. If somehow some reference(s) remains active even after they have been used up by program logic then those objects become eligible for Garbage Collection but never get collected since their respective reference variables still point at them causing unnecessary accumulation of unused/unrequired Objects over time resulting into what we call “Memory Leak” issue with our Application Codebase leading into Performance Degradation & System Crashes eventually!  
+
+To avoid such problems one should keep track if their code has any potential chances where Object References might be left dangling without getting released explicitly using null assignments or try-catch blocks etc., so that GC can reclaim those resources back once they become eligible otherwise Memory Leaks would continue accumulating over time leading us into trouble!
 
 ### What problems it causes
 
