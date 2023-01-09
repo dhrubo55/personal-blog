@@ -36,8 +36,6 @@ Now let us understand what is Memory Leak
 
 a memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in a way that memory which is no longer needed is not released
 
-Memory leaks are a major issue for software engineers, especially those working with Java. A memory leak occurs when an application continues to use more and more of the computer's RAM without releasing it after it has been used. This can cause serious performance issues as the available RAM decreases and eventually leads to system crashes or outages.
-
 Memory leaks in Java can be caused by a variety of factors such as incorrect garbage collection, resource leakage in APIs, unclosed streams or connections, poor coding practices etc. These issues can lead to decreased responsiveness from applications due to increased latency times; they may also result in OutOfMemoryError exceptions being thrown which causes applications to crash unexpectedly or become unstable over time due their inability handle large amounts of data efficiently anymore . 
 
 There are two main types of memory leaks that occur within Java programs: unintentional (or accidental) memory leak and intentional (or deliberate) one’s . Unintentional ones arise when code is written incorrectly leading objects not being released from heap space once they have served their purpose , while intentional ones happen deliberately where references are left dangling so that objects remain alive even though there is no need for them any longer . 
