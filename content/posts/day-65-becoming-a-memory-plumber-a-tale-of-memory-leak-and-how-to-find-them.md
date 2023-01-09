@@ -45,10 +45,15 @@ To avoid such problems one should keep track if their code has any potential cha
 ### What problems it causes
 
 Memory leaks in Java can be caused by a variety of factors such as incorrect garbage collection, resource leakage in APIs, unclosed streams or connections, poor coding practices etc. These issues can lead to decreased responsiveness from applications due to increased latency times; they may also result in OutOfMemoryError exceptions being thrown which causes applications to crash unexpectedly or become unstable over time due their inability handle large amounts of data efficiently anymore . 
-
+### Types of Memory Leaks
 
 There are two main types of memory leaks that occur within Java programs: unintentional (or accidental) memory leak and intentional (or deliberate) one’s . Unintentional ones arise when code is written incorrectly leading objects not being released from heap space once they have served their purpose , while intentional ones happen deliberately where references are left dangling so that objects remain alive even though there is no need for them any longer . 
 
+
+### Analyze for finding Memory leaks
  In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment  
 
+### Steps to prevent Memory leaks
  To prevent Memory Leaks occurring its important ensure all resources get closed properly at end each operation ; try avoid creating too many temporary variables unnecessarily & keep track object lifetime create them only necessary basis then dispose off quickly once done with it ; finally make sure Garbage Collector running correctly so old unused objects get cleared up regularly thus freeing up valuable system resources
+ 
+### Memory leak issue i faced in my work
