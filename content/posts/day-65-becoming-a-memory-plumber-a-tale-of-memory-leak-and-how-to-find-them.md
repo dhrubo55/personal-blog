@@ -60,6 +60,12 @@ There are many ways memory leaks can occur in a java program. Some of them are
 8. Interned strings
 9. Thread local
 
+
+now let us understand these typical memory leak issues
+
+#### static fields
+
+
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
