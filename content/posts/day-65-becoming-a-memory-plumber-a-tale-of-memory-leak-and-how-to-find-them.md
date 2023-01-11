@@ -50,7 +50,15 @@ Memory leaks in Java can be caused by a variety of factors such as incorrect gar
 
 There are many ways memory leaks can occur in a java program. Some of them are
 
-1. 
+1. Static fields
+2. Loitering objects
+3. In memory cache not evicted
+4. Unclosed resource
+5. custom equals and hashcode implementation
+6. Inner class that references outer classes
+7. Finalization bug
+8. Interned strings
+9. Thread local
 
 ### Analyze for finding Memory leaks
 
