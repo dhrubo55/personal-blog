@@ -64,7 +64,30 @@ There are many ways memory leaks can occur in a java program. Some of them are
 now let us understand these typical memory leak issues
 
 #### static fields
+ heavy use of static variables can cause memory leaks. In Java, static fields have a lifetime that usually matches the entire lifetime of the running program / application (unless ClassLoader becomes eligible for garbage collection).
+ 
+lets see a case 
 
+```java
+public class Day65 {
+    public static List<String> strings = new ArrayList<>();
+
+    public void add() {
+        for (int i = 0; i < 100000; i++) {
+            list.add(new String());
+        }
+        System.out.println("check point add");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Beforee calling add");
+        new Day65().populateList();
+        System.out.println("After calling add");
+    }
+}
+```
+
+here when observing with 
 
 ### Analyze for finding Memory leaks
 
