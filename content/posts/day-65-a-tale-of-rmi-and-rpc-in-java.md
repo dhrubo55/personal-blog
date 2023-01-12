@@ -19,6 +19,8 @@ Remote Method Invocation (RMI) and Remote Procedure Call (RPC) are two important
 ### What is RMI
 At its core, Remote Method Invocation is a way of calling methods on remote objects over a network connection using the Object Request Broker Architecture (ORB). It provides developers with the ability to execute code remotely without having any knowledge about where or how it is being run – all you need is an interface definition file (.idl file), which describes your object's methods signatures and return types along with some additional information related to security etc., then you can use it just like any other local object! The main benefit here lies in its flexibility; since there’s no requirement for manual coding or compilation when making changes across multiple systems simultaneously - instead all that needs doing is updating one centralised IDL file. 
 
+
+
 ### What is RPC
 In contrast , Remote Procedure Call operates by sending messages between client-server applications via either TCP/IP sockets or named pipes depending upon implementation details; typically these requests contain parameters such as function name & arguments which will be used by server side procedure before returning results back again through same communication channel used initially . Unlike RMI however , RPC does not have direct access control mechanisms built into protocol itself - meaning if needed extra steps must taken during development time ensure only authorised clients able make calls against particular procedures exposed publicly .  
 
