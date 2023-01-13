@@ -66,8 +66,20 @@ Here’s a simple example of the remote interface that defines the behavior of R
 
 ```java
 public interface MessageService extends Remote {
-    String send(String clientMessage) throws RemoteException;
+    String send(String message) throws RemoteException;
 }
 ```
 
 when we implement this object its called remote object which is for the server. For the client, the RMI library will dynamically create an implementation Stub.
+
+implementation
+
+```java
+public class MessengerServiceImpl implements MessengerService { 
+ 
+    @Override 
+    public String send(String message) { 
+        return "Client Message".equals(message) ? "Server Message" : null;
+    }
+}
+```
