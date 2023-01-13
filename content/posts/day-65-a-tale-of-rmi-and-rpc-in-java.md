@@ -62,10 +62,12 @@ Remote objects are objects that implement a special remote interface that specif
 
 All methods in the remote interface must declare that they can throw the exception java.rmi.RemoteException . This exception (actually, one of many subclasses to RemoteException) is thrown when any kind of networking error happens: for example, the server could crash, the network could fail, or you could be requesting an object that for some reason isn’t available.
 
-Here’s a simple example of the remote interface that defines the behavior of RemoteObject; we’ll give it two methods that can be invoked remotely, both of which return some kind of Widget object:
+Here’s a simple example of the remote interface that defines the behavior of RemoteObject; we’ll give it a method that can be invoked remotely 
 
 ```java
 public interface MessageService extends Remote {
     String send(String clientMessage) throws RemoteException;
 }
 ```
+
+when we implement this object its called remote object which is for the server. For the client, the RMI library will dynamically create an implementation Stub.
