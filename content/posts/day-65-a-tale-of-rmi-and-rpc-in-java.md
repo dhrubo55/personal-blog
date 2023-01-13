@@ -85,3 +85,5 @@ public class MessengerServiceImpl implements MessengerService {
 ```
 
 It'd be unusual for our remote object to throw a RemoteException since this exception is typically reserved for the RMI library to raise communication errors to the client. Leaving it out also has the benefit of keeping our implementation RMI-agnostic. Also, any additional methods defined in the remote object, but not in the interface, remain invisible for the client.
+
+Once we create the remote implementation, we need to bind the remote object to an RMI registry.
