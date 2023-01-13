@@ -30,3 +30,15 @@ Before an object can be used with RMI, it must be serializable. But that’s not
 
 Non remote objects are simpler. They are just normal serializable objects. (You can pass these over the network). The catch is that when you pass a non remote object over the network it is simply copied. So references to the object on one host are not the same as those on the remote host. Non remote objects are passed by copy (as opposed to by reference). 
 
+
+#### Stub 
+
+Stub is used in the implementation of remote objects. When you invoke a method on a remote object (which could be on a different host), you are actually calling some local code that serves as a proxy for that object. This is the stub. (It is called a stub because it is something like a truncated placeholder for the object.) 
+
+The stub object on the client machine builds an information block and sends this information to the server.
+
+The block consists of
+
+- An identifier of the remote object to be used
+- Method name which is to be invoked
+- Parameters to the remote JVM
