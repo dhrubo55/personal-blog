@@ -42,3 +42,12 @@ The block consists of
 - An identifier of the remote object to be used
 - Method name which is to be invoked
 - Parameters to the remote JVM
+
+#### Skeleton
+
+The skeleton is another proxy that lives with the real object on its original host. It receives remote method invocations from the stub and passes them to the object.
+
+The skeleton object passes the request from the stub object to the remote object. It performs the following tasks
+
+- It calls the desired method on the real object present on the server.
+- It forwards the parameters received from the stub object to the method.
