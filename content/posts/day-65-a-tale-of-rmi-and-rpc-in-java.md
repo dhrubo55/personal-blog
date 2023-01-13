@@ -51,3 +51,17 @@ The skeleton object passes the request from the stub object to the remote object
 
 - It calls the desired method on the real object present on the server.
 - It forwards the parameters received from the stub object to the method.
+
+Before creatin stubs and skeletons we need to create remote object and understand how it works
+
+#### Remote Object
+
+The first thing to do is to create an interface that will provide the description of the methods that can be invoked by remote clients. This interface should extend the Remote interface and the method prototype within the interface should throw the RemoteException.
+
+
+
+```java
+public interface MessageService extends Remote {
+    String send(String clientMessage) throws RemoteException;
+}
+```
