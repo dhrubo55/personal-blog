@@ -117,3 +117,7 @@ Now lets create a RMI registry
 ### Creating RMI Registry
 
 We can stand up a registry local to our server or as a separate stand-alone service. For simplicity, we'll create one that is local to our server:
+
+```java
+Registry rmiRegistry = LocateRegistry.createRegistry(1099);
+```
