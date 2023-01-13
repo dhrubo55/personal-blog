@@ -58,7 +58,11 @@ Before creatin stubs and skeletons we need to create remote object and understan
 
 The first thing to do is to create an interface that will provide the description of the methods that can be invoked by remote clients. This interface should extend the Remote interface and the method prototype within the interface should throw the RemoteException.
 
+Remote objects are objects that implement a special remote interface that specifies which of the object’s methods can be invoked remotely. The remote interface must extend the java.rmi.Remote interface. Your remote object will implement its remote interface; as will the stub object that is automatically generated for it. In the rest of your code, you should then refer to the remote object as an instance of the remote interface—not as an instance of its actual class. Because both the real object and stub implement the remote interface, they are equivalent as far as we are concerned (for method invocation); locally, we never have to worry about whether we have a reference to a stub or to an actual object. This “type equivalence” means that we can use normal language features, like casting with remote objects. Of course public fields (variables) of the remote object are not accessible through an interface, so you must make accessor methods if you want to manipulate the remote object’s fields.
 
+All methods in the remote interface must declare that they can throw the exception java.rmi.RemoteException . This exception (actually, one of many subclasses to RemoteException) is thrown when any kind of networking error happens: for example, the server could crash, the network could fail, or you could be requesting an object that for some reason isn’t available.
+
+Here’s a simple example of the remote interface that defines the behavior of RemoteObject; we’ll give it two methods that can be invoked remotely, both of which return some kind of Widget object:
 
 ```java
 public interface MessageService extends Remote {
