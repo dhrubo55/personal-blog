@@ -93,3 +93,13 @@ Once we create the remote implementation, we need to bind the remote object to a
 The registry is the RMI phone book. You use the registry to look up a reference to a registered remote object on another host. We’ve already described how remote references can be passed back and forth by remote method calls. But the registry is needed to bootstrap the process: the client needs some way of looking up some initial object.
 
 The registry is implemented by a class called `Naming` and an application called rmiregistry . This application must be running on the local host before you start a Java program that uses the registry. You can then create instances of remote objects and bind them to particular names in the registry. (Remote objects that bind themselves to the registry sometimes provide a main( ) method for this purpose.) A registry name can be anything you choose; it takes the form of a slash-separated path. When a client object wants to find your object, it constructs a special URL with the rmi: protocol, the hostname, and the object name. On the client, the RMI Naming class then talks to the registry and returns the remote object reference.
+
+So before registering in RMI registry we need to create a stub
+
+```java
+MessengerService server = new MessengerServiceImpl();
+MessengerService stub = (MessengerService) UnicastRemoteObject
+  .exportObject((MessengerService) server, 0);
+```
+
+#### UnicastRemoteObject
