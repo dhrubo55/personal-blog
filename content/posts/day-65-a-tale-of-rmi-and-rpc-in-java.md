@@ -87,3 +87,9 @@ public class MessengerServiceImpl implements MessengerService {
 It'd be unusual for our remote object to throw a RemoteException since this exception is typically reserved for the RMI library to raise communication errors to the client. Leaving it out also has the benefit of keeping our implementation RMI-agnostic. Also, any additional methods defined in the remote object, but not in the interface, remain invisible for the client.
 
 Once we create the remote implementation, we need to bind the remote object to an RMI registry.
+
+### RMI Registry
+
+The registry is the RMI phone book. You use the registry to look up a reference to a registered remote object on another host. We’ve already described how remote references can be passed back and forth by remote method calls. But the registry is needed to bootstrap the process: the client needs some way of looking up some initial object.
+
+The registry is implemented by a class called `Naming` and an application called rmiregistry . This application must be running on the local host before you start a Java program that uses the registry. You can then create instances of remote objects and bind them to particular names in the registry. (Remote objects that bind themselves to the registry sometimes provide a main( ) method for this purpose.) A registry name can be anything you choose; it takes the form of a slash-separated path. When a client object wants to find your object, it constructs a special URL with the rmi: protocol, the hostname, and the object name. On the client, the RMI Naming class then talks to the registry and returns the remote object reference.
