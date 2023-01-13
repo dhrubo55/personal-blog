@@ -102,4 +102,13 @@ MessengerService stub = (MessengerService) UnicastRemoteObject
   .exportObject((MessengerService) server, 0);
 ```
 
+We use the static `UnicastRemoteObject.exportObject` method to create our stub implementation. The stub communicates with the server over the underlying RMI protocol.
+
+The first argument to exportObject is the remote server object. The second argument is the port that exportObject uses for exporting the remote object to the registry.
+
+Giving a value of zero indicates that we don't care which port exportObject uses, which is typical and so chosen dynamically.
+
 #### UnicastRemoteObject
+
+The actual implementation of a remote object (not the interface we discussed previously) will usually extend `java.rmi.server.UnicastRemoteObject`. This is the RMI equivalent to the familiar Object class. When a subclass of UnicastRemoteObject is constructed, the RMI runtime system automatically “exports” it to start listening for network connections from remote interfaces (stubs) for the object. Like `java.lang.Object`, this superclass also provides implementations of `equals( )` , `hashcode( )`, and `toString( )` that make sense for a remote object.
+
