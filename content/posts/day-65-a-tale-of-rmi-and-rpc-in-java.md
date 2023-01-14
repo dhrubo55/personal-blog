@@ -116,7 +116,7 @@ Now lets create a RMI registry
 
 ### Creating RMI Registry
 
-We can stand up a registry local to our server or as a separate stand-alone service. For simplicity, we'll create one that is local to our server:
+We can start up a registry local to our server or as a separate stand-alone service. Here we will create for local
 
 ```java
 Registry rmiRegistry = LocateRegistry.createRegistry(1099);
@@ -136,4 +136,26 @@ An RMI registry is a naming facility like JNDI etc. We can follow a similar patt
 
 ```java
 registry.rebind("MessengerService", stub);
+```
+ after registering the stub in RMI registry we need to create a client.
+ 
+ 
+#### Create Client
+
+To do this, we'll first locate the RMI registry. In addition, we'll look up the remote object stub using the bounded unique key.
+
+And finally, we'll invoke the send method:
+
+```java
+Registry registry = LocateRegistry.getRegistry();
+MessengerService server = (MessengerService) registry
+  .lookup("MessengerService"); // looking for the binded stub
+String responseMessage = server.send("Client Message");
+String expectedMessage = "Server Message";
+ 
+if (expectedMessage.equals(responseMessage)) {
+	System.out.println("Connection Successful");
+} else {
+	System.out.println("Not able to recognize client");
+}
 ```
