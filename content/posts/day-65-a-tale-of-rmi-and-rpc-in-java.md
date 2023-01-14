@@ -121,3 +121,10 @@ We can stand up a registry local to our server or as a separate stand-alone serv
 ```java
 Registry rmiRegistry = LocateRegistry.createRegistry(1099);
 ```
+
+This creates a registry to which stubs can be bound by servers and discovered by clients. Also, we've used the `createRegistry` method, since we are creating the registry `local` to the `server`.
+
+By default, an RMI registry runs on port `1099`. Rather, a different port can also be specified in the createRegistry factory method.
+
+But in the stand-alone case, we'd call `getRegistry`, passing the `hostname` and `port` number as parameters.
+
