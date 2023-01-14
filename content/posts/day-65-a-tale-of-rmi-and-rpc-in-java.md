@@ -14,8 +14,6 @@ image = ""
 relative = false
 
 +++
-ShowToc
-
 Remote Method Invocation (RMI) and Remote Procedure Call (RPC) are two important concepts in Java that allow for distributed computing. Both RMI and RPC enable software components to communicate with each other over a network, allowing code to be executed on different machines without the need for manual intervention. In this blog post, we will discuss what RMI and RPC are, how they differ from one another, their advantages/disadvantages as well as an example of each in Java.
 
 ### What is RMI
