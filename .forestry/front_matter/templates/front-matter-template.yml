@@ -10,7 +10,7 @@ fields:
   showOnly:
     field: showtoc
     value: true
-  hidden: false
+  hidden: true
 - type: text
   name: title
   label: Title
