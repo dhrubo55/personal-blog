@@ -159,3 +159,9 @@ if (expectedMessage.equals(responseMessage)) {
 	System.out.println("Not able to recognize client");
 }
 ```
+
+Because we're running the RMI registry on the local machine and default port 1099, we don't pass any parameters to getRegistry.
+
+Indeed, if the registry is rather on a different host or different port, we can supply these parameters.
+
+Once we lookup the stub object using the registry, we can invoke the methods on the remote server.
