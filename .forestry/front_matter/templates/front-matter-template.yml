@@ -2,6 +2,14 @@
 label: Front Matter Template
 hide_body: false
 fields:
+- type: boolean
+  name: showtoc
+  label: Show ToC
+  description: If Table of Contents should be visible or not
+  default: true
+  showOnly:
+    field: showtoc
+    value: true
 - type: text
   name: title
   label: Title
@@ -51,14 +59,6 @@ fields:
   label: Description
   description: Description of the article for SEO purposes. Can be similar to the
     summary of the article
-- type: boolean
-  name: showtoc
-  label: Show ToC
-  description: If Table of Contents should be visible or not
-  default: true
-  showOnly:
-    field: showtoc
-    value: true
 - type: field_group
   name: cover
   label: Cover
