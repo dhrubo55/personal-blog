@@ -81,7 +81,7 @@ fields:
   name: showtoc
   label: Show ToC
   description: If Table of Contents should be visible or not
-  default: false
+  default: true
   showOnly:
     field: showtoc
     value: true
