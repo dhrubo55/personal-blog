@@ -2,7 +2,6 @@
 category = []
 date = 2023-01-12T00:00:00Z
 description = "Understanding how RPC and RMI works in java "
-draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day65"
 summary = "Understanding how RPC and RMI works in java"
