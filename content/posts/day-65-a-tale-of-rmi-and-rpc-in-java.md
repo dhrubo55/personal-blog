@@ -110,6 +110,8 @@ Giving a value of zero indicates that we don't care which port exportObject uses
 
 The actual implementation of a remote object (not the interface we discussed previously) will usually extend `java.rmi.server.UnicastRemoteObject`. This is the RMI equivalent to the familiar Object class. When a subclass of UnicastRemoteObject is constructed, the RMI runtime system automatically “exports” it to start listening for network connections from remote interfaces (stubs) for the object. Like `java.lang.Object`, this superclass also provides implementations of `equals( )` , `hashcode( )`, and `toString( )` that make sense for a remote object.
 
+### RMI Architecture 
+
 Now lets create a RMI registry
 
 ### Creating RMI Registry
