@@ -114,8 +114,6 @@ The actual implementation of a remote object (not the interface we discussed pre
 
 ![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1673840235/images-from-blog/30_Java_Remote_Method_Invocation_RMI_architecture_sr9ydb.png)
 
-       Img : RMI Architecture 
-
 Now lets create a RMI registry
 
 ### Creating RMI Registry
