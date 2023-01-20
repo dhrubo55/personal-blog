@@ -122,6 +122,9 @@ public T pop() {
 }
 ```
 
+By setting the array entry to null, the item is no longer reachable from the array. Therefore it is eligible for garbage collection.
+
+Garbage collection isn't magic. It can do most of the work to clean up memory for you. But, you have to make sure you write your code correctly to eliminate unnecessary strong references. The garbage collector can't read your mind, and figure out that you didn't really mean to keep the strong reference.
 
 
 
