@@ -105,6 +105,23 @@ public T pop() {
 }
 ```
 
+Because the array holds a reference to the item at the former top of the stack, the item is still strongly reachable from the array and therefore won't be garbage collected. Furthermore, because of the way a stack works, the item is no longer externally accessible. Thus, the item is said to be "loitering". It hangs around for no reason.
+
+The correct implementation of the pop method would be this:
+
+```java
+public T pop() {
+    if (top == -1) {
+        throw new NoSuchElementException();
+    }
+    T item = items[top];
+    // Clear the reference to allow garbage collection
+    items[top] = null;
+    top--;
+    return item;
+}
+```
+
 
 
 
