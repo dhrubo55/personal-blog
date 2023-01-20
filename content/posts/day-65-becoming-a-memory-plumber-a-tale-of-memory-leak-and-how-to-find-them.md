@@ -96,6 +96,8 @@ These objects are allocated memory, but not used, and not garbage collected. The
 Let's understand this scenario with an example
 
 
+
+
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
