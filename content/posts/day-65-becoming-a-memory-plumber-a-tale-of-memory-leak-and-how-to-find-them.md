@@ -93,7 +93,17 @@ here when observing with
 
 These objects are allocated memory, but not used, and not garbage collected. These keep increasing the size of the JVM heap and represent memory leaks, which can cause an out-of-memory error or excessive overhead on the garbage collector.
 
-Let's understand this scenario with an example
+Let's understand this scenario with an example, consider a stack backed by an array, and you implement pop this way:
+
+```java
+public T pop() {
+    if (top == -1) {
+        throw new NoSuchElementException();
+    }
+    T item = items[top--];
+    return item;
+}
+```
 
 
 
