@@ -91,6 +91,9 @@ here when observing with
 
 #### Loitering Objects
 
+These objects are allocated memory, but not used, and not garbage collected. These keep increasing the size of the JVM heap and represent memory leaks, which can cause an out-of-memory error or excessive overhead on the garbage collector.
+
+Let's understand this scenario with an example
 
 
 ### Analyze for finding Memory leaks
