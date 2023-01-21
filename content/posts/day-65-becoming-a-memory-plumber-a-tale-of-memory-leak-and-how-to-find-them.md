@@ -133,14 +133,11 @@ public class CacheStore<T> {
     private Cache<String, T> cache;
 
     //Constructor to build Cache Store
-    public CacheStore(int expiryDuration, TimeUnit timeUnit) {
-        cache = CacheBuilder.newBuilder()
-                .expireAfterWrite(expiryDuration, timeUnit)
-                .concurrencyLevel(Runtime.getRuntime().availableProcessors())
-                .build();
+    public CacheStore() {
+        cache = CacheBuilder.newBuilder().build();
     }
 
-    //Method to fetch previously stored record using record key
+
     public T get(String key) {
         return cache.getIfPresent(key);
     }
