@@ -162,7 +162,16 @@ public class CustomCache<T> {
     }
 }
 ```
-Now adding a size and cache eviction policy will help not to cause memory leak. 
+Now adding a size and cache eviction policy will help not to cause memory leak. In guava `CacheBuilder` by adding the properties `maximumSize` and `expireAfterAccess` will limit the size and when will be the entires will be deleted
+
+```java
+public CustomCache() {
+        cache = CacheBuilder.newBuilder()
+        					.maximumSize(100)
+                            .expireAfterAccess(30, TimeUnit.MINUTES)
+        					.build();
+ }
+```
 
 ### Analyze for finding Memory leaks
 
