@@ -14,15 +14,7 @@ image = ""
 relative = false
 
 +++
-1. What is memory leak
-2. What problems it causes
-3. Types
-4. Analyzing tools
-5. What to analyze and how
-6. What can we do to prevent it
-7. conclusion with example
-
-What is memory leak
+### What is memory leak
 
 Memory leaks are a major issue for software engineers, especially those working with Java. A memory leak occurs when an application continues to use more and more of the computer's RAM without releasing it after it has been used. This can cause serious performance issues as the available RAM decreases and eventually leads to system crashes or outages.
 
@@ -60,13 +52,13 @@ There are many ways memory leaks can occur in a java program. Some of them are
 8. Interned strings
 9. Thread local
 
-
 now let us understand these typical memory leak issues
 
 #### static fields
- heavy use of static variables can cause memory leaks. In Java, static fields have a lifetime that usually matches the entire lifetime of the running program / application (unless ClassLoader becomes eligible for garbage collection).
- 
-lets see a case 
+
+heavy use of static variables can cause memory leaks. In Java, static fields have a lifetime that usually matches the entire lifetime of the running program / application (unless ClassLoader becomes eligible for garbage collection).
+
+lets see a case
 
 ```java
 public class Day65 {
@@ -87,7 +79,7 @@ public class Day65 {
 }
 ```
 
-here when observing with 
+here when observing with
 
 #### Loitering Objects
 
@@ -127,6 +119,7 @@ By setting the array entry to null, the item is no longer reachable from the arr
 Garbage collection isn't magic. It can do most of the work to clean up memory for you. But, you have to make sure you write your code correctly to eliminate unnecessary strong references. The garbage collector can't read your mind, and figure out that you didn't really mean to keep the strong reference.
 
 #### In Memory Cache Eviction
+
 when we build in memory cache (in this case Guava library) there is a possibility of memory leak when the cache get increased without clearing the cache. let us first understand what is cache eviction
 
 ##### Cache Eviction
@@ -162,6 +155,7 @@ public class CustomCache<T> {
     }
 }
 ```
+
 Now adding a size and cache eviction policy will help not to cause memory leak. In guava `CacheBuilder` by adding the properties `maximumSize` and `expireAfterAccess` will limit the size and when will be the entires will be deleted
 
 ```java
@@ -173,12 +167,4 @@ public CustomCache() {
  }
 ```
 
-### Analyze for finding Memory leaks
-
-In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
-
-### Steps to prevent Memory leaks
-
-To prevent Memory Leaks occurring its important ensure all resources get closed properly at end each operation ; try avoid creating too many temporary variables unnecessarily & keep track object lifetime create them only necessary basis then dispose off quickly once done with it ; finally make sure Garbage Collector running correctly so old unused objects get cleared up regularly thus freeing up valuable system resources
-
-### Memory leak issue i faced in my work
+### 
