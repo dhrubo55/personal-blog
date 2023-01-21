@@ -131,6 +131,12 @@ when we build in memory cache (in this case Guava library) there is a possibilit
 
 ##### Cache Eviction
 
+Caches are small because cache memory is more expensive to produce and purchase. The small size of the cache limits the amount of data we can store. We need to consider what data we keep or remove over time. This dilemma is the core purpose behind cache eviction. It will depending on algorithms will remove some entries.
+
+So by restricting the size or creating an eviction policy will ensure the cache doesn't grow uncontrollably.
+
+In the below example we will see a cache without a size or eviction policy
+
 ```java
 public class CustomCache<T> {
     private Cache<String, T> cache;
@@ -156,8 +162,7 @@ public class CustomCache<T> {
     }
 }
 ```
-
-in here as there is no size or eviction of cache so
+Now adding a size and cache eviction policy will help not to cause memory leak. 
 
 ### Analyze for finding Memory leaks
 
