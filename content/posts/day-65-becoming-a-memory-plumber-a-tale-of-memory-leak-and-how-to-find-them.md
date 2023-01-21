@@ -129,11 +129,11 @@ Garbage collection isn't magic. It can do most of the work to clean up memory fo
 #### In Memory Cache Eviction
 
 ```java
-public class CacheStore<T> {
+public class CustomCache<T> {
     private Cache<String, T> cache;
 
     //Constructor to build Cache Store
-    public CacheStore() {
+    public CustomCache() {
         cache = CacheBuilder.newBuilder().build();
     }
 
