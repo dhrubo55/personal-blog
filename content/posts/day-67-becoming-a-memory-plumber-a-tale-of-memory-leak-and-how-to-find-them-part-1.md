@@ -9,7 +9,7 @@ summary = "Understanding and finding the causes and types of memory leaks and to
 title = "Day 67: Becoming a memory plumber; A tale of Memory Leak and how to find them ( part 1)"
 [cover]
 alt = "day67"
-caption = "day67 "
+caption = "day67"
 image = ""
 relative = false
 
