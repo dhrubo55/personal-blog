@@ -167,4 +167,4 @@ public CustomCache() {
  }
 ```
 
-### 
+In part 2 will learn about other type of reasons for memory leak 
