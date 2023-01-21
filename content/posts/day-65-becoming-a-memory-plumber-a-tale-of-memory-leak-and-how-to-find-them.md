@@ -127,6 +127,9 @@ By setting the array entry to null, the item is no longer reachable from the arr
 Garbage collection isn't magic. It can do most of the work to clean up memory for you. But, you have to make sure you write your code correctly to eliminate unnecessary strong references. The garbage collector can't read your mind, and figure out that you didn't really mean to keep the strong reference.
 
 #### In Memory Cache Eviction
+when we build in memory cache (in this case using guava library) there is a possibility of memory leak when the cache get increased without clearing the cache. let us first understand what is cache eviction
+
+##### Cache Eviction
 
 ```java
 public class CustomCache<T> {
@@ -154,6 +157,7 @@ public class CustomCache<T> {
 }
 ```
 
+in here as there is no size or eviction of cache so
 
 ### Analyze for finding Memory leaks
 
