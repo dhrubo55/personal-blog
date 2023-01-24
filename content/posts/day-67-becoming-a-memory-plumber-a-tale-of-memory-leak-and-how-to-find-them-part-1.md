@@ -22,6 +22,16 @@ relative = false
 6. What can we do to prevent it
 7. conclusion with example
 
+previous post breifly discussed about few types of memory leaks. In todays post going to further discuss about six other scenarios which can cause memory leaks. They are
+
+4. Unclosed resource
+5. custom equals and hashcode implementation
+6. Inner class that references outer classes
+7. Finalization bug
+8. Interned strings
+9. Thread local
+
+
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
