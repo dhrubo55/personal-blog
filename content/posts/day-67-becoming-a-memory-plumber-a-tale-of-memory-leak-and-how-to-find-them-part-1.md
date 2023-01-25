@@ -39,7 +39,9 @@ Java developers must be aware that any code which opens external resources such 
 
 #### Custom .equals() and .hashCode() implementation 
 
-Custom .equals() and .hashCode() implementation can cause memory leaks in Java due to the way they are used. When a class implements these methods, it is responsible for managing its own state and ensuring that all objects of the same type have unique references. If this is not done properly, an object can be created but never garbage collected because it will always exist as a reference from another object or collection. This leads to more objects staying in memory than necessary which causes a gradual increase in system resources over time until eventually there is no longer enough available for other tasks leading to poor performance or even crashing of the application.
+Custom .equals() and .hashCode() implementation can cause memory leaks in Java due to the way they are used. When a class implements these methods, it is responsible for managing its own state and ensuring that all objects of the same type have unique references. If this is not done properly, an object can be created but never garbage collected because it will always exist as a reference from another object or collection. This leads to more objects staying in memory than necessary which causes a gradual increase in system resources over time until eventually there is no longer enough available for other tasks leading to poor performance or even crashing of the application. 
+
+Let's see an example scenario where 
 
 
 ### Analyze for finding Memory leaks
