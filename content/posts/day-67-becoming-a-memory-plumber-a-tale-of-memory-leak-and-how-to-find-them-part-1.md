@@ -43,6 +43,18 @@ Custom .equals() and .hashCode() implementation can cause memory leaks in Java d
 
 Let's see an example scenario, In HashSet and HashMap `.equals()` and `.hashCode()`uses these methods in many operations, and if they're not overridden correctly, they can become a source for potential memory leak problems.
 
+```java
+class SaleResult {
+	int saleCount;
+    booelan isSuccess;
+    
+    public SaleResult(int saleCount, boolean isSuccess) {
+    	this.saleCount = saleCount;
+        this.isSuccess = isSuccess;
+    }
+}
+```
+now i
 
 ### Analyze for finding Memory leaks
 
