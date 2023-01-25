@@ -24,13 +24,18 @@ relative = false
 
 previous post breifly discussed about few types of memory leaks. In todays post going to further discuss about six other scenarios which can cause memory leaks. They are
 
-4. Unclosed resource
-5. custom equals and hashcode implementation
-6. Inner class that references outer classes
-7. Finalization bug
-8. Interned strings
-9. Thread local
+1. Unclosed resource
+2. custom equals and hashcode implementation
+3. Inner class that references outer classes
+4. Finalization bug
+5. Interned strings
+6. Thread local
 
+#### Unclosed Resources
+
+Unclosed resource memory leak in Java occurs when an application fails to release resources such as file handles, sockets, and database connections after they are no longer needed. These unclosed resources can remain allocated for extended periods of time resulting in a gradual buildup of system memory. This type of leak is particularly dangerous because it often goes unnoticed until the system runs out of available RAM or disk space. 
+
+Java developers must be aware that any code which opens external resources such as files or databases should ensure that these are properly closed once their use has concluded. Failure to do so will result in a slow but steady increase in the amount of used memory on the system over time which can eventually lead to performance issues or even complete failure due to lack of available RAM and/or disk space on the machine hosting your application's process(es).
 
 ### Analyze for finding Memory leaks
 
