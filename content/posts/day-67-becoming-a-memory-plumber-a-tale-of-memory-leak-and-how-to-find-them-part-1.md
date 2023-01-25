@@ -54,7 +54,7 @@ class SaleResult {
     }
 }
 ```
-now i
+now if we set this object as key in a hashmap or hashset and if we insert d
 
 ### Analyze for finding Memory leaks
 
