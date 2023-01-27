@@ -54,7 +54,11 @@ class SaleResult {
     }
 }
 ```
-now if we set this object as key in a hashmap or hashset and if we insert d
+now if we set this object as key in a hashmap or hashset and if a string id for value of the cusomterId we would need to ensure they are unique as HashMap and HashSet dont allow duplicate keys.
+
+```java
+
+```
 
 ### Analyze for finding Memory leaks
 
