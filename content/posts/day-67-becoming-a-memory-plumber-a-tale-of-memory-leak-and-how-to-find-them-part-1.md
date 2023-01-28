@@ -46,7 +46,7 @@ Let's see an example scenario, In HashSet and HashMap `.equals()` and `.hashCode
 ```java
 class SaleResult {
 	int saleCount;
-    booelan isSuccess;
+    boolean isSuccess;
     
     public SaleResult(int saleCount, boolean isSuccess) {
     	this.saleCount = saleCount;
@@ -57,8 +57,15 @@ class SaleResult {
 now if we set this object as key in a hashmap or hashset and if a string id for value of the cusomterId we would need to ensure they are unique as HashMap and HashSet dont allow duplicate keys.
 
 ```java
-
+Map<SaleResult, Long> map = new HashMap<>();
+for(int i=0; i<10000; i++) {
+	map.put(new Person("jon"), 1);
+}
+System.out.println(map.size());
 ```
+here we will see 1000 objects are being inserted and thus the size of the map is 1000. Here we're using SaleReuslt as a key. Since Map doesn't allow duplicate keys, the numerous duplicate SaleResult objects that we inserted as a key shouldn't increase the memory.
+
+But since we haven't defined the proper equals() method, the duplicate objects pile up and increase the memory, which is why we see more than one object in the memory.
 
 ### Analyze for finding Memory leaks
 
