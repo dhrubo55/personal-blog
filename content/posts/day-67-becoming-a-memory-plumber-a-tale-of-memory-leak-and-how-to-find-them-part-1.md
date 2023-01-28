@@ -97,7 +97,7 @@ class SaleResult {
       }
 }
 ```
-now after this there will be
+now after this there will be only 1 instance of `SaleResult` in the hashmap after insert.
 
 ### Analyze for finding Memory leaks
 
