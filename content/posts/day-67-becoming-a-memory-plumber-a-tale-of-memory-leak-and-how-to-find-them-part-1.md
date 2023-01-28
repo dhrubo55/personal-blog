@@ -67,6 +67,38 @@ here we will see 1000 objects are being inserted and thus the size of the map is
 
 But since we haven't defined the proper equals() method, the duplicate objects pile up and increase the memory, which is why we see more than one object in the memory.
 
+However, if we'd overridden the equals() and hashCode() methods properly, then only one Person object would exist in this Map. Let's take a look at the proper implementations of equals() and hashCode() for our SaleResult class:
+
+```java
+class SaleResult {
+        int id;
+        boolean isSuccess;
+
+        public SaleResult(int id, boolean isSuccess) {
+            this.id = id;
+            this.isSuccess = isSuccess;
+        }
+
+      @Override
+      public boolean equals(Object o) {
+          if (o == this) return true;
+          if (!(o instanceof SaleResult)) {
+              return false;
+          }
+          SaleResult result = (SaleResult) o;
+          return result.id == this.id;
+      }
+
+      @Override
+      public int hashCode() {
+          int hash = 7;
+          hash = 31 * hash + id;
+          return hash;
+      }
+}
+```
+
+
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
