@@ -33,13 +33,13 @@ previous post breifly discussed about few types of memory leaks. In todays post 
 
 #### Unclosed Resources
 
-Unclosed resource memory leak in Java occurs when an application fails to release resources such as file handles, sockets, and database connections after they are no longer needed. These unclosed resources can remain allocated for extended periods of time resulting in a gradual buildup of system memory. This type of leak is particularly dangerous because it often goes unnoticed until the system runs out of available RAM or disk space. 
+Unclosed resource memory leak in Java occurs when an application fails to release resources such as file handles, sockets, and database connections after they are no longer needed. These unclosed resources can remain allocated for extended periods of time resulting in a gradual buildup of system memory. This type of leak is particularly dangerous because it often goes unnoticed until the system runs out of available RAM or disk space.
 
 Java developers must be aware that any code which opens external resources such as files or databases should ensure that these are properly closed once their use has concluded. Failure to do so will result in a slow but steady increase in the amount of used memory on the system over time which can eventually lead to performance issues or even complete failure due to lack of available RAM and/or disk space on the machine hosting your application's process(es).
 
-#### Custom .equals() and .hashCode() implementation 
+#### Custom .equals() and .hashCode() implementation
 
-Custom .equals() and .hashCode() implementation can cause memory leaks in Java due to the way they are used. When a class implements these methods, it is responsible for managing its own state and ensuring that all objects of the same type have unique references. If this is not done properly, an object can be created but never garbage collected because it will always exist as a reference from another object or collection. This leads to more objects staying in memory than necessary which causes a gradual increase in system resources over time until eventually there is no longer enough available for other tasks leading to poor performance or even crashing of the application. 
+Custom .equals() and .hashCode() implementation can cause memory leaks in Java due to the way they are used. When a class implements these methods, it is responsible for managing its own state and ensuring that all objects of the same type have unique references. If this is not done properly, an object can be created but never garbage collected because it will always exist as a reference from another object or collection. This leads to more objects staying in memory than necessary which causes a gradual increase in system resources over time until eventually there is no longer enough available for other tasks leading to poor performance or even crashing of the application.
 
 Let's see an example scenario, In HashSet and HashMap `.equals()` and `.hashCode()`uses these methods in many operations, and if they're not overridden correctly, they can become a source for potential memory leak problems.
 
@@ -54,6 +54,7 @@ class SaleResult {
     }
 }
 ```
+
 now if we set this object as key in a hashmap or hashset and if a string id for value of the cusomterId we would need to ensure they are unique as HashMap and HashSet dont allow duplicate keys.
 
 ```java
@@ -63,6 +64,7 @@ for(int i=0; i<10000; i++) {
 }
 System.out.println(map.size());
 ```
+
 here we will see 1000 objects are being inserted and thus the size of the map is 1000. Here we're using SaleReuslt as a key. Since Map doesn't allow duplicate keys, the numerous duplicate SaleResult objects that we inserted as a key shouldn't increase the memory.
 
 But since we haven't defined the proper equals() method, the duplicate objects pile up and increase the memory, which is why we see more than one object in the memory.
@@ -97,11 +99,14 @@ class SaleResult {
       }
 }
 ```
+
 now after this there will be only 1 instance of `SaleResult` in the hashmap after insert.
 
 #### Inner class that references outer classes
 
+This happens in the case of non-static inner classes (anonymous classes). For initialization, these inner classes always require an instance of the enclosing class. This type of leak occurs when the inner class holds a reference to the outer class. which prevents the garbage collector from reclaiming any memory associated with outer instance. This causes significant performance degradation and even application crashes if not addressed properly.
 
+Inner classes are useful for organizing code better, but it is important to consider their impact on memory management when using them in your program design. The best way to prevent this type of issue is through `proper usage of weak references` within the inner class implementation or using `static` classes. so that it does not maintain a strong reference back up into its parent or containing object graph structure while still providing access as needed at runtime.
 
 ### Analyze for finding Memory leaks
 
