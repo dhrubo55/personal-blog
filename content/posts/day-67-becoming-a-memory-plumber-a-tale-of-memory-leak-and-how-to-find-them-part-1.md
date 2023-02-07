@@ -121,6 +121,38 @@ now after this there will be only 1 instance of `SaleResult` in the hashmap afte
 
 This happens in the case of non-static inner classes (anonymous classes). For initialization, these inner classes always require an instance of the enclosing class. This type of leak occurs when the inner class holds a reference to the outer class. which prevents the garbage collector from reclaiming any memory associated with outer instance. This causes significant performance degradation and even application crashes if not addressed properly.
 
+```java
+ class SaleResult {
+        long saleCount;
+
+        public SaleResult(long saleCount) {
+            this.saleCount = saleCount;
+        }
+
+        class SaleData {
+
+        }
+
+        SaleData getSaleData() {
+            return new SaleData();
+        }
+    }
+```
+
+now if we run this program like this
+
+```java
+public class Day67 {
+	public static void main(String args[]) {
+    	List<SaleResult> saleResults = new ArrayList<>();
+        
+        while(true) { // for analyzing the program
+        	
+        }
+    }
+}
+```
+
 Inner classes are useful for organizing code better, but it is important to consider their impact on memory management when using them in your program design. The best way to prevent this type of issue is through `proper usage of weak references` within the inner class implementation or using `static` classes. so that it does not maintain a strong reference back up into its parent or containing object graph structure while still providing access as needed at runtime.
 
 ### 
