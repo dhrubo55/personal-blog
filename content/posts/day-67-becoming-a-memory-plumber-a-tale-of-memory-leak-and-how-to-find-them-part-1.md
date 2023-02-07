@@ -144,10 +144,10 @@ now if we run this program like this
 ```java
 public class Day67 {
 	public static void main(String args[]) {
-    	List<SaleResult> saleResults = new ArrayList<>();
+    	List<SaleResult.SaleData> saleResults = new ArrayList<>();
         
-        while(true) { // for analyzing the program
-        	
+        while(infiniteLoopFlag) { // for analyzing the program
+        	saleResults.add(new SaleResult(10).getSaleData()):
         }
     }
 }
