@@ -35,6 +35,21 @@ previous post breifly discussed about few types of memory leaks. In todays post 
 
 Unclosed resource memory leak in Java occurs when an application fails to release resources such as file handles, sockets, and database connections after they are no longer needed. These unclosed resources can remain allocated for extended periods of time resulting in a gradual buildup of system memory. This type of leak is particularly dangerous because it often goes unnoticed until the system runs out of available RAM or disk space.
 
+```java
+public void getSaleResults() {
+    try {
+        URL url = new URL("http://api.com/saleResutlts");
+        URLConnection urlConnection = url.openConnection();
+        InputStream is = urlConnection.getInputStream();
+        byte[] bytes = is.readAllBytes();
+    } catch (IOException ioe) {
+        ioe.printStackTrace();
+    }
+}
+```
+
+so to resolve this we should use `try-with-resource`
+
 Java developers must be aware that any code which opens external resources such as files or databases should ensure that these are properly closed once their use has concluded. Failure to do so will result in a slow but steady increase in the amount of used memory on the system over time which can eventually lead to performance issues or even complete failure due to lack of available RAM and/or disk space on the machine hosting your application's process(es).
 
 #### Custom .equals() and .hashCode() implementation
