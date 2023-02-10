@@ -152,6 +152,7 @@ public class Day67 {
     }
 }
 ```
+the inner class `SaleData` will keep the reference of the Outer class `SaleResult` thus causing memory not to be GC.
 
 Inner classes are useful for organizing code better, but it is important to consider their impact on memory management when using them in your program design. The best way to prevent this type of issue is through `proper usage of weak references` within the inner class implementation or using `static` classes. so that it does not maintain a strong reference back up into its parent or containing object graph structure while still providing access as needed at runtime.
 
