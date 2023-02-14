@@ -162,46 +162,6 @@ Sometimes using `finalize()` can cause memory leaks. Whenever a classes `finaliz
 
 Additionally, if the code written in the finalize() method isn't optimal, and if the finalizer queue can't keep up with the Java garbage collector, then sooner or later our application is destined to meet an OutOfMemoryError.
 
-Now lets see an example where we will create a class which will override its `finalize()` and in it, it will create other instance of the same class 
-
-```java
-class Leak {
-    public void break() {
-        if (depth > 2) {
-            Leaker.done();
-        }
-    }
-    private int num;
-    public Leak(int n) {
-        this.num = n;
-    }
-    protected void finalize() {
-        new Leak(depth + 1).check();
-        new Leak(depth + 1).check();
-    }
-}
-
-public class Leaker {
-    private static boolean makeMore = true;
-    public static void done() {
-        makeMore = false;
-    }
-    public static void main(String[] args) throws InterruptedException {
-        // make a bunch of them until the garbage collector gets active
-        while (makeMore) {
-            new Leakee(0).check();
-        }
-        // sit back and watch the finalizers chew through memory
-        while (true) {
-            Thread.sleep(1000);
-            System.out.println("memory=" +
-                    Runtime.getRuntime().freeMemory() + " / " +
-                    Runtime.getRuntime().totalMemory());
-        }
-    }
-}
-```
-
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
