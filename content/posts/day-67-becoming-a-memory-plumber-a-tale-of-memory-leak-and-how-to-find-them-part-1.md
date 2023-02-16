@@ -162,6 +162,16 @@ Sometimes using `finalize()` can cause memory leaks. Whenever a classes `finaliz
 
 Additionally, if the code written in the finalize() method isn't optimal, and if the finalizer queue can't keep up with the Java garbage collector, then sooner or later our application is destined to meet an OutOfMemoryError.
 
+### ThreadLocal 
+
+ThreadLocal is a api that gives us the ability to store state to a particular thread, and thus allows us to achieve thread safety.
+
+When using this construct, each thread will hold an implicit reference to its copy of a _ThreadLocal_ variable and will maintain its own copy, instead of sharing the resource across multiple threads, as long as the thread is alive.
+
+Despite its advantages, the use of _ThreadLocal_ variables is controversial, as they're infamous for introducing memory leaks if not used properly. Joshua Bloch once commented on thread local usage that:
+
+>“Can you cause unintended object retention with thread locals? Sure you can. But you can do this with arrays too. That doesn’t mean that thread locals (or arrays) are bad things. Merely that you have to use them with some care. The use of thread pools demands extreme care. Sloppy use of thread pools in combination with sloppy use of thread locals can cause unintended object retention, as has been noted in many places. But placing the blame on thread locals is unwarranted.” – Joshua Bloch
+
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
