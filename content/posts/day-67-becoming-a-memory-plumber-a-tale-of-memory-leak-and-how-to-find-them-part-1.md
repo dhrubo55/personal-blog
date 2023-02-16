@@ -164,7 +164,7 @@ Additionally, if the code written in the finalize() method isn't optimal, and if
 
 ### Interning String Manually
 
-Though 
+Though we dont do manual String interning
 
 ### Analyze for finding Memory leaks
 
