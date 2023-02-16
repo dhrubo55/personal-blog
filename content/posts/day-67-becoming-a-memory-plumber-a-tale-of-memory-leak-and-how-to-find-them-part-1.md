@@ -28,8 +28,7 @@ previous post breifly discussed about few types of memory leaks. In todays post 
 2. custom equals and hashcode implementation
 3. Inner class that references outer classes
 4. Finalization bug
-5. Interned strings
-6. Thread local
+5. Thread local
 
 #### Unclosed Resources
 
@@ -152,19 +151,16 @@ public class Day67 {
     }
 }
 ```
+
 the inner class `SaleData` will keep the reference of the Outer class `SaleResult` thus causing memory not to be GC.
 
 Inner classes are useful for organizing code better, but it is important to consider their impact on memory management when using them in your program design. The best way to prevent this type of issue is through `proper usage of weak references` within the inner class implementation or using `static` classes. so that it does not maintain a strong reference back up into its parent or containing object graph structure while still providing access as needed at runtime.
 
 ### Using finalization
 
-Sometimes using `finalize()` can cause memory leaks. Whenever a classes `finalize()` method is overridden, then objects of that class aren't instantly garbage collected. Instead, the GC queues them for finalization, which occurs at a later point in time. 
+Sometimes using `finalize()` can cause memory leaks. Whenever a classes `finalize()` method is overridden, then objects of that class aren't instantly garbage collected. Instead, the GC queues them for finalization, which occurs at a later point in time.
 
 Additionally, if the code written in the finalize() method isn't optimal, and if the finalizer queue can't keep up with the Java garbage collector, then sooner or later our application is destined to meet an OutOfMemoryError.
-
-### Interning String Manually
-
-Though we dont do manual String interning
 
 ### Analyze for finding Memory leaks
 
