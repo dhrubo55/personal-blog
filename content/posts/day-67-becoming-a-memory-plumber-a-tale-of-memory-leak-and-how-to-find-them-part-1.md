@@ -162,7 +162,7 @@ Sometimes using `finalize()` can cause memory leaks. Whenever a classes `finaliz
 
 Additionally, if the code written in the finalize() method isn't optimal, and if the finalizer queue can't keep up with the Java garbage collector, then sooner or later our application is destined to meet an OutOfMemoryError.
 
-### ThreadLocal 
+### ThreadLocal
 
 ThreadLocal is a api that gives us the ability to store state to a particular thread, and thus allows us to achieve thread safety.
 
@@ -170,7 +170,15 @@ When using this construct, each thread will hold an implicit reference to its co
 
 Despite its advantages, the use of _ThreadLocal_ variables is controversial, as they're infamous for introducing memory leaks if not used properly. Joshua Bloch once commented on thread local usage that:
 
->“Can you cause unintended object retention with thread locals? Sure you can. But you can do this with arrays too. That doesn’t mean that thread locals (or arrays) are bad things. Merely that you have to use them with some care. The use of thread pools demands extreme care. Sloppy use of thread pools in combination with sloppy use of thread locals can cause unintended object retention, as has been noted in many places. But placing the blame on thread locals is unwarranted.” – Joshua Bloch
+> “Can you cause unintended object retention with thread locals? Sure you can. But you can do this with arrays too. That doesn’t mean that thread locals (or arrays) are bad things. Merely that you have to use them with some care. The use of thread pools demands extreme care. Sloppy use of thread pools in combination with sloppy use of thread locals can cause unintended object retention, as has been noted in many places. But placing the blame on thread locals is unwarranted.” – Joshua Bloch
+
+_ThreadLocals_ are supposed to be garbage collected once the holding thread is no longer alive. But the problem arises when we use _ThreadLocals_ along with modern application servers.
+
+Modern application servers use a pool of threads to process requests, instead of creating new ones (for example, [the _Executor_](https://tomcat.apache.org/tomcat-7.0-doc/config/executor.html) in the case of Apache Tomcat). Moreover, they also use a separate classloader.
+
+Since ThreadPools in application servers work on the concept of thread reuse, they're never garbage collected; instead, they're reused to serve another request.
+
+If any class creates a _ThreadLocal_ variable, but doesn't explicitly remove it, then a copy of that object will remain with the worker _Thread_ even after the web application is stopped, thus preventing the object from being garbage collected.
 
 ### Analyze for finding Memory leaks
 
