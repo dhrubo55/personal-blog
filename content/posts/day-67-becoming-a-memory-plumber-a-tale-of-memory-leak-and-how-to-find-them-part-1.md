@@ -174,7 +174,7 @@ Despite its advantages, the use of _ThreadLocal_ variables is controversial, as 
 
 _ThreadLocals_ are supposed to be garbage collected once the holding thread is no longer alive. But the problem arises when we use _ThreadLocals_ along with modern application servers.
 
-Modern application servers use a pool of threads to process requests, instead of creating new ones (for example, [the _Executor_](https://tomcat.apache.org/tomcat-7.0-doc/config/executor.html) in the case of Apache Tomcat). Moreover, they also use a separate classloader.
+Modern application servers use a pool of threads to process requests, instead of creating new ones (for example, [the _Executor_](https://tomcat.apache.org/tomcat-7.0-doc/config/executor.html) in the case of Apache Tomcat). Moreover, they also use a separate `classloader`.
 
 Since ThreadPools in application servers work on the concept of thread reuse, they're never garbage collected; instead, they're reused to serve another request.
 
