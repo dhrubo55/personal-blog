@@ -188,12 +188,40 @@ In this example, the chain of strong references looks like this:
 
 `Thread` object → `threadLocals` map → instance of example class → example class → static `ThreadLocal` field → `ThreadLocal` object.
 
-### Analyze for finding Memory leaks
+Lets see an example of this
 
-In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
+```java
+public class Day67 {
 
-### Steps to prevent Memory leaks
+    private static final ThreadLocal<List<String>> threadLocal = new ThreadLocal<>();
 
-To prevent Memory Leaks occurring its important ensure all resources get closed properly at end each operation ; try avoid creating too many temporary variables unnecessarily & keep track object lifetime create them only necessary basis then dispose off quickly once done with it ; finally make sure Garbage Collector running correctly so old unused objects get cleared up regularly thus freeing up valuable system resources
+    public static void main(String[] args) throws InterruptedException {
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Thread thread = new Thread(() -> {
+                List<String> list = new ArrayList<>();
+                threadLocal.set(list);
+                // add a lot of data to the thread-local list
+                for (int j = 0; j < 100000; j++) {
+                    list.add("This is a string that will consume some memory.");
+                }
+            });
+            threads.add(thread);
+            thread.start();
+        }
+        for (Thread thread : threads) {
+            thread.join();
+        }
+        // At this point, all threads have completed execution.
+        // However, the thread-local lists have not been cleared,
+        // and will continue to consume memory until the program terminates.
+    }
+}
+```
+In this program, we define a ThreadLocal variable called threadLocal which stores a list of strings. We then create 10 threads and in each thread, we create a new list and add a lot of data to it. We then set this list as the value of the thread-local variable using threadLocal.set(list).
 
-### Memory leak issue i faced in my work
+Because the ThreadLocal variable is thread-local, each thread has its own list and the lists are not shared between threads. However, since we are adding a lot of data to each list, they consume a significant amount of memory.
+
+The problem is that once each thread has completed execution, the lists are not cleared. Because the ThreadLocal variable still holds a reference to each list, they will not be garbage collected and will continue to consume memory until the program terminates. This can lead to a memory leak, as the program's memory usage will continue to grow over time.
+
+To avoid this, we should always make sure to clear the thread-local variables once we are done with them, by calling `threadLocal.remove()` at the end of each thread's execution.
