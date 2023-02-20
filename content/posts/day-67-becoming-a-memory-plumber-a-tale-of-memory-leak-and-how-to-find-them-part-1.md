@@ -14,15 +14,7 @@ image = ""
 relative = false
 
 +++
-1. What is memory leak
-2. What problems it causes
-3. Types
-4. Analyzing tools
-5. What to analyze and how
-6. What can we do to prevent it
-7. conclusion with example
-
-previous post breifly discussed about few types of memory leaks. In todays post going to further discuss about six other scenarios which can cause memory leaks. They are
+In my previous post  I briefly discussed about few types of memory leaks. In todays post going to further discuss about six other scenarios which can cause memory leaks. They are
 
 1. Unclosed resource
 2. custom equals and hashcode implementation
@@ -218,6 +210,7 @@ public class Day67 {
     }
 }
 ```
+
 In this program, we define a ThreadLocal variable called threadLocal which stores a list of strings. We then create 10 threads and in each thread, we create a new list and add a lot of data to it. We then set this list as the value of the thread-local variable using threadLocal.set(list).
 
 Because the ThreadLocal variable is thread-local, each thread has its own list and the lists are not shared between threads. However, since we are adding a lot of data to each list, they consume a significant amount of memory.
