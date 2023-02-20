@@ -22,7 +22,7 @@ In my previous post  I briefly discussed about few types of memory leaks. In tod
 4. Finalization bug
 5. Thread local
 
-#### Unclosed Resources
+### Unclosed Resources
 
 Unclosed resource memory leak in Java occurs when an application fails to release resources such as file handles, sockets, and database connections after they are no longer needed. These unclosed resources can remain allocated for extended periods of time resulting in a gradual buildup of system memory. This type of leak is particularly dangerous because it often goes unnoticed until the system runs out of available RAM or disk space.
 
@@ -43,7 +43,7 @@ so to resolve this we should use `try-with-resource`
 
 Java developers must be aware that any code which opens external resources such as files or databases should ensure that these are properly closed once their use has concluded. Failure to do so will result in a slow but steady increase in the amount of used memory on the system over time which can eventually lead to performance issues or even complete failure due to lack of available RAM and/or disk space on the machine hosting your application's process(es).
 
-#### Custom .equals() and .hashCode() implementation
+### Custom .equals() and .hashCode() implementation
 
 Custom .equals() and .hashCode() implementation can cause memory leaks in Java due to the way they are used. When a class implements these methods, it is responsible for managing its own state and ensuring that all objects of the same type have unique references. If this is not done properly, an object can be created but never garbage collected because it will always exist as a reference from another object or collection. This leads to more objects staying in memory than necessary which causes a gradual increase in system resources over time until eventually there is no longer enough available for other tasks leading to poor performance or even crashing of the application.
 
@@ -108,7 +108,7 @@ class SaleResult {
 
 now after this there will be only 1 instance of `SaleResult` in the hashmap after insert.
 
-#### Inner class that references outer classes
+### Inner class that references outer classes
 
 This happens in the case of non-static inner classes (anonymous classes). For initialization, these inner classes always require an instance of the enclosing class. This type of leak occurs when the inner class holds a reference to the outer class. which prevents the garbage collector from reclaiming any memory associated with outer instance. This causes significant performance degradation and even application crashes if not addressed properly.
 
