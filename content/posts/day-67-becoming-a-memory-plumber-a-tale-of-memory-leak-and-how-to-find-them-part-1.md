@@ -178,6 +178,16 @@ Modern application servers use a pool of threads to process requests, instead of
 
 If any class creates a _ThreadLocal_ variable, but doesn't explicitly remove it, then a copy of that object will remain with the worker _Thread_ even after the web application is stopped, thus preventing the object from being garbage collected.
 
+#### How does ThreadLocal Creates memory leak
+
+* Each `Thread` has a private field `threadLocals`, which actually stores the thread-local values.
+* Each _key_ in this map is a weak reference to a `ThreadLocal` object, so after that `ThreadLocal` object is garbage-collected, its entry is removed from the map.
+* But each _value_ is a strong reference, so when a value (directly or indirectly) points to the `ThreadLocal` object that is its _key_, that object will neither be garbage-collected nor removed from the map as long as the thread lives.
+
+In this example, the chain of strong references looks like this:
+
+`Thread` object → `threadLocals` map → instance of example class → example class → static `ThreadLocal` field → `ThreadLocal` object.
+
 ### Analyze for finding Memory leaks
 
 In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
