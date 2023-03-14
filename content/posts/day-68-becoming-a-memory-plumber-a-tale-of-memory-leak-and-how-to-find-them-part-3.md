@@ -24,28 +24,29 @@ relative = false
 
 Analyzing for memory leaks in Java involves identifying objects that are no longer being used by the program but are still being held in memory. which can cause memory usage to increase over time and potentially lead to out-of-memory errors. Here are the steps for analyzing and identifying memory leaks in Java:
 
-### Identify the symptoms: 
+### Identify the symptoms:
 
 The first step in analyzing for memory leaks is to identify the symptoms of the issue, such as out-of-memory errors or increasing memory usage over time.
 
-### Gather data: 
+### Gather data:
 
-Once the symptoms have been identified, gather data on the application's memory usage. This can be done using tools such as Java's built-in JMX monitoring, VisualVM or JConsole.
+Once the symptoms have been identified, gather data on the application's memory usage. This can be done using tools such as Java's built-in JMX monitoring, VisualVM or JConsole. JFR is another tool to get events and data that is occuring in the jvm. Java Mission Control provides these data. There are some other tools in this page mentioned below
 
-### Create heap dumps: 
+[https://docs.oracle.com/javase/9/troubleshoot/diagnostic-tools.htm#JSTGD117](https://docs.oracle.com/javase/9/troubleshoot/diagnostic-tools.htm#JSTGD117 "https://docs.oracle.com/javase/9/troubleshoot/diagnostic-tools.htm#JSTGD117")
+
+### Create heap dumps:
 
 Create heap dumps at regular intervals or when the application experiences an out-of-memory error. Heap dumps can be analyzed using tools like Eclipse Memory Analyzer (MAT) or VisualVM.
-
 
 ### Analyze heap dumps
 
 Analyze the heap dumps to identify the objects that are being held in memory but are no longer being used by the application. MAT and VisualVM can help identify the root cause of memory leaks.
 
-### Identify the cause: 
+### Identify the cause:
 
 Once the objects causing the memory leaks have been identified, determine the root cause of the issue. This may involve reviewing the code to identify incorrect memory management practices or third-party libraries causing the issue.
 
-### Fix the issue: 
+### Fix the issue:
 
 Fix the issue by correcting the root cause. This may involve modifying the code to properly release resources, updating third-party libraries, or tuning the JVM settings to better manage memory.
 
