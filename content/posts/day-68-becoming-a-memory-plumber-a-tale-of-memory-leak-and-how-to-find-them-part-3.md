@@ -65,7 +65,7 @@ Once the objects causing the memory leaks have been identified, determine the ro
 
 ### Fix the issue:
 
-Fix the issue by correcting the root cause. This may involve modifying the code to properly release resources, updating third-party libraries, or tuning the JVM settings to better manage memory.
+Fix the issue by correcting the root cause. This may involve modifying the code to properly release resources, updating third-party libraries, or tuning the JVM settings to better manage memory. 
 
 ### Test:
 
@@ -73,9 +73,15 @@ Test the application to ensure that the memory leak has been fixed and that the 
 
 By following these steps, developers can identify and address memory leaks in their Java applications. Regular monitoring and analysis can help prevent memory leaks from becoming a significant issue in production environments.
 
-\### Analyze for finding Memory leaks
+### Analyze for finding Memory leaks
 
-In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like HeapHero , JProfiler , VisualVM etc., these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
+In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like 
+
+1. HeapHero 
+2. JProfiler 
+3. VisualVM etc., 
+
+   these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
 
 \### Steps to prevent Memory leaks
 
