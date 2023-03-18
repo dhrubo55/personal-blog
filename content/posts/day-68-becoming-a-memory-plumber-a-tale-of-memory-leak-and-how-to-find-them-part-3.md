@@ -87,4 +87,6 @@ these allow you view what exactly happening under hood during runtime & identify
 
 To prevent Memory Leaks occurring its important ensure all resources get closed properly at end each operation ; try avoid creating too many temporary variables unnecessarily & keep track object lifetime create them only necessary basis then dispose off quickly once done with it ; finally make sure Garbage Collector running correctly so old unused objects get cleared up regularly thus freeing up valuable system resources
 
-### Memory leak issue i faced in my work
+### Memory leak issue i faced 
+
+In my case I was searching f
