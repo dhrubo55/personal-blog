@@ -48,7 +48,7 @@ Create heap dumps at regular intervals or when the application experiences an ou
 
 Analyze the heap dumps to identify the objects that are being held in memory but are no longer being used by the application. MAT and VisualVM can help identify the root cause of memory leaks. Below is the snap for MAT where a heap dump file is loaded 
 
-![Analyzing Java Heap problems Part 2: Using Eclipse MAT – Schneide Blog](https://schneide.files.wordpress.com/2008/12/mat-overview.png)
+
 
 Java heap dumps can be analyzed using various tools, such as Eclipse Memory Analyzer (MAT) and VisualVM. Here are the general steps for analyzing Java heap dumps:
 
