@@ -48,6 +48,8 @@ Create heap dumps at regular intervals or when the application experiences an ou
 
 Analyze the heap dumps to identify the objects that are being held in memory but are no longer being used by the application. MAT and VisualVM can help identify the root cause of memory leaks.
 
+![Analyzing Java Heap problems Part 2: Using Eclipse MAT – Schneide Blog](https://schneide.files.wordpress.com/2008/12/mat-overview.png)
+
 Java heap dumps can be analyzed using various tools, such as Eclipse Memory Analyzer (MAT) and VisualVM. Here are the general steps for analyzing Java heap dumps:
 
 1. Capture the heap dump: Heap dumps can be captured using command-line tools like jmap or via the application itself (if it supports such functionality). Heap dumps can also be automatically captured when the application experiences an OutOfMemoryError.
@@ -65,7 +67,7 @@ Once the objects causing the memory leaks have been identified, determine the ro
 
 ### Fix the issue:
 
-Fix the issue by correcting the root cause. This may involve modifying the code to properly release resources, updating third-party libraries, or tuning the JVM settings to better manage memory. 
+Fix the issue by correcting the root cause. This may involve modifying the code to properly release resources, updating third-party libraries, or tuning the JVM settings to better manage memory.
 
 ### Test:
 
@@ -75,11 +77,11 @@ By following these steps, developers can identify and address memory leaks in th
 
 ### Analyze for finding Memory leaks
 
-In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like 
+In order analyze whether your program contains any potential Memory Leaks you will need some kind specialized tools like
 
-1. HeapHero 
-2. JProfiler 
-3. VisualVM 
+1. HeapHero
+2. JProfiler
+3. VisualVM
 
 these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
 
