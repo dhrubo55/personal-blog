@@ -30,7 +30,7 @@ Once the symptoms have been identified, gather data on the application's memory 
 
 At first lets learn what is heap dump.
 
-\#### Heap dumps :
+#### Heap dumps :
 
 The term Heapdump describes **the JVM mechanism that generates a dump of all the live objects that are on the Java™ heap**, which are being used by the running Java application. There are two dump formats, the text or classic heap dump format and the Portable Heap Dump (PHD) format.
 
