@@ -75,7 +75,7 @@ In order analyze whether your program contains any potential Memory Leaks you wi
 
 these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment.
 
-In my case we started looking into which classes were taking much memory and thread execution as well. Then exported a heap dump and isolated the class which was an old version of an library. 
+In the case I was working, we started looking into which classes were taking much memory and thread execution as well. Then exported a heap dump and analyzed it with Eclipse MAT and isolated the class which was an old version of a library. 
 
 ### Steps to prevent Memory leaks
 
