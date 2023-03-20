@@ -14,14 +14,6 @@ image = ""
 relative = false
 
 +++
-1. What is memory leak
-2. What problems it causes
-3. Types
-4. Analyzing tools
-5. What to analyze and how
-6. What can we do to prevent it
-7. conclusion with example
-
 Analyzing for memory leaks in Java involves identifying objects that are no longer being used by the program but are still being held in memory. which can cause memory usage to increase over time and potentially lead to out-of-memory errors. Here are the steps for analyzing and identifying memory leaks in Java:
 
 ### Identify the symptoms:
@@ -81,12 +73,10 @@ In order analyze whether your program contains any potential Memory Leaks you wi
 2. JProfiler
 3. VisualVM
 
-these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment
+these allow you view what exactly happening under hood during runtime & identify problematic areas ahead time before problems start manifesting themselves on production environment.
+
+In my case we started looking into which classes were taking much memory and thread execution as well. Then exported a heap dump and isolated the class which was an old version of an library. 
 
 ### Steps to prevent Memory leaks
 
 To prevent Memory Leaks occurring its important ensure all resources get closed properly at end each operation ; try avoid creating too many temporary variables unnecessarily & keep track object lifetime create them only necessary basis then dispose off quickly once done with it ; finally make sure Garbage Collector running correctly so old unused objects get cleared up regularly thus freeing up valuable system resources
-
-### Memory leak issue i faced 
-
-In my case I was searching f
