@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2023-02-23T00:00:00Z
+date = 2023-03-30T00:00:00Z
 description = "Finding memory leak by analyzing GC and memory dump using VisualVM and Eclipse MAT "
 draft = true
 showtoc = true
