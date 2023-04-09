@@ -32,7 +32,7 @@ Before we dive into writing benchmarks, we need to set up JMH in our project. JM
     <!-- Gradle dependency -->
     compile 'org.openjdk.jmh:jmh-core:1.34'
 
-Writing a simple benchmark
+### Writing a simple benchmark
 
 To write a benchmark using JMH, we need to create a class and annotate it with **`@BenchmarkMode`**, **`@OutputTimeUnit`**, and **`@State`** annotations. The **`@BenchmarkMode`** annotation specifies the benchmark mode, the **`@OutputTimeUnit`** annotation specifies the time unit to use for reporting, and the **`@State`** annotation specifies the state of the benchmark.
 
