@@ -4,7 +4,7 @@ date = 2023-04-05T00:00:00Z
 description = "Exploring benchmarking harness in Java and how its use to understand performance"
 draft = true
 showtoc = true
-slug = "/java/100DaysOfJava/day68"
+slug = "/java/100DaysOfJava/day69"
 summary = "Exploring benchmarking harness in Java and how its use to understand performance"
 title = "Day 69 : Unlocking Java Performance Secrets: Harnessing the Power of JMH Microbenchmarking"
 [cover]
