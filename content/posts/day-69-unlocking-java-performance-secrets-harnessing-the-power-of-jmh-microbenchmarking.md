@@ -37,11 +37,11 @@ Fig: JMH
 
 #### Setup Phase
 
-The first phase of the JMH execution lifecycle is the setup phase. During this phase, JMH initializes the benchmark state and sets up the environment for the benchmark. The @Setup annotation can be used to define a method that will be executed during this phase.
+The first phase of the JMH execution lifecycle is the setup phase. During this phase, JMH initializes the benchmark state and sets up the environment for the benchmark. The `@Setup` annotation can be used to define a method that will be executed during this phase.
 
 #### Warmup Phase
 
-The next phase is the warmup phase. During this phase, JMH runs the benchmark method multiple times to allow the JVM to warm up and optimize the code. The @Warmup annotation can be used to control the duration of the warmup phase and the number of iterations to run.
+The next phase is the warmup phase. During this phase, JMH runs the benchmark method multiple times to allow the JVM to warm up and optimize the code. The `@Warmup` annotation can be used to control the duration of the warmup phase and the number of iterations to run.
 
 #### Measurement Phase
 
@@ -49,7 +49,7 @@ The measurement phase is the main benchmarking phase. During this phase, JMH mea
 
 #### Iteration Tear Down Phase
 
-After each iteration of the benchmark method, JMH executes any methods annotated with @TearDownIteration. This can be used to clean up any resources or reset the state of the benchmark.
+After each iteration of the benchmark method, JMH executes any methods annotated with `@TearDownIteration`. This can be used to clean up any resources or reset the state of the benchmark.
 
 #### Result Aggregation Phase
 
@@ -57,7 +57,7 @@ After all iterations have completed, JMH aggregates the results and computes sta
 
 #### Benchmark Tear Down Phase
 
-Finally, JMH executes any methods annotated with @TearDown after the benchmark has completed. This can be used to release any resources or perform any necessary cleanup.
+Finally, JMH executes any methods annotated with `@TearDown` after the benchmark has completed. This can be used to release any resources or perform any necessary cleanup.
 
 ### Setting up JMH
 
