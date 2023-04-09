@@ -99,7 +99,7 @@ In this benchmark, we have annotated the class with **`@State(Scope.Thread)`** t
 
 The benchmark method is annotated with **`@Benchmark`**, which indicates that this is the method that we want to measure. In this case, we are measuring the time taken to add two integers.
 
-Running a benchmark
+### Running a benchmark
 
 To run a benchmark, we can create an instance of the **`org.openjdk.jmh.runner.Runner`** class and pass it the class that contains the benchmark. Here is an example of how to run the **`AddBenchmark`** class we just created:
 
