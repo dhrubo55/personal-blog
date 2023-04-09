@@ -120,3 +120,5 @@ To run a benchmark, we can create an instance of the **`org.openjdk.jmh.runner.R
 ```
 
 In this example, we have created an instance of the **`OptionsBuilder`** class and used it to specify the benchmark class that we want to run. We then create an instance of the **`Runner`** class and pass it the options we just created.
+
+For further learning Jenkov has a great tutorial about it. https://jenkov.com/tutorials/java-performance/jmh.html
