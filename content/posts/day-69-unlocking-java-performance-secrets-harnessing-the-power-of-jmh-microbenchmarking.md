@@ -34,6 +34,8 @@ we'll explore the different phases of the JMH execution lifecycle and what happe
 
 ![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1681054942/images-from-blog/Untitled_Diagram.drawio_1_vvm3pm.png)
 
+Fig: JMH
+
 #### Setup Phase
 
 The first phase of the JMH execution lifecycle is the setup phase. During this phase, JMH initializes the benchmark state and sets up the environment for the benchmark. The @Setup annotation can be used to define a method that will be executed during this phase.
