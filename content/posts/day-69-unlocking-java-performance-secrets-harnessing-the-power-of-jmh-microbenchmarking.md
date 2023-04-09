@@ -17,6 +17,37 @@ relative = false
 Java Microbenchmark Harness (JMH) is a Java library used to measure the performance of Java code snippets, methods, and classes. It is a useful tool for developers who want to optimize their Java applications, identify performance bottlenecks, and compare the performance of different implementations.
 
 JMH provides a simple API for developers to write benchmarks and test their performance. In this blog post, we will explore the basics of JMH and how to write and run benchmarks using JMH.
+### What is a Benchmark Harness:
+
+A benchmark harness is a software that provides the infrastructure to conduct benchmarks of a software and/or hardware system, typically with the goal to quantitatively assess the system's characteristics and capabilities or to compare the characteristics and capabilities of multiple systems relative to each other
+
+### What is JMH:
+
+JMH is built on top of the Java Virtual Machine's (JVM) HotSpot compiler infrastructure. It uses the Just-In-Time (JIT) compiler to optimize code at runtime, which means that the code is executed multiple times before the actual benchmark is run. This ensures that the benchmark results are accurate and consistent.
+
+To achieve this, JMH generates a benchmarking harness that consists of a loop that executes the benchmark method multiple times. This loop is called a "measurement iteration" and it is executed several times to ensure that the benchmark results are reliable.
+
+### JMH Execution Lifecyle
+
+we'll explore the different phases of the JMH execution lifecycle and what happens during each phase.
+
+#### Setup Phase
+The first phase of the JMH execution lifecycle is the setup phase. During this phase, JMH initializes the benchmark state and sets up the environment for the benchmark. The @Setup annotation can be used to define a method that will be executed during this phase.
+
+#### Warmup Phase
+The next phase is the warmup phase. During this phase, JMH runs the benchmark method multiple times to allow the JVM to warm up and optimize the code. The @Warmup annotation can be used to control the duration of the warmup phase and the number of iterations to run.
+
+#### Measurement Phase
+The measurement phase is the main benchmarking phase. During this phase, JMH measures the performance of the benchmark method. The @Benchmark annotation is used to mark the method to be benchmarked. JMH runs the benchmark method for a configurable number of iterations and measures the execution time of each iteration.
+
+#### Iteration Tear Down Phase
+After each iteration of the benchmark method, JMH executes any methods annotated with @TearDownIteration. This can be used to clean up any resources or reset the state of the benchmark.
+
+#### Result Aggregation Phase
+After all iterations have completed, JMH aggregates the results and computes statistics such as the mean, standard deviation, and confidence intervals. This provides a summary of the benchmark results.
+
+#### Benchmark Tear Down Phase
+Finally, JMH executes any methods annotated with @TearDown after the benchmark has completed. This can be used to release any resources or perform any necessary cleanup.
 
 ### Setting up JMH
 
