@@ -32,7 +32,7 @@ To achieve this, JMH generates a benchmarking harness that consists of a loop th
 
 we'll explore the different phases of the JMH execution lifecycle and what happens during each phase.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1681054942/images-from-blog/Untitled_Diagram.drawio_1_vvm3pm.png)
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1681057025/images-from-blog/JMH_uiajzf.png)
 
 Fig: JMH
 
