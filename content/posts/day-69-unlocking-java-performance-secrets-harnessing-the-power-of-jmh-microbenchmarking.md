@@ -22,7 +22,8 @@ JMH provides a simple API for developers to write benchmarks and test their perf
 
 Before we dive into writing benchmarks, we need to set up JMH in our project. JMH can be easily added to your project by adding the following dependency to your Maven or Gradle build file:
 
-    <!-- Maven dependency -->
+```xml   
+<!-- Maven dependency -->
     <dependency>
         <groupId>org.openjdk.jmh</groupId>
         <artifactId>jmh-core</artifactId>
@@ -31,6 +32,7 @@ Before we dive into writing benchmarks, we need to set up JMH in our project. JM
     
     <!-- Gradle dependency -->
     compile 'org.openjdk.jmh:jmh-core:1.34'
+```
 
 ### Writing a simple benchmark
 
@@ -38,6 +40,7 @@ To write a benchmark using JMH, we need to create a class and annotate it with *
 
 Here is an example of a simple benchmark that measures the performance of adding two integers:
 
+```java
     import org.openjdk.jmh.annotations.Benchmark;
     import org.openjdk.jmh.annotations.BenchmarkMode;
     import org.openjdk.jmh.annotations.Mode;
@@ -59,6 +62,7 @@ Here is an example of a simple benchmark that measures the performance of adding
             return a + b;
         }
     }
+```
 
 In this benchmark, we have annotated the class with **`@State(Scope.Thread)`** to indicate that the state of the benchmark is local to each thread, **`@BenchmarkMode(Mode.AverageTime)`** to indicate that we want to measure the average time taken by the benchmark, and **`@OutputTimeUnit(TimeUnit.NANOSECONDS)`** to indicate that we want to report the results in nanoseconds.
 
@@ -68,6 +72,7 @@ Running a benchmark
 
 To run a benchmark, we can create an instance of the **`org.openjdk.jmh.runner.Runner`** class and pass it the class that contains the benchmark. Here is an example of how to run the **`AddBenchmark`** class we just created:
 
+```java
     import org.openjdk.jmh.runner.Runner;
     import org.openjdk.jmh.runner.RunnerException;
     import org.openjdk.jmh.runner.options.Options;
@@ -81,5 +86,6 @@ To run a benchmark, we can create an instance of the **`org.openjdk.jmh.runner.R
             new Runner(options).run();
         }
     }
+```
 
 In this example, we have created an instance of the **`OptionsBuilder`** class and used it to specify the benchmark class that we want to run. We then create an instance of the **`Runner`** class and pass it the options we just created.
