@@ -127,4 +127,5 @@ pages:
 - content/posts/day-67-becoming-a-memory-plumber-a-tale-of-memory-leak-and-how-to-find-them-part-1.md
 - content/posts/day-68-becoming-a-memory-plumber-a-tale-of-memory-leak-and-how-to-find-them-part-3.md
 - content/posts/day-69-unlocking-java-performance-secrets-harnessing-the-power-of-jmh-microbenchmarking.md
+- content/posts/day-70-diving-deep-into-array-copy-measuring-array-copy-performance-in-java-with-jmh-a-comparative-analysis-of-methods.md
 - content/posts/git-troubleshooting-6-helpful-command-with-explanations.md
