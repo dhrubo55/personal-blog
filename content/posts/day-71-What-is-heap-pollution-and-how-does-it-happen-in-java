@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2023-05-29T00:00:00Z
+date = 2023-06-03T00:00:00Z
 description = "Understanding Heap poullion in java and its causes and how to prevent it"
 draft = false
 showtoc = true
@@ -14,7 +14,6 @@ image = ""
 relative = false
 
 +++
-
 Java is a statically typed language that provides type safety to ensure that variables are used consistently and correctly. However, there are cases where type safety can be compromised, leading to unexpected behavior and runtime errors. One such scenario is heap pollution. In this blog post, we will explore the concept of Java heap pollution, understand why it happens, learn how to detect it, and discuss potential solutions to mitigate its risks.
 
 ### What is Java Heap Pollution?
