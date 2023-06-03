@@ -1,7 +1,7 @@
 +++
 category = []
 date = 2023-06-03T00:00:00Z
-description = "Understanding Heap poullion in java and its causes and how to prevent it"
+description = "Understanding Heap poullion in java and its causes and how to prevent it."
 draft = false
 showtoc = true
 slug = "/java/100DaysOfJava/day71"
