@@ -31,8 +31,7 @@ params:
   disableSpecial1stPost: false
   comments: false
   hidemeta: false
-  showtoc: false
-  tocopen: false
+
   assets:
     favicon: icons/favicon.ico
     favicon16x16: icons/favicon-16x16.png
