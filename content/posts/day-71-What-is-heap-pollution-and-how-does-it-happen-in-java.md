@@ -11,6 +11,8 @@ alt = "day71"
 caption = "day71"
 image = ""
 relative = false
+ShowToc: true
+TocOpen: true
 
 +++
 
