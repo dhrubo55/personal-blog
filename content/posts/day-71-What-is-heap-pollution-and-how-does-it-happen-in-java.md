@@ -3,7 +3,6 @@ category = []
 date = 2023-06-09T00:00:00Z
 description = "Understanding Heap poullion in java and its causes and how to prevent it."
 draft = false
-showtoc = true
 slug = "posts/java/100DaysOfJava/day71"
 summary = "Understanding Heap poullion in java and its causes and how to prevent it"
 title = "Day 71: Understanding Heap poullion in java and its causes and how to prevent it"
