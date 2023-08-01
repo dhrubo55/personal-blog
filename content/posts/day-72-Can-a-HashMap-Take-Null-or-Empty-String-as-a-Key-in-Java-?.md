@@ -61,7 +61,7 @@ To improve performance and minimize the impact of hash collisions, it's crucial 
 
 >So back to the question from this we can understand that null can be a valid key for an Hashmap
 
-Also its mention in the documenation of [https://github.com/openjdk/jdk/blob/c22cadf32fbfa206f089c9d73c3b7f3db069d47a/src/java.base/share/classes/java/util/HashMap.java#L43][jdk]. Now lets see can empty string can be a valid key. 
+Also its mention in the documenation of [JDK](https://github.com/openjdk/jdk/blob/c22cadf32fbfa206f089c9d73c3b7f3db069d47a/src/java.base/share/classes/java/util/HashMap.java#L43). Now lets see can empty string can be a valid key. 
 
 As an empty string still and String object in java so it will generate a valid hashcode when we do 
 
