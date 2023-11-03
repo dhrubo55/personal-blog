@@ -6,7 +6,7 @@ draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day73"
-summary = "Can a HashMap Take Null as a Key in Java?"
+summary = "Understanding how Symmetric and Asymmetric encryption works using Java Cryptography Extension"
 title = "Day 73: Java Security: Safeguarding Data with Encryption and Keys"
 [cover]
 alt = "day73"
