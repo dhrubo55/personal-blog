@@ -20,9 +20,9 @@ title = "Day 74: Java security:  Crafting a Toy TLS Server with Java Security AP
 
 [cover]
 
-alt = "day72"
+alt = "day74"
 
-caption = "day72"
+caption = "day74"
 
 image = ""
 
@@ -238,5 +238,5 @@ sslSocket.close();
 sslServerSocket.close();
 ```
 
-  
+to learn more about tls https://hpbn.co/transport-layer-security-tls/
 
