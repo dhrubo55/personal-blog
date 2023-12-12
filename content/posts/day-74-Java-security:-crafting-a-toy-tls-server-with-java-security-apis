@@ -1,34 +1,18 @@
 +++
-
 category = []
-
-date = 2023-11-28T00:00:00Z
-
-description = "Java security:  Crafting a Toy TLS Server with Java Security API"
-
+date = 2023-09-11T00:00:00Z
+description = "Java Security: Crafting a toy TLS Server with Java Security API"
 draft = false
-
 ShowToc = true
-
 TocOpen = true
-
 slug = "posts/java/100DaysOfJava/day74"
-
-summary = "Java security:  Crafting a Toy TLS Server with Java Security API"
-
-title = "Day 74: Java security:  Crafting a Toy TLS Server with Java Security API"
-
+summary = "Understanding how Symmetric and Asymmetric encryption works using Java Cryptography Extension"
+title = "Day 74: Java Security: Crafting a toy TLS Server with Java Security API"
 [cover]
-
 alt = "day74"
-
 caption = "day74"
-
 image = ""
-
 relative = false
-
-  
 
 +++
 
