@@ -56,7 +56,7 @@ Here's an overview of how TLS works:
     
     - Both the client and server send a "Finished" message to confirm that the handshake is complete. The encrypted session is now established.
 
-%% ### How TLS uses Key Pair
+### How TLS uses Key Pair
 
 TLS uses key pairs, consisting of a public key and a private key, to secure communications over the internet. These keys serve various purposes during the TLS handshake process:
 
