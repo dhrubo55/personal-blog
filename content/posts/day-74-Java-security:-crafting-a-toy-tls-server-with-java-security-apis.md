@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2023-09-11T00:00:00Z
+date = 2023-12-12T00:00:00Z
 description = "Java Security: Crafting a toy TLS Server with Java Security API"
 draft = false
 ShowToc = true
