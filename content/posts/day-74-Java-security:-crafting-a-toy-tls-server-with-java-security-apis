@@ -51,7 +51,7 @@ Here's an overview of how TLS works:
     - **ServerHello:** The server responds with its own "Hello" message, selecting a cryptographic algorithm and other parameters from the client's list.
     - **Key Exchange:** The server provides its public key to the client, and they agree on a pre-master secret, which will be used to generate encryption keys.
 
-![[Pasted image 20231204204730.png]]
+![TLS Handshake](https://res.cloudinary.com/dlsxyts6o/image/upload/v1702372982/images-from-blog/b83b75dbbf5b7e4be31c8000f91fc1a8_jcozjd.svg)
 
 2. **Key Exchange:**
     
