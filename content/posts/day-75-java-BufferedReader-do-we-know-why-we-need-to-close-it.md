@@ -64,15 +64,15 @@ In this example we can see that after reading from the file if we dont close the
 Let us first understand what a file descriptor is. 
 	
 ##### File Descriptor : 
-	A file descriptor is a low-level integer value that uniquely identifies an open file within a process in a Unix-based operating system. It serves as a handle or reference to an open file or I/O resource, and it is used by the operating system to keep track of various properties and status information associated with the file.
+A file descriptor is a low-level integer value that uniquely identifies an open file within a process in a Unix-based operating system. It serves as a handle or reference to an open file or I/O resource, and it is used by the operating system to keep track of various properties and status information associated with the file.
 
-	 File descriptors are represented as non-negative integers. Standard input, output, and error have the file descriptor values 0, 1, and 2, respectively. Additional file descriptors are typically assigned starting from 3 and incrementing for each new open file.
+File descriptors are represented as non-negative integers. Standard input, output, and error have the file descriptor values 0, 1, and 2, respectively. Additional file descriptors are typically assigned starting from 3 and incrementing for each new open file.
 
-	In Java, while the concept of file descriptors exists at the operating system level, Java itself abstracts many details through higher-level constructs like streams and readers/writers. When working with Java's I/O classes, you often don't directly deal with file descriptors, but the underlying operating system still manages them behind the scenes
-	
-	When dealing with file-based input streams, each open file consumes a file descriptor. Failing to close a `BufferedReader` means leaving file descriptors unclosed. In scenarios where the application handles a large number of files or operates for an extended period, this can result in file descriptor exhaustion. Once the system runs out of available file descriptors, it may fail to open new files, causing unexpected errors and disruptions.
+In Java, while the concept of file descriptors exists at the operating system level, Java itself abstracts many details through higher-level constructs like streams and readers/writers. When working with Java's I/O classes, you often don't directly deal with file descriptors, but the underlying operating system still manages them behind the scenes
 
-	Now let us see a code example for this 
+When dealing with file-based input streams, each open file consumes a file descriptor. Failing to close a `BufferedReader` means leaving file descriptors unclosed. In scenarios where the application handles a large number of files or operates for an extended period, this can result in file descriptor exhaustion. Once the system runs out of available file descriptors, it may fail to open new files, causing unexpected errors and disruptions.
+
+Now let us see a code example for this 
 
 ```java
 import java.io.BufferedReader;
@@ -110,23 +110,23 @@ public class Day75 {
 
 In this example:
 
- The `main` method iterates over a range of file names (e.g., "file1.txt", "file2.txt", ..., "file1000.txt").
- 
- The `readFromFile` method is responsible for reading the content from each file using a `BufferedReader`.
- 
- The `BufferedReader` is not properly closed in the `finally` block, simulating a scenario where developers forget to close the resource.
+The `main` method iterates over a range of file names (e.g., "file1.txt", "file2.txt", ..., "file1000.txt").
 
-	To see the impact of file descriptor exhaustion, you can run this program in an environment where there is a limit on the number of allowed open file descriptors. After running for some time, the program may encounter issues due to the exhaustion of file descriptors.
+The `readFromFile` method is responsible for reading the content from each file using a `BufferedReader`.
 
-	To avoid file descriptor exhaustion, it's crucial to close resources properly. Uncommenting the `bufferedReader.close();` line in the `finally` block ensures that the file descriptor associated with each `BufferedReader` is released after reading from the file.
+The `BufferedReader` is not properly closed in the `finally` block, simulating a scenario where developers forget to close the resource.
+
+To see the impact of file descriptor exhaustion, you can run this program in an environment where there is a limit on the number of allowed open file descriptors. After running for some time, the program may encounter issues due to the exhaustion of file descriptors.
+
+To avoid file descriptor exhaustion, it's crucial to close resources properly. Uncommenting the `bufferedReader.close();` line in the `finally` block ensures that the file descriptor associated with each `BufferedReader` is released after reading from the file.
 	
 3. #### Resource Contention: 
 
 In cases where the code interacts with external resources, such as databases or network connections, leaving the `BufferedReader` unclosed can lead to resource contention. This occurs when the resources are not released promptly, and subsequent operations may be delayed or blocked due to the lingering open connections.
 	
-	Resource contention occurs in computing when multiple processes or threads compete for access to a shared resource, and this competition leads to delays, reduced performance, or potential deadlocks. A shared resource can be any entity that is accessed or modified by multiple concurrent operations, such as files, database connections, network sockets, or even sections of memory.
+Resource contention occurs in computing when multiple processes or threads compete for access to a shared resource, and this competition leads to delays, reduced performance, or potential deadlocks. A shared resource can be any entity that is accessed or modified by multiple concurrent operations, such as files, database connections, network sockets, or even sections of memory.
 
-	Now let us see a code example 
+Now let us see a code example 
 
 ```java
 import java.io.BufferedReader;
@@ -169,13 +169,13 @@ public class Day75 {
 }
 ```
 
-    The `main` method creates two threads (`thread1` and `thread2`) that concurrently attempt to read from the same file (`shared-file.txt`).
+The `main` method creates two threads (`thread1` and `thread2`) that concurrently attempt to read from the same file (`shared-file.txt`).
 
-	The `readFromFile` method is responsible for reading the content from the file using a `BufferedReader`.
-	
-	The `BufferedReader` is not properly closed in the `finally` block, simulating a scenario where developers forget to close the resource, leading to resource contention.
+The `readFromFile` method is responsible for reading the content from the file using a `BufferedReader`.
 
-	To observe the resource contention, run this program and observe the empty output from both threads. Uncommenting the `bufferedReader.close();` line in the `finally` block ensures that the resource contention is mitigated by properly closing the `BufferedReader`. Without proper closure, multiple threads may interfere with each other, leading to unpredictable and undesirable outcomes.
+The `BufferedReader` is not properly closed in the `finally` block, simulating a scenario where developers forget to close the resource, leading to resource contention.
+
+To observe the resource contention, run this program and observe the empty output from both threads. Uncommenting the `bufferedReader.close();` line in the `finally` block ensures that the resource contention is mitigated by properly closing the `BufferedReader`. Without proper closure, multiple threads may interfere with each other, leading to unpredictable and undesirable outcomes.
 
 ### Resource Leaks:
 
@@ -183,13 +183,13 @@ public class Day75 {
 
 When reading from files, especially in a multi-threaded environment, failing to close a `BufferedReader` can result in file locks not being released. This is critical because file locks prevent other processes or threads from accessing the file. Over time, accumulating file locks due to unclosed readers can lead to contention and potential deadlock situations.
 
-	In the above example of Resource contention can generate file locks that will prevent other instances of buffered reader to get the file to read.
+In the above example of Resource contention can generate file locks that will prevent other instances of buffered reader to get the file to read.
 	
 2. #### Network Resource Leaks:
  
- When dealing with network-related input streams, such as reading from a URL, leaving the `BufferedReader` unclosed can result in resource leaks in the network stack. This may lead to issues such as connection leaks, where network resources are not released promptly, affecting the application's ability to establish new connections.
+When dealing with network-related input streams, such as reading from a URL, leaving the `BufferedReader` unclosed can result in resource leaks in the network stack. This may lead to issues such as connection leaks, where network resources are not released promptly, affecting the application's ability to establish new connections.
 
-	Now let us see a code example for this
+Now let us see a code example for this
 
 ```java
 import java.io.BufferedReader;
