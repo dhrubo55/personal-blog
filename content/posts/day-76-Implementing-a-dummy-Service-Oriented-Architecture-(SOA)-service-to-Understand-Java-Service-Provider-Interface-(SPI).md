@@ -166,7 +166,7 @@ SPI enables a clear separation between service interfaces and their implementati
 
  The `ServiceLoader` class simplifies service discovery, making it straightforward for the application to locate and load available service implementations. This is especially beneficial in large-scale applications with numerous services.
 
-#### Cons:**
+#### Cons:
 
 1. #### Limited Compile-Time Checking:
 
