@@ -41,7 +41,7 @@ Java enforces memory safety through garbage collection and automatic memory mana
 - **Field and Array Manipulation:** The Unsafe API allows direct access and modification of fields and array elements, even if they are declared private or final. This can be helpful for performance optimization or implementing custom data structures.
 - **Thread Management:** Unsafe provides low-level control over thread scheduling and synchronization. This is rarely used in practice due to the complexity and potential for race conditions.
 
-## Unsafe and Native Memory: A Delicate Dance**
+## Unsafe and Native Memory: A Delicate Dance
 
 The Unsafe API interacts with native memory (memory managed by the operating system) through pointers. These pointers hold memory addresses that the Unsafe API can use to:
 
