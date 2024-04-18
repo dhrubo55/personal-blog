@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2024-04-04T00:00:00Z
+date = 2024-04-18T00:00:00Z
 description = "Day 78: Java 22 - Embracing Safe Memory Allocation Using MemorySegment and Arena API - An alternative to Unsafe API"
 draft = false
 ShowToc = true
