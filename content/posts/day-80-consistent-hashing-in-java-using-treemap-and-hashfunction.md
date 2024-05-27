@@ -23,7 +23,7 @@ Traditional hashing techniques often result in significant rehashing of keys whe
 
 ## Key Concepts
 
-https://res.cloudinary.com/dlsxyts6o/image/upload/v1716810696/consistent_hashing_uxq5xo.png
+![Consistent Hashing](image.png)
 
 ### Hash Function
 A Hash Function is a mathematical algorithm that takes an input (or 'message') and returns a fixed-size string of bytes. The output is typically a hash code or hash value. The primary purpose of a hash function is to map data of arbitrary size to data of a fixed size. In the context of consistent hashing, the hash function is used to assign both data keys and node identifiers to positions on the hash ring.
