@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2024-05-23T00:00:00Z
+date = 2024-07-04T00:00:00Z
 description = "Day 81: Creating custom stream operations ex: Slide, Shift, Zip and Fold using Spliterator"
 draft = false
 ShowToc = true
