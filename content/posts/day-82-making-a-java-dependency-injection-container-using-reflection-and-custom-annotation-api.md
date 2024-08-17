@@ -1,6 +1,6 @@
 +++
 category = []
-date = 2024-07-04T00:00:00Z
+date = 2024-08-17T00:00:00Z
 description = "Day 82: Reflection in Java: Building a Simple DI Container in 100 Lines of Code"
 draft = false
 ShowToc = true
@@ -70,7 +70,7 @@ Dependency Injection (DI) is a design pattern in Java that aims to decouple clas
 
 #### Constructor Injection
 Constructor injection involves passing dependencies as arguments to a class's constructor. This method ensures that all required dependencies are available upon object creation, making it ideal for mandatory dependencies [5]. Constructor injection supports immutability and state safety, as the object is either instantiated with a full state or not instantiated at all [7].
-
+```java
 public class Car {
     private final Engine engine;
     private final Steering steering;
@@ -82,11 +82,13 @@ public class Car {
         this.steering = steering;
     }
 }
-
+```
 This pattern is particularly useful when dealing with components that are essential for an object's functionality, such as a car needing an engine and steering [8].
 
 #### Setter Injection
 Setter injection utilizes setter methods to inject dependencies after object creation. This approach offers more flexibility but can make the class mutable [5]. It's preferred for optional dependencies that are not mandatorily required but can assist in some ways [8].
+
+```java
 public class User {
     private String phoneNumber;
 
@@ -95,25 +97,28 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 }
-
+```
 Setter injection is suitable for scenarios where dependencies may change during the object's lifecycle or when dealing with optional components [7].
 
 ### Method Injection
 Method injection involves injecting dependencies directly into methods where they are needed. This pattern is less common but can be useful in specific scenarios where dependencies are required only for certain operations.
+
+```java
 public class MessageSender {
     @Autowired
     public void sendMessage(MessageService messageService, String message) {
         messageService.send(message);
     }
 }
-
+```
 ### Field Injection
 Field injection directly injects dependencies into class fields, typically using annotations. While it results in less boilerplate code and can improve readability, it doesn't support immutability and can make testing more challenging [7].
+```java
 public class EmailService {
     @Autowired
     private EmailClient emailClient;
 }
-
+```
 When choosing a dependency injection pattern, developers should consider factors such as immutability, state safety, and the nature of the dependencies (mandatory vs. optional). Constructor injection is generally recommended for its support of immutability and clear dependency declaration, while setter injection offers more flexibility for optional dependencies [7].
 
 To implement these patterns effectively, developers can use frameworks like Spring, which provide powerful dependency injection containers. These containers manage the creation and injection of dependencies, inverting the control flow and allowing for more modular and maintainable code [5].
@@ -128,13 +133,14 @@ Registering the binder with the application, often through a configuration file 
 Implementing a class that extends a framework-specific class (e.g., ResourceConfig in JAX-RS) to register the binder and specify the packages to scan for injectable components [11].
 
 For example, in a JAX-RS application, the initialization might look like this:
+```java
 public class MyApplication extends ResourceConfig {
     public MyApplication() {
         register(new MyApplicationBinder());
         packages(true, "com.mypackage.rest");
     }
 }
-
+```
 This initialization sets up the container to manage dependencies within the specified package and its subpackages.
 
 ### Dependency Scanning and Registration
@@ -162,6 +168,8 @@ The final step in the DI process is resolving and injecting dependencies. This i
 
 It's important to note that the order in which methods or fields annotated with @Inject are called is not defined by `JSR330`, so developers should not assume a specific order of injection [12].
 To implement this lightweight DI container, developers can use annotations like @Inject to mark injection points [13]. For example:
+
+```java
 public class Payroll {
     private EmployeeDatabase employeeDatabase;
 
@@ -171,15 +179,16 @@ public class Payroll {
     }
     // ... rest of the class implementation
 }
+```
 
 This design allows for flexible configuration and easy testing, as dependencies can be easily mocked or stubbed [10]. It also promotes the use of immutable objects and makes dependencies explicit, which enhances code maintainability [10].
 By implementing these components, developers can create a lightweight DI container that provides the benefits of dependency injection without the complexity of larger frameworks. This approach is particularly useful for standalone Java applications or when retrofitting legacy systems as part of major refactoring efforts [14].
 
 Now lets implement a DI container 
 
-At first we will see how the container is made up and then will create the services and load them in the container and use them to see.
-
 ![day82](https://res.cloudinary.com/dlsxyts6o/image/upload/v1723899273/images-from-blog/simple-di-in-java-day-82_umso8i.png)
+
+At first we will see how the container is made up and then will create the services and load them in the container and use them to see.
 
 ```java
 public class DIContainer {
