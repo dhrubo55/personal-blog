@@ -180,7 +180,6 @@ public class Payroll {
     // ... rest of the class implementation
 }
 ```
-
 This design allows for flexible configuration and easy testing, as dependencies can be easily mocked or stubbed [10]. It also promotes the use of immutable objects and makes dependencies explicit, which enhances code maintainability [10].
 By implementing these components, developers can create a lightweight DI container that provides the benefits of dependency injection without the complexity of larger frameworks. This approach is particularly useful for standalone Java applications or when retrofitting legacy systems as part of major refactoring efforts [14].
 
@@ -315,13 +314,13 @@ private <T> T getOrCreateInstance(Class<T> clazz) throws Exception {
 }
 ```
 
-
 The createInstance method handles the actual object creation: It performs these steps:
 
 1. Find an @Inject-annotated constructor
 2. Create the instance using the constructor or default constructor
 3. Inject fields
 4. Inject methods
+
 ```java
 private <T> T createInstance(Class<?> clazz) {
     try {
@@ -340,7 +339,7 @@ private <T> T createInstance(Class<?> clazz) {
 }
 ```
 
-Constructor Injection
+### Constructor Injection
 
 findInjectableConstructor looks for a constructor annotated with @Inject: If found, createInstanceWithConstructor handles the dependency injection: This method searches for a constructor annotated with @Inject. Here's what's happening:
 
@@ -377,7 +376,8 @@ private Object createInstanceWithConstructor(Constructor<?> constructor) throws 
 }
 ```
 
-Field Injection The injectFields method handles field injection: 
+### Field Injection 
+The injectFields method handles field injection: 
 
 We iterate over all declared fields of the class for each field annotated with @Inject
 
@@ -399,7 +399,7 @@ private void injectFields(Class<?> clazz, Object instance) throws Exception {
 }
 ```
 
-8. Method Injection
+### Method Injection
 
 This method performs method injection: We iterate over all declared methods of the class
 
