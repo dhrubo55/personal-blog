@@ -338,9 +338,9 @@ private <T> T createInstance(Class<?> clazz) {
         throw new RuntimeException("Error creating instance of " + clazz.getName(), e);
     }
 }
-``
+```
 
-6. Constructor Injection
+Constructor Injection
 
 findInjectableConstructor looks for a constructor annotated with @Inject: If found, createInstanceWithConstructor handles the dependency injection: This method searches for a constructor annotated with @Inject. Here's what's happening:
 
