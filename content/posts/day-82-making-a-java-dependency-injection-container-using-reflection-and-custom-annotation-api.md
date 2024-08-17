@@ -186,7 +186,7 @@ By implementing these components, developers can create a lightweight DI contain
 
 Now lets implement a DI container 
 
-![day82](https://res.cloudinary.com/dlsxyts6o/image/upload/v1723901021/images-from-blog/simple-dependency-injection_oolbgt.png)
+![day82](https://res.cloudinary.com/dlsxyts6o/image/upload/v1723901217/images-from-blog/simple-dependency-injection_ycnmlt.png)
 
 
 At first we will see how the container is made up and then will create the services and load them in the container and use them to see.
