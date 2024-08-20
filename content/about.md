@@ -9,7 +9,7 @@ summary: About Mohibul Hassan. This section details what he does & everything el
 ---
 Hi there! :wave: I am Mohibul Hassan Chowdhury.
 
-I work as a Software Engineer for a living. I've been fortunate enough to be able to work with some amazing folks over the past couple of years. And with their help, I garnered 3+ years of experience working on real business issues
+I work as a Software Engineer for a living. I've been fortunate enough to be able to work with some amazing folks over the past couple of years. And with their help, I garnered 5+ years of experience working on real business issues
 
 ## Technology Stack
 
@@ -19,7 +19,7 @@ Following are the list of technologies I'm most familiar with:
 | :-------------------- | :------------------------------------------------: |
 | Programming Languages |                [Java][Java],[JS][JS]               |
 | Backend               |              [Springboot][Springboot]              |
-| Hosting               |  [Heroku][Heroku] - [Google Cloud Platform][GCP]   |
+| Hosting               |     [AWS][Aws] - [Google Cloud Platform][GCP]      |
 | Frontend              |           [Vue][Vue] - [Nuxt][Nuxt]                |
 | Shell Scripting       |      [PowerShell][PowerShell] - [Bash][Bash]       |
 | Miscellaneous         |                 [GitHub][GitHub]                   |
@@ -56,7 +56,6 @@ These are the platforms you can find me on:
 [TensorFlow]: https://www.tensorflow.org/
 [Sklearn]: https://scikit-learn.org
 <!-- * Cloud Platforms -->
-[Heroku]: https://www.heroku.com/
 [AWS]: https://aws.amazon.com/
 [GCP]: https://cloud.google.com/
 <!-- * Dev Platforms -->
