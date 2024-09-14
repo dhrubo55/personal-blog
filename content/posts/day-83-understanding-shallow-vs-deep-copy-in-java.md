@@ -72,12 +72,7 @@ In this example, when we assign `person1` to `person2`, we're creating a shallow
 
 There are several ways to create shallow copies in Java:
 
-1. **Assignment Operator**: The simplest form of shallow copy.
-   ```java
-   Person person2 = new Person(person1); // Shallow copy
-   ```
-
-2. **Object.clone() method**: Requires implementing the `Cloneable` interface.
+1. **Object.clone() method**: Requires implementing the `Cloneable` interface.
    ```java
    public class Person implements Cloneable {
        // ... fields and other methods ...
@@ -89,7 +84,7 @@ There are several ways to create shallow copies in Java:
    }
    ```
 
-3. **Copy Constructor**: Can be used for shallow copying if it only copies references.
+2. **Copy Constructor**: Can be used for shallow copying if it only copies references.
    ```java
    public Person(Person other) {
        this.name = other.name; // Shallow copy of reference
