@@ -74,7 +74,7 @@ There are several ways to create shallow copies in Java:
 
 1. **Assignment Operator**: The simplest form of shallow copy.
    ```java
-   Person person2 = person1; // Shallow copy
+   Person person2 = new Person(person1); // Shallow copy
    ```
 
 2. **Object.clone() method**: Requires implementing the `Cloneable` interface.
