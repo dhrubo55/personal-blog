@@ -1,13 +1,13 @@
 +++
 category = []
 date = 2024-09-14T00:00:00Z
-description = "Day 83: "Java Object Cloning: Exploring Shallow and Deep Copy Techniques"
+description = "Day 83: Java Object Cloning: Exploring Shallow and Deep Copy Techniques"
 draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day83"
 summary = "Exploring shallow and deep copying of object in java"
-title = "Day 83: "Java Object Cloning: Exploring Shallow and Deep Copy Techniques"
+title = "Day 83: Java Object Cloning: Exploring Shallow and Deep Copy Techniques"
 [cover]
 alt = "day83"
 caption = "day83"
