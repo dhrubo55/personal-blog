@@ -39,11 +39,13 @@ The core components of our HCR implementation include:
 
 Below is a simplified flow diagram illustrating the HCR process:
 
-[HCR Flowchart](https://asset.cloudinary.com/dlsxyts6o/909c4084e572b93154622e418fc0385e)
+![HCR Flowchart](https://res.cloudinary.com/dlsxyts6o/image/upload/v1727932300/image_2024-10-03_111134341_fwi3rh.png)
 
 1. **Source Changes**: Developers modify Java source files in the specified directory.
 2. **File Watcher**: Detects changes and triggers the compilation process.
 3. **Compile & Reload**: Compiles the modified files and reloads the classes using a custom class loader.
+4. **Custom Class Loader**: Loads the newly compiled class into the jvm.
+5. **Invoke Main Method**: Exectues the main method by executing the bytecode of the reloaded class.
 
 ## Implementing Hot Class Reload
 
@@ -54,7 +56,7 @@ Here's a breakdown of the Java program implementing HCR:
 The program initializes by setting up directories for source and compiled classes. It ensures these directories exist and are ready for use.
 
 ```java
-public Day84(String sourceDir, String classDir) {
+public HotReload(String sourceDir, String classDir) {
     this.sourceDir = Paths.get(sourceDir).toAbsolutePath();
     this.classDir = Paths.get(classDir).toAbsolutePath();
     // Directory setup code...
