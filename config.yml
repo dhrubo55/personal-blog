@@ -63,7 +63,7 @@ params:
   - name: email
     url: mailto:mohibulhassan100@gmail.com
   - name: buymeacoffee
-    url: https://www.buymeacoffee.com/
+    url: https://www.buymeacoffee.com/celurian92c
   cover:
     hidden: true
     hiddenInList: true
