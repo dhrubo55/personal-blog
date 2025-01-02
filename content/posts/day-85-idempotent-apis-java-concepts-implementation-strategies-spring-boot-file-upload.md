@@ -16,7 +16,6 @@ relative = false
 
 +++
 
-
 Idempotency is a reliable way of building robust API, particularly in distributed systems where retries and network failures are common. This blog explores the concept of idempotency and **multiple ways to implement it** using a Spring Boot file upload service, ensuring no duplicate uploads occur.
 
 ---
