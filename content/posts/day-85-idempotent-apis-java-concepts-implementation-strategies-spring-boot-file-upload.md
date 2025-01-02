@@ -64,6 +64,8 @@ Here are **four different strategies to implement idempotency** for a file uploa
 - The server stores this key alongside the uploaded file's metadata.
 - If a request with the same key is received again, the server returns the already-stored file's response instead of reprocessing the upload.
 
+![Idempotency Key-based Deduplication](https://res.cloudinary.com/dlsxyts6o/image/upload/v1735820992/images-from-blog/idempotency_key_based_deduplication_gim4ca.png)
+
 **Implementation Steps:**
 - Store the `idempotencyKey` in a database table.
 - Before processing a new upload, check if the key already exists.
@@ -101,6 +103,8 @@ public FileRecord uploadFile(String idempotencyKey, MultipartFile file) throws I
 - Before saving the file, the server checks if a file with the same hash already exists.
 - If a match is found, the server rejects the upload or returns the existing file's metadata.
 
+![Content Hashing](https://res.cloudinary.com/dlsxyts6o/image/upload/v1735820992/images-from-blog/content-hashing-for-deduplication_szr2vl.png)
+
 **Implementation Steps:**
 - Generate a hash of the file's content.
 - Store the hash in the database alongside the file metadata.
@@ -129,6 +133,8 @@ fileRecordRepository.findByFileHash(fileHash).ifPresent(existing -> {
 **How It Works:**
 - Combines the strengths of both strategies.
 - Clients provide an `X-Idempotency-Key`, but the server also validates file uniqueness using content hashing.
+
+![Combination key + conent hash](https://res.cloudinary.com/dlsxyts6o/image/upload/v1735820992/images-from-blog/Combination_Key_Hash_js2aqb.png)
 
 **Implementation Steps:**
 1. Check for the `idempotencyKey` in the database.
@@ -167,6 +173,8 @@ public FileRecord uploadFile(String idempotencyKey, MultipartFile file) throws I
 - After a successful upload, the server issues a token (e.g., a UUID or file hash).
 - Clients must include this token in subsequent uploads to reference the original file.
 - If the token is valid, the server skips the upload and returns the original file's response.
+
+![Token Based Deduplication](https://res.cloudinary.com/dlsxyts6o/image/upload/v1735820992/images-from-blog/Token-based-deduplication_wyaefe.png)
 
 **Implementation Steps:**
 1. Generate a token after the first successful upload.
