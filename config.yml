@@ -1,5 +1,7 @@
 baseURL: "https://mohibulsblog.netlify.app"
+defaultContentLanguage: "en"
 languageCode: "en-us"
+defaultContentLanguageInSubdir: false
 title: "Mohibul Hassan"
 theme: "hugo-PaperMod"
 paginate: 5
