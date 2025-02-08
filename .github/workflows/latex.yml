@@ -1,5 +1,9 @@
 name: Compile LaTeX Resume
 
+# Add permissions at workflow level
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
   push:
@@ -28,8 +32,10 @@ jobs:
         latexmk -pdf resume.tex
         # This will generate resume.pdf in the same directory as resume.tex
 
-    - name: Upload PDF artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: resume-pdf
-        path: static/resume.pdf
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'GitHub Actions Bot'
+        git config --global user.email 'actions@github.com'
+        git add static/resume.pdf
+        git commit -m "Update resume.pdf" || exit 0
+        git push
