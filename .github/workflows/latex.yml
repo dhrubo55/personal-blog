@@ -1,12 +1,14 @@
 name: Compile LaTeX Resume
 
 on:
-  workflow_dispatch:  # Allow manual triggers
+  workflow_dispatch:
   push:
     branches:
       - main
+      - dev  # Add dev branch if you're using it
     paths:
-      - 'content/resume.tex'  # Only trigger on resume.tex changes
+      - '**/resume.tex'  # Match resume.tex anywhere in the repo
+      - '.github/workflows/latex.yml'  # Trigger on workflow changes too
 
 jobs:
   build:
@@ -16,19 +18,46 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Debug - List files
+      run: |
+        pwd
+        ls -la
+        find . -name "resume.tex"
+
     - name: Set up LaTeX
       uses: dante-ev/latex-action@v2
 
-    - name: Create output directory
-      run: mkdir -p static/files
+    - name: Create directories
+      run: |
+        mkdir -p static/files
+        mkdir -p public/files
 
     - name: Compile LaTeX document
       run: |
-        latexmk -pdf -output-directory=static/files content/resume.tex
-        cp static/files/resume.pdf static/resume.pdf
+        # Debug path
+        echo "Looking for resume.tex..."
+        find . -name "resume.tex"
+        
+        # Compile
+        cd content
+        latexmk -pdf -output-directory=../static/files resume.tex
+        
+        # Copy to both static and public
+        cp ../static/files/resume.pdf ../static/resume.pdf
+        mkdir -p ../public/files
+        cp ../static/files/resume.pdf ../public/resume.pdf
+
+    - name: Debug - Check output
+      run: |
+        ls -la static/files
+        ls -la static/resume.pdf
+        ls -la public/files || true
+        ls -la public/resume.pdf || true
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v2
       with:
         name: resume-pdf
-        path: static/resume.pdf
+        path: |
+          static/resume.pdf
+          public/resume.pdf
