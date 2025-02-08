@@ -1,0 +1,162 @@
+% Resume in Latex
+% Author : Mohibul Hassan Chowdhury (Based on template by Sourabh Bajaj)
+% License : MIT
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.375in}
+\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADING-----------------
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+  \textbf{\href{http://mohibulsblog.netlify.com/}{\Large Mohibul Hassan Chowdhury}} & Email: \href{mailto:mohibulhassan100@gmail.com}{mohibulhassan100@gmail.com}\\
+  \href{http://mohibulsblog.netlify.app/}{Portfolio: mohibulsblog.netlify.app} & GitHub: \href{http://github.com/dhrubo55}{github.com/dhrubo55}\\
+  \href{https://www.linkedin.com/in/mohibulhassan}{LinkedIn: linkedin.com/in/mohibulhassan} & Mobile: +88 01891962583
+\end{tabular*}
+
+%-----------EXPERIENCE-----------------
+\section{Professional Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Cefalo (Offshore branch of Cefalo AS, Norway)}{Dhaka, Bangladesh}
+      {Senior Software Engineer}{Sept 2022 - Present}
+      \resumeItemListStart
+        \resumeItem{Full Stack Development}
+          {Develop and maintain high-performance, scalable solutions for LeadDesk, a leading CPaaS provider, using Java (Jersey), JavaScript (Vue, AngularJS), TypeScript, and Erlang}
+        \resumeItem{Client Collaboration}
+          {Work closely with international clients to understand requirements, design solutions, and implement features that meet business needs}
+        \resumeItem{System Architecture}
+          {Contribute to software architecture decisions and API development, ensuring scalability and maintainability of systems serving 24,000+ users with 99.99\% uptime}
+        \resumeItem{Research \& Development}
+          {Implement performance enhancements and process improvements, increasing release frequency to 4 times per sprint}
+        \resumeItem{Code Quality}
+          {Conduct thorough code reviews, mentor junior developers, and ensure adherence to best practices and coding standards}
+        \resumeItem{Problem Solving}
+          {Utilize strong analytical thinking and decision-making skills to troubleshoot and resolve complex technical issues}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Brain Station 23}{Dhaka, Bangladesh}
+      {Software Engineer}{Dec 2020 - Sept 2022}
+      \resumeItemListStart
+        \resumeItem{Backend Development}
+          {Developed robust backend services using Java Spring Boot framework and Spring Data JPA, ensuring scalability and performance}
+        \resumeItem{Authentication System}
+          {Designed and implemented a custom multi-tenant authentication system, enhancing security for various user levels}
+        \resumeItem{Payment Integration}
+          {Successfully integrated Stripe payment gateway into existing Spring Boot application, managing product categories, transaction history, and service allocation}
+        \resumeItem{Testing \& Quality Assurance}
+          {Improved codebase test coverage by writing comprehensive unit and integration tests using JUnit and Mockito}
+        \resumeItem{Agile Practices}
+          {Collaborated effectively with international clients in an Agile/Scrum environment, ensuring timely project delivery}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Welldev}{Dhaka, Bangladesh}
+      {Junior Software Engineer}{Sept 2019 - Nov 2020}
+      \resumeItemListStart
+        \resumeItem{Frontend Development}
+          {Developed responsive UI components for chatbot projects using Vue.js, Nuxt.js, and Angular, implementing state management with Vuex and VuexORM}
+        \resumeItem{Backend Development}
+          {Created RESTful APIs and backend functionalities with Spring Boot and PostgreSQL}
+        \resumeItem{Component Library}
+          {Built a component library using Storybook to facilitate design verification and consistency}
+        \resumeItem{Testing}
+          {Increased code quality by implementing unit tests for Vue components using Jest and Vue Test Utils}
+        \resumeItem{DevOps}
+          {Containerized local development environment using Docker, improving team productivity and consistency}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%--------TECHNICAL SKILLS------------
+\section{Technical Skills}
+  \begin{tabularx}{\textwidth}{l X}
+    \textbf{Languages} & Java, JavaScript, TypeScript, SQL, HTML, CSS, Erlang \\
+    \textbf{Frameworks \& Libraries} \quad &  Spring Boot, Hibernate, Vue.js, Nuxt.js, Angular, Node.js, Jersey \\
+    \textbf{Tools \& Technologies} & Git, GitHub Actions (CI/CD), Docker, PostgreSQL, Firebase, Cloud Functions, AEM \\
+    \textbf{Methodologies} & Agile, Scrum, Test-Driven Development (TDD), Microservices Architecture \\
+  \end{tabularx}
+
+
+%-----------PROJECTS-----------------
+\section{Key Projects}
+  \resumeSubHeadingListStart
+    \resumeSubItem{LeadDesk CPaaS Platform (Professional)}
+      {Developed and maintained critical features for a Contact Center as a Service (CCaaS) platform, serving 24,000+ users with 99.99\% uptime. Utilized Java, JavaScript, TypeScript, and Erlang in a microservices architecture.}
+    \resumeSubItem{AbbviePro (Professional)}
+      {Contributed to a multi-tenant Adobe Experience Manager (AEM) website for healthcare professionals. Developed backend in Java and frontend using AngularJS, adhering to enterprise CMS standards.}
+    \resumeSubItem{Hospital Management System (Personal)}
+      {Developed a comprehensive API using Spring Boot, Spring Security, and Hibernate. Implemented JWT-based authentication for secure access to patient, doctor, and admin endpoints.}
+    \resumeSubItem{SOAP-Based Bookmarking Web Service (Personal)}
+      {Created a SOAP web service for bookmark management with CRUD operations, utilizing Spring Boot and XML for data transfer.}
+  \resumeSubHeadingListEnd
+
+  %-----------EDUCATION-----------------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {BRAC University}{Dhaka, Bangladesh}
+      {Bachelor of Science in Computer Science}{2019}
+  \resumeSubHeadingListEnd
+
+
+\end{document}
