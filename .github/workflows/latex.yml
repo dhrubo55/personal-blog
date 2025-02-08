@@ -5,10 +5,9 @@ on:
   push:
     branches:
       - main
-      - dev  # Add dev branch if you're using it
     paths:
-      - '**/resume.tex'  # Match resume.tex anywhere in the repo
-      - '.github/workflows/latex.yml'  # Trigger on workflow changes too
+      - '**/resume.tex'
+      - '.github/workflows/latex.yml'
 
 jobs:
   build:
@@ -16,16 +15,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Debug - List files
+    - name: Install TeX Live
       run: |
-        pwd
-        ls -la
-        find . -name "resume.tex"
-
-    - name: Set up LaTeX
-      uses: dante-ev/latex-action@v2
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended latexmk
 
     - name: Create directories
       run: |
@@ -34,28 +29,13 @@ jobs:
 
     - name: Compile LaTeX document
       run: |
-        # Debug path
-        echo "Looking for resume.tex..."
-        find . -name "resume.tex"
-        
-        # Compile
         cd content
         latexmk -pdf -output-directory=../static/files resume.tex
-        
-        # Copy to both static and public
         cp ../static/files/resume.pdf ../static/resume.pdf
-        mkdir -p ../public/files
         cp ../static/files/resume.pdf ../public/resume.pdf
 
-    - name: Debug - Check output
-      run: |
-        ls -la static/files
-        ls -la static/resume.pdf
-        ls -la public/files || true
-        ls -la public/resume.pdf || true
-
     - name: Upload PDF artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: resume-pdf
         path: |
