@@ -6,7 +6,7 @@ on:
     branches:
       - master
     paths:
-      - '**/resume.tex'
+      - 'static/resume.tex'
       - '.github/workflows/latex.yml'
 
 jobs:
@@ -22,22 +22,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended latexmk
 
-    - name: Create directories
-      run: |
-        mkdir -p static/files
-        mkdir -p public/files
-
     - name: Compile LaTeX document
       run: |
-        cd content
-        latexmk -pdf -output-directory=../static/files resume.tex
-        cp ../static/files/resume.pdf ../static/resume.pdf
-        cp ../static/files/resume.pdf ../public/resume.pdf
+        cd static
+        latexmk -pdf resume.tex
+        # This will generate resume.pdf in the same directory as resume.tex
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v4
       with:
         name: resume-pdf
-        path: |
-          static/resume.pdf
-          public/resume.pdf
+        path: static/resume.pdf
