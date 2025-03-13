@@ -7,7 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day86"
 summary = "Implementing a sandbox application that can take JAR or java file and run it securely"
-title = "Day 85: Building a Secure Java Sandbox with Custom Class Loaders, Process isolation and Java Platform Module System – Executing JAR and .java Files Safely"
+title = "Day 86: Building a Secure Java Sandbox with Custom Class Loaders, Process isolation and Java Platform Module System – Executing JAR and .java Files Safely"
 [cover]
 alt = "day86"
 caption = "day86"
