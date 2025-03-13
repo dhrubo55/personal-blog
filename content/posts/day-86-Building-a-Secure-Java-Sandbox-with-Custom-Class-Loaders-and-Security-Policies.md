@@ -1,12 +1,12 @@
 +++
 category = []
-date = 2024-12-21T00:00:00Z
+date = 2025-03-12T00:00:00Z
 description = "Day 86: Building a Secure Java Sandbox with Custom Class Loaders, Process isolation and Java Platform Module System"
-draft = true
+draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day86"
-summary = "Implementing a sandbox application that can take JAR and java file and run it securely"
+summary = "Implementing a sandbox application that can take JAR or java file and run it securely"
 title = "Day 85: Building a Secure Java Sandbox with Custom Class Loaders, Process isolation and Java Platform Module System – Executing JAR and .java Files Safely"
 [cover]
 alt = "day86"
@@ -16,7 +16,7 @@ relative = false
 
 +++
 
-In the era of rapid software development, security remains a crucial consideration, especially when running untrusted code. The Java sandbox environment is a powerful tool for ensuring code isolation, enabling secure execution by restricting access to core libraries and system resources. This blog walks through creating a robust sandbox environment in Java using custom class loaders and security policies—tools that are especially valuable for those working on plugins, user-generated scripts, or controlled environments for evaluating code.
+As software engineers we sometimes have to execute some arbitary code that we found or some jar in (Java) case to figure out what its doing. But copy pasting some code in a system directly is a poor security practice thus having a sandbox environment is a powerful tool for ensuring code isolation, enabling secure execution by restricting access to core libraries and system resources. This blog walks through creating a robust sandbox environment in Java using custom class loaders and security policies—tools that are especially valuable for those working on plugins, user-generated scripts, or controlled environments for evaluating code.
 
 ### The Basics of Java Sandboxing
 
@@ -215,7 +215,7 @@ class ModernSandboxTest {
 - Compilation time: ~50ms for simple classes
 
 ### Conclusion
-This modern sandbox implementation provides:
+This sandbox implementation provides:
 
 1. Process isolation for maximum security
 2. Configurable resource limits
