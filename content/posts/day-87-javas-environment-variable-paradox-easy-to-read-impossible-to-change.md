@@ -19,6 +19,16 @@ Have you ever needed to access or modify environment variables in your Java appl
 
 In today's post, I'll dive into environment variables in Java 21 - something I've been playing with recently. We'll look at how to read them (the easy part) and explore different approaches to modify them (the not-so-easy part).
 
+### TLDR
+Java makes reading env variables easy (System.getenv()), but modifying them is restricted
+
+#### Four options for modification:
+1. ProcessBuilder for child processes only
+2. JNA for native system function access
+3. Reflection hacks (avoid in production!)
+4. Native OS commands (setx/export)
+5. Best practice: Load env variables at startup rather than modifying at runtime
+
 ### What are Environment Variables anyway?
 
 Before jumping into code, let's take a step back. Environment variables are basically key-value pairs that live outside your application. They're part of the environment in which your process runs.
