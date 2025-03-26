@@ -1,0 +1,505 @@
++++
+category = []
+date = 2025-03-12T00:00:00Z
+description = "Day 87: "
+draft = false
+ShowToc = true
+TocOpen = true
+slug = "posts/java/100DaysOfJava/day87"
+summary = "Implementing a sandbox application that can take JAR or java file and run it securely"
+title = "Day 86: Building a Secure Java Sandbox with Custom Class Loaders, Process isolation and Java Platform Module System – Executing JAR and .java Files Safely"
+[cover]
+alt = "day87"
+caption = "day87"
+image = ""
+relative = false
+
++++
+
+
+As software engineers, we often need to interact with system environment variables to configure our applications dynamically. Environment variables provide a flexible way to influence application behavior without changing code, making them essential for configuring applications across different environments. Today, I'll explore how to perform CRUD (Create, Read, Update, Delete) operations on system environment variables using Java 21.
+
+### What Are System Environment Variables?
+
+System environment variables are dynamic named values that can affect the way running processes behave on a computer. They are part of the environment in which a process runs and can be accessed by applications during runtime.
+
+### Common Uses of Environment Variables:
+
+1. **Configuration Management**: Store configuration values like database URLs, API keys, and feature flags
+2. **Path Information**: Define where the system should look for executable programs (e.g., PATH variable)
+3. **Runtime Environment Identification**: Differentiate between development, testing, and production environments
+4. **System Information**: Store details about the operating system, user profiles, and system directories
+5. **Security**: Store sensitive information outside of code repositories
+
+Environment variables are particularly useful in containerized applications, microservices architectures, and cloud deployments where configuration needs to be flexible and environment-specific.
+
+## Reading Environment Variables in Java 21
+
+Reading environment variables is the most common operation and Java provides several built-in methods to access them.
+
+### Method 1: Using System.getenv()
+
+The `System.getenv()` method is the standard way to read environment variables in Java:
+
+```java
+import java.util.Map;
+
+public class EnvVariableReader {
+    public static void main(String[] args) {
+        // Get a specific environment variable
+        String path = System.getenv("PATH");
+        System.out.println("PATH: " + path);
+        
+        // Get all environment variables
+        Map<String, String> env = System.getenv();
+        System.out.println("All Environment Variables:");
+        env.forEach((key, value) -> System.out.println(key + ": " + value));
+    }
+}
+```
+
+This code demonstrates how to retrieve both a specific environment variable and all environment variables as a Map.
+
+### Method 2: Using ProcessBuilder
+
+Java 21's `ProcessBuilder` class also provides access to environment variables:
+
+```java
+import java.util.Map;
+
+public class ProcessBuilderEnvReader {
+    public static void main(String[] args) {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        Map<String, String> environment = processBuilder.environment();
+        
+        System.out.println("Environment variables from ProcessBuilder:");
+        environment.forEach((key, value) -> System.out.println(key + " = " + value));
+    }
+}
+```
+
+The advantage of using `ProcessBuilder` is that you can modify the environment variables for the subprocess you're about to launch.
+
+## Creating and Updating Environment Variables in Java
+
+Unlike reading environment variables, creating or updating them programmatically is more complex due to JVM security restrictions. Java doesn't provide direct methods to modify the parent process's environment variables due to security considerations.
+
+Here are several approaches to achieve this:
+
+### Method 1: Using ProcessBuilder for Subprocess Environment
+
+You can set environment variables for child processes:
+
+```java
+import java.io.IOException;
+
+public class EnvVariableSetter {
+    public static void main(String[] args) {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("java", "-version");
+            
+            // Modify environment for the subprocess
+            processBuilder.environment().put("MY_CUSTOM_VAR", "custom_value");
+            
+            // Start the process with the modified environment
+            Process process = processBuilder.start();
+            
+            // Wait for the process to complete
+            int exitCode = process.waitFor();
+            System.out.println("Process exited with code: " + exitCode);
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This method only affects the child process, not the current JVM or system-wide environment.
+
+### Method 2: Using JNA (Java Native Access)
+
+For more direct control, you can use the JNA library to access native system functions:
+
+```java
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.Platform;
+
+public class JNAEnvSetter {
+    // Define the C library interface
+    public interface CLibrary extends Library {
+        CLibrary INSTANCE = Native.load(Platform.isWindows() ? "msvcrt" : "c", CLibrary.class);
+        int setenv(String name, String value, int overwrite);
+        int unsetenv(String name);
+    }
+    
+    public static void main(String[] args) {
+        // Set an environment variable
+        int result = CLibrary.INSTANCE.setenv("MY_ENV_VAR", "my_value", 1);
+        
+        if (result == 0) {
+            System.out.println("Environment variable set successfully");
+            
+            // Verify by reading it back
+            String value = System.getenv("MY_ENV_VAR");
+            System.out.println("MY_ENV_VAR: " + value);
+        } else {
+            System.out.println("Failed to set environment variable");
+        }
+    }
+}
+```
+
+Note: You'll need to add the JNA library to your project dependencies.
+
+### Method 3: Using Reflection (not recommended for production)
+
+For experimental purposes, you can use reflection to modify the private environment map:
+
+```java
+import java.lang.reflect.Field;
+import java.util.Map;
+
+public class ReflectionEnvSetter {
+    @SuppressWarnings("unchecked")
+    public static void main(String[] args) {
+        try {
+            // Get the environment map using reflection
+            Map<String, String> env = System.getenv();
+            Field field = env.getClass().getDeclaredField("m");
+            field.setAccessible(true);
+            Map<String, String> modifiableEnv = (Map<String, String>) field.get(env);
+            
+            // Add or update an environment variable
+            modifiableEnv.put("TEST_VAR", "test_value");
+            
+            System.out.println("Modified environment variable. TEST_VAR: " + System.getenv("TEST_VAR"));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Important warning: This method:
+- Is not guaranteed to work across all JVM implementations
+- May vary in behavior across Java versions
+- Is not recommended for production code
+- May cause security or stability issues
+
+### Method 4: Using Native Process Execution
+
+Another approach is to use Java to execute OS-specific commands:
+
+```java
+import java.io.IOException;
+
+public class NativeEnvSetter {
+    public static void main(String[] args) {
+        try {
+            ProcessBuilder processBuilder;
+            
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                // For Windows
+                processBuilder = new ProcessBuilder("cmd", "/c", "setx", "MY_ENV_VAR", "my_value");
+            } else {
+                // For Unix/Linux/MacOS
+                processBuilder = new ProcessBuilder("/bin/sh", "-c", "export MY_ENV_VAR=my_value");
+            }
+            
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            
+            System.out.println("Process exited with code: " + exitCode);
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This executes the appropriate OS-specific command to set an environment variable. On Windows, the `setx` command sets a persistent environment variable, while on Unix-like systems, the `export` command sets it for the current shell session.
+
+## Deleting Environment Variables in Java
+
+Similar to creating and updating, deleting environment variables also requires indirect approaches:
+
+### Method 1: Using ProcessBuilder for a Subprocess
+
+```java
+import java.io.IOException;
+
+public class EnvVariableDeleter {
+    public static void main(String[] args) {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("java", "-version");
+            
+            // Remove an environment variable for the subprocess
+            processBuilder.environment().remove("MY_CUSTOM_VAR");
+            
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            System.out.println("Process exited with code: " + exitCode);
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Method 2: Using JNA
+
+```java
+public class JNAEnvDeleter {
+    public static void main(String[] args) {
+        // Unset/delete an environment variable
+        int result = JNAEnvSetter.CLibrary.INSTANCE.unsetenv("MY_ENV_VAR");
+        
+        if (result == 0) {
+            System.out.println("Environment variable deleted successfully");
+        } else {
+            System.out.println("Failed to delete environment variable");
+        }
+    }
+}
+```
+
+### Method 3: Using Native Process Execution
+
+```java
+import java.io.IOException;
+
+public class NativeEnvDeleter {
+    public static void main(String[] args) {
+        try {
+            ProcessBuilder processBuilder;
+            
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                // For Windows - Note: REG DELETE requires admin privileges
+                processBuilder = new ProcessBuilder(
+                    "cmd", "/c", 
+                    "REG DELETE \"HKCU\\Environment\" /V MY_ENV_VAR /f"
+                );
+            } else {
+                // For Unix/Linux/MacOS
+                processBuilder = new ProcessBuilder(
+                    "/bin/sh", "-c", 
+                    "unset MY_ENV_VAR"
+                );
+            }
+            
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            
+            System.out.println("Process exited with code: " + exitCode);
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+## Practical Example: A Complete Environment Variable Manager
+
+Let's put everything together into a comprehensive environment variable manager class:
+
+```java
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
+
+public class EnvironmentVariableManager {
+    
+    /**
+     * Read a specific environment variable
+     */
+    public static Optional<String> readEnvVariable(String name) {
+        return Optional.ofNullable(System.getenv(name));
+    }
+    
+    /**
+     * Read all environment variables
+     */
+    public static Map<String, String> readAllEnvVariables() {
+        return System.getenv();
+    }
+    
+    /**
+     * Set an environment variable for the current process and its children
+     * Note: This sets the variable only for child processes
+     */
+    public static boolean setEnvVariableForChildProcesses(String name, String value) {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.environment().put(name, value);
+        return true;
+    }
+    
+    /**
+     * Set a system-wide environment variable using OS-specific commands
+     */
+    public static boolean setSystemEnvVariable(String name, String value) {
+        try {
+            ProcessBuilder processBuilder;
+            
+            if (isWindows()) {
+                // For Windows - sets a permanent user variable
+                processBuilder = new ProcessBuilder("cmd", "/c", "setx", name, value);
+            } else {
+                // For Unix/Linux systems
+                // Note: This affects only the current session unless added to profile files
+                String command = String.format("export %s=\"%s\" && echo \"export %s=%s\" >> ~/.profile", 
+                                             name, value, name, value);
+                processBuilder = new ProcessBuilder("/bin/sh", "-c", command);
+            }
+            
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            return exitCode == 0;
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Delete an environment variable system-wide
+     */
+    public static boolean deleteSystemEnvVariable(String name) {
+        try {
+            ProcessBuilder processBuilder;
+            
+            if (isWindows()) {
+                // For Windows
+                processBuilder = new ProcessBuilder(
+                    "cmd", "/c", 
+                    "REG DELETE \"HKCU\\Environment\" /V " + name + " /f"
+                );
+            } else {
+                // For Unix/Linux systems
+                String command = String.format("unset %s && sed -i '/export %s=/d' ~/.profile", name, name);
+                processBuilder = new ProcessBuilder("/bin/sh", "-c", command);
+            }
+            
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            return exitCode == 0;
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Helper method to check if running on Windows
+     */
+    private static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("windows");
+    }
+    
+    /**
+     * Example usage
+     */
+    public static void main(String[] args) {
+        // Read an environment variable
+        Optional<String> path = readEnvVariable("PATH");
+        path.ifPresent(p -> System.out.println("PATH: " + p));
+        
+        // Set an environment variable (system-wide)
+        String varName = "JAVA21_TEST_VAR";
+        boolean setResult = setSystemEnvVariable(varName, "Hello from Java 21!");
+        System.out.println("Set result: " + setResult);
+        
+        // Note: At this point, you might need to restart your application to see the change
+        System.out.println("After setting, current value: " + System.getenv(varName));
+        System.out.println("(You may need to restart your application to see the change)");
+        
+        // Delete an environment variable
+        boolean deleteResult = deleteSystemEnvVariable(varName);
+        System.out.println("Delete result: " + deleteResult);
+    }
+}
+```
+
+## Java 21 Specific Features for Environment Variable Handling
+
+Java 21 introduces some improvements that can enhance your environment variable operations:
+
+### 1. Record Patterns for Processing Environment Data
+
+You can use record patterns (preview feature in Java 21) to process environment variables more elegantly:
+
+```java
+import java.util.Map;
+
+public class Java21EnvExample {
+    // A record to represent an environment variable
+    record EnvVariable(String name, String value) {}
+    
+    public static void main(String[] args) {
+        Map<String, String> env = System.getenv();
+        
+        // Using record patterns to process environment variables
+        env.entrySet().stream()
+            .map(entry -> new EnvVariable(entry.getKey(), entry.getValue()))
+            .filter(EnvVariable ev -> ev.name().startsWith("JAVA_"))
+            .forEach(ev -> {
+                // Pattern matching with records (preview feature)
+                if (ev instanceof EnvVariable(String name, String value)) {
+                    System.out.println("Java-related env var: " + name + " = " + value);
+                }
+            });
+    }
+}
+```
+
+### 2. String Templates (Preview Feature)
+
+Java 21 introduces string templates (preview) which can make environment variable handling more readable:
+
+```java
+import static java.lang.StringTemplate.STR;
+
+public class Java21TemplatesExample {
+    public static void main(String[] args) {
+        String homeDir = System.getenv("HOME");
+        String username = System.getenv("USER");
+        
+        // Using string templates (preview feature)
+        String message = STR."""
+            User Information:
+            Username: \{username}
+            Home Directory: \{homeDir}
+            """;
+        
+        System.out.println(message);
+    }
+}
+```
+
+Note: To use these preview features, you need to compile with the `--enable-preview` flag.
+
+## Conclusion
+
+Working with system environment variables in Java requires different approaches depending on whether you're reading variables (straightforward) or modifying them (more complex). 
+
+Java primarily supports reading environment variables through `System.getenv()` and `ProcessBuilder.environment()`, while modifications require workarounds like:
+1. Using ProcessBuilder for child processes
+2. Using JNA for native system calls
+3. Using native process execution for OS-specific commands
+4. Using reflection (not recommended for production)
+
+In practice, the safest approach for managing environment variables in Java applications is:
+- Read variables using the built-in Java methods
+- For setting variables persistently, use an external configuration system or implement a proper configuration management strategy
+- Consider using frameworks like Spring Boot that offer robust environment configuration capabilities
+
+Remember that environment variables are just one approach to configuration management. For more complex scenarios, consider using configuration files, property systems, or dedicated configuration services that might better suit your application's needs.
+
+Java 21's new features like record patterns and string templates can make working with environment variables more elegant, though modifications to the system environment still require the indirect approaches outlined in this post.
