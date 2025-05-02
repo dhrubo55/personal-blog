@@ -33,6 +33,8 @@ Standard transcription services often provide raw text, but our use case demande
 
 I designed a flow orchestrated by our Spring Boot backend:
 
+![Architecture](https://res.cloudinary.com/dlsxyts6o/image/upload/v1746182920/spring-boot-gemini-audio-transcription.png)
+
 1.  **Audio Ingestion & Preparation**: The backend receives audio files (potentially triggered by a frontend action or a batch process). It converts these files into the FLAC format, which is well-suited for transcription tasks.
 2.  **Cloud Storage**: The processed FLAC files are uploaded to a Google Cloud Storage (GCS) bucket. GCS acts as a staging area, allowing Gemini 1.5 to access potentially large audio files efficiently using their GCS URIs.
 3.  **Vertex AI & Gemini 1.5**: The Spring Boot application makes requests to the Vertex AI API, pointing Gemini 1.5 to the GCS URI of the audio file. Crucially, the request includes a carefully crafted prompt to guide the transcription process.
