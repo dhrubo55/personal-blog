@@ -111,6 +111,113 @@ To cater to different needs, I implemented two processing modes:
 
 2.  **Batch Processing (Scheduled)**: For processing large backlogs of audio files, I implemented a scheduled job using Spring's `@Scheduled` annotation. This job runs periodically (e.g., nightly), queries the database for unprocessed audio files, and processes them sequentially (or in small batches) using the synchronous Vertex AI API endpoint. This is suitable for non-urgent, bulk processing tasks.
 
+
+```java
+    public static List<SafetySetting> getCustomSafetySettings() {
+        final List<SafetySetting> safetySettings = new ArrayList<>();
+        safetySettings.add(SafetySetting.newBuilder()
+                .setCategory(HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT)
+                .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_NONE)
+                .build());
+        safetySettings.add(SafetySetting.newBuilder()
+                .setCategory(HarmCategory.HARM_CATEGORY_HARASSMENT)
+                .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_NONE)
+                .build());
+        safetySettings.add(SafetySetting.newBuilder()
+                .setCategory(HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT)
+                .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_NONE)
+                .build());
+        safetySettings.add(SafetySetting.newBuilder()
+                .setCategory(HarmCategory.HARM_CATEGORY_HATE_SPEECH)
+                .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_NONE)
+                .build());
+        safetySettings.add(SafetySetting.newBuilder()
+                .setCategory(HarmCategory.HARM_CATEGORY_UNSPECIFIED)
+                .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_NONE)
+                .build());
+        return safetySettings;
+    }
+
+    private SpeechToTextInfo transcribeAudioWithGeminiSync(final String gcsUri,
+                                                           final SpeechToTextInfo pendingInfo) {
+        try {
+            log.debug("Transcribing audio synchronously with Gemini for callId: {} and recordingId: {}",
+                    pendingInfo.getCallId(), pendingInfo.getRecordId());
+
+            final GenerativeModel model = new GenerativeModel(modelName, vertexAI);
+            model.withSafetySettings(getCustomSafetySettings());
+
+            final GenerateContentResponse response = model.generateContent(
+                    ContentMaker.fromMultiModalData(
+                            buildPrompt(""),
+                            PartMaker.fromMimeTypeAndData("audio/flac", gcsUri)
+                    ));
+
+            final ImmutableGeminiSpeechToTextTranscriptInfo.Builder transcriptInfoBuilder =
+                    ImmutableGeminiSpeechToTextTranscriptInfo.builder();
+
+            final double avgLogProbs = response.getCandidates(0).getAvgLogprobs();
+            transcriptInfoBuilder.hasAcceptableConfidence(avgLogProbs >= CONFIDENCE_THRESHOLD)
+                    .avgLogProbs(avgLogProbs);
+
+            final String transcript = ResponseHandler.getText(response);
+            final SpeechToTextInfo completedInfo = SpeechToTextInfo.from(pendingInfo)
+                    .setTranscript(transcript)
+                    .setStatus(SpeechToTextState.success)
+                    .setTranscriptsInfo(ImmutableList.of(transcriptInfoBuilder.build()))
+                    .build();
+
+            // save into db
+            return completedInfo;
+
+        } catch (final Exception e) {
+            log.error("Failed to transcribe audio synchronously for callId: {}",
+                    pendingInfo.getCallId(), e);
+            final SpeechToTextInfo failedInfo = SpeechToTextInfo.from(pendingInfo)
+                    .setStatus(SpeechToTextState.failed)
+                    .build();
+            // save into db
+            return failedInfo;
+        }
+    }
+
+    private void transcribeAudioWithGemini(final String gcsUri, final String language,
+                                           final SpeechToTextInfo pendingInfo) {
+        try {
+            log.debug("Transcribing audio with Gemini for callId: {} and recordingId: {}",
+                    pendingInfo.getCallId(), pendingInfo.getRecordId());
+
+            final GenerativeModel model = new GenerativeModel(modelName, vertexAI);
+            model.withSafetySettings(getCustomSafetySettings());
+
+            final ApiFuture<GenerateContentResponse> response = model.generateContentAsync(
+                    ContentMaker.fromMultiModalData(
+                            buildPrompt(language),
+                            PartMaker.fromMimeTypeAndData("audio/flac", gcsUri)
+                    ));
+
+            log.debug("Transcribing audio with Gemini for callId: {} and recordingId: {} and response {}",
+                    pendingInfo.getCallId(), pendingInfo.getRecordId(), response);
+            ApiFutures.addCallback(response, new ApiFutureCallback<GenerateContentResponse>() {
+                @Override
+                public void onSuccess(final GenerateContentResponse result) {
+                    log.debug("Transcribing audio with Gemini for callId: {} and recordingId: {} and result {}",
+                            pendingInfo.getCallId(), pendingInfo.getRecordId(), result);
+                    processTranscription(result, pendingInfo);
+                }
+
+                @Override
+                public void onFailure(final Throwable t) {
+                    handleTranscriptionFailure(pendingInfo, t);
+                }
+            }, MoreExecutors.directExecutor());
+        } catch (final Exception e) {
+            handleTranscriptionFailure(pendingInfo, e);
+        }
+    }
+
+```
+
 ### Learnings and Final Thoughts
 
 This project was a deep dive into applying large language models to a specific, structured task. Key takeaways include:
