@@ -7,31 +7,31 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day88"
 summary = "Building a robust multilingual audio transcription system using Spring Boot, Google Cloud Storage, and Vertex AI's Gemini 1.5, covering architecture, prompt engineering, safety settings, confidence scoring, and async/batch processing."
-title = "Day 88: Advanced Multilingual Audio Transcription with Gemini 1.5, Vertex AI, and Spring Boot"
+title = "Day 88: Multilingual Audio Transcription with Gemini 1.5, Vertex AI, and Spring Boot"
 [cover]
 alt = "day88"
 caption = "day88"
-image = "" # Optional: Add a relevant image path later
+image = ""
 relative = false
 +++
 
-Following up on my explorations into  Java I recently tackled a fascinating project integrating Generative AI for a practical business need: transcribing audio files accurately, across multiple languages, and with specific formatting requirements.
+Following up on my explorations into Java I recently tackled a fascinating project integrating Generative AI for a practical business need: transcribing audio files accurately, across multiple languages, and with specific formatting requirements.
 
-The core task involved processing audio recordings (often from call centers or meetings) to generate accurate text transcripts. However, the requirements went beyond simple speech-to-text. We needed speaker diarization (identifying who spoke when), handling multiple languages (English plus about five others), specific formatting for numbers and dates, and a way to flag potentially unclear sections. We chose Google Cloud's Vertex AI, specifically leveraging the power of the Gemini 1.5 model, orchestrated within a Spring Boot application.
+The core task involved processing audio recordings to generate accurate text transcripts. However, the requirements went beyond simple speech-to-text. I needed speaker diarization (identifying who spoke when), handling multiple languages (English plus about five others), specific formatting for numbers and dates, and a way to flag potentially unclear sections. I chose Google Cloud's Vertex AI, specifically leveraging the power of the Gemini 1.5 model, orchestrated within a Spring Boot application.
 
 ### The Challenge: Beyond Simple Speech-to-Text
 
 Standard transcription services often provide raw text, but our use case demanded more structure and nuance:
 
-1.  **Multilingual Support**: The system had to reliably transcribe audio in several languages, sometimes within the same recording.
+1.  **Multilingual Support**: The system had to reliably transcribe audio in several languages.
 2.  **Speaker Diarization**: Identifying speaker changes and labeling them consistently (e.g., "Speaker A:", "Speaker B:") was crucial for readability.
 3.  **Specific Formatting**: Timestamps at speaker changes, language-specific number/date formats were required.
 4.  **Handling Imperfections**: Marking inaudible sections and managing overlapping speech gracefully was necessary.
-5.  **Quality Assessment**: We needed a mechanism, even if basic, to gauge the confidence level of the transcription for potential human review.
+5.  **Quality Assessment**: I needed a mechanism, even if basic, to gauge the confidence level of the transcription for potential human review.
 
 ### Architecture: A Spring Boot & Google Cloud Symphony
 
-We designed a flow orchestrated by our Spring Boot backend:
+I designed a flow orchestrated by our Spring Boot backend:
 
 1.  **Audio Ingestion & Preparation**: The backend receives audio files (potentially triggered by a frontend action or a batch process). It converts these files into the FLAC format, which is well-suited for transcription tasks.
 2.  **Cloud Storage**: The processed FLAC files are uploaded to a Google Cloud Storage (GCS) bucket. GCS acts as a staging area, allowing Gemini 1.5 to access potentially large audio files efficiently using their GCS URIs.
@@ -47,30 +47,34 @@ Gemini 1.5's strength lies in its large context window and multimodal capabiliti
 
 #### Prompt Engineering for Precision
 
-Getting the desired output required careful prompt engineering. A simple "transcribe this" wouldn't suffice. We iterated to develop a detailed prompt structure:
+Getting the desired output required careful prompt engineering. A simple "transcribe this" wouldn't suffice. I iterated to develop a detailed prompt structure:
 
 ```text
-Please accurately transcribe this audio recording in [language] with high attention to detail. I need a professional-quality transcript that captures the following elements:
+Please accurately transcribe this audio recording with high attention to detail. %1$s is the preferred language if specified.
 
-Language Information:
+I need a professional-quality transcript that captures the following elements:
 
-*   Primary language: [language]
+Language Detection and Handling:
+1. If language code is provided ([Language code]):
+   - Use this as the primary transcription language
+2. If no language code is provided:
+   - Detect the spoken language from the audio
+   - Transcribe in the detected language
+   - Include the detected language code in the response
 
-Formatting:
-
-*   Include timestamps every speaker change.
-*   Label speakers as "Speaker A:", "Speaker B:", etc.
-*   Format numbers according to the [language] numeric formatting conventions.
-*   Format dates as DD.MM.YYYY.
+Formatting Requirements:
+- Include timestamps at every speaker change
+- Label speakers as "Speaker A:", "Speaker B:", etc.
+- Use appropriate number formatting for the detected/specified language
+- Format dates as DD.MM.YYYY
 
 Language-Specific Guidelines:
-[Optional: Add any very specific rules for a given language here]
+[Language code]
 
 Special Instructions:
-
-*   Mark unclear speech with [inaudible].
-*   For overlapping speech, prioritize the main speaker.
-*   Ignore background noise unless relevant.
+- Mark unclear speech with [inaudible]
+- For overlapping speech, prioritize the main speaker
+- Ignore background noise unless relevant
 ```
 
 This prompt explicitly tells the model:
@@ -82,28 +86,28 @@ The `[language]` placeholders are dynamically filled based on the audio file's m
 
 #### Navigating Safety Settings
 
-An interesting challenge arose with Vertex AI's default safety settings. While essential for preventing harmful content generation, they could sometimes misinterpret certain words or phrases in the audio as violating policies, leading to incomplete or refused transcriptions. For our specific use case (transcribing potentially sensitive but legitimate business conversations), we needed the full, unfiltered transcription.
+An interesting challenge arose with Vertex AI's default safety settings. While essential for preventing harmful content generation, they could sometimes misinterpret certain words or phrases in the audio as violating policies, leading to incomplete or refused transcriptions. For our specific use case (transcribing potentially sensitive but legitimate business conversations), I needed the full, unfiltered transcription.
 
-After some research and testing, we identified specific safety categories that could be disabled for our Vertex AI requests without compromising the core goal, ensuring we received the most accurate transcription possible, even if the conversation contained potentially flagged terms in a benign context. This requires careful consideration of the risks and is specific to the controlled nature of the input audio.
+After some research and testing, I identified specific safety categories that could be disabled for our Vertex AI requests without compromising the core goal, ensuring I received the most accurate transcription possible, even if the conversation contained potentially flagged terms in a benign context. This requires careful consideration of the risks and is specific to the controlled nature of the input audio.
 
 ### Measuring Confidence: A Pragmatic Approach
 
 LLMs don't typically provide a simple, reliable "accuracy score." However, Gemini responses can include log probabilities (`avg_logprobs`) for the generated tokens, offering a hint about the model's internal confidence. While not a perfect measure of factual accuracy, lower (less negative) log probabilities generally indicate higher confidence from the model's perspective.
 
-We implemented a makeshift confidence scoring system:
+I implemented a makeshift confidence scoring system:
 1.  Examine the `avg_logprobs` returned by the API (if available for the specific call type).
-2.  Set a threshold (we experimented and settled around `-0.4`).
-3.  If the average log probability for a transcription segment fell below this threshold, we set a flag (`needs_review`) in our database associated with that transcript.
+2.  Set a threshold (I experimented and settled around `-0.4`).
+3.  If the average log probability for a transcription segment fell below this threshold, I set a flag (`needs_review`) in our database associated with that transcript.
 
-This flag signals to human agents (e.g., call center quality assurance) that a particular transcript might warrant closer inspection. It's a pragmatic "human-in-the-loop" approach, acknowledging the limitations of automated quality assessment for generative models.
+This flag signals to human agents (e.g., call center quality assurance) that a particular transcript might warrant closer inspection. It's a pragmatic **human-in-the-loop** approach, acknowledging the limitations of automated quality assessment for generative models.
 
 ### Implementation: Async vs. Batch Processing
 
-To cater to different needs, we implemented two processing modes:
+To cater to different needs, I implemented two processing modes:
 
 1.  **Asynchronous Processing (User-Initiated)**: When a user triggers transcription (e.g., via a button click on a frontend), the Spring Boot backend initiates the process asynchronously (`@Async` or using message queues). The user gets an immediate acknowledgment, and the backend handles the conversion, upload, Vertex AI call, and DB update in the background. Upon completion or failure, the user can be notified (e.g., via websockets or polling). This provides a responsive user experience.
 
-2.  **Batch Processing (Scheduled)**: For processing large backlogs of audio files, we implemented a scheduled job using Spring's `@Scheduled` annotation. This job runs periodically (e.g., nightly), queries the database for unprocessed audio files, and processes them sequentially (or in small batches) using the synchronous Vertex AI API endpoint. This is suitable for non-urgent, bulk processing tasks.
+2.  **Batch Processing (Scheduled)**: For processing large backlogs of audio files, I implemented a scheduled job using Spring's `@Scheduled` annotation. This job runs periodically (e.g., nightly), queries the database for unprocessed audio files, and processes them sequentially (or in small batches) using the synchronous Vertex AI API endpoint. This is suitable for non-urgent, bulk processing tasks.
 
 ### Learnings and Final Thoughts
 
