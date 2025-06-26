@@ -6,7 +6,7 @@ draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day89"
-summary = "That "perfect" Singleton you wrote? It's probably creating multiple instances in production—here's why it happens and five bulletproof ways to fix it."
+summary = "That perfect Singleton you wrote? It's probably creating multiple instances in production—here's why it happens and five bulletproof ways to fix it."
 title = "Day 89: When Your Singleton Isn't Really a Singleton (And How to Fix It)"
 [cover]
 alt = "day89"
