@@ -1,7 +1,7 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2025-06-26T00:00:00Z
-description = "That "perfect" Singleton you wrote? It's probably creating multiple instances in production—here's why it happens and five bulletproof ways to fix it."
+description = "That perfect Singleton you wrote? It's probably creating multiple instances in production—here's why it happens and five bulletproof ways to fix it."
 draft = false
 ShowToc = true
 TocOpen = true
