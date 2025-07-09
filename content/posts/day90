@@ -1,0 +1,401 @@
++++
+category = ["Java", "100DaysOfJava"]
+date = 2025-06-26T00:00:00Z
+description = "That perfect Singleton you wrote? It's probably creating multiple instances in production—here's why it happens and five bulletproof ways to fix it."
+draft = true
+ShowToc = true
+TocOpen = true
+slug = "posts/java/100DaysOfJava/day90"
+summary = "That perfect Singleton you wrote? It's probably creating multiple instances in production—here's why it happens and five bulletproof ways to fix it."
+title = "Day 90: The Mystery of the Disappearing Performance - Building Your Own Java Agent"
+[cover]
+alt = "day90"
+caption = "day90"
+image = ""
+relative = false
++++
+
+
+
+## The Production Incident That Changes Everything
+
+It was 2 AM on a Friday night when Sarah's phone buzzed with the dreaded PagerDuty alert. The e-commerce platform she'd been nurturing for two years was crawling to a halt. Customer complaints were flooding in, the CEO was asking questions, and the monitoring dashboard showed... nothing useful.
+
+"Why don't we have visibility into what's actually happening inside our application?" she wondered, staring at generic CPU and memory graphs that told her nothing about which methods were slow, which endpoints were failing, or where the bottlenecks really were.
+
+That night, Sarah discovered the power of **Java Agents** - the same technology that powers tools like New Relic, AppDynamics, and Datadog. But instead of paying thousands in licensing fees, she decided to build her own. What she learned would revolutionize how her team monitored their applications.
+
+## The Magic Behind the Curtain
+
+Have you ever wondered how monitoring tools can peek inside your running Java application without you changing a single line of code? The secret lies in Java's **Instrumentation API** - a powerful but often overlooked feature that lets you intercept and modify your application's behavior at runtime.
+
+Think of a Java Agent as a silent observer that sits alongside your application, watching every method call, timing every operation, and collecting insights that would be impossible to gather otherwise. It's like having a super-powered debugging assistant that never sleeps.
+
+## Sarah's Journey: Building the Agent
+
+### Chapter 1: The Foundation
+
+Sarah started with a simple question: "What if I could see exactly how long each method takes?" 
+
+She created the heart of her monitoring system - the `MonitoringAgent` class that would become the command center for all observability:
+
+```java
+package com.monitoring.agent;
+
+import com.monitoring.agent.collector.MetricsCollector;
+import com.monitoring.agent.collector.MemoryMetricsCollector;
+import com.monitoring.agent.reporter.ConsoleReporter;
+import com.monitoring.agent.transformer.MethodTimingTransformer;
+import com.monitoring.agent.transformer.HttpRequestTransformer;
+
+import java.lang.instrument.Instrumentation;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+public class MonitoringAgent {
+    private static final MetricsCollector metricsCollector = new MetricsCollector();
+    private static final MemoryMetricsCollector memoryCollector = new MemoryMetricsCollector();
+    private static final ConsoleReporter reporter = new ConsoleReporter();
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+    
+    public static void premain(String agentArgs, Instrumentation inst) {
+        System.out.println("Sarah's Monitoring Agent starting...");
+        
+        // Parse agent arguments
+        AgentConfig config = parseAgentArgs(agentArgs);
+        
+        // Register transformers - the watchers
+        inst.addTransformer(new MethodTimingTransformer(metricsCollector, config));
+        inst.addTransformer(new HttpRequestTransformer(metricsCollector, config));
+        
+        // Start periodic reporting - the storyteller
+        startPeriodicReporting();
+        
+        // Graceful shutdown - clean up the evidence
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Final Performance Story:");
+            reporter.report(metricsCollector.getMetrics());
+            scheduler.shutdown();
+        }));
+        
+        System.out.println("Agent successfully attached! Now watching your application...");
+    }
+    
+    private static void startPeriodicReporting() {
+        // Every 30 seconds, tell the performance story
+        scheduler.scheduleAtFixedRate(() -> {
+            reporter.report(metricsCollector.getMetrics());
+        }, 30, 30, TimeUnit.SECONDS);
+        
+        // Keep an eye on memory every 5 seconds
+        scheduler.scheduleAtFixedRate(() -> {
+            memoryCollector.collectMemoryStats();
+        }, 5, 5, TimeUnit.SECONDS);
+    }
+    
+    // ... rest of the implementation
+}
+```
+The premain method is where the magic begins. It's called before your application's main method, giving the agent a chance to set up its watchers and prepare for the show.
+
+Chapter 2: The Method Detective
+The real breakthrough came when Sarah realized she could intercept every method call using bytecode transformation. She created the MethodTimingTransformer - a digital detective that could slip timing code into methods without anyone noticing:
+
+```java
+package com.monitoring.agent.transformer;
+
+import com.monitoring.agent.collector.MetricsCollector;
+import javassist.*;
+
+import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.IllegalClassFormatException;
+import java.security.ProtectionDomain;
+
+public class MethodTimingTransformer implements ClassFileTransformer {
+    private final MetricsCollector metricsCollector;
+    private final Set<String> targetPackages;
+    
+    @Override
+    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
+                          ProtectionDomain protectionDomain, byte[] classfileBuffer)
+            throws IllegalClassFormatException {
+        
+        // Skip the boring system classes
+        if (shouldSkipClass(className)) {
+            return classfileBuffer;
+        }
+        
+        try {
+            ClassPool classPool = ClassPool.getDefault();
+            CtClass ctClass = classPool.makeClass(new java.io.ByteArrayInputStream(classfileBuffer));
+            
+            boolean modified = false;
+            
+            // Transform each interesting method
+            for (CtMethod method : ctClass.getDeclaredMethods()) {
+                if (shouldInstrumentMethod(method)) {
+                    instrumentMethod(ctClass, method);
+                    modified = true;
+                }
+            }
+            
+            if (modified) {
+                return ctClass.toBytecode();
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Detective work failed on: " + className + " - " + e.getMessage());
+        }
+        
+        return classfileBuffer;
+    }
+    
+    private void instrumentMethod(CtClass ctClass, CtMethod method) throws CannotCompileException {
+        String methodName = ctClass.getName() + "." + method.getName();
+        
+        // Plant the timing sensors
+        method.insertBefore(
+            "long startTime = System.nanoTime();" +
+            "com.monitoring.agent.MonitoringAgent.getMetricsCollector().recordMethodStart(\"" + methodName + "\");"
+        );
+        
+        method.insertAfter(
+            "long endTime = System.nanoTime();" +
+            "long duration = endTime - startTime;" +
+            "com.monitoring.agent.MonitoringAgent.getMetricsCollector().recordMethodEnd(\"" + methodName + "\", duration);"
+        );
+        
+        // Catch the troublemakers
+        method.addCatch(
+            "com.monitoring.agent.MonitoringAgent.getMetricsCollector().recordMethodError(\"" + methodName + "\", $e);" +
+            "throw $e;",
+            ClassPool.getDefault().get("java.lang.Exception")
+        );
+    }
+    
+    // ... helper methods for filtering classes and methods
+}
+```
+
+This transformer uses Javassist to modify bytecode on-the-fly, injecting timing code before and after method execution. It's like having a stopwatch that automatically starts and stops for every method call.
+
+Chapter 3: The Web Traffic Monitor
+Sarah's next challenge was understanding her REST API performance. She created an HttpRequestTransformer that could identify Spring Boot controllers and track their response times:
+
+```java
+package com.monitoring.agent.transformer;
+
+public class HttpRequestTransformer implements ClassFileTransformer {
+    
+    @Override
+    public byte[] transform(ClassLoader loader, String className, ...) {
+        // Target Spring Boot controllers and servlets
+        if (isHttpEndpointClass(className)) {
+            return instrumentHttpEndpoint(className, classfileBuffer);
+        }
+        return classfileBuffer;
+    }
+    
+    private boolean isHttpEndpointClass(String className) {
+        return className != null && (
+            className.contains("Controller") ||
+            className.contains("RestController") ||
+            className.endsWith("Servlet")
+        );
+    }
+    
+    private void instrumentHttpMethod(CtClass ctClass, CtMethod method) throws CannotCompileException {
+        String endpoint = ctClass.getName() + "." + method.getName();
+        
+        // Track the request journey
+        method.insertBefore(
+            "long requestStart = System.currentTimeMillis();" +
+            "com.monitoring.agent.MonitoringAgent.getMetricsCollector().recordHttpRequest(\"" + endpoint + "\");"
+        );
+        
+        method.insertAfter(
+            "long requestEnd = System.currentTimeMillis();" +
+            "long responseTime = requestEnd - requestStart;" +
+            "com.monitoring.agent.MonitoringAgent.getMetricsCollector().recordHttpResponse(\"" + endpoint + "\", responseTime, 200);"
+        );
+    }
+}
+```
+
+Chapter 4: The Data Storyteller
+The most crucial part was collecting and presenting the data in a way that told a story. Sarah's MetricsCollector became the memory of the system:
+
+```java
+package com.monitoring.agent.collector;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
+
+public class MetricsCollector {
+    private final Map<String, MethodMetrics> methodMetrics = new ConcurrentHashMap<>();
+    private final Map<String, HttpMetrics> httpMetrics = new ConcurrentHashMap<>();
+    private final AtomicLong totalRequests = new AtomicLong(0);
+    private final AtomicLong totalErrors = new AtomicLong(0);
+    
+    public void recordMethodStart(String methodName) {
+        methodMetrics.computeIfAbsent(methodName, k -> new MethodMetrics()).incrementInvocations();
+    }
+    
+    public void recordMethodEnd(String methodName, long durationNanos) {
+        MethodMetrics metrics = methodMetrics.get(methodName);
+        if (metrics != null) {
+            metrics.addDuration(durationNanos);
+        }
+    }
+    
+    // Thread-safe metrics tracking
+    public static class MethodMetrics {
+        private final LongAdder invocations = new LongAdder();
+        private final LongAdder totalDuration = new LongAdder();
+        private final LongAdder errors = new LongAdder();
+        private volatile long minDuration = Long.MAX_VALUE;
+        private volatile long maxDuration = Long.MIN_VALUE;
+        
+        // ... implementation details
+    }
+}
+```
+
+Chapter 5: The Performance Reporter
+Finally, Sarah created a reporter that could tell the performance story in human-readable format:
+
+```java
+public class ConsoleReporter {
+    public void report(MetricsSnapshot snapshot) {
+        System.out.println("\n" + "=".repeat(80));
+        System.out.println("SARAH'S PERFORMANCE DETECTIVE REPORT - " + LocalDateTime.now().format(timeFormatter));
+        System.out.println("=".repeat(80));
+        
+        reportOverview(snapshot);
+        reportSlowMethods(snapshot);
+        reportBusyEndpoints(snapshot);
+        reportMemoryHealth();
+    }
+    
+    private void reportSlowMethods(MetricsSnapshot snapshot) {
+        System.out.println("\nSLOWEST METHODS (The Suspects):");
+        System.out.println("   Method Name | Calls | Avg Time | Max Time | Errors");
+        System.out.println("   " + "-".repeat(65));
+        
+        snapshot.getMethodMetrics().entrySet().stream()
+            .sorted((e1, e2) -> Double.compare(e2.getValue().getAverageDuration(), e1.getValue().getAverageDuration()))
+            .limit(10)
+            .forEach(entry -> {
+                // Show the performance story for each method
+            });
+    }
+}
+```
+
+The Revelation: Sarah's "Aha!" Moment
+Three weeks after deploying her agent, Sarah discovered something shocking. The method everyone suspected was causing slowdowns (DatabaseService.findUser()) was actually performing fine. The real culprit was a seemingly innocent logging utility that was synchronously writing to a remote server on every call.
+
+Without her agent, this would have taken weeks to find. With it, the problem was obvious in the first performance report.
+
+Building Your Own Agent: The Complete Recipe
+Here's how you can create your own monitoring agent:
+
+1. Set Up the Project Structure
+
+```
+java-monitor-agent/
+├── src/main/java/com/monitoring/agent/
+│   ├── MonitoringAgent.java          (The command center)
+│   ├── transformer/
+│   │   ├── MethodTimingTransformer.java    (The method detective)
+│   │   └── HttpRequestTransformer.java     (The web traffic monitor)
+│   ├── collector/
+│   │   └── MetricsCollector.java          (The data storyteller)
+│   └── reporter/
+│       └── ConsoleReporter.java           (The performance narrator)
+├── src/main/resources/META-INF/MANIFEST.MF
+└── pom.xml
+```
+
+2. Package with Maven
+
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <configuration>
+        <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                <manifestEntries>
+                    <Premain-Class>com.monitoring.agent.MonitoringAgent</Premain-Class>
+                    <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                    <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                </manifestEntries>
+            </transformer>
+        </transformers>
+    </configuration>
+</plugin>
+```
+
+3. Launch Your Application with the Agent
+
+```
+# The moment of truth
+java -javaagent:java-monitor-agent-1.0.0.jar=packages=com.yourcompany -jar your-app.jar
+```
+
+4. Watch the Magic Happen
+
+```
+🚀 Sarah's Monitoring Agent starting...
+✅ Agent successfully attached! Now watching your application...
+
+================================================================================
+📊 SARAH'S PERFORMANCE DETECTIVE REPORT - 2024-01-15 14:30:45
+================================================================================
+
+🔍 THE BIG PICTURE:
+   Total HTTP Requests: 1,247
+   Total Errors: 3 (😱 Something needs attention!)
+   Methods Under Surveillance: 45
+   HTTP Endpoints Monitored: 12
+
+🐌 SLOWEST METHODS (The Suspects):
+   Method Name                         | Calls | Avg Time | Max Time | Errors
+   ---------------------------------------------------------------------------
+   UserService.findUserById            |   342 | 12.45 ms | 156.7 ms |      0
+   LoggingService.writeToRemoteServer  |   892 | 245.3 ms | 2.1 sec  |      3 ⚠️
+   ProductService.searchProducts       |   128 | 45.23 ms | 289.1 ms |      0
+
+🌐 BUSIEST ENDPOINTS (The Popular Kids):
+   Endpoint                      | Requests | Avg Response | Status Codes
+   ----------------------------------------------------------------------
+   UserController.getUser        |      342 |    15.67 ms  | 200:340, 404:2
+   ProductController.search      |      128 |    48.12 ms  | 200:127, 500:1
+
+💾 MEMORY HEALTH CHECK:
+   Used Memory: 245.6 MB (24.5% - Looking good! 👍)
+   Free Memory: 254.4 MB
+   Max Memory: 1.0 GB
+================================================================================
+```
+
+The Plot Twist: What Sarah Learned
+Performance problems hide in unexpected places - The slowest method wasn't in the database layer, but in the logging system.
+
+Visibility is everything - You can't optimize what you can't measure.
+
+Zero-code monitoring is possible - Java agents can provide deep insights without changing your application code.
+
+Thread safety matters - When collecting metrics from a multi-threaded application, use thread-safe collections like ConcurrentHashMap and LongAdder.
+
+Selective instrumentation is key - Don't monitor everything; focus on your application packages to avoid noise.
+
+The Epilogue: Your Turn to Be the Detective
+Java agents are like having a seasoned detective working 24/7 to solve performance mysteries in your applications. They use the Java Instrumentation API to become invisible observers, collecting evidence and telling the story of your application's behavior.
+
+The next time your application is misbehaving at 2 AM, you won't be staring helplessly at generic system metrics. You'll have your own custom agent providing exactly the insights you need to quickly identify and fix the problem.
+
+Whether you build your own agent like Sarah did, or use commercial tools, understanding how Java instrumentation works will make you a better developer and a more effective problem solver.
