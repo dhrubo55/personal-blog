@@ -18,6 +18,8 @@ relative = false
 
 Ever had that sinking feeling? A critical application slows to a crawl in production. Users are complaining. You're staring at logs, but they tell you nothing. You wish you could just ask the application, "What's taking you so long?" Debugging is out; you can't just halt a live system. This is where commercial giants like [New Relic](https://newrelic.com/) or [Datadog](https://www.datadoghq.com/) wave their magic wands and produce beautiful dashboards showing you exactly which methods are the culprits.
 
+![NewRelic Architecture (Taken from newrelic website)](https://res.cloudinary.com/dlsxyts6o/image/upload/v1752821092/images-from-blog/platform_infrastructure_iekahu_qfgav9.png)
+
 I've seen developers wrestle with these black boxes. But what if I told you that the "magic" isn't magic at all? It's a standard, if somewhat hidden, feature of the JVM. Today, on day 90 of your Java journey, we are going to explore the keys to this kingdom. We're going to build our own Java Agent.
 
 **We'll create a simple, powerful tool that can attach to any Java application and measure method execution times, all without touching a single line of the target application's source code.**
