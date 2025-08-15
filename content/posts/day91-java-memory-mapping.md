@@ -326,4 +326,4 @@ The memory-mapped version is really faster than traditional reading and used 100
 - You only need to read the file once, sequentially
 - You're in a memory-constrained environment where you can't trust the OS page cache
 
-The beauty of memory mapping is that it turns file I/O into memory access, letting the operating system's decades of optimization work for you. It's like having a genius butler who anticipates your every need and fetches data before you even know you want it like Alfred.
+The beauty of memory mapping is that it turns file I/O into memory access, letting the operating system's decades of optimization work for you. It's like having a genius butler who anticipates your every need and fetches data before you even know you want it like Alfred. The full code is in my [github](https://github.com/dhrubo55/100DaysOfJava/tree/main/day91)
