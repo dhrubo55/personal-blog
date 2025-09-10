@@ -53,7 +53,7 @@ keywords = [
 ]
 
 # Structured Data for Rich Snippets
-author = "Mohibul Hasan"
+author = "Mohibul Hassan Chowdhury"
 type = "article"
 articleSection = "Java Development"
 wordCount = 4500
