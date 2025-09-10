@@ -1,17 +1,18 @@
 ---
-title: "Building AI Agents with Spring AI: My learning from the workshop"
+title: "Building AI Agents with Java 21 and Spring AI: My learning from the workshop"
 date: 2025-01-15T10:00:00Z
-draft: true
+draft: false
 tags: ["100DaysOfJava", "Spring AI", "AI Agents", "AWS", "Bedrock", "Vector Database", "RAG", "MCP"]
 categories: ["Java", "Artificial Intelligence", "Spring Framework"]
 author: "Mohibul"
-description: "Learn how to build intelligent Java applications using Spring AI, from basic chat interfaces to sophisticated agents with memory, RAG capabilities, and external tool integration."
+description: "Learn to build intelligent Java AI applications using Spring AI framework. Complete tutorial covering ChatClient, RAG implementation, vector databases, and AWS Bedrock integration for enterprise AI agents."
 ---
 
 ### Building Production-Ready AI Agents with Spring AI: My learning from the workshop
 
-Hey fellow Java developers, Today marks day 92 of my #100DaysOfJava journey, I have an exciting story to share with you! I recently attended an incredible workshop on [Building Java AI Agents with Spring AI](https://aws-experience.com/emea/smb/e/90912/building-java-ai-agents-with-spring-ai) hosted by AWS. In this workshop we learned about building an AI agent that can not only chat with you but also manage a fictional unicorn rental business as example application.
+Hey fellow Java developers, Today marks day 92 of my #100DaysOfJava journey, I have an exciting story to share with you! I recently attended an incredible workshop on [Building Java AI Agents with Spring AI](https://aws-experience.com/emea/smb/e/90912/building-java-ai-agents-with-spring-ai) hosted by AWS. In this workshop I learned about building an AI agent that can not only chat with you but also manage a fictional unicorn rental business as example application.
 
+#### What you will learn
 This article will demonstrate my learnings from the workshop, like how to construct a complete AI agent system using Spring AI, progressing from a simple chat interface to a sophisticated application featuring persistent memory, retrieval-augmented generation (RAG), and external tool integration. We'll build a fictional unicorn rental system that showcases real-world AI integration patterns applicable to any business domain.
 
 Picture this: You're a Java developer who has been comfortable with Spring Boot for years, and suddenly someone tells you that you can now build AI-powered applications using the same familiar Spring concepts you already know and love. That's exactly what Spring AI brings to the table!
@@ -19,6 +20,8 @@ Picture this: You're a Java developer who has been comfortable with Spring Boot 
 ### Understanding Spring AI's Core Architecture
 
 Spring AI provides a unified abstraction layer over various AI model providers, including OpenAI, Azure OpenAI, and Amazon Bedrock. The framework's central component is the `ChatClient` interface, which standardizes interactions with different AI models while maintaining Spring's dependency injection and configuration principles.
+
+For understanding the core architecture of Spring AI one need to understand the core concepts and you can learn it from [Spring AI Core Concepts](https://docs.spring.io/spring-ai/reference/concepts.html)
 
 ### The ChatClient Interface: Your Gateway to AI Magic
 
@@ -397,9 +400,9 @@ Production deployments require attention to security:
 - **Data Privacy**: Ensure conversation data handling complies with privacy regulations
 - **Input Validation**: Validate and sanitize all user inputs before processing
 
-## Common Pitfalls and Best Practices
+### Common Pitfalls and Best Practices
 
-There are some common mistakes we can make when developing AI appli
+When developing AI applications with Spring AI, several common pitfalls can impact performance, cost, and user experience. Here's how to avoid them:
 
 ### Memory Management
 
@@ -442,24 +445,26 @@ Development teams can create AI assistants that interact with CI/CD systems, mon
 
 AI agents can orchestrate complex business processes by integrating with ERP systems, approval workflows, and notification services.
 
-## Conclusion
+### Conclusion: The Future of Java AI Development
 
-Spring AI democratizes AI integration for Java developers by providing familiar abstractions and configuration patterns. The framework enables rapid development of sophisticated AI agents while maintaining production-ready architecture principles.
+Spring AI represents a paradigm shift for Java developers entering the AI space. Instead of learning entirely new frameworks or switching to Python, you can leverage your existing Spring expertise to build sophisticated AI applications.
 
-Key benefits include:
+**Key takeaways for your next Java AI project:**
 
-- **Familiar Development Model**: Leverages existing Spring expertise
-- **Provider Agnostic**: Supports multiple AI model providers
-- **Production Ready**: Includes memory management, streaming, and deployment features
-- **Extensible**: Supports custom tools and integration patterns
+1. **Leverage Familiar Patterns**: Spring AI uses dependency injection, configuration properties, and annotations you already know
+2. **Start Simple, Scale Smart**: Begin with basic chat functionality and progressively add memory, RAG, and tool calling
+3. **Production-Ready Architecture**: The framework includes enterprise features like connection pooling, error handling, and monitoring out of the box
+4. **Provider Flexibility**: Switch between OpenAI, Azure, AWS Bedrock, or other providers without changing your application code
+5. **Real Business Value**: Move beyond chatbots to create AI agents that integrate with existing business systems
 
-The combination of conversation memory, RAG capabilities, and tool calling creates AI agents that can handle complex, stateful interactions while maintaining context and accessing real-time information. This foundation supports building AI-powered applications that deliver genuine business value within existing enterprise architectures.
+The combination of Spring AI's familiar development model with powerful AI capabilities opens up endless possibilities for Java applications. Whether you're building customer service automation, internal development tools, or complex business process orchestration, Spring AI provides the foundation you need.
 
-As AI continues to evolve, Spring AI provides a stable foundation that abstracts provider-specific details while enabling developers to focus on solving business problems rather than managing AI infrastructure complexity.
+As the AI landscape continues evolving, Spring AI ensures Java developers can innovate without abandoning their expertise. The future of enterprise AI is here, and it speaks Java.
 
-here is the github link for the whole project https://github.com/dhrubo55/java-ai-agent-amazon-workshop
+**Ready to start building?** Check out the [complete project repository](https://github.com/dhrubo55/java-ai-agent-amazon-workshop) and begin your own AI journey today.
 
-*This post is part of my #100DaysOfJava challenge. Follow along for daily insights, tutorials, and discoveries in the world of Software development!*
+---
+*This post is part of my #100DaysOfJava challenge. Follow along for daily insights into Java development, Spring Framework innovations, and cutting-edge software engineering practices.*
 
 
 ---
