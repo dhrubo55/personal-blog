@@ -20,7 +20,20 @@ relative = false
 Hey fellow Java developers, Today marks day 92 of my #100DaysOfJava journey, I have an exciting story to share with you! I recently attended an incredible workshop on [Building Java AI Agents with Spring AI](https://aws-experience.com/emea/smb/e/90912/building-java-ai-agents-with-spring-ai) hosted by AWS. In this workshop I learned about building an AI agent that can not only chat with you but also manage a fictional unicorn rental business as example application.
 
 #### What you will learn
-This article will demonstrate my learnings from the workshop, like how to construct a complete AI agent system using Spring AI, progressing from a simple chat interface to a sophisticated application featuring persistent memory, retrieval-augmented generation (RAG), and external tool integration. We'll build a fictional unicorn rental system that showcases real-world AI integration patterns applicable to any business domain.
+This article will demonstrate my learnings from the workshop, like how to construct a complete AI agent system using Spring AI, progressing from a simple chat interface to a sophisticated application featuring:
+
+- **Persistent Memory Management**
+- **Retrieval-Augmented Generation (RAG)**
+- **External Tool Integration**
+- **ChatClient Interface**
+- **Vector Store Integration**
+- **AWS Bedrock Integration**
+- **Model Context Protocol (MCP)**
+- **Production Deployment**
+- **Security & Performance**
+- **Real-world Architecture**
+
+We'll build a fictional unicorn rental system that showcases real-world AI integration patterns applicable to any business domain.
 
 Picture this: You're a Java developer who has been comfortable with Spring Boot for years, and suddenly someone tells you that you can now build AI-powered applications using the same familiar Spring concepts you already know and love. That's exactly what Spring AI brings to the table!
 
@@ -28,7 +41,7 @@ Picture this: You're a Java developer who has been comfortable with Spring Boot 
 
 Spring AI provides a unified abstraction layer over various AI model providers, including OpenAI, Azure OpenAI, and Amazon Bedrock. The framework's central component is the `ChatClient` interface, which standardizes interactions with different AI models while maintaining Spring's dependency injection and configuration principles.
 
-For understanding the core architecture of Spring AI one need to understand the core concepts and you can learn it from [Spring AI Core Concepts](https://docs.spring.io/spring-ai/reference/concepts.html)
+To fully grasp Spring AI's architecture, it's essential to understand its foundational concepts. The [Spring AI Core Concepts](https://docs.spring.io/spring-ai/reference/concepts.html) documentation provides comprehensive coverage of these fundamental principles.
 
 ### The ChatClient Interface: Your Gateway to AI Magic
 
