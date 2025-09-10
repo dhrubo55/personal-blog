@@ -1,6 +1,6 @@
 +++
 category = ["Java", "100DaysOfJava"]
-date = 2025-01-15T00:00:00Z
+date = 2025-09-10T00:00:00Z
 description = "Learn to build intelligent Java AI applications using Spring AI framework. Complete tutorial covering ChatClient, RAG implementation, vector databases, and AWS Bedrock integration for enterprise AI agents."
 draft = false
 ShowToc = true
