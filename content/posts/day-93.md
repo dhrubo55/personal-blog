@@ -669,7 +669,7 @@ class SensitiveDataTest {
 
 ## What We've Achieved
 
-Let's summerize what our `@Sensitive` annotation system provides:
+Let's summarize what our `@Sensitive` annotation system provides:
 
 1. **Automatic parameter masking** in logs via AOP  
 2. **Stack trace protection** through custom exception handling  
@@ -696,41 +696,33 @@ That's the difference between a security incident and a normal debugging session
 
 ## Performance Considerations
 
-You might be thinking: "This sounds expensive!" Let's address that:
+You might be thinking: `This sounds expensive!` Let's address that.
 
 1. **AOP Overhead**: Minimal - only affects methods with `@Sensitive` parameters
 2. **Reflection**: Used sparingly, and results can be cached
 3. **String Operations**: Only happens when logging/exceptions occur
 4. **Production Impact**: Negligible compared to I/O operations
 
-In benchmarks, the overhead is typically < 1ms per intercepted method call - a small price for security.
+In benchmarks, the overhead is typically less than 1ms per intercepted method call, a small price for security.
 
 ## Limitations and Future Improvements
 
 Let's be honest about what this doesn't solve:
 
-1. **Heap dumps** - Sensitive data can still appear in memory dumps  
-2. **Debugger access** - Developers can still see raw values when debugging  
-3. **Serialization** - Standard Java serialization isn't masked  
-4. **JVM native methods** - Deep JVM calls bypass our aspects
+**Heap dumps** can still show sensitive data in memory dumps  
+**Debugger access** means developers can still see raw values when debugging  
+**Serialization** with standard Java serialization isn't masked  
+**JVM native methods** and deep JVM calls bypass our aspects
 
-**Future enhancements could include:**
-- Java Agent for complete JVM integration
-- Custom serialization handlers
-- Memory encryption for sensitive fields
-- Annotation processor for compile-time validation
+Future enhancements could include Java Agent for complete JVM integration, custom serialization handlers, memory encryption for sensitive fields, and annotation processor for compile-time validation.
 
 ## Lessons Learned
 
-Building this system taught me three important lessons:
-
-1. **Security is layered** - No single solution catches everything
-2. **Developer experience matters** - Annotations should be intuitive
-3. **Framework integration is key** - Solutions must work with existing tools
+Building this system taught me some important lessons. Security is layered, no single solution catches everything. Developer experience matters, annotations should be intuitive. Framework integration is key, solutions must work with existing tools.
 
 ## Wrapping Up
 
-We've built a robust, production-ready system for masking sensitive data in Java - inspired by PHP but enhanced with Java's powerful reflection and AOP capabilities. While Java doesn't have a native `#[SensitiveParameter]` equivalent (yet!), we can build something even more flexible.
+We've built a robust, production-ready system for masking sensitive data in Java, inspired by PHP but enhanced with Java's powerful reflection and AOP capabilities. While Java doesn't have a native `#[SensitiveParameter]` equivalent (yet!), we can build something even more flexible.
 
 The complete code is modular, testable, and ready to drop into your Spring Boot application. Just add the annotations, configure the aspect, and sleep better knowing your passwords won't end up in your logs.
 
@@ -744,9 +736,9 @@ Copy the codes from here and start your own experiments:
 3. Try the partial masking with credit cards
 4. Create custom mask patterns
 
-Remember: Security isn't just about preventing attacks - it's about protecting your users' trust. And sometimes, that starts with a simple annotation.
+Remember: Security isn't just about preventing attacks, it's about protecting your users' trust. And sometimes, that starts with a simple annotation.
 
-**Happy (and secure) coding!** 🔒
+**Happy (and secure) coding!**
 
 ---
 
