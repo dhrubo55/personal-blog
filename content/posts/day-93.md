@@ -23,7 +23,7 @@ We've all been there (or hopefully learned from others' mistakes). One innocent 
 
 Recently, I stumbled upon PHP 8.2's `#[SensitiveParameter]` attribute, and I had one of those "why doesn't Java have this?" moments. With just a simple annotation, PHP developers can mark parameters as sensitive:
 
-fig 1 : ![](https://x.com/enunomaduro/status/1972948320869032032/photo/1)
+![](https://pbs.twimg.com/media/G2FRP80XgAAy7f6?format=jpg&name=large)
 
 Elegant and effective but we're Java developers, and we don't just copy, we engineer solutions that work with our ecosystem.
 
@@ -749,8 +749,6 @@ Remember: Security isn't just about preventing attacks - it's about protecting y
 **Happy (and secure) coding!** 🔒
 
 ---
-
-**What's your biggest security concern in your Java applications? Have you ever accidentally logged sensitive data? Share your stories in the comments below!**
 
 ### References and Further Reading
 
