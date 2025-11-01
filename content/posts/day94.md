@@ -643,47 +643,11 @@ Then, if you want more, come back and try the other techniques. But start there.
 
 ## The End? Or Just the Beginning?
 
-My 8-second startup problem isn't just solved—it's obliterated. 
-
-But here's what really changed: I stopped accepting slow as inevitable. I started asking "why?" and "what if?"
 
 Why does classloading take so long? What if we cached it?  
 Why are we creating 300 beans at startup? What if we waited?  
 Why are we running on the JVM at all? What if we compiled ahead-of-time?
 
-Every "what if" opened a new door.
+Every "what if" openes a new door.
 
 Your Java app doesn't have to start slow. The tools are there. The techniques work. You just need to use them.
-
-Now, if you'll excuse me, I need to go show Sarah my 80ms startup time and watch her face when I tell her it's still Spring Boot.
-
-Some victories are just too sweet not to savor.
-
----
-
-**P.S.** - If you're curious about the full configuration I ended up with, here it is:
-
-```bash
-# My final JVM args
-java -XX:SharedArchiveFile=app-cds.jsa \
-     -Xshare:on \
-     -Xms64m \
-     -Xmx512m \
-     -XX:MetaspaceSize=64m \
-     -XX:+UseSerialGC \
-     -XX:TieredStopAtLevel=1 \
-     -jar my-app.jar
-```
-
-```properties
-# My application.properties
-spring.main.lazy-initialization=true
-spring.main.log-startup-info=false
-spring.main.banner-mode=off
-spring.jmx.enabled=false
-spring.aot.enabled=true
-```
-
-From 8 seconds to 85 milliseconds. Sometimes, you just need to know where to look.
-
-Happy optimizing! 🚀
