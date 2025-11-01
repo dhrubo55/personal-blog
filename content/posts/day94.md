@@ -15,7 +15,6 @@ image = ""
 relative = false
 +++
 
-## The 8-Second Problem That Haunted My Nights
 
 A few days ago I attended a company knowledge sharing where one of my brillliant colleauges talked about optimizing java memory and performance tuning. Where he talked about spring boot applicaiton start up time and how we can shave off some time to load the application faster. That got me thinking 
 
