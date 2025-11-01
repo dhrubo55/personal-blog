@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava", "Perf", "JVM", "Optimization"]
 date = 2025-10-30T00:00:00Z
 description = "Your Java app takes so much time to start. You've tried everything, or have you? Here's how I cut startup time using techniques you probably haven't tried yet."
-draft = false
+draft = true
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day94"
@@ -16,7 +16,7 @@ relative = false
 +++
 
 
-A few days ago I attended a company knowledge sharing where one of my brillliant colleauges talked about optimizing java memory and performance tuning. Where he talked about spring boot applicaiton start up time and how we can shave off some time to load the application faster. That got me thinking 
+A few days ago I attended a company knowledge sharing where one of my brilliant colleauges talked about optimizing java memory and performance tuning. Where he talked about spring boot application start up time and how we can shave off some time to load the application faster. That got me thinking 
 
 Even though I dont directly work with spring boot application, can I improve my java jersey application starting time? How should one approach it? What can I improve to get faster startup time?.
 
@@ -35,11 +35,11 @@ After digging deep (and I mean JVM logs, profilers, lots of blogs and articles),
 - **~20% is reflection and proxies** - All that runtime magic has a cost
 - **~10% is I/O** - Reading configs, connecting to databases
 
-*Note: These percentages vary by application, but they're a good rule of thumb from profiling java apps.*
+*Note: These are approximate distributions based on analysis from Spring Boot team's [startup optimization research](https://spring.io/blog/2018/12/12/how-fast-is-spring), [Oracle's JVM performance documentation](https://docs.oracle.com/en/java/javase/17/vm/class-data-sharing.html), and profiling multiple applications. Your mileage will vary depending on framework, dependencies, and architecture choices.*
 
 I was dealing with very slow startup time of the Jersey application though my application loads and verifies a lot of stuff before starting still I think there could be improvements.
 
-Once I knew where the time was *actually* going, I could fight back. And boy, did I fight back.
+Once I knew where the time was *actually* going, I could fight back.
 
 ## Chapter 1: The JVM Strikes Back (Or: How I Learned to Stop Worrying and Love AppCDS)
 
@@ -635,8 +635,6 @@ If you take nothing else from this post, do this:
 # And this to your JVM args
 -XX:SharedArchiveFile=app-cds.jsa -Xshare:on
 ```
-
-That's it. You'll likely see 30-50% improvement. Five minutes of work.
 
 Then, if you want more, come back and try the other techniques. But start there.
 
