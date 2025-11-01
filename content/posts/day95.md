@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava"]
 date = 2025-10-24T00:00:00Z
 description = "When you modify a list and the original stays unchanged—is it magic? Nope, it's persistent data structures. Here's why they're evolutionary perfect for modern Java."
-draft = false
+draft = true
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day95"

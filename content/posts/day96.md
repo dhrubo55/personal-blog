@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava"]
 date = 2025-10-24T00:00:00Z
 description = "You've been writing lambdas and streams for years, but are you really doing functional programming? Let's dive into the deep end with monads, functors, and patterns that'll make your Erlang friends jealous."
-draft = false
+draft = true
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day94"
