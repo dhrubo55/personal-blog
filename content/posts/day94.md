@@ -16,9 +16,9 @@ relative = false
 +++
 
 
-A few days ago I attended a company knowledge sharing where one of my brilliant colleauges talked about optimizing java memory and performance tuning. Where he talked about spring boot application start up time and how we can shave off some time to load the application faster. That got me thinking 
+A few days ago I attended a company knowledge sharing where one of my brilliant colleauges talked about optimizing java memory and performance tuning. Where he talked about spring boot application start up time and how we can shave off some time to load the application faster.
 
-That night, I fell down the rabbit hole. And what I found gave me lots of ideas. Turns out, I'd been thinking about startup time all wrong.
+That night after thinking about it, I fell down the rabbit hole. And what I found gave me lots of ideas. Turns out, I'd been thinking about startup time all wrong.
 
 ## My Journey Structure
 
@@ -42,11 +42,11 @@ After digging deep (and I mean JVM logs, profilers, lots of blogs and articles),
 - **Major part of time goes to classloading** - The JVM reading and parsing your .class files
 - **For spring another major time spend in bean creation** - Spring (or your framework) wiring everything together  
 - **Another big chunk of time goes into reflection and proxies** - All that runtime magic has a cost
-- **Some of time goes into I/O** - Reading configs, connecting to databases
+- **Some of the time goes into I/O** - Reading configs, connecting to databases
 
 *Note: These are approximate distributions based on analysis from Spring Boot team's [startup optimization research](https://spring.io/blog/2018/12/12/how-fast-is-spring), [Oracle's JVM performance documentation](https://docs.oracle.com/en/java/javase/17/vm/class-data-sharing.html), and profiling multiple applications. Your mileage will vary depending on framework, dependencies, and architecture choices.*
 
-I was dealing with very slow startup time of the Jersey application though my application loads and verifies a lot of stuff before starting still I think there could be improvements.Once I knew where the time was *actually* going, I could fight back.
+I was dealing with very slow startup time of the Jersey application though, my application loads and verifies a lot of stuff before starting still I think there could be improvements.Once I knew where the time was *actually* going, I could fight back.
 
 **Pro Tip**: Before optimizing anything, jump to 
 [The Measurement Mindset](#the-measurement-mindset-you-cant-optimize-what-you-dont-measure) to learn how to 
@@ -86,8 +86,6 @@ java -XX:SharedArchiveFile=app-cds.jsa \
 
 No code changes. No architecture overhaul. Just telling the JVM to be smarter about something it was already doing.
 
-But I wasn't done. Not even close. 
-
 APPLIES TO: Any Java 10+ application (not Spring-specific)
 
 ## Chapter 2: Spring Boot's Little Secrets
@@ -101,7 +99,7 @@ NOTE: While I was exploring Jersey optimization, I researched
 
 ### Auto-Configuration: The Double-Edged Sword
 
-Spring Boot's auto-configuration is brilliant for getting started fast. But in production? It's scanning and conditionally configuring things you'll *never* use.
+Spring Boot's auto-configuration is brilliant for getting started fast. But in production? It's scanning and conditionally configuring things one might *never* use.
 
 One can have lots of **auto-configurations** enabled, and actually need maybe very few of them.
 
@@ -127,7 +125,7 @@ Here's after I got specific:
     JmxAutoConfiguration.class,
     RabbitAutoConfiguration.class,
     MongoAutoConfiguration.class,
-    // ... and 25 others I wasn't using
+    // ... and many others I wasn't using
 })
 public class MyApp {
     public static void main(String[] args) {
@@ -203,7 +201,7 @@ And Spring Boot config:
 spring.aot.enabled=true
 ```
 
-The build process became... intense. It would take very long time to build. But the result?
+The build process became... intense. It would take very long time to build.
 
 
 ### The Tradeoffs (Because Nothing Is Free)
@@ -245,7 +243,7 @@ Large heaps take longer to initialize. The JVM has to zero out that memory.
 -Xms64m -Xmx512m
 ```
 
-For a microservice that uses maybe 200MB at peak? This was a no-brainer. Shaved off **0.2 seconds**.
+For a microservice that uses maybe 200MB at peak? This was a no-brainer.
 
 ### The Tiered Compilation Secret
 
@@ -295,7 +293,7 @@ No nested JARs. No custom classloader. Just straightforward classpath execution.
 
 This one's for the hardcore optimizers. Why ship the entire JDK when you only use a fraction of it?
 
-JLink creates a custom Java runtime with *only* the modules you need:
+[JLink](https://www.baeldung.com/jlink) creates a custom Java runtime with *only* the modules you need:
 
 ```bash
 # First, see what modules you actually use
@@ -417,8 +415,12 @@ public class ParallelInitConfig {
             });
             
             // Wait for all to complete
-            CompletableFuture.allOf(dbWarmup, cacheWarmup, messagingConnect).join();
-            log.info("Parallel initialization complete");
+            CompletableFuture.allOf(dbWarmup, cacheWarmup, messagingConnect)
+                .exceptionally(ex -> {
+                logger.error("Startup task failed", ex);
+                return null;
+            })
+            .join();
         };
     }
 }
