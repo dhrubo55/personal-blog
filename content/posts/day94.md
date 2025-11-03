@@ -49,7 +49,7 @@ After digging deep (and I mean JVM logs, profilers, lots of blogs and articles),
 I was dealing with very slow startup time of the Jersey application though my application loads and verifies a lot of stuff before starting still I think there could be improvements.Once I knew where the time was *actually* going, I could fight back.
 
 **Pro Tip**: Before optimizing anything, jump to 
-[The Measurement Mindset](#measurement-mindset) to learn how to 
+[The Measurement Mindset](#the-measurement-mindset-you-cant-optimize-what-you-dont-measure) to learn how to 
 profile your specific bottlenecks. I'm presenting techniques in the 
 order I discovered them, but you should measure first.
 
