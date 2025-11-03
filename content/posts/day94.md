@@ -628,18 +628,6 @@ After? "Oh, 1.2 seconds is spent loading Jackson modules I don't even use. Let m
 
 Precision beats guessing every time.
 
-## The Startup Time Buffet: Pick What Works for You
-
-Here's my honest recommendation based on what you're building:
-
-| Your Situation | Best Strategy | Expected Startup |
-|----------------|---------------|------------------|
-| CLI tool or function | GraalVM Native Image | 5-50ms |
-| Serverless/K8s microservice | Spring Boot 3 + AOT + AppCDS | 100-500ms |
-| REST API (moderate scale) | Lazy init + exclude configs + AppCDS | 800ms-2s |
-| Legacy Spring Boot app | Disable unused features + AppCDS | 2-5s |
-| Complex enterprise app | Measure first, then optimize hot paths | 3-8s |
-
 ## The Lessons That Stuck
 
 After this whole journey, here's what I learned:
