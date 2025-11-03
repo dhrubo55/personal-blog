@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava", "Perf", "JVM", "Optimization"]
 date = 2025-10-30T00:00:00Z
 description = "Your Java app takes so much time to start. You've tried everything, or have you? Here's how I cut startup time using techniques you probably haven't tried yet."
-draft = true
+draft = flase
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day94"
@@ -18,9 +18,18 @@ relative = false
 
 A few days ago I attended a company knowledge sharing where one of my brilliant colleauges talked about optimizing java memory and performance tuning. Where he talked about spring boot application start up time and how we can shave off some time to load the application faster. That got me thinking 
 
-Even though I dont directly work with spring boot application, can I improve my java jersey application starting time? How should one approach it? What can I improve to get faster startup time?.
-
 That night, I fell down the rabbit hole. And what I found gave me lots of ideas. Turns out, I'd been thinking about startup time all wrong.
+
+## My Journey Structure
+
+I started with a Jersey application startup problem, but quickly 
+realized optimization techniques fall into three categories:
+
+1. **JVM-level** (Chapters 1, 4, 5) - Apply to ANY Java app
+2. **Spring Boot-specific** (Chapters 2, 3) - Research for future projects
+3. **Framework-agnostic architecture** (Chapters 6, 7) - Adaptable to Jersey
+
+I've marked each technique with its applicability.
 
 ## The Uncomfortable Truth About Startup Time
 
@@ -30,16 +39,19 @@ I used to think "JVM starts slow, deal with it." But that's like saying "traffic
 
 After digging deep (and I mean JVM logs, profilers, lots of blogs and articles), I discovered a typical breakdown that many Java developers observe:
 
-- **~40% is classloading** - The JVM reading and parsing your .class files
-- **~30% is bean creation** - Spring (or your framework) wiring everything together  
-- **~20% is reflection and proxies** - All that runtime magic has a cost
-- **~10% is I/O** - Reading configs, connecting to databases
+- **Major part of time goes to classloading** - The JVM reading and parsing your .class files
+- **For spring another major time spend in bean creation** - Spring (or your framework) wiring everything together  
+- **Another big chunk of time goes into reflection and proxies** - All that runtime magic has a cost
+- **Some of time goes into I/O** - Reading configs, connecting to databases
 
 *Note: These are approximate distributions based on analysis from Spring Boot team's [startup optimization research](https://spring.io/blog/2018/12/12/how-fast-is-spring), [Oracle's JVM performance documentation](https://docs.oracle.com/en/java/javase/17/vm/class-data-sharing.html), and profiling multiple applications. Your mileage will vary depending on framework, dependencies, and architecture choices.*
 
-I was dealing with very slow startup time of the Jersey application though my application loads and verifies a lot of stuff before starting still I think there could be improvements.
+I was dealing with very slow startup time of the Jersey application though my application loads and verifies a lot of stuff before starting still I think there could be improvements.Once I knew where the time was *actually* going, I could fight back.
 
-Once I knew where the time was *actually* going, I could fight back.
+**Pro Tip**: Before optimizing anything, jump to 
+[The Measurement Mindset](#measurement-mindset) to learn how to 
+profile your specific bottlenecks. I'm presenting techniques in the 
+order I discovered them, but you should measure first.
 
 ## Chapter 1: The JVM Strikes Back (Or: How I Learned to Stop Worrying and Love AppCDS)
 
@@ -74,11 +86,18 @@ java -XX:SharedArchiveFile=app-cds.jsa \
 
 No code changes. No architecture overhaul. Just telling the JVM to be smarter about something it was already doing.
 
-But I wasn't done. Not even close.
+But I wasn't done. Not even close. 
+
+APPLIES TO: Any Java 10+ application (not Spring-specific)
 
 ## Chapter 2: Spring Boot's Little Secrets
 
 I love Spring Boot. I really do. But it's like that friend who insists on checking if you locked the door, turned off the stove, and closed the windows—even when you're just running to the mailbox.
+
+NOTE: While I was exploring Jersey optimization, I researched 
+   these Spring Boot techniques. If you're using Spring Boot, these 
+   will apply directly. For Jersey/other frameworks, focus on the 
+   JVM-level optimizations in Chapters 1, 4, and 5.
 
 ### Auto-Configuration: The Double-Edged Sword
 
@@ -156,6 +175,9 @@ At compile time, it generates `META-INF/spring.components`. This means Spring do
 At this point, I had to ask myself: how fast could this thing *really* go?
 
 Enter **GraalVM Native Image**. This is the quantum leap, the paradigm shift, the "wait, is this still Java?" moment.
+
+ADVANCED TECHNIQUE: This requires significant build changes and 
+    may not work with all libraries. Evaluate carefully.
 
 ### What Actually Happens
 
@@ -298,7 +320,7 @@ I ran this command and I was like why do we use so many dependencies:
 mvn dependency:tree | grep -c "jar"
 ```
 
-**206 dependencies.**
+found **206 dependencies.**
 
 Did I need all of them? thats the question I asked Then I started to look which kind of dependencies one can remove?.
 
@@ -463,7 +485,7 @@ public class DataMapper {
 }
 ```
 
-With MapStruct:
+With **MapStruct**:
 
 ```java
 @Mapper(componentModel = "spring")
@@ -640,11 +662,10 @@ Then, if you want more, come back and try the other techniques. But start there.
 
 ## The End? Or Just the Beginning?
 
-
 Why does classloading take so long? What if we cached it?  
 Why are we creating 300 beans at startup? What if we waited?  
 Why are we running on the JVM at all? What if we compiled ahead-of-time?
 
 Every "what if" openes a new door.
 
-Your Java app doesn't have to start slow. The tools are there. The techniques work. You just need to use them.
+Your Java app doesn't have to start slow. The tools are there. The techniques work. You just need to start your exloration.
