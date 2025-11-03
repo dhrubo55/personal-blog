@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava", "Perf", "JVM", "Optimization"]
 date = 2025-10-30T00:00:00Z
 description = "Your Java app takes so much time to start. You've tried everything, or have you? Here's how I cut startup time using techniques you probably haven't tried yet."
-draft = flase
+draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day94"
