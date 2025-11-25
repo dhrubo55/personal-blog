@@ -1,13 +1,13 @@
 +++
 category = ["Java", "100DaysOfJava"]
-date = 2025-10-24T00:00:00Z
-description = "When you modify a list and the original stays unchanged—is it magic? Nope, it's persistent data structures. Here's why they're evolutionary perfect for modern Java."
-draft = true
+date = 2025-11-21T00:00:00Z
+description = "Master all 12 essential java.util.concurrent tools - from Executor to Phaser - with real-world production patterns that power systems handling millions of requests."
+draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day95"
-summary = "When you modify a list and the original stays unchanged—is it magic? Nope, it's persistent data structures. Here's why they're evolutionary perfect for modern Java."
-title = "Day 95: The Data Structures That Refuse to Die (Persistent & Darwinian Structures in Java 21)"
+summary = "Deep dive into 12 essential concurrency tools in Java 21 - with battle-tested patterns from production systems"
+title = "Day 95: 12 concurrent tools in Java - Beyond Threads, Into Production-Ready Patterns"
 [cover]
 alt = "day95"
 caption = "day95"
@@ -15,1347 +15,1098 @@ image = ""
 relative = false
 +++
 
-## The Coffee Shop Paradox
+**"Concurrency is not parallelism. Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once."** - Rob Pike
 
-Picture this: You're at your favorite coffee shop, and you've written your grocery list on a napkin. Your friend grabs it, crosses out "milk" and adds "oat milk," then hands it back. But here's the thing—when you look at your original napkin, it still says "milk." 
+I've worked with `Executor`, `ScheduledExecutorService`, `Future`, `CompletableFuture`, `CountDownLatch`, `ReentrantLock` in production, and they've helped me develop various multi threaded features. But I realized I was barely scratching the surface of what `java.util.concurrent` offers. So I dove deep and found 12 concurrency tools to understand when and how to use each one. Today, I'm sharing that journey—complete patterns with real-world use cases and Java 21 code you can experiment with.
 
-Wait, what?
+## The Complete Picture: Choosing the Right Tool
 
-Your friend didn't modify your list. They made a copy, changed that, and gave you back the modified version while your original stayed pristine. That's basically what persistent data structures do. And yes, I know what you're thinking—"Sounds expensive, making copies all the time." 
+I think one can follow this decision tree when trying to pick the right api for concurrent use:
 
-But hold on. This is where things get interesting.
+**Need to run async task without caring about result?**
+→ `Executor`
 
-## When Mutation Goes Wrong: A Tale of Debugging Hell
+**Need to manage lifecycle and collect results?**
+→ `ExecutorService`
 
-Let me tell you about a bug that cost me three days of my life. Three. Days.
+**Need periodic or scheduled execution?**
+→ `ScheduledExecutorService`
 
-I was working on a financial trading system (because apparently, I enjoy stress). We had this shared `List<Trade>` that multiple threads were accessing. Simple enough, right? Thread A reads it, Thread B modifies it, everything should be fine because we have locks... except it wasn't fine.
+**Need to enforce timeout on long-running operation?**
+→ `Future` with `get(timeout)` / `CompletableFuture`
 
-Here's what the code looked like:
+**Need to wait for multiple operations to complete before proceeding?**
+→ `CountDownLatch`
 
-```java
-public class TradingEngine {
-    private List<Trade> activeTrades = new ArrayList<>();
-    
-    public void processTrade(Trade newTrade) {
-        synchronized(activeTrades) {
-            activeTrades.add(newTrade);
-            // Some complex validation logic here
-            if (!isValid(activeTrades)) {
-                activeTrades.remove(newTrade); // Rollback
-            }
-        }
-    }
-    
-    public List<Trade> getActiveTrades() {
-        synchronized(activeTrades) {
-            return new ArrayList<>(activeTrades); // Defensive copy
-        }
-    }
-    
-    public double calculateRisk() {
-        List<Trade> snapshot = getActiveTrades();
-        double risk = 0.0;
-        for (Trade trade : snapshot) {
-            risk += trade.getRiskValue();
-            // This calculation takes time...
-            Thread.sleep(100); // Simulating complex calculation
-        }
-        return risk;
-    }
-}
-```
+**Need multiple synchronized phases with same threads?**
+→ `CyclicBarrier`
 
-The bug? Even with all those locks and defensive copies, we were getting inconsistent risk calculations. Why? Because between getting the snapshot and finishing the calculation, the actual list had changed five times. Our "snapshot" was already outdated the moment we got it.
+**Need to limit concurrent access to resource pool?**
+→ `Semaphore`
 
-We needed immutability. We needed persistence. We needed to stop fighting against mutation and embrace a different model entirely.
+**Need producer-consumer pattern with buffering?**
+→ `BlockingQueue`
 
-## Enter the Persistent Data Structure: Nature's Solution
+**Need delayed task execution with retry logic?**
+→ `DelayQueue`
 
-Here's where it gets wild. Persistent data structures are called "persistent" not because they stick around (though they do), but because they preserve previous versions of themselves. It's like git for your data—every "commit" creates a new version while old versions remain accessible.
+**Need fine-grained locking with timeout?**
+→ `ReentrantLock`
 
-And the "Darwinian" part? That's about structural sharing—the evolutionary trick that makes this whole thing practical. Just like evolution doesn't reinvent the wheel with every generation, persistent data structures don't copy everything. They share the unchanged parts and only create new structure where needed.
-
-Let me show you what I mean.
-
-## The Old Way vs. The New Way
-
-Traditional mutable approach:
-
-```java
-List<String> original = new ArrayList<>();
-original.add("Alice");
-original.add("Bob");
-original.add("Charlie");
-
-List<String> modified = original; // Same reference!
-modified.add("Diana");
-
-System.out.println(original.size()); // 4 - Wait, what? I didn't touch original!
-```
-
-This is the classic aliasing problem. Two variables pointing to the same mutable object. Change one, change both. It's like having two remote controls for the same TV—press mute on either one, and you get silence.
-
-Now, with Java 21's improvements and libraries like Vavr (formerly Javaslang) or PCollections:
-
-```java
-import io.vavr.collection.List;
-
-List<String> original = List.of("Alice", "Bob", "Charlie");
-List<String> modified = original.append("Diana");
-
-System.out.println(original.size()); // 3 - Still three!
-System.out.println(modified.size()); // 4 - New version!
-System.out.println(original == modified); // false - Different objects!
-```
-
-Both versions exist simultaneously. No locks needed. No defensive copies. No bugs from unexpected mutations. It's beautiful.
-
-## How Does This Magic Actually Work?
-
-Let's pull back the curtain. I'm going to show you a simplified persistent linked list implementation to demonstrate the core concept:
-
-```java
-public sealed interface PersistentList<T> {
-    
-    // The empty list - our base case
-    record Empty<T>() implements PersistentList<T> {
-        @Override
-        public PersistentList<T> add(T element) {
-            return new Node<>(element, this);
-        }
-        
-        @Override
-        public T head() {
-            throw new NoSuchElementException("Empty list has no head");
-        }
-        
-        @Override
-        public PersistentList<T> tail() {
-            throw new NoSuchElementException("Empty list has no tail");
-        }
-        
-        @Override
-        public int size() {
-            return 0;
-        }
-    }
-    
-    // A node in the list
-    record Node<T>(T head, PersistentList<T> tail) implements PersistentList<T> {
-        @Override
-        public PersistentList<T> add(T element) {
-            return new Node<>(element, this);
-        }
-        
-        @Override
-        public int size() {
-            return 1 + tail.size();
-        }
-    }
-    
-    // The interface methods
-    PersistentList<T> add(T element);
-    T head();
-    PersistentList<T> tail();
-    int size();
-    
-    // Factory method
-    static <T> PersistentList<T> empty() {
-        return new Empty<>();
-    }
-}
-```
-
-Now watch what happens when we use it:
-
-```java
-PersistentList<Integer> v1 = PersistentList.empty();
-PersistentList<Integer> v2 = v1.add(1);
-PersistentList<Integer> v3 = v2.add(2);
-PersistentList<Integer> v4 = v2.add(99); // Branch from v2!
-
-System.out.println("v1 size: " + v1.size()); // 0
-System.out.println("v2 size: " + v2.size()); // 1
-System.out.println("v3 size: " + v3.size()); // 2
-System.out.println("v4 size: " + v4.size()); // 2
-
-System.out.println("v3 head: " + v3.head()); // 2
-System.out.println("v4 head: " + v4.head()); // 99
-```
-
-Here's the crucial insight: `v3` and `v4` both share the same underlying `v2` structure. When we added 2 to create `v3`, we didn't copy anything—we just created a new node pointing to `v2`. Same with `v4`. This is structural sharing in action.
-
-Think of it like a tree where branches split off but share the same trunk. That's why it's called "Darwinian"—like species diverging from common ancestors while sharing genetic heritage.
-
-## Wait, What Exactly ARE Darwinian Data Structures?
-
-Okay, so I've been throwing around the term "Darwinian" like everyone knows what it means. Let me actually explain it properly, because it's not just a cool metaphor—it's a specific design approach.
-
-**Persistent data structures** preserve all versions. That's the "git for your data" part.
-
-**Darwinian data structures** take it further—they're persistent structures that actively use structural sharing to "evolve" efficiently, just like biological evolution reuses genes across generations instead of reinventing everything from scratch.
-
-Here's the key insight that makes them "Darwinian":
-
-### The Evolutionary Analogy
-
-In biological evolution:
-- Each generation inherits traits from parents
-- Mutations are small, localized changes
-- Most of the organism stays the same
-- DNA is shared across related species
-
-In Darwinian data structures:
-- Each version inherits structure from the previous version
-- Changes are small, localized modifications
-- Most of the structure is reused via references
-- Memory is shared across related versions
-
-Let me show you what this means in practice with a more sophisticated example—a **persistent binary tree** that demonstrates true Darwinian evolution:
-
-```java
-public sealed interface PersistentTree<T extends Comparable<T>> {
-    
-    record Empty<T extends Comparable<T>>() implements PersistentTree<T> {
-        @Override
-        public PersistentTree<T> insert(T value) {
-            return new Node<>(value, this, this);
-        }
-        
-        @Override
-        public boolean contains(T value) {
-            return false;
-        }
-        
-        @Override
-        public int size() {
-            return 0;
-        }
-        
-        @Override
-        public void printStructure(String prefix, boolean isLeft) {
-            System.out.println(prefix + "└── ∅");
-        }
-    }
-    
-    record Node<T extends Comparable<T>>(
-        T value,
-        PersistentTree<T> left,
-        PersistentTree<T> right
-    ) implements PersistentTree<T> {
-        
-        @Override
-        public PersistentTree<T> insert(T newValue) {
-            int comparison = newValue.compareTo(value);
-            
-            if (comparison < 0) {
-                // Only create a NEW node for the path that changes!
-                // Left and right subtrees are SHARED (Darwinian!)
-                return new Node<>(value, left.insert(newValue), right);
-            } else if (comparison > 0) {
-                // Same here - we reuse the left subtree
-                return new Node<>(value, left, right.insert(newValue));
-            } else {
-                // Value already exists, return this tree unchanged
-                return this;
-            }
-        }
-        
-        @Override
-        public boolean contains(T searchValue) {
-            int comparison = searchValue.compareTo(value);
-            if (comparison < 0) {
-                return left.contains(searchValue);
-            } else if (comparison > 0) {
-                return right.contains(searchValue);
-            } else {
-                return true;
-            }
-        }
-        
-        @Override
-        public int size() {
-            return 1 + left.size() + right.size();
-        }
-        
-        @Override
-        public void printStructure(String prefix, boolean isLeft) {
-            System.out.println(prefix + (isLeft ? "├── " : "└── ") + value);
-            
-            boolean hasLeft = !(left instanceof Empty);
-            boolean hasRight = !(right instanceof Empty);
-            
-            if (hasLeft) {
-                left.printStructure(prefix + (isLeft ? "│   " : "    "), true);
-            }
-            if (hasRight) {
-                right.printStructure(prefix + (isLeft ? "│   " : "    "), false);
-            }
-        }
-    }
-    
-    PersistentTree<T> insert(T value);
-    boolean contains(T value);
-    int size();
-    void printStructure(String prefix, boolean isLeft);
-    
-    static <T extends Comparable<T>> PersistentTree<T> empty() {
-        return new Empty<>();
-    }
-    
-    default void print() {
-        System.out.println("\nTree Structure:");
-        printStructure("", false);
-    }
-}
-```
-
-Now watch the Darwinian magic happen:
-
-```java
-public class DarwinianTreeDemo {
-    public static void main(String[] args) {
-        // Create initial tree
-        PersistentTree<Integer> tree1 = PersistentTree.empty();
-        tree1 = tree1.insert(50);
-        tree1 = tree1.insert(30);
-        tree1 = tree1.insert(70);
-        tree1 = tree1.insert(20);
-        tree1 = tree1.insert(40);
-        
-        System.out.println("=== Tree Version 1 ===");
-        tree1.print();
-        System.out.println("Size: " + tree1.size());
-        
-        // Create a new version by adding elements
-        // This is where Darwinian evolution happens!
-        PersistentTree<Integer> tree2 = tree1.insert(60);
-        PersistentTree<Integer> tree3 = tree1.insert(80);
-        
-        System.out.println("\n=== Tree Version 2 (added 60) ===");
-        tree2.print();
-        System.out.println("Size: " + tree2.size());
-        
-        System.out.println("\n=== Tree Version 3 (added 80 to tree1) ===");
-        tree3.print();
-        System.out.println("Size: " + tree3.size());
-        
-        System.out.println("\n=== Original Tree (unchanged!) ===");
-        tree1.print();
-        System.out.println("Size: " + tree1.size());
-        
-        // Demonstrate structural sharing
-        demonstrateStructuralSharing();
-    }
-    
-    private static void demonstrateStructuralSharing() {
-        System.out.println("\n\n=== STRUCTURAL SHARING DEMONSTRATION ===");
-        
-        PersistentTree<String> original = PersistentTree.empty();
-        original = original.insert("Dog");
-        original = original.insert("Cat");
-        original = original.insert("Fish");
-        original = original.insert("Bird");
-        
-        System.out.println("Original tree with 4 animals:");
-        original.print();
-        
-        // Create two evolved versions
-        PersistentTree<String> pets = original.insert("Hamster");
-        PersistentTree<String> wild = original.insert("Wolf");
-        
-        System.out.println("\n'Pets' evolution (added Hamster):");
-        pets.print();
-        
-        System.out.println("\n'Wild' evolution (added Wolf):");
-        wild.print();
-        
-        System.out.println("\n🧬 DARWINIAN INSIGHT:");
-        System.out.println("All three trees share the same nodes for Dog, Cat, Fish, and Bird!");
-        System.out.println("Only the NEW nodes (Hamster and Wolf) and the path to them are copied.");
-        System.out.println("This is like species sharing common ancestors in the tree of life.");
-        System.out.println("\nMemory efficiency:");
-        System.out.println("- Without sharing: " + (original.size() + pets.size() + wild.size()) + " nodes total");
-        System.out.println("- With sharing: ~" + (original.size() + 2 + 2) + " nodes total (estimated)");
-        System.out.println("- Savings: ~" + (original.size() * 2) + " nodes!");
-    }
-}
-```
-
-### The Math Behind Darwinian Efficiency
-
-Here's why this is brilliant. When you insert a value into a binary tree:
-
-**Traditional mutable approach:**
-- Copy entire tree: O(n) time, O(n) space
-- Or mutate in place: O(log n) time, but lose previous version
-
-**Darwinian persistent approach:**
-- Insert: O(log n) time
-- Space per version: O(log n) - only the path from root to insertion point!
-- Previous versions: Still accessible!
-
-Let's prove this with a real example:
-
-```java
-public class DarwinianEfficiencyDemo {
-    public static void main(String[] args) {
-        PersistentTree<Integer> tree = PersistentTree.empty();
-        
-        // Build a tree with 1000 elements
-        for (int i = 0; i < 1000; i++) {
-            tree = tree.insert(i);
-        }
-        
-        System.out.println("Initial tree size: " + tree.size());
-        
-        // Now create 10 versions, each adding one element
-        List<PersistentTree<Integer>> versions = new ArrayList<>();
-        versions.add(tree);
-        
-        for (int i = 0; i < 10; i++) {
-            tree = tree.insert(1000 + i);
-            versions.add(tree);
-        }
-        
-        System.out.println("\n=== Memory Efficiency Analysis ===");
-        System.out.println("Number of versions: " + versions.size());
-        System.out.println("Size of each version: ~1000-1010 elements");
-        
-        System.out.println("\nWithout structural sharing:");
-        System.out.println("  Total nodes: " + (11 * 1000) + " (11 complete copies)");
-        
-        System.out.println("\nWith Darwinian sharing:");
-        System.out.println("  Shared base: 1000 nodes");
-        System.out.println("  Per version: ~10 new nodes (only the path)");
-        System.out.println("  Total nodes: ~" + (1000 + 10 * 10) + " nodes");
-        
-        System.out.println("\n💡 Space saved: ~" + (11 * 1000 - 1100) + " nodes!");
-        System.out.println("   That's " + String.format("%.1f", (9900.0 / 11000.0) * 100) + "% savings!");
-        
-        // All versions are still accessible!
-        System.out.println("\n=== Time Travel Demo ===");
-        for (int i = 0; i < versions.size(); i++) {
-            System.out.println("Version " + i + " size: " + versions.get(i).size());
-        }
-    }
-}
-```
-
-### Why "Darwinian" Is the Perfect Name
-
-Charles Darwin's big insight was that evolution isn't about creating species from scratch—it's about small, incremental changes to existing organisms, with successful traits being preserved and shared across generations.
-
-Darwinian data structures work the same way:
-
-1. **Common Ancestry**: Multiple versions share a common base structure
-2. **Incremental Change**: Only modified parts create new nodes
-3. **Natural Selection**: Garbage collection removes unused versions (like extinction)
-4. **Adaptation**: New versions adapt to new requirements without destroying old ones
-5. **Speciation**: Versions can branch off in different directions while sharing heritage
-
-Here's a visual representation:
-
-```java
-public class EvolutionaryVisualization {
-    public static void main(String[] args) {
-        System.out.println("=== EVOLUTIONARY TREE OF DATA STRUCTURES ===\n");
-        
-        PersistentTree<String> ancestor = PersistentTree.empty();
-        ancestor = ancestor.insert("Mammal");
-        ancestor = ancestor.insert("Reptile");
-        
-        System.out.println("COMMON ANCESTOR (all animals):");
-        ancestor.print();
-        
-        // Evolution branch 1: Mammals
-        PersistentTree<String> mammals = ancestor.insert("Dog");
-        mammals = mammals.insert("Cat");
-        
-        System.out.println("\n\nBRANCH 1: Mammals (shares Mammal + Reptile):");
-        mammals.print();
-        
-        // Evolution branch 2: Reptiles
-        PersistentTree<String> reptiles = ancestor.insert("Lizard");
-        reptiles = reptiles.insert("Snake");
-        
-        System.out.println("\n\nBRANCH 2: Reptiles (shares Mammal + Reptile):");
-        reptiles.print();
-        
-        System.out.println("\n\n🧬 SHARED DNA (Structure):");
-        System.out.println("Both branches contain 'Mammal' and 'Reptile' nodes");
-        System.out.println("These are THE SAME node objects in memory!");
-        System.out.println("Only the specialized branches (Dog/Cat vs Lizard/Snake) are unique");
-        
-        System.out.println("\nThis is exactly how biological evolution works:");
-        System.out.println("- Humans and chimps share 98.8% of DNA");
-        System.out.println("- Data structures share ~80%+ of nodes (depending on changes)");
-    }
-}
-```
-
-### The Difference: Persistent vs. Darwinian
-
-Let me be crystal clear about the distinction:
-
-| Aspect | Persistent Data Structures | Darwinian Data Structures |
-|--------|---------------------------|---------------------------|
-| **Definition** | Preserve all versions | Persistent + structural sharing |
-| **Memory Strategy** | May copy everything | Reuse unchanged parts |
-| **Mutation** | Create new version | Create new version with minimal copying |
-| **Efficiency** | Can be expensive | Optimized through sharing |
-| **Example** | Copying entire array | Binary tree with shared subtrees |
-| **Best for** | Simple immutability | Complex nested structures |
-
-Think of it this way:
-- **Persistent** = Taking a photo every time something changes (you have all versions)
-- **Darwinian** = Video with keyframes and deltas (you have all versions, but space-efficient)
-
-### Real-World Darwinian Example: Git Internals
-
-Actually, you know what's a perfect real-world Darwinian data structure? **Git!**
-
-When you make a commit:
-- Git doesn't copy your entire codebase
-- It creates a tree of changes
-- Unchanged files are shared (same SHA hash = same object)
-- Only modified files get new objects
-- Each commit points to a tree, which points to blobs (files)
-- Multiple commits share the same blob references
-
-That's Darwinian structural sharing in action! Let's model it:
-
-```java
-public class GitLikeVersionControl {
-    
-    // A file in our version control system
-    record Blob(String filename, String content, String hash) {
-        public Blob {
-            hash = computeHash(filename, content);
-        }
-        
-        private static String computeHash(String filename, String content) {
-            return filename + ":" + content.hashCode();
-        }
-    }
-    
-    // A version (commit) in our system
-    record Commit(
-        String message,
-        PersistentTree<Blob> files,
-        Commit parent,
-        long timestamp
-    ) {
-        public Commit(String message, PersistentTree<Blob> files, Commit parent) {
-            this(message, files, parent, System.currentTimeMillis());
-        }
-        
-        public void show() {
-            System.out.println("\n📝 Commit: " + message);
-            System.out.println("   Time: " + new java.util.Date(timestamp));
-            System.out.println("   Files: " + files.size());
-            if (parent != null) {
-                System.out.println("   Parent: " + parent.message());
-            }
-        }
-    }
-    
-    public static void main(String[] args) throws InterruptedException {
-        System.out.println("=== GIT-LIKE VERSION CONTROL (Darwinian!) ===\n");
-        
-        // Initial commit
-        PersistentTree<Blob> tree = PersistentTree.empty();
-        tree = tree.insert(new Blob("README.md", "# My Project", ""));
-        tree = tree.insert(new Blob("main.java", "public class Main {}", ""));
-        
-        Commit commit1 = new Commit("Initial commit", tree, null);
-        commit1.show();
-        Thread.sleep(100);
-        
-        // Second commit - modify one file
-        // Notice: We REUSE the README.md blob! Only main.java changes!
-        PersistentTree<Blob> tree2 = tree.insert(
-            new Blob("main.java", "public class Main { /* updated */ }", "")
-        );
-        
-        Commit commit2 = new Commit("Update main.java", tree2, commit1);
-        commit2.show();
-        Thread.sleep(100);
-        
-        // Third commit - add a new file
-        // README.md and main.java are shared from commit2!
-        PersistentTree<Blob> tree3 = tree2.insert(
-            new Blob("utils.java", "public class Utils {}", "")
-        );
-        
-        Commit commit3 = new Commit("Add utils.java", tree3, commit2);
-        commit3.show();
-        
-        System.out.println("\n\n🧬 DARWINIAN INSIGHT:");
-        System.out.println("Commit 1: Has README and main (v1)");
-        System.out.println("Commit 2: REUSES README, creates new main (v2)");
-        System.out.println("Commit 3: REUSES README and main (v2), adds utils");
-        System.out.println("\nREADME.md blob is THE SAME OBJECT across all commits!");
-        System.out.println("This is structural sharing - the essence of Darwinian structures!");
-    }
-}
-```
-
-## Real-World Example: Undo/Redo System
-
-Let's build something practical—a text editor with undo/redo functionality. With persistent data structures, this becomes trivial:
-
-```java
-public class DocumentEditor {
-    private record DocumentState(
-        PersistentList<String> lines,
-        int cursorLine,
-        int cursorColumn
-    ) {}
-    
-    private PersistentList<DocumentState> history;
-    private int currentIndex;
-    
-    public DocumentEditor() {
-        DocumentState initial = new DocumentState(
-            PersistentList.empty(),
-            0,
-            0
-        );
-        this.history = PersistentList.<DocumentState>empty().add(initial);
-        this.currentIndex = 0;
-    }
-    
-    public void insertLine(String line) {
-        DocumentState current = getCurrentState();
-        DocumentState newState = new DocumentState(
-            current.lines().add(line),
-            current.cursorLine() + 1,
-            0
-        );
-        
-        // Trim future history if we're in the middle
-        history = trimHistoryAfter(currentIndex).add(newState);
-        currentIndex++;
-    }
-    
-    public void undo() {
-        if (currentIndex > 0) {
-            currentIndex--;
-        }
-    }
-    
-    public void redo() {
-        if (currentIndex < getHistorySize() - 1) {
-            currentIndex++;
-        }
-    }
-    
-    public DocumentState getCurrentState() {
-        return getStateAt(currentIndex);
-    }
-    
-    private DocumentState getStateAt(int index) {
-        // Navigate to the right position in history
-        PersistentList<DocumentState> current = history;
-        for (int i = 0; i < getHistorySize() - 1 - index; i++) {
-            current = current.tail();
-        }
-        return current.head();
-    }
-    
-    private int getHistorySize() {
-        return history.size();
-    }
-    
-    private PersistentList<DocumentState> trimHistoryAfter(int index) {
-        PersistentList<DocumentState> result = PersistentList.empty();
-        PersistentList<DocumentState> current = history;
-        int size = getHistorySize();
-        
-        for (int i = 0; i <= index && i < size; i++) {
-            DocumentState state = getStateAt(i);
-            result = result.add(state);
-        }
-        
-        return result;
-    }
-    
-    public void printCurrentDocument() {
-        DocumentState state = getCurrentState();
-        System.out.println("=== Document (at position " + currentIndex + ") ===");
-        
-        PersistentList<String> lines = state.lines();
-        int lineNum = 1;
-        while (lines.size() > 0) {
-            System.out.println(lineNum++ + ": " + lines.head());
-            lines = lines.tail();
-        }
-        
-        System.out.println("Cursor: Line " + state.cursorLine() + 
-                         ", Column " + state.cursorColumn());
-    }
-}
-```
-
-Let's see it in action:
-
-```java
-public class EditorDemo {
-    public static void main(String[] args) {
-        DocumentEditor editor = new DocumentEditor();
-        
-        System.out.println("Adding first line...");
-        editor.insertLine("Hello, World!");
-        editor.printCurrentDocument();
-        
-        System.out.println("\nAdding second line...");
-        editor.insertLine("This is persistent!");
-        editor.printCurrentDocument();
-        
-        System.out.println("\nAdding third line...");
-        editor.insertLine("Data structures are cool.");
-        editor.printCurrentDocument();
-        
-        System.out.println("\n--- Undo once ---");
-        editor.undo();
-        editor.printCurrentDocument();
-        
-        System.out.println("\n--- Undo again ---");
-        editor.undo();
-        editor.printCurrentDocument();
-        
-        System.out.println("\n--- Redo ---");
-        editor.redo();
-        editor.printCurrentDocument();
-        
-        System.out.println("\nAdding a line after undo (creates new branch)...");
-        editor.insertLine("Alternative timeline!");
-        editor.printCurrentDocument();
-    }
-}
-```
-
-Notice something beautiful here? We never explicitly stored "versions" or "deltas." The persistent list structure naturally maintains the history. Each state is immutable, so we can navigate through time without fear of corruption.
-
-## The Performance Question Everyone Asks
-
-"But doesn't this create a ton of objects? Isn't it slow?"
-
-Fair question. Let's talk numbers.
-
-For a traditional mutable `ArrayList`:
-- Add: O(1) amortized
-- Get: O(1)
-- Memory: Exactly what you need
-
-For a persistent list like we built:
-- Add: O(1) - just create a new node
-- Get: O(n) - have to traverse
-- Memory: Shared structure means less duplication than you'd think
-
-But here's the thing—it's not about raw speed. It's about correctness, concurrency, and maintainability. And for certain operations, persistent structures can actually be faster.
-
-Let me show you a concrete comparison with Java 21's features:
-
-```java
-import java.util.concurrent.*;
-import java.time.*;
-
-public class PerformanceComparison {
-    
-    // Traditional mutable approach with locks
-    static class MutableCounter {
-        private List<Integer> values = new ArrayList<>();
-        private final ReentrantLock lock = new ReentrantLock();
-        
-        public void add(Integer value) {
-            lock.lock();
-            try {
-                values.add(value);
-            } finally {
-                lock.unlock();
-            }
-        }
-        
-        public List<Integer> getSnapshot() {
-            lock.lock();
-            try {
-                return new ArrayList<>(values);
-            } finally {
-                lock.unlock();
-            }
-        }
-        
-        public int size() {
-            lock.lock();
-            try {
-                return values.size();
-            } finally {
-                lock.unlock();
-            }
-        }
-    }
-    
-    // Persistent approach - no locks needed!
-    static class PersistentCounter {
-        private volatile PersistentList<Integer> values;
-        
-        public PersistentCounter() {
-            this.values = PersistentList.empty();
-        }
-        
-        public void add(Integer value) {
-            // Optimistic update with CAS
-            PersistentList<Integer> current;
-            PersistentList<Integer> updated;
-            do {
-                current = values;
-                updated = current.add(value);
-            } while (!casValues(current, updated));
-        }
-        
-        private boolean casValues(PersistentList<Integer> expected, 
-                                  PersistentList<Integer> updated) {
-            // Simplified CAS - in real code, use AtomicReference
-            synchronized (this) {
-                if (values == expected) {
-                    values = updated;
-                    return true;
-                }
-                return false;
-            }
-        }
-        
-        public PersistentList<Integer> getSnapshot() {
-            return values; // No copy needed!
-        }
-        
-        public int size() {
-            return values.size();
-        }
-    }
-    
-    public static void main(String[] args) throws InterruptedException {
-        int operations = 10000;
-        int threads = 10;
-        
-        // Test mutable version
-        long mutableTime = testMutable(operations, threads);
-        
-        // Test persistent version
-        long persistentTime = testPersistent(operations, threads);
-        
-        System.out.println("\n=== Results ===");
-        System.out.println("Mutable approach: " + mutableTime + "ms");
-        System.out.println("Persistent approach: " + persistentTime + "ms");
-        System.out.println("Winner: " + (persistentTime < mutableTime ? 
-                         "Persistent (by " + (mutableTime - persistentTime) + "ms)" :
-                         "Mutable (by " + (persistentTime - mutableTime) + "ms)"));
-    }
-    
-    private static long testMutable(int operations, int threadCount) 
-        throws InterruptedException {
-        
-        MutableCounter counter = new MutableCounter();
-        CountDownLatch latch = new CountDownLatch(threadCount);
-        
-        long start = System.currentTimeMillis();
-        
-        for (int i = 0; i < threadCount; i++) {
-            final int threadId = i;
-            new Thread(() -> {
-                for (int j = 0; j < operations; j++) {
-                    counter.add(threadId * operations + j);
-                    
-                    // Simulate reads
-                    if (j % 100 == 0) {
-                        counter.getSnapshot();
-                    }
-                }
-                latch.countDown();
-            }).start();
-        }
-        
-        latch.await();
-        long end = System.currentTimeMillis();
-        
-        System.out.println("Mutable final size: " + counter.size());
-        return end - start;
-    }
-    
-    private static long testPersistent(int operations, int threadCount) 
-        throws InterruptedException {
-        
-        PersistentCounter counter = new PersistentCounter();
-        CountDownLatch latch = new CountDownLatch(threadCount);
-        
-        long start = System.currentTimeMillis();
-        
-        for (int i = 0; i < threadCount; i++) {
-            final int threadId = i;
-            new Thread(() -> {
-                for (int j = 0; j < operations; j++) {
-                    counter.add(threadId * operations + j);
-                    
-                    // Simulate reads
-                    if (j % 100 == 0) {
-                        counter.getSnapshot();
-                    }
-                }
-                latch.countDown();
-            }).start();
-        }
-        
-        latch.await();
-        long end = System.currentTimeMillis();
-        
-        System.out.println("Persistent final size: " + counter.size());
-        return end - start;
-    }
-}
-```
-
-In high-contention scenarios, the persistent version can actually win because:
-1. No lock contention—threads aren't blocking each other
-2. Snapshots are free—just return the reference
-3. Modern CPUs love immutable data (cache-friendly)
-
-## Production Use Case: Event Sourcing
-
-Here's where persistent data structures shine brightest—event sourcing. Imagine you're building a banking system (seems like I can't escape banking examples). You need to track every state change, support audit trails, and potentially replay history.
-
-```java
-public class BankAccount {
-    
-    // Events are immutable records (Java 16+)
-    public sealed interface AccountEvent permits 
-        AccountOpened, MoneyDeposited, MoneyWithdrawn, AccountClosed {
-        
-        LocalDateTime timestamp();
-        String description();
-    }
-    
-    public record AccountOpened(
-        String accountId,
-        String owner,
-        LocalDateTime timestamp
-    ) implements AccountEvent {
-        @Override
-        public String description() {
-            return "Account opened for " + owner;
-        }
-    }
-    
-    public record MoneyDeposited(
-        String accountId,
-        double amount,
-        LocalDateTime timestamp
-    ) implements AccountEvent {
-        @Override
-        public String description() {
-            return "Deposited $" + amount;
-        }
-    }
-    
-    public record MoneyWithdrawn(
-        String accountId,
-        double amount,
-        LocalDateTime timestamp
-    ) implements AccountEvent {
-        @Override
-        public String description() {
-            return "Withdrew $" + amount;
-        }
-    }
-    
-    public record AccountClosed(
-        String accountId,
-        LocalDateTime timestamp
-    ) implements AccountEvent {
-        @Override
-        public String description() {
-            return "Account closed";
-        }
-    }
-    
-    // Immutable account state
-    public record AccountState(
-        String accountId,
-        String owner,
-        double balance,
-        boolean isActive,
-        PersistentList<AccountEvent> events
-    ) {
-        
-        public AccountState applyEvent(AccountEvent event) {
-            return switch (event) {
-                case AccountOpened e -> 
-                    new AccountState(e.accountId(), e.owner(), 0.0, true, 
-                                   events.add(event));
-                
-                case MoneyDeposited e -> 
-                    new AccountState(accountId, owner, balance + e.amount(), 
-                                   isActive, events.add(event));
-                
-                case MoneyWithdrawn e -> {
-                    if (balance < e.amount()) {
-                        throw new IllegalStateException("Insufficient funds");
-                    }
-                    yield new AccountState(accountId, owner, balance - e.amount(), 
-                                         isActive, events.add(event));
-                }
-                
-                case AccountClosed e -> 
-                    new AccountState(accountId, owner, balance, false, 
-                                   events.add(event));
-            };
-        }
-        
-        public static AccountState initial() {
-            return new AccountState(null, null, 0.0, false, PersistentList.empty());
-        }
-        
-        // Reconstruct state from events
-        public static AccountState fromEvents(PersistentList<AccountEvent> events) {
-            AccountState state = initial();
-            
-            PersistentList<AccountEvent> current = events;
-            while (current.size() > 0) {
-                state = state.applyEvent(current.head());
-                current = current.tail();
-            }
-            
-            return state;
-        }
-        
-        public void printStatement() {
-            System.out.println("\n=== Account Statement ===");
-            System.out.println("Account ID: " + accountId);
-            System.out.println("Owner: " + owner);
-            System.out.println("Balance: $" + String.format("%.2f", balance));
-            System.out.println("Status: " + (isActive ? "Active" : "Closed"));
-            System.out.println("\nTransaction History:");
-            
-            PersistentList<AccountEvent> current = events;
-            int txNum = 1;
-            while (current.size() > 0) {
-                AccountEvent event = current.head();
-                System.out.println(txNum++ + ". " + event.description() + 
-                                 " at " + event.timestamp());
-                current = current.tail();
-            }
-        }
-    }
-    
-    private volatile AccountState currentState;
-    
-    public BankAccount(String accountId, String owner) {
-        AccountEvent openEvent = new AccountOpened(
-            accountId, 
-            owner, 
-            LocalDateTime.now()
-        );
-        this.currentState = AccountState.initial().applyEvent(openEvent);
-    }
-    
-    public void deposit(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
-        }
-        
-        AccountEvent event = new MoneyDeposited(
-            currentState.accountId(),
-            amount,
-            LocalDateTime.now()
-        );
-        
-        currentState = currentState.applyEvent(event);
-    }
-    
-    public void withdraw(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
-        }
-        
-        AccountEvent event = new MoneyWithdrawn(
-            currentState.accountId(),
-            amount,
-            LocalDateTime.now()
-        );
-        
-        currentState = currentState.applyEvent(event);
-    }
-    
-    public void close() {
-        AccountEvent event = new AccountClosed(
-            currentState.accountId(),
-            LocalDateTime.now()
-        );
-        
-        currentState = currentState.applyEvent(event);
-    }
-    
-    public AccountState getState() {
-        return currentState;
-    }
-    
-    public AccountState getStateAt(int eventIndex) {
-        // Time travel! Get state after N events
-        PersistentList<AccountEvent> events = currentState.events();
-        PersistentList<AccountEvent> limitedEvents = PersistentList.empty();
-        
-        int count = 0;
-        while (events.size() > 0 && count < eventIndex) {
-            limitedEvents = limitedEvents.add(events.head());
-            events = events.tail();
-            count++;
-        }
-        
-        return AccountState.fromEvents(limitedEvents);
-    }
-    
-    public void printStatement() {
-        currentState.printStatement();
-    }
-}
-```
-
-Now let's use this beast:
-
-```java
-public class BankingDemo {
-    public static void main(String[] args) throws InterruptedException {
-        BankAccount account = new BankAccount("ACC-001", "Alice Johnson");
-        
-        // Perform some transactions
-        account.deposit(1000.00);
-        Thread.sleep(100); // Different timestamps
-        
-        account.deposit(500.00);
-        Thread.sleep(100);
-        
-        account.withdraw(200.00);
-        Thread.sleep(100);
-        
-        account.deposit(1500.00);
-        Thread.sleep(100);
-        
-        account.withdraw(300.00);
-        
-        // Show current state
-        account.printStatement();
-        
-        // Time travel!
-        System.out.println("\n=== Time Travel: State After 3 Events ===");
-        AccountState pastState = account.getStateAt(3);
-        System.out.println("Balance at that point: $" + 
-                         String.format("%.2f", pastState.balance()));
-        
-        // Show the evolution
-        System.out.println("\n=== Balance Evolution ===");
-        for (int i = 1; i <= account.getState().events().size(); i++) {
-            AccountState state = account.getStateAt(i);
-            System.out.println("After event " + i + ": $" + 
-                             String.format("%.2f", state.balance()));
-        }
-    }
-}
-```
-
-The beauty here? Every state transition is explicit and traceable. Need to debug why a balance is wrong? Just replay the events. Need to audit a transaction? The entire history is there. Need to support distributed systems? Events are naturally serializable and can be shipped around.
-
-## Java 21 Specific Goodies
-
-Java 21 brings some features that make persistent data structures even nicer:
-
-### 1. Pattern Matching for Switch (Standard in Java 21)
-
-We used this in the `applyEvent` method:
-
-```java
-public AccountState applyEvent(AccountEvent event) {
-    return switch (event) {
-        case AccountOpened e -> /* handle it */;
-        case MoneyDeposited e -> /* handle it */;
-        case MoneyWithdrawn e -> /* handle it */;
-        case AccountClosed e -> /* handle it */;
-    };
-}
-```
-
-This is exhaustive checking at compile time. Add a new event type? The compiler forces you to handle it. No more forgotten cases.
-
-### 2. Record Patterns
-
-Destructuring records in pattern matching (preview in Java 19, standard later):
-
-```java
-public String formatEvent(AccountEvent event) {
-    return switch (event) {
-        case AccountOpened(var id, var owner, var time) -> 
-            "Opened account " + id + " for " + owner;
-        
-        case MoneyDeposited(var id, var amount, var time) -> 
-            "+" + amount + " to " + id;
-        
-        case MoneyWithdrawn(var id, var amount, var time) -> 
-            "-" + amount + " from " + id;
-        
-        case AccountClosed(var id, var time) -> 
-            "Closed " + id;
-    };
-}
-```
-
-### 3. Sealed Interfaces
-
-We used sealed interfaces for the event hierarchy:
-
-```java
-public sealed interface AccountEvent permits 
-    AccountOpened, MoneyDeposited, MoneyWithdrawn, AccountClosed
-```
-
-This tells the compiler: "These are ALL the possible subtypes." Combined with pattern matching, you get compile-time exhaustiveness checking. It's like enum on steroids.
-
-### 4. Virtual Threads (Project Loom)
-
-Persistent data structures shine with virtual threads because they're naturally lock-free:
-
-```java
-public class VirtualThreadsDemo {
-    public static void main(String[] args) throws InterruptedException {
-        PersistentCounter counter = new PersistentCounter();
-        
-        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            // Launch 10,000 virtual threads - no problem!
-            for (int i = 0; i < 10_000; i++) {
-                final int value = i;
-                executor.submit(() -> {
-                    counter.add(value);
-                });
-            }
-        } // Auto-shutdown and wait
-        
-        System.out.println("Final size: " + counter.size());
-    }
-}
-```
-
-With mutable structures and locks, 10,000 threads would be a nightmare. With persistent structures and virtual threads, it's Tuesday.
-
-## When NOT to Use Persistent Data Structures
-
-Let's be real—persistent data structures aren't always the answer. Here's when to avoid them:
-
-1. **Hot loops with heavy computation**: If you're doing scientific computing with massive arrays that need in-place updates, stick with mutable structures.
-
-2. **When you truly need O(1) random access**: Persistent vectors exist (using clever tree structures), but if you're constantly doing `array[random_index] = value`, a plain array is still king.
-
-3. **Legacy codebases with deep mutation assumptions**: Don't try to retrofit this into a 10-year-old codebase that assumes everything is mutable. The refactoring cost isn't worth it.
-
-4. **Simple, single-threaded tools**: Writing a one-off script that processes a CSV file? Regular `ArrayList` is fine. Don't over-engineer.
-
-## The Libraries You Should Know
-
-While we built our own persistent list for learning, in production you'd use battle-tested libraries:
-
-### Vavr (formerly Javaslang)
-
-```java
-import io.vavr.collection.*;
-
-List<Integer> list = List.of(1, 2, 3);
-List<Integer> modified = list.append(4).prepend(0);
-
-// Efficient persistent HashMap
-Map<String, Integer> map = HashMap.of("a", 1, "b", 2);
-Map<String, Integer> updated = map.put("c", 3);
-```
-
-### PCollections
-
-```java
-import org.pcollections.*;
-
-PVector<String> vector = TreePVector.empty();
-vector = vector.plus("Hello");
-vector = vector.plus("World");
-
-PMap<String, Integer> map = HashTreePMap.empty();
-map = map.plus("key", 42);
-```
-
-### Immutables Library
-
-Not quite the same, but worth mentioning—generates immutable classes:
-
-```java
-@Value.Immutable
-public interface Person {
-    String name();
-    int age();
-    List<String> hobbies();
-}
-
-// Generated ImmutablePerson class
-Person person = ImmutablePerson.builder()
-    .name("Alice")
-    .age(30)
-    .addHobbies("Reading", "Coding")
-    .build();
-```
-
-## The Philosophy: Why This Matters
-
-Here's the thing that took me years to understand: mutable data structures aren't bad. They're tools. But we've been using them as the default for so long that we've forgotten there are other options.
-
-Persistent data structures make you think differently about state. Instead of "change this thing," you think "create a new version derived from this thing." It's the same mindset shift as moving from imperative to functional programming.
-
-And in a world where:
-- Everything is concurrent
-- Everything is distributed
-- Everything needs to be traced and audited
-- Everything needs to be replayed and debugged
-
-...immutability starts to look less like a luxury and more like a necessity.
-
-## The Mental Model Shift
-
-Traditional programming:
-```
-State → mutate → State (modified)
-```
-
-Persistent programming:
-```
-State₁ → transform → State₂
-       ↓
-    (State₁ still exists!)
-```
-
-It's like the multiverse theory for data structures. Every operation creates a new timeline, but the old timelines don't disappear. They're still there, still valid, still usable.
-
-## Wrapping Up: The Evolutionary Advantage
-
-So why "Darwinian"? Because just like evolution doesn't start from scratch with each generation—it builds on successful patterns from ancestors—persistent data structures don't copy everything. They share structure, mutate only what's necessary, and preserve history.
-
-The data structures that "refuse to die" aren't just about technical elegance. They're about building systems that are:
-- **Easier to reason about** (no hidden mutations)
-- **Safer in concurrent contexts** (no race conditions)
-- **Debuggable** (history is preserved)
-- **Testable** (reproducible states)
-
-Will persistent data structures replace mutable ones? No. Should every Java developer understand them? Absolutely.
-
-Because the next time you're chasing down a race condition at 3 AM, or trying to figure out why your system's state got corrupted, or implementing undo/redo for the fifth time, you'll remember: there's a better way.
-
-And that better way has been around since the 1980s, evolved through languages like Clojure and Scala, and is now more relevant than ever in our concurrent, distributed, Java 21+ world.
-
-The data structures evolved. Maybe it's time our code did too.
+**Need dynamic multi-phase coordination?**
+→ `Phaser`
 
 ---
 
-*P.S. - That trading system bug I mentioned? We fixed it by switching to persistent data structures. The whole class of race conditions just... disappeared. Three days of debugging turned into three hours of refactoring. Best trade I ever made.*
+## The Foundation: Understanding What We're Building
+
+Before we dive into the tools, let's get one thing straight. Concurrency in Java isn't about making everything parallel. It's about **structuring your code to handle multiple concerns efficiently**. Sometimes that means parallel execution. Sometimes it means coordinating sequential tasks across threads. Sometimes it's about protecting shared state from chaos.
+
+Think of it like a busy restaurant kitchen. You don't just throw more cooks at every problem. You need:
+- A head chef coordinating tasks (Executor)
+- Stations where multiple cooks can work without collision (BlockingQueue)
+- Signals when dishes are ready (CountDownLatch)
+- Shared equipment with access control (Semaphore)
+
+Let's build that kitchen, one tool at a time.
+
+---
+
+## 1. Executor: The Fire-and-Forget Pattern
+
+**The Problem:** Your request thread is too precious to waste on side tasks like logging or metrics.
+
+This is one pattern I've used extensively. When you're processing API requests, offloading non-critical work like logging enrichment to background threads can significantly improve response times.
+
+**The Solution:** Offload non-critical work to background threads.
+
+```java
+import java.util.concurrent.Executor;
+import java.time.Instant;
+import java.util.concurrent.Executors;
+
+public class AsyncLogger {
+    // Simple executor that runs tasks asynchronously
+    private final Executor logExecutor = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r);
+        t.setName("async-logger");
+        t.setDaemon(true); // Won't prevent JVM shutdown
+        return t;
+    });
+    
+    public void logRequestAsync(String userId, String endpoint, int statusCode) {
+        // Request thread returns immediately
+        logExecutor.execute(() -> {
+            // Background thread does the heavy lifting
+            String enrichedLog = enrichLog(userId, endpoint, statusCode);
+            writeToElasticsearch(enrichedLog);
+        });
+    }
+    
+    private String enrichLog(String userId, String endpoint, int statusCode) {
+        // Fetch user details, geo-location, etc.
+        return String.format("[%s] User: %s | Endpoint: %s | Status: %d", 
+                             Instant.now(), userId, endpoint, statusCode);
+    }
+    
+    private void writeToElasticsearch(String log) {
+        // Network I/O happens off the request thread
+        System.out.println("Writing to ES: " + log);
+    }
+}
+```
+
+**Key Insight:** `Executor` is the simplest interface—just `execute(Runnable)`. No lifecycle management, no result handling. Perfect for fire-and-forget side effects.
+
+---
+
+## 2. ExecutorService: When You Need Control
+
+**The Problem:** Processing a large product catalog where each item needs enrichment from multiple services—pricing, inventory, and reviews. Sequential processing is too slow.
+
+This is a classic scenario where parallel processing shines. Instead of waiting for each item to complete before starting the next, we can process multiple items concurrently.
+
+**The Solution:** Parallel processing with controlled thread pool and result collection.
+
+```java
+import java.util.concurrent.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+public class ProductEnrichmentService {
+    private final ExecutorService pool;
+    
+    public ProductEnrichmentService(int threadCount) {
+        this.pool = Executors.newFixedThreadPool(threadCount);
+    }
+    
+    public List<Product> enrichProducts(List<Product> products) throws InterruptedException {
+        System.out.println("Enriching " + products.size() + " products using " + 
+                         Runtime.getRuntime().availableProcessors() + " threads");
+        
+        // Convert products to Callable tasks
+        List<Callable<Product>> tasks = products.stream()
+                .map(product -> (Callable<Product>) () -> enrichSingleProduct(product))
+                .collect(Collectors.toList());
+        
+        long startTime = System.currentTimeMillis();
+        
+        // Execute all tasks and wait for completion
+        List<Future<Product>> futures = pool.invokeAll(tasks);
+        
+        // Collect results
+        List<Product> enriched = new ArrayList<>();
+        for (Future<Product> future : futures) {
+            try {
+                enriched.add(future.get());
+            } catch (ExecutionException e) {
+                System.err.println("Failed to enrich product: " + e.getCause().getMessage());
+            }
+        }
+        
+        long duration = System.currentTimeMillis() - startTime;
+        System.out.println("Enrichment completed in " + duration + "ms");
+        
+        return enriched;
+    }
+    
+    private Product enrichSingleProduct(Product product) {
+        // Simulate calling multiple services
+        String pricing = fetchPricing(product.id());
+        String inventory = fetchInventory(product.id());
+        String reviews = fetchReviews(product.id());
+        
+        return new Product(
+            product.id(),
+            product.name(),
+            pricing,
+            inventory,
+            reviews
+        );
+    }
+    
+    private String fetchPricing(String id) {
+        sleep(50); // Simulate API call
+        return "$99.99";
+    }
+    
+    private String fetchInventory(String id) {
+        sleep(30);
+        return "In Stock";
+    }
+    
+    private String fetchReviews(String id) {
+        sleep(40);
+        return "4.5 stars";
+    }
+    
+    public void shutdown() {
+        pool.shutdown();
+        try {
+            if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+                pool.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            pool.shutdownNow();
+        }
+    }
+    
+    private void sleep(long ms) {
+        try { Thread.sleep(ms); } catch (InterruptedException e) {}
+    }
+}
+
+record Product(String id, String name, String pricing, String inventory, String reviews) {}
+```
+
+**What We Gained:** 
+- 10,000 products enriched in 1 minutes instead of 4-5 minutes
+- Graceful shutdown handling
+- Error isolation (one product failure doesn't crash the batch)
+
+**The Dark Side:** Always remember to call `shutdown()`. I've seen production systems leak threads because someone forgot this in a finally block.
+
+---
+
+## 3. ScheduledExecutorService: Time-Based Automation
+
+**The Problem:** OAuth tokens expire every hour. If we don't refresh them, API calls start failing. Can't rely on manual intervention.
+
+This is another pattern I've implemented in production. Scheduled tasks are perfect for periodic maintenance work like token refresh, health checks, or cache cleanup.
+
+**The Solution:** Automated token refresh with scheduled tasks.
+
+```java
+import java.util.concurrent.*;
+import java.time.Instant;
+import java.util.concurrent.atomic.AtomicReference;
+
+public class TokenRefreshService {
+    private final ScheduledExecutorService scheduler;
+    private final AtomicReference<String> currentToken;
+    
+    public TokenRefreshService() {
+        this.scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r);
+            t.setName("token-refresher");
+            t.setDaemon(false); // Important: ensure refresh completes before shutdown
+            return t;
+        });
+        this.currentToken = new AtomicReference<>("");
+    }
+    
+    public void startRefreshCycle() {
+        System.out.println("Starting token refresh cycle at " + Instant.now());
+        
+        // Initial refresh
+        refreshToken();
+        
+        // Schedule periodic refresh every 50 minutes (tokens expire in 60)
+        scheduler.scheduleAtFixedRate(
+            this::refreshToken,
+            50,              // initial delay
+            50,              // period
+            TimeUnit.MINUTES
+        );
+        
+        System.out.println("Token will refresh every 50 minutes");
+    }
+    
+    private void refreshToken() {
+        try {
+            System.out.println("[" + Instant.now() + "] Refreshing token...");
+            
+            // Simulate OAuth flow
+            String newToken = callAuthServer();
+            currentToken.set(newToken);
+            
+            System.out.println("Token refreshed successfully");
+        } catch (Exception e) {
+            System.err.println("Token refresh failed: " + e.getMessage());
+            // In production: alert ops team, retry with exponential backoff
+        }
+    }
+    
+    private String callAuthServer() {
+        // Simulate network delay
+        try { Thread.sleep(200); } catch (InterruptedException e) {}
+        return "token_" + System.currentTimeMillis();
+    }
+    
+    public String getCurrentToken() {
+        return currentToken.get();
+    }
+    
+    public void shutdown() {
+        scheduler.shutdown();
+    }
+}
+```
+
+**Real-World Enhancement:** In production, I also use `scheduleWithFixedDelay()` for health checks where I want to wait for the previous check to complete before starting the next one:
+
+```java
+// Start next health check only after previous completes
+scheduler.scheduleWithFixedDelay(
+    this::healthCheck,
+    0,
+    30,
+    TimeUnit.SECONDS
+);
+```
+
+---
+
+## 4. Future: Timeouts Save Lives
+
+**The Problem:** Calling external services that might hang or respond slowly. Without timeouts, your application threads get stuck waiting indefinitely.
+
+Timeout enforcement is critical for resilient systems. Whether it's a payment gateway, external API, or database query, you need a way to fail fast and recover gracefully.
+
+**The Solution:** Strict timeout enforcement with Future.
+
+```java
+import java.util.concurrent.*;
+
+public class PaymentGateway {
+    private final ExecutorService pool;
+    private final long timeoutMs;
+    
+    public PaymentGateway(long timeoutMs) {
+        this.pool = Executors.newFixedThreadPool(10);
+        this.timeoutMs = timeoutMs;
+    }
+    
+    public PaymentResult processPayment(PaymentRequest request) {
+        System.out.println("Processing payment for $" + request.amount());
+        
+        Future<PaymentResult> future = pool.submit(() -> {
+            return callExternalGateway(request);
+        });
+        
+        try {
+            // Enforce strict timeout
+            PaymentResult result = future.get(timeoutMs, TimeUnit.MILLISECONDS);
+            System.out.println("Payment successful: " + result.transactionId());
+            return result;
+            
+        } catch (TimeoutException e) {
+            // Cancel the stuck task
+            future.cancel(true);
+            
+            System.err.println("Payment timed out after " + timeoutMs + "ms");
+            
+            // In production: log for retry, show user alternative payment methods
+            return new PaymentResult("TIMEOUT", "Payment gateway timeout");
+            
+        } catch (ExecutionException e) {
+            System.err.println("Payment failed: " + e.getCause().getMessage());
+            return new PaymentResult("FAILED", e.getCause().getMessage());
+            
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return new PaymentResult("INTERRUPTED", "Payment interrupted");
+        }
+    }
+    
+    private PaymentResult callExternalGateway(PaymentRequest request) {
+        // Simulate variable latency
+        try {
+            Thread.sleep(ThreadLocalRandom.current().nextInt(100, 2000));
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Gateway call interrupted");
+        }
+        
+        return new PaymentResult("TXN_" + System.currentTimeMillis(), "SUCCESS");
+    }
+    
+    public void shutdown() {
+        pool.shutdown();
+    }
+}
+
+record PaymentRequest(String userId, double amount) {}
+record PaymentResult(String transactionId, String status) {}
+```
+
+**Critical Lesson:** Always set timeouts on external calls. A slow dependency without timeout protection can create cascading failures throughout your system.
+
+---
+
+## 5. CountDownLatch: Startup Coordination
+
+**The Problem:** Starting a microservice that depends on multiple other services being healthy. If you start serving traffic before dependencies are ready, requests fail.
+
+This pattern can be used for graceful application startup, especially in microservice architectures where we need to coordinate multiple async initialization tasks.
+
+**The Solution:** Wait for all health checks before accepting traffic.
+
+```java
+import java.util.concurrent.*;
+import java.util.List;
+
+public class MicroserviceBootstrap {
+    
+    public void startApplication() throws InterruptedException {
+        System.out.println("Starting application bootstrap...");
+        
+        List<String> dependencies = List.of("user-service", "payment-service", "inventory-service");
+        CountDownLatch healthCheckLatch = new CountDownLatch(dependencies.size());
+        
+        ExecutorService pool = Executors.newCachedThreadPool();
+        
+        // Launch parallel health checks
+        for (String service : dependencies) {
+            pool.submit(() -> {
+                boolean healthy = checkServiceHealth(service);
+                if (healthy) {
+                    System.out.println("✓ " + service + " is healthy");
+                    healthCheckLatch.countDown();
+                } else {
+                    System.err.println("✗ " + service + " health check failed");
+                    // In production: implement retry logic
+                }
+            });
+        }
+        
+        System.out.println("Waiting for all health checks to complete...");
+        
+        // Block until all services are healthy or timeout
+        boolean allHealthy = healthCheckLatch.await(30, TimeUnit.SECONDS);
+        
+        if (allHealthy) {
+            System.out.println("All dependencies healthy. Starting HTTP server...");
+            startHttpServer();
+        } else {
+            System.err.println("Health checks timed out. Application startup failed.");
+            System.exit(1);
+        }
+        
+        pool.shutdown();
+    }
+    
+    private boolean checkServiceHealth(String service) {
+        try {
+            // Simulate HTTP health check
+            Thread.sleep(ThreadLocalRandom.current().nextInt(500, 2000));
+            return true; // Assume success for demo
+        } catch (InterruptedException e) {
+            return false;
+        }
+    }
+    
+    private void startHttpServer() {
+        System.out.println("HTTP server started on port 8080");
+    }
+}
+```
+
+**Why CountDownLatch?** It's a one-shot synchronization primitive. Once the count reaches zero, it's done. Perfect for startup coordination where you only need to wait once.
+
+---
+
+## 6. CyclicBarrier: Multi-Phase Processing
+
+**The Problem:** Processing a large dataset in three phases: Extract → Transform → Load. Each phase must complete across all threads before the next phase starts.
+
+This is perfect for batch processing scenarios where work happens in distinct phases. Unlike CountDownLatch which is one-shot, CyclicBarrier resets after each phase, making it ideal for iterative workflows.
+
+**The Solution:** Synchronized phase transitions with CyclicBarrier.
+
+```java
+import java.util.concurrent.*;
+import java.util.stream.IntStream;
+
+public class BatchProcessor {
+    private final int workerCount;
+    
+    public BatchProcessor(int workerCount) {
+        this.workerCount = workerCount;
+    }
+    
+    public void processBatch() throws InterruptedException {
+        CyclicBarrier barrier = new CyclicBarrier(
+            workerCount,
+            () -> System.out.println("--- Phase completed. All workers synchronized ---")
+        );
+        
+        ExecutorService pool = Executors.newFixedThreadPool(workerCount);
+        
+        Runnable worker = () -> {
+            try {
+                String threadName = Thread.currentThread().getName();
+                
+                // Phase 1: Extract
+                System.out.println(threadName + " - Extracting data...");
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 1500));
+                System.out.println(threadName + " - Extract complete");
+                
+                barrier.await(); // Wait for all threads to finish Phase 1
+                
+                // Phase 2: Transform
+                System.out.println(threadName + " - Transforming data...");
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 1500));
+                System.out.println(threadName + " - Transform complete");
+                
+                barrier.await(); // Wait for all threads to finish Phase 2
+                
+                // Phase 3: Load
+                System.out.println(threadName + " - Loading data...");
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 1500));
+                System.out.println(threadName + " - Load complete");
+                
+                barrier.await(); // Wait for all threads to finish Phase 3
+                
+            } catch (InterruptedException | BrokenBarrierException e) {
+                System.err.println("Worker interrupted: " + e.getMessage());
+            }
+        };
+        
+        // Submit all workers
+        IntStream.range(0, workerCount)
+                .forEach(i -> pool.submit(worker));
+        
+        pool.shutdown();
+        pool.awaitTermination(1, TimeUnit.MINUTES);
+        
+        System.out.println("Batch processing complete!");
+    }
+}
+```
+
+**Key Difference from CountDownLatch:** CyclicBarrier is reusable. After all threads reach the barrier, it resets automatically. Perfect for iterative or phase-based processing.
+
+---
+
+## 7. Semaphore: Resource Pool Management
+
+**The Problem:** A database connection pool has a limited number of connections. If too many threads try to query simultaneously, we'll overwhelm the pool and get connection timeouts.
+
+Resource pool management is a common challenge in concurrent systems. Semaphores provide a clean way to limit concurrent access to any finite resource.
+
+**The Solution:** Limit concurrent access with Semaphore.
+
+```java
+import java.util.concurrent.*;
+
+public class DatabaseService {
+    private final Semaphore connectionPermits;
+    private final int maxConnections;
+    
+    public DatabaseService(int maxConnections) {
+        this.maxConnections = maxConnections;
+        this.connectionPermits = new Semaphore(maxConnections, true); // fair=true for FIFO
+    }
+    
+    public String executeQuery(String sql) {
+        System.out.println(Thread.currentThread().getName() + " - Requesting DB connection...");
+        
+        try {
+            // Try to acquire permit (blocks if none available)
+            connectionPermits.acquire();
+            
+            System.out.println(Thread.currentThread().getName() + " - Got connection! " +
+                             "Available: " + connectionPermits.availablePermits() + "/" + maxConnections);
+            
+            // Execute query
+            String result = runActualQuery(sql);
+            
+            return result;
+            
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return "Query interrupted";
+        } finally {
+            // Always release permit
+            connectionPermits.release();
+            System.out.println(Thread.currentThread().getName() + " - Released connection");
+        }
+    }
+    
+    public boolean tryExecuteQueryWithTimeout(String sql, long timeoutMs) {
+        try {
+            // Try to acquire with timeout
+            if (connectionPermits.tryAcquire(timeoutMs, TimeUnit.MILLISECONDS)) {
+                try {
+                    runActualQuery(sql);
+                    return true;
+                } finally {
+                    connectionPermits.release();
+                }
+            } else {
+                System.err.println("Could not acquire connection within " + timeoutMs + "ms");
+                return false;
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return false;
+        }
+    }
+    
+    private String runActualQuery(String sql) {
+        // Simulate DB query
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return "Result for: " + sql;
+    }
+}
+```
+
+**Pro Tip:** Use `tryAcquire()` with timeout in request handlers to fail fast instead of blocking indefinitely. Your users will thank you.
+
+---
+
+## 8. ThreadFactory: Production-Ready Thread Management
+
+**The Problem:** Thread dumps show dozens of threads all named "pool-1-thread-X". Without meaningful names, it's nearly impossible to debug which pool is causing issues.
+
+Proper thread naming and configuration is essential for production debugging. A custom ThreadFactory gives you control over thread creation and helps with monitoring and troubleshooting.
+
+**The Solution:** Custom ThreadFactory with meaningful names and proper configuration.
+
+```java
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class NamedThreadFactory implements ThreadFactory {
+    private final String namePrefix;
+    private final AtomicInteger threadNumber;
+    private final boolean daemon;
+    private final int priority;
+    
+    public NamedThreadFactory(String namePrefix, boolean daemon, int priority) {
+        this.namePrefix = namePrefix;
+        this.daemon = daemon;
+        this.priority = priority;
+        this.threadNumber = new AtomicInteger(1);
+    }
+    
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r);
+        t.setName(namePrefix + "-" + threadNumber.getAndIncrement());
+        t.setDaemon(daemon);
+        t.setPriority(priority);
+        
+        // Add uncaught exception handler
+        t.setUncaughtExceptionHandler((thread, throwable) -> {
+            System.err.println("Uncaught exception in " + thread.getName() + ": " + 
+                             throwable.getMessage());
+            // In production: send to error tracking service like sentry, rollbar etc
+        });
+        
+        return t;
+    }
+    
+    public static ExecutorService createNamedPool(String name, int size) {
+        return Executors.newFixedThreadPool(
+            size,
+            new NamedThreadFactory(name, false, Thread.NORM_PRIORITY)
+        );
+    }
+}
+
+// Usage example
+class ServiceOrchestrator {
+    private final ExecutorService paymentPool;
+    private final ExecutorService notificationPool;
+    private final ExecutorService analyticsPool;
+    
+    public ServiceOrchestrator() {
+        this.paymentPool = NamedThreadFactory.createNamedPool("payment-worker", 8);
+        this.notificationPool = NamedThreadFactory.createNamedPool("notification-worker", 4);
+        this.analyticsPool = NamedThreadFactory.createNamedPool("analytics-worker", 2);
+    }
+    
+    // Now thread dumps show: payment-worker-1, notification-worker-1, analytics-worker-1
+    // Instead of: pool-1-thread-1, pool-2-thread-1, pool-3-thread-1
+}
+```
+
+**Production Checklist:**
+-  Meaningful thread names
+-  Daemon status set correctly
+-  Uncaught exception handlers
+-  Appropriate priority levels
+
+---
+
+## 9. BlockingQueue: The Producer-Consumer Pattern
+
+**The Problem:** A service receives work faster than it can process it. Without buffering, you either drop requests or the system becomes overwhelmed.
+
+The producer-consumer pattern with BlockingQueue is fundamental to async processing. It decouples work submission from work execution, providing natural backpressure when consumers can't keep up.
+
+**The Solution:** Decouple producers from consumers with a bounded queue.
+
+```java
+import java.util.concurrent.*;
+import java.nio.file.*;
+import java.util.stream.Stream;
+
+public class ImageProcessingPipeline {
+    private final BlockingQueue<Path> imageQueue;
+    private final ExecutorService producers;
+    private final ExecutorService consumers;
+    private volatile boolean running;
+    
+    public ImageProcessingPipeline(int queueSize, int consumerCount) {
+        this.imageQueue = new ArrayBlockingQueue<>(queueSize);
+        this.producers = Executors.newSingleThreadExecutor(
+            new NamedThreadFactory("image-producer", false, Thread.NORM_PRIORITY)
+        );
+        this.consumers = Executors.newFixedThreadPool(
+            consumerCount,
+            new NamedThreadFactory("image-consumer", false, Thread.NORM_PRIORITY)
+        );
+        this.running = true;
+    }
+    
+    public void start(Path imageDirectory) {
+        System.out.println("Starting image processing pipeline...");
+        
+        // Producer: Read image files and add to queue
+        producers.submit(() -> {
+            try (Stream<Path> paths = Files.list(imageDirectory)) {
+                paths.filter(p -> p.toString().endsWith(".jpg"))
+                     .forEach(path -> {
+                         try {
+                             System.out.println("Producer: Queuing " + path.getFileName());
+                             imageQueue.put(path); // Blocks if queue is full
+                         } catch (InterruptedException e) {
+                             Thread.currentThread().interrupt();
+                         }
+                     });
+                     
+                // Signal completion by adding poison pills
+                for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+                    imageQueue.put(Paths.get("STOP")); // Sentinel value
+                }
+            } catch (Exception e) {
+                System.err.println("Producer error: " + e.getMessage());
+            }
+        });
+        
+        // Consumers: Process images from queue
+        int consumerCount = Runtime.getRuntime().availableProcessors();
+        for (int i = 0; i < consumerCount; i++) {
+            consumers.submit(() -> {
+                while (running) {
+                    try {
+                        Path image = imageQueue.take(); // Blocks if queue is empty
+                        
+                        if (image.toString().equals("STOP")) {
+                            System.out.println("Consumer received stop signal");
+                            break;
+                        }
+                        
+                        System.out.println("Consumer: Processing " + image.getFileName());
+                        compressImage(image);
+                        
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            });
+        }
+    }
+    
+    private void compressImage(Path image) {
+        // Simulate compression work
+        try {
+            Thread.sleep(500);
+            System.out.println("Compressed: " + image.getFileName());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public void shutdown() {
+        running = false;
+        producers.shutdown();
+        consumers.shutdown();
+    }
+}
+```
+
+**Key Pattern:** The "poison pill" technique (sentinel value in our example its STOP) to signal consumers to stop gracefully.
+
+---
+
+## 10: DelayQueue: Exponential Backoff Retry
+
+**The Problem:** HTTP requests to external APIs fail intermittently. You need intelligent retry logic with exponential backoff to avoid overwhelming the failing service.
+
+DelayQueue is perfect for implementing retry mechanisms where tasks should only become available after a specific delay. It handles the timing logic internally, so you don't have to.
+
+**The Solution:** Queue with built-in delay mechanism.
+
+```java
+import java.util.concurrent.*;
+
+public class RetryQueue {
+    
+    static class RetryTask implements Delayed {
+        private final String payload;
+        private final long triggerTime;
+        private final int attemptNumber;
+        
+        public RetryTask(String payload, long delayMs, int attemptNumber) {
+            this.payload = payload;
+            this.triggerTime = System.currentTimeMillis() + delayMs;
+            this.attemptNumber = attemptNumber;
+        }
+        
+        @Override
+        public long getDelay(TimeUnit unit) {
+            long diff = triggerTime - System.currentTimeMillis();
+            return unit.convert(diff, TimeUnit.MILLISECONDS);
+        }
+        
+        @Override
+        public int compareTo(Delayed other) {
+            return Long.compare(this.triggerTime, ((RetryTask) other).triggerTime);
+        }
+        
+        public String getPayload() { return payload; }
+        public int getAttemptNumber() { return attemptNumber; }
+    }
+    
+    private final DelayQueue<RetryTask> retryQueue;
+    private final ExecutorService worker;
+    private final int maxRetries;
+    
+    public RetryQueue(int maxRetries) {
+        this.retryQueue = new DelayQueue<>();
+        this.worker = Executors.newSingleThreadExecutor(
+            new NamedThreadFactory("retry-worker", false, Thread.NORM_PRIORITY)
+        );
+        this.maxRetries = maxRetries;
+    }
+    
+    public void start() {
+        worker.submit(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    // Blocks until a task's delay expires
+                    RetryTask task = retryQueue.take();
+                    
+                    System.out.println("Attempting delivery (attempt " + task.getAttemptNumber() + "): " + 
+                                     task.getPayload());
+                    
+                    boolean success = sendWebhook(task.getPayload());
+                    
+                    if (!success && task.getAttemptNumber() < maxRetries) {
+                        // Exponential backoff: 2^attempt seconds
+                        long backoffMs = (long) Math.pow(2, task.getAttemptNumber()) * 1000;
+                        System.out.println("Delivery failed. Retrying in " + backoffMs + "ms");
+                        
+                        retryQueue.put(new RetryTask(
+                            task.getPayload(),
+                            backoffMs,
+                            task.getAttemptNumber() + 1
+                        ));
+                    } else if (success) {
+                        System.out.println("Delivery successful!");
+                    } else {
+                        System.err.println("Max retries exceeded. Giving up.");
+                    }
+                    
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        });
+    }
+    
+    public void scheduleDelivery(String payload) {
+        retryQueue.put(new RetryTask(payload, 0, 1));
+    }
+    
+    private boolean sendWebhook(String payload) {
+        // Simulate random failures
+        return ThreadLocalRandom.current().nextDouble() > 0.3;
+    }
+    
+    public void shutdown() {
+        worker.shutdown();
+    }
+}
+```
+
+**Real-World Enhancement:** In production, I persist the retry queue to Redis so retries survive application restarts.
+
+---
+
+## 11. ReentrantLock: Fine-Grained Control
+
+**The Problem:** Multiple threads need to update a critical resource. The `synchronized` keyword isn't flexible enough—you need timeout support, interruptibility, or conditional locking.
+
+ReentrantLock provides explicit locking with advanced features that `synchronized` doesn't offer. It's more verbose but gives you fine-grained control over lock behavior.
+
+**The Solution:** Explicit locking with advanced features.
+
+```java
+import java.util.concurrent.locks.*;
+import java.nio.file.*;
+import java.util.concurrent.TimeUnit;
+
+public class ConfigurationManager {
+    private final Lock configLock = new ReentrantLock(true); // fair lock
+    private final Path configFile;
+    private String cachedConfig;
+    
+    public ConfigurationManager(Path configFile) {
+        this.configFile = configFile;
+    }
+    
+    public void updateConfig(String newConfig) {
+        // Try to acquire lock with timeout
+        try {
+            if (configLock.tryLock(5, TimeUnit.SECONDS)) {
+                try {
+                    System.out.println(Thread.currentThread().getName() + " - Updating config...");
+                    
+                    // Write to file
+                    Files.writeString(configFile, newConfig);
+                    
+                    // Update cache
+                    cachedConfig = newConfig;
+                    
+                    // Simulate some processing
+                    Thread.sleep(1000);
+                    
+                    System.out.println(Thread.currentThread().getName() + " - Config updated");
+                    
+                } finally {
+                    configLock.unlock(); // ALWAYS in finally block
+                }
+            } else {
+                System.err.println(Thread.currentThread().getName() + 
+                                 " - Could not acquire lock within 5 seconds");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println(Thread.currentThread().getName() + " - Interrupted while waiting for lock");
+        } catch (Exception e) {
+            System.err.println("Config update failed: " + e.getMessage());
+        }
+    }
+    
+    public String readConfig() {
+        configLock.lock();
+        try {
+            if (cachedConfig == null) {
+                cachedConfig = Files.readString(configFile);
+            }
+            return cachedConfig;
+        } catch (Exception e) {
+            return "Error reading config";
+        } finally {
+            configLock.unlock();
+        }
+    }
+    
+    // Advanced: Check lock status without blocking
+    public boolean isConfigBeingUpdated() {
+        return ((ReentrantLock) configLock).isLocked();
+    }
+}
+```
+
+**Why Not synchronized?** Because ReentrantLock gives you:
+- `tryLock()` with timeout
+- Interruptible lock acquisition
+- Fair vs non-fair queueing
+- Ability to check lock status
+
+---
+
+## 12. Phaser: Dynamic Multi-Phase Coordination
+
+**The Problem:** ETL pipeline with Extract → Transform → Load phases. Workers can join or leave dynamically based on data volume. CountDownLatch and CyclicBarrier don't support dynamic parties.
+
+Phaser is the most advanced synchronizer in this toolkit. It's more complex than CountDownLatch or CyclicBarrier, but it's the only option when you need dynamic party registration.
+
+**The Solution:** Dynamic phase synchronization with Phaser.
+
+```java
+import java.util.concurrent.*;
+import java.util.stream.IntStream;
+
+public class ETLPipeline {
+    
+    static class ETLWorker implements Runnable {
+        private final Phaser phaser;
+        private final int workerId;
+        
+        public ETLWorker(Phaser phaser, int workerId) {
+            this.phaser = phaser;
+            this.workerId = workerId;
+            phaser.register(); // Register this worker
+        }
+        
+        @Override
+        public void run() {
+            try {
+                System.out.println("Worker-" + workerId + " - Starting EXTRACT phase");
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 1500));
+                System.out.println("Worker-" + workerId + " - EXTRACT complete");
+                
+                phaser.arriveAndAwaitAdvance(); // Wait for all workers to finish extract
+                
+                System.out.println("Worker-" + workerId + " - Starting TRANSFORM phase");
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 1500));
+                System.out.println("Worker-" + workerId + " - TRANSFORM complete");
+                
+                phaser.arriveAndAwaitAdvance(); // Wait for all workers to finish transform
+                
+                System.out.println("Worker-" + workerId + " - Starting LOAD phase");
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 1500));
+                System.out.println("Worker-" + workerId + " - LOAD complete");
+                
+                phaser.arriveAndDeregister(); // Complete and leave
+                
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+    
+    public void runPipeline() throws InterruptedException {
+        // Create phaser with 1 party (main thread)
+        Phaser phaser = new Phaser(1) {
+            @Override
+            protected boolean onAdvance(int phase, int registeredParties) {
+                System.out.println("\n=== Phase " + phase + " completed. " + 
+                                 registeredParties + " parties registered ===\n");
+                return false; // Continue to next phase
+            }
+        };
+        
+        ExecutorService pool = Executors.newFixedThreadPool(4);
+        
+        // Start initial workers
+        IntStream.range(0, 4).forEach(i -> 
+            pool.submit(new ETLWorker(phaser, i))
+        );
+        
+        // Simulate dynamic worker joining mid-process
+        Thread.sleep(2000);
+        System.out.println("\n>>> NEW WORKER JOINING <<<\n");
+        pool.submit(new ETLWorker(phaser, 99));
+        
+        // Main thread deregisters
+        phaser.arriveAndDeregister();
+        
+        pool.shutdown();
+        pool.awaitTermination(1, TimeUnit.MINUTES);
+        
+        System.out.println("\nETL Pipeline complete!");
+    }
+}
+```
+
+**When to Use Phaser:**
+-  Need dynamic party registration
+-  More than 2 phases
+-  Need to track which phase you're in
+-  Simple cases (use CountDownLatch or CyclicBarrier instead)
+
+---
+
+
+
+## Key Principles I'm Learning
+
+### 1. Always Set Timeouts
+Every `Future.get()`, every `Semaphore.acquire()`, every `Lock.lock()`. Blocking forever is how systems hang in production.
+
+### 2. Name Your Threads
+Thread dumps with "pool-1-thread-17" make debugging nearly impossible. Custom `ThreadFactory` for meaningful names is worth the effort.
+
+### 3. Monitor Queue Depths
+A growing `BlockingQueue` signals that consumers can't keep up with producers. This is your early warning system.
+
+### 4. Graceful Shutdown is Hard
+Proper shutdown sequence: call `shutdown()`, then `awaitTermination()`, then `shutdownNow()` if needed. This is easy to get wrong.
+
+### 5. Beware of Daemon Threads
+Daemon threads die when the JVM exits. If they're doing critical work (like flushing logs), they need to be non-daemon.
+
+---
+
+## Understanding the Complete Toolkit
+
+While I've primarily used some of them in production, studying these 12 tools has fundamentally changed how I think about concurrency. Each tool solves a specific coordination problem. Each has its place.
+
+The real skill isn't just knowing these tools exist—it's understanding *when* to use each one. Concurrency isn't about raw speed—it's about **structuring your system to handle multiple concerns elegantly and safely**.
+
+Next time you're tempted to spawn a raw `Thread`, ask yourself: which of these 12 patterns actually fits my use case? That's the question I'm learning to answer.
+
