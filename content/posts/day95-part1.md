@@ -17,7 +17,12 @@ relative = false
 
 **"Concurrency is not parallelism. Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once."** - Rob Pike
 
-I've worked with `Executor`, `ScheduledExecutorService`, `Future`, `CompletableFuture`, `CountDownLatch`, `ReentrantLock` in production, and they've helped me develop various multi-threaded features. But I realized I was barely scratching the surface of what `java.util.concurrent` offers. 
+I've worked with `Executor`, `ScheduledExecutorService`, `Future`, `CompletableFuture`, `CountDownLatch`, `ReentrantLock` in production, and they've helped me develop various multi-threaded features. But I realized I was barely scratching the surface of what `java.util.concurrent` offers.
+
+**Primary References:**
+- Goetz, B., et al. (2006). *Java Concurrency in Practice*. Addison-Wesley.
+- Oracle. (2023). *Java SE API Specification*: [`java.util.concurrent` package](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html)
+- Lea, D. (2000). "A Java Fork/Join Framework", *Science of Computer Programming*, 37(1-3). 
 
 This is **Part 1 of 2** where we'll explore the **foundation and execution patterns**: the core building blocks that power modern concurrent Java applications.
 
@@ -61,18 +66,22 @@ Before we dive in, let's talk about when concurrency is **overkill**:
 
 **Rule of thumb:** Measure first. Add concurrency only when sequential processing is proven to be a bottleneck.
 
+**The Cost Model:** Concurrency introduces coordination overhead. By Amdahl's Law, speedup is limited by the sequential fraction of your program (Goetz et al., 2006, Ch. 11). If synchronization overhead exceeds the parallelizable benefit, you'll make things slower. Always profile before parallelizing.
+
 ---
 
 ## Performance Characteristics Reference
 
 | Tool                         | CPU Overhead | Memory Characteristics                                  | Behavioral Notes                               | Best For                       |
 | ---------------------------- | ------------ | ------------------------------------------------------- | ---------------------------------------------- | ------------------------------ |
-| **Executor**                 | Low          | Uses caller thread or a simple dispatcher               | Submits tasks without lifecycle management     | Fire-and-forget tasks          |
-| **ExecutorService**          | Low–Medium   | Thread-pool backed; memory tied to pool size and queues | Manages worker threads, queues, and shutdown   | Managed task execution         |
-| **ScheduledExecutorService** | Medium       | Thread-pool plus scheduling structures                  | Time-based and periodic task execution         | Delayed and recurring tasks    |
-| **Future**                   | Very Low     | Holds a reference to a pending result                   | Represents eventual completion; blocking get() | Simple result retrieval        |
-| **CompletableFuture**        | Low–Medium   | Stores callbacks, completion stages                     | Non-blocking composition, async pipelines      | Async workflow chains          |
-| **CountDownLatch**           | Very Low     | Small synchronization primitive                         | One-shot coordination of thread arrival        | Release-on-countdown scenarios |
+| **Executor**                 | Low          | Minimal; delegates to provided threads                  | Submits tasks without lifecycle management     | Fire-and-forget tasks          |
+| **ExecutorService**          | Low–Medium   | Thread-pool backed; scales with pool size and queue bounds | Manages worker threads, queues, and shutdown   | Managed task execution         |
+| **ScheduledExecutorService** | Medium       | Thread-pool plus heap-based delay queues (priority queue) | Time-based and periodic task execution         | Delayed and recurring tasks    |
+| **Future**                   | Very Low     | Single object reference (~40-60 bytes) per task         | Represents eventual completion; blocking get() | Simple result retrieval        |
+| **CompletableFuture**        | Low–Medium   | Base object + callback chain (~200-400 bytes per composition) | Non-blocking composition, async pipelines      | Async workflow chains          |
+| **CountDownLatch**           | Very Low     | ~32 bytes via AbstractQueuedSynchronizer                | One-shot coordination of thread arrival        | Release-on-countdown scenarios |
+
+*Memory characteristics based on HotSpot JVM defaults. Thread stack size typically 1MB per thread (configurable via `-Xss`). See Oracle JVM documentation for platform-specific values.*
 
 
 ---
@@ -161,8 +170,10 @@ for (int i = 0; i < 1_000_000; i++) {
 }
 ```
 
+*Reference: Oracle Java SE API - [`Executors.newCachedThreadPool()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Executors.html#newCachedThreadPool()): "Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available." - No upper bound documented.*
+
 **Common Mistakes:**
-1. Using daemon threads for critical work (logs might be lost on JVM shutdown)
+1. Using daemon threads for critical work (logs might be lost on JVM shutdown) - *Reference: Java Language Specification §12.8: The JVM exits when all non-daemon threads terminate.*
 2. No backpressure mechanism (can overwhelm the executor)
 3. Losing exceptions (they're swallowed unless you add explicit handling)
 
@@ -172,7 +183,7 @@ for (int i = 0; i < 1_000_000; i++) {
 
 **The Problem:** Processing a large product catalog where each item needs enrichment from multiple services—pricing, inventory, and reviews. Sequential processing is too slow.
 
-This is a classic scenario where parallel processing shines. Instead of waiting for each item to complete before starting the next, we can process multiple items concurrently.
+This is a classic scenario where parallel processing *can* provide speedup—**if I/O wait time dominates compute time**. Concurrency benefit depends on latency distribution and CPU contention (Goetz et al., 2006, Ch. 8). Instead of waiting for each item to complete before starting the next, we can process multiple items concurrently.
 
 **The Solution:** Parallel processing with controlled thread pool and result collection.
 
@@ -291,11 +302,13 @@ int cpuBoundPoolSize = Runtime.getRuntime().availableProcessors();
 // For I/O-bound tasks (rule of thumb):
 int ioBoundPoolSize = Runtime.getRuntime().availableProcessors() * 2;
 
-// More precise I/O formula:
+// More precise I/O formula (derived from Little's Law):
 // ThreadCount = NumCores * (1 + WaitTime/ComputeTime)
 // Example: 8 cores, 90% wait time, 10% compute
 // = 8 * (1 + 0.9/0.1) = 8 * 10 = 80 threads
 ```
+
+*Reference: Goetz et al., 2006, Chapter 8 ("Applying Thread Pools"): Thread pool sizing using Little's Law and utilization analysis.*
 
 **Common Mistakes:**
 
@@ -326,6 +339,10 @@ ExecutorService pool = Executors.newCachedThreadPool();
 pool.shutdown();
 pool.submit(() -> doWork()); // Throws RejectedExecutionException
 ```
+
+**Modern Java Note:** `Executors` factory methods are convenient but lack configurability. For production systems, consider direct `ThreadPoolExecutor` construction with explicit queue bounds and rejection policies. Java 21+ introduces Structured Concurrency (JEP 453) and Scoped Values (JEP 446) for safer concurrent patterns.
+
+*Reference: OpenJDK JEP 453: Structured Concurrency (Preview) - [https://openjdk.org/jeps/453](https://openjdk.org/jeps/453)*
 
 ---
 
@@ -427,7 +444,7 @@ scheduler.scheduleWithFixedDelay(task, 0, 1, TimeUnit.SECONDS);
 
 **Cons:**
 - If task takes longer than period, tasks queue up (scheduleAtFixedRate)
-- Exceptions cancel future executions
+- Exceptions cancel future executions - *Reference: Oracle Java SE API - [`ScheduledExecutorService`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ScheduledExecutorService.html): "If any execution of the task encounters an exception, subsequent executions are suppressed."*
 - No built-in retry logic
 - Clock drift not handled
 
@@ -564,7 +581,7 @@ record PaymentResult(String transactionId, String status) {}
 Future<String> future = pool.submit(() -> callExternalApi());
 String result = future.get(); // Blocks FOREVER if API hangs!
 
-// ✅ CORRECT: Always use timeout
+// CORRECT: Always use timeout
 Future<String> future = pool.submit(() -> callExternalApi());
 String result = future.get(5, TimeUnit.SECONDS);
 
@@ -583,9 +600,12 @@ Future<?> future = pool.submit(() -> {
         doWork();
         if (Thread.interrupted()) break; // Check interruption
     }
+    System.out.println("Task gracefully stopped");
 });
 future.cancel(true); // Task stops
 ```
+
+*Reference: Goetz et al., 2006, Chapter 7 ("Cancellation and Shutdown"): Proper interruption handling patterns.*
 
 ---
 
@@ -1057,6 +1077,107 @@ ExecutorService pool = Executors.newSingleThreadExecutor(r -> {
 });
 ```
 
+## Debugging Concurrent Code
+
+**Essential Tools:**
+
+### 1. Thread Dumps with jstack
+
+```bash
+# Get process ID
+jps
+
+# Generate thread dump
+jstack <pid> > threaddump.txt
+
+# Look for:
+# - "BLOCKED" threads waiting on locks
+# - "WAITING" threads in park()
+# - Thread pool names (why naming matters!)
+```
+
+*Reference: Oracle JDK Tools - [`jstack`](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jstack.html): "Prints Java thread stack traces for a Java process."*
+
+### 2. ThreadPoolExecutor Hooks
+
+```java
+public class MonitoredThreadPool extends ThreadPoolExecutor {
+    private final ThreadLocal<Long> startTime = new ThreadLocal<>();
+    
+    public MonitoredThreadPool(int corePoolSize, int maxPoolSize) {
+        super(corePoolSize, maxPoolSize, 60L, TimeUnit.SECONDS, 
+              new LinkedBlockingQueue<>());
+    }
+    
+    @Override
+    protected void beforeExecute(Thread t, Runnable r) {
+        super.beforeExecute(t, r);
+        startTime.set(System.nanoTime());
+        System.out.println("Task starting on thread: " + t.getName());
+    }
+    
+    @Override
+    protected void afterExecute(Runnable r, Throwable t) {
+        try {
+            long elapsed = System.nanoTime() - startTime.get();
+            System.out.println("Task completed in " + elapsed / 1_000_000 + "ms");
+            
+            if (t != null) {
+                System.err.println("Task failed: " + t.getMessage());
+            }
+        } finally {
+            super.afterExecute(r, t);
+        }
+    }
+    
+    @Override
+    protected void terminated() {
+        System.out.println("ThreadPool terminated. Completed tasks: " + 
+                         getCompletedTaskCount());
+    }
+}
+```
+
+*Reference: Oracle Java SE API - [`ThreadPoolExecutor`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html): Hook methods `beforeExecute`, `afterExecute`, and `terminated` for monitoring and debugging.*
+
+### 3. Detecting Thread Pool Saturation
+
+```java
+ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+
+// Monitor pool health
+int activeCount = pool.getActiveCount();
+int queueSize = pool.getQueue().size();
+long completedTasks = pool.getCompletedTaskCount();
+
+if (queueSize > 1000) {
+    System.err.println("WARNING: Thread pool queue saturated!");
+    // Alert ops team, scale horizontally, or apply backpressure
+}
+```
+
+*Reference: Goetz et al., 2006, Chapter 8 ("Applying Thread Pools"): Monitoring thread pool saturation and tuning.*
+
+### 4. Common Deadlock Patterns
+
+```java
+// Thread 1: locks A, waits for B
+synchronized(lockA) {
+    synchronized(lockB) { /* ... */ }
+}
+
+// Thread 2: locks B, waits for A → DEADLOCK!
+synchronized(lockB) {
+    synchronized(lockA) { /* ... */ }
+}
+```
+
+**Detection:** `jstack` will report "Found one Java-level deadlock" and show the lock dependency cycle.
+
+**Prevention:** Always acquire locks in consistent order (Goetz et al., 2006, Ch. 10).
+
+---
+
 ## Part 1 Summary: Foundation & Execution
 
 We've covered the **foundation of Java concurrency**:
@@ -1082,7 +1203,7 @@ We've covered the **foundation of Java concurrency**:
 - CyclicBarrier - Reusable multi-phase coordination
 - Phaser - Dynamic party registration
 - Semaphore - Resource pool management
-- ReentrantLock - Fine-grained locking
+- ReentrantLock - Fine-grained locking (**Safety Note:** Requires disciplined ownership to avoid deadlocks; see Doug Lea's [`AbstractQueuedSynchronizer`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/AbstractQueuedSynchronizer.html) documentation)
 - BlockingQueue - Producer-consumer patterns
 - DelayQueue - Time-delayed execution
 
