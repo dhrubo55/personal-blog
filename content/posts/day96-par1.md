@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava"]
 date = 2025-11-21T00:00:00Z
 description = "Master advanced Java concurrency - CyclicBarrier, Phaser, Semaphore, ReentrantLock, BlockingQueue, DelayQueue, and ThreadFactory with production patterns, trade-offs, and debugging techniques."
-draft = false
+draft = true
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day96"
