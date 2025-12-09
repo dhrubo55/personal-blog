@@ -24,11 +24,13 @@ I've worked with `Executor`, `ScheduledExecutorService`, `Future`, `CompletableF
 - Oracle. (2023). *Java SE API Specification*: [`java.util.concurrent` package](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html)
 - Lea, D. (2000). "A Java Fork/Join Framework", *Science of Computer Programming*, 37(1-3). 
 
-This is **Part 1 of 2** where we'll explore the **foundation and execution patterns**: the core building blocks that power modern concurrent Java applications.
+This is **Part 1 of 3** where we'll explore the **foundation and execution patterns**: the core building blocks that power modern concurrent Java applications.
 
 ## Series Overview
 
-**Part 1 (Today):** Foundation & Execution
+This is a **3-part series** on Java Concurrency:
+
+**Part 1 (Today - Day 95):** Foundation & Execution
 - Executor
 - ExecutorService  
 - ScheduledExecutorService
@@ -36,13 +38,17 @@ This is **Part 1 of 2** where we'll explore the **foundation and execution patte
 - CompletableFuture
 - CountDownLatch
 
-**Part 2 (Day 96):** Synchronization & Advanced Patterns
+**Part 2 (Day 96):** Core Synchronization Patterns
 - CyclicBarrier
-- Phaser
 - Semaphore
-- ReentrantLock
+- ThreadFactory
 - BlockingQueue
+
+**Part 3 (Day 97):** Advanced Patterns & Production Readiness
 - DelayQueue
+- ReentrantLock
+- Phaser
+- Debugging, Monitoring, Production Patterns
 
 ---
 
@@ -1201,12 +1207,16 @@ We've covered the **foundation of Java concurrency**:
 
 **Coming in Part 2 (Day 96):**
 - CyclicBarrier - Reusable multi-phase coordination
-- Phaser - Dynamic party registration
 - Semaphore - Resource pool management
-- ReentrantLock - Fine-grained locking (**Safety Note:** Requires disciplined ownership to avoid deadlocks; see Doug Lea's [`AbstractQueuedSynchronizer`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/AbstractQueuedSynchronizer.html) documentation)
+- ThreadFactory - Production-ready thread management
 - BlockingQueue - Producer-consumer patterns
+
+**Coming in Part 3 (Day 97):**
 - DelayQueue - Time-delayed execution
+- ReentrantLock - Fine-grained locking
+- Phaser - Dynamic party registration
+- **Plus:** Debugging techniques, monitoring patterns, and production readiness checklist
 
 ---
 
-**Next:** Day 96 - Java Concurrency Toolkit Part 2: Synchronization & Advanced Patterns
+**Next:** [Day 96 - Java Concurrency Toolkit Part 2: Core Synchronization Patterns](/posts/java/100DaysOfJava/day96)
