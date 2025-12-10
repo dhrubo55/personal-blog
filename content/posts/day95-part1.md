@@ -15,6 +15,8 @@ image = ""
 relative = false
 +++
 
+> **Series Navigation:** [Part 1 (You are here)](#) • [Part 2: Core Synchronization](/posts/java/100DaysOfJava/day96) • [Part 3: Advanced Patterns](/posts/java/100DaysOfJava/day97)
+
 **"Concurrency is not parallelism. Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once."** - Rob Pike
 
 I've worked with `Executor`, `ScheduledExecutorService`, `Future`, `CompletableFuture`, `CountDownLatch`, `ReentrantLock` in production, and they've helped me develop various multi-threaded features. But I realized I was barely scratching the surface of what `java.util.concurrent` offers.
@@ -49,6 +51,19 @@ This is a **3-part series** on Java Concurrency:
 - ReentrantLock
 - Phaser
 - Debugging, Monitoring, Production Patterns
+
+---
+
+## Quick Reference: Part 1 Tools at a Glance
+
+| Tool | TL;DR | Key Gotcha |
+|------|-------|------------|
+| **Executor** | Simplest interface - just `execute(Runnable)`. No lifecycle, no results. | No way to retrieve results or manage lifecycle |
+| **ExecutorService** | Managed thread pool with lifecycle control. Returns `Future` for results. | Must call `shutdown()` - thread pools leak otherwise |
+| **ScheduledExecutorService** | Schedules tasks for future or periodic execution. | Exceptions cancel all future executions - wrap in try-catch! |
+| **Future** | Represents eventual completion. **Always use `get(timeout)`** - never without. | Blocking API - blocks calling thread until complete |
+| **CompletableFuture** | Non-blocking async composition (Java's Promises). Chain, combine, handle errors. | Complex API - use `thenCompose` not `thenApply(join())` |
+| **CountDownLatch** | One-shot countdown. Wait at `await()` until `countDown()` reaches zero. | Can't reset. Always countDown in `finally` to avoid deadlock |
 
 ---
 
@@ -108,6 +123,8 @@ Think of it like a busy restaurant kitchen:
 ---
 
 ## 1. Executor: The Fire-and-Forget Pattern
+
+**TL;DR:** Simplest interface - just `execute(Runnable)`. No lifecycle, no results. Perfect for async side effects like logging or metrics where you don't need to wait for completion.
 
 **The Problem:** Your request thread is too precious to waste on side tasks like logging or metrics.
 
@@ -186,6 +203,8 @@ for (int i = 0; i < 1_000_000; i++) {
 ---
 
 ## 2. ExecutorService: When You Need Control
+
+**TL;DR:** Managed thread pool with lifecycle control. Returns `Future` for results. Use `invokeAll()` for batch processing. Always shutdown: `shutdown()` → `awaitTermination()` → `shutdownNow()`. Size pool based on workload (CPU vs I/O).
 
 **The Problem:** Processing a large product catalog where each item needs enrichment from multiple services—pricing, inventory, and reviews. Sequential processing is too slow.
 
@@ -354,6 +373,8 @@ pool.submit(() -> doWork()); // Throws RejectedExecutionException
 
 ## 3. ScheduledExecutorService: Time-Based Automation
 
+**TL;DR:** Schedules tasks for future or periodic execution. Use `scheduleAtFixedRate()` for fixed intervals, `scheduleWithFixedDelay()` for guaranteed gaps. Wrap tasks in try-catch - exceptions cancel future executions!
+
 **The Problem:** OAuth tokens expire every hour. If we don't refresh them, API calls start failing. Can't rely on manual intervention.
 
 This is another pattern I've implemented in production. Scheduled tasks are perfect for periodic maintenance work like token refresh, health checks, or cache cleanup.
@@ -496,6 +517,8 @@ scheduler.scheduleAtFixedRate(() -> {
 
 ## 4. Future: Timeouts Save Lives
 
+**TL;DR:** Represents eventual completion of async task. **Always use `get(timeout)`** - never `get()` without timeout. Can cancel running tasks (if they respect interruption). Blocking API - use CompletableFuture for non-blocking.
+
 **The Problem:** Calling external services that might hang or respond slowly. Without timeouts, your application threads get stuck waiting indefinitely.
 
 Timeout enforcement is critical for resilient systems. Whether it's a payment gateway, external API, or database query, you need a way to fail fast and recover gracefully.
@@ -616,6 +639,8 @@ future.cancel(true); // Task stops
 ---
 
 ## 5. CompletableFuture: Async Pipelines
+
+**TL;DR:** Non-blocking async composition (Java's answer to Promises). Chain with `thenApply/thenCompose`, combine with `allOf/anyOf`, handle errors with `exceptionally/handle`. Powerful but complex - practice required. Always specify executor pool.
 
 **The Problem:** You need to call multiple services in a chain, handle errors at each step, and compose results—all without blocking threads.
 
@@ -896,6 +921,8 @@ CompletableFuture.supplyAsync(() -> step1())
 ---
 
 ## 6. CountDownLatch: Startup Coordination
+
+**TL;DR:** One-shot countdown mechanism. Threads wait at `await()` until count reaches zero via `countDown()` calls. Can't reset (use CyclicBarrier for reusable). Always countDown in `finally` block to avoid deadlock.
 
 **The Problem:** Starting a microservice that depends on multiple other services being healthy. If you start serving traffic before dependencies are ready, requests fail.
 
