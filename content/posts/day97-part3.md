@@ -52,16 +52,6 @@ This is a **3-part series** on Java Concurrency:
 
 ---
 
-## Performance Characteristics Reference
-
-| Tool | CPU Overhead | Memory Per Instance | Typical Latency | Best For |
-|------|-------------|---------------------|-----------------|----------|
-| **DelayQueue** | Medium | ~200 bytes + heap | Milliseconds (granularity) | Scheduled/delayed work |
-| **ReentrantLock** | Very Low | ~48 bytes | Nanoseconds | Fine-grained locking |
-| **Phaser** | Medium | ~128 bytes + parties | Microseconds | Dynamic phase coordination |
-
----
-
 ## Quick Reference: Part 3 Tools at a Glance
 
 | Tool | TL;DR | Key Gotcha |
@@ -77,8 +67,6 @@ Parts 1 and 2 covered tools you'll use frequently. Part 3 covers **advanced patt
 ---
 
 ## 1. DelayQueue: Exponential Backoff Retry
-
-**TL;DR:** Queue where items become available after a delay. Perfect for retry patterns with exponential backoff. Requires implementing `Delayed` interface. Unbounded - can grow indefinitely.
 
 **The Problem:** HTTP requests to external APIs fail intermittently. You need intelligent retry logic with exponential backoff to avoid overwhelming the failing service.
 
@@ -185,21 +173,21 @@ public class RetryQueue {
 ### Trade-offs and Limitations
 
 **Pros:**
-- ✅ Built-in delay mechanism
-- ✅ No need for manual timing logic
-- ✅ Priority-based on delay time
-- ✅ Perfect for retry patterns
+- Built-in delay mechanism
+- No need for manual timing logic
+- Priority-based on delay time
+- Perfect for retry patterns
 
 **Cons:**
-- ❌ Unbounded (can grow indefinitely)
-- ❌ Requires implementing Delayed interface
-- ❌ Clock-dependent (system time changes affect it)
-- ❌ Higher CPU usage than simple queue
+- Unbounded (can grow indefinitely)
+- Requires implementing Delayed interface
+- Clock-dependent (system time changes affect it)
+- Higher CPU usage than simple queue
 
 **Common Mistakes:**
 
 ```java
-// ❌ MISTAKE 1: Incorrect getDelay implementation
+// MISTAKE 1: Incorrect getDelay implementation
 class BadDelayedTask implements Delayed {
     private long delay;
     
@@ -209,7 +197,7 @@ class BadDelayedTask implements Delayed {
     }
 }
 
-// ✅ CORRECT: Return remaining time
+// CORRECT: Return remaining time
 class GoodDelayedTask implements Delayed {
     private final long triggerTime; // Absolute time
     
@@ -219,13 +207,13 @@ class GoodDelayedTask implements Delayed {
     }
 }
 
-// ❌ MISTAKE 2: Forgetting compareTo
+// MISTAKE 2: Forgetting compareTo
 class BadTask implements Delayed {
     public long getDelay(TimeUnit unit) { /*...*/ }
     // Missing compareTo! ClassCastException at runtime
 }
 
-// ✅ CORRECT: Implement compareTo
+// CORRECT: Implement compareTo
 class GoodTask implements Delayed {
     public long getDelay(TimeUnit unit) { /*...*/ }
     
@@ -238,14 +226,14 @@ class GoodTask implements Delayed {
     }
 }
 
-// ❌ MISTAKE 3: Not handling negative delays
+// MISTAKE 3: Not handling negative delays
 public long getDelay(TimeUnit unit) {
     long remaining = triggerTime - System.currentTimeMillis();
     return unit.convert(remaining, TimeUnit.MILLISECONDS);
     // If triggerTime is in the past, this is negative = available immediately
 }
 
-// ✅ CORRECT: This is actually correct behavior!
+// CORRECT: This is actually correct behavior!
 // Negative delay = task is ready immediately
 ```
 
@@ -288,8 +276,6 @@ public class CircuitBreakerRetry {
 ---
 
 ## 2. ReentrantLock: Fine-Grained Control
-
-**TL;DR:** Explicit locking with advanced features: timeouts, interruptibility, fair mode. More powerful than `synchronized` but requires manual unlock in `finally`. Use when you need `tryLock()` or lock status checking.
 
 **The Problem:** Multiple threads need to update a critical resource. The `synchronized` keyword isn't flexible enough, you need timeout support, interruptibility, or conditional locking.
 
@@ -374,17 +360,17 @@ public class ConfigurationManager {
 ### Trade-offs and Limitations
 
 **Pros:**
-- ✅ Timeout support
-- ✅ Interruptible lock acquisition
-- ✅ Fair vs non-fair modes
-- ✅ Can check lock state
-- ✅ Condition variables support
+- Timeout support
+- Interruptible lock acquisition
+- Fair vs non-fair modes
+- Can check lock state
+- Condition variables support
 
 **Cons:**
-- ❌ More verbose than synchronized
-- ❌ Must remember to unlock in finally
-- ❌ Easy to create deadlocks if not careful
-- ❌ No automatic unlock on exception
+- More verbose than synchronized
+- Must remember to unlock in finally
+- Easy to create deadlocks if not careful
+- No automatic unlock on exception
 
 **synchronized vs ReentrantLock:**
 
@@ -402,12 +388,12 @@ public class ConfigurationManager {
 **Common Mistakes:**
 
 ```java
-// ❌ MISTAKE 1: Forgetting to unlock
+// MISTAKE 1: Forgetting to unlock
 lock.lock();
 doWork(); // What if this throws?
 lock.unlock(); // Never called!
 
-// ✅ CORRECT: Always use try-finally
+// CORRECT: Always use try-finally
 lock.lock();
 try {
     doWork();
@@ -415,7 +401,7 @@ try {
     lock.unlock(); // Always happens
 }
 
-// ❌ MISTAKE 2: Locking in wrong order (deadlock)
+// MISTAKE 2: Locking in wrong order (deadlock)
 // Thread 1
 lockA.lock();
 lockB.lock(); // Waits for B
@@ -424,7 +410,7 @@ lockB.lock();
 lockA.lock(); // Waits for A
 // DEADLOCK!
 
-// ✅ CORRECT: Acquire locks in consistent order
+// CORRECT: Acquire locks in consistent order
 Lock first = getLockById(Math.min(idA, idB));
 Lock second = getLockById(Math.max(idA, idB));
 first.lock();
@@ -439,13 +425,13 @@ try {
     first.unlock();
 }
 
-// ❌ MISTAKE 3: Not handling lock acquisition failure
+// MISTAKE 3: Not handling lock acquisition failure
 if (lock.tryLock()) {
     doWork(); // What if this throws?
     lock.unlock(); // Never called!
 }
 
-// ✅ CORRECT: tryLock with try-finally
+// CORRECT: tryLock with try-finally
 if (lock.tryLock()) {
     try {
         doWork();
@@ -456,10 +442,10 @@ if (lock.tryLock()) {
     // Handle failure to acquire lock
 }
 
-// ❌ MISTAKE 4: Ignoring interruption
+// MISTAKE 4: Ignoring interruption
 lock.lockInterruptibly(); // Throws InterruptedException
 
-// ✅ CORRECT: Handle interruption
+// CORRECT: Handle interruption
 try {
     lock.lockInterruptibly();
     try {
@@ -531,8 +517,6 @@ public class CachedData {
 ---
 
 ## 3. Phaser: Dynamic Multi-Phase Coordination
-
-**TL;DR:** Most advanced synchronizer - supports dynamic party registration/deregistration and multiple phases. Complex but powerful. Only use when CountDownLatch or CyclicBarrier won't work. Common in elastic worker pools.
 
 **The Problem:** ETL pipeline with Extract → Transform → Load phases. Workers can join or leave dynamically based on data volume. CountDownLatch and CyclicBarrier don't support dynamic parties.
 
@@ -618,37 +602,37 @@ public class ETLPipeline {
 ```
 
 **When to Use Phaser:**
-- ✅ Need dynamic party registration
-- ✅ More than 2 phases
-- ✅ Need to track which phase you're in
-- ❌ Simple cases (use CountDownLatch or CyclicBarrier instead)
+- Need dynamic party registration
+- More than 2 phases
+- Need to track which phase you're in
+- Simple cases (use CountDownLatch or CyclicBarrier instead)
 
 ### Trade-offs and Limitations
 
 **Pros:**
-- ✅ Dynamic party registration/deregistration
-- ✅ Multiple phases (not limited to 2 like CyclicBarrier)
-- ✅ Phase number tracking
-- ✅ Callback on phase completion
-- ✅ Can terminate phases programmatically
+- Dynamic party registration/deregistration
+- Multiple phases (not limited to 2 like CyclicBarrier)
+- Phase number tracking
+- Callback on phase completion
+- Can terminate phases programmatically
 
 **Cons:**
-- ❌ Most complex synchronizer
-- ❌ Higher overhead than CountDownLatch/CyclicBarrier
-- ❌ Easy to misuse (register/deregister bugs)
-- ❌ Harder to reason about
+- Most complex synchronizer
+- Higher overhead than CountDownLatch/CyclicBarrier
+- Easy to misuse (register/deregister bugs)
+- Harder to reason about
 
 **Common Mistakes:**
 
 ```java
-// ❌ MISTAKE 1: Forgetting to register
+// MISTAKE 1: Forgetting to register
 Phaser phaser = new Phaser(1);
 pool.submit(() -> {
     // Forgot to call phaser.register()!
     phaser.arriveAndAwaitAdvance(); // IllegalStateException
 });
 
-// ✅ CORRECT: Register in constructor or before work
+// CORRECT: Register in constructor or before work
 class Worker implements Runnable {
     private final Phaser phaser;
     
@@ -662,13 +646,13 @@ class Worker implements Runnable {
     }
 }
 
-// ❌ MISTAKE 2: Forgetting to deregister
+// MISTAKE 2: Forgetting to deregister
 phaser.register();
 doWork();
 // Forgot phaser.arriveAndDeregister()
 // Phaser waits forever!
 
-// ✅ CORRECT: Always deregister when done
+// CORRECT: Always deregister when done
 phaser.register();
 try {
     doWork();
@@ -677,7 +661,7 @@ try {
     phaser.arriveAndDeregister(); // Always cleanup
 }
 
-// ❌ MISTAKE 3: onAdvance returns true too early
+// MISTAKE 3: onAdvance returns true too early
 Phaser phaser = new Phaser(1) {
     @Override
     protected boolean onAdvance(int phase, int registeredParties) {
@@ -685,7 +669,7 @@ Phaser phaser = new Phaser(1) {
     }
 };
 
-// ✅ CORRECT: Return true only when truly done
+// CORRECT: Return true only when truly done
 protected boolean onAdvance(int phase, int registeredParties) {
     System.out.println("Phase " + phase + " complete");
     return phase >= 2 || registeredParties == 0; // Stop after phase 2
@@ -740,17 +724,17 @@ kill -3 <PID>  # Sends SIGQUIT, creates thread dump
 ```
 
 **Red flags:**
-- 🚨 Many threads in WAITING on same object → Likely missed countDown/release
-- 🚨 BLOCKED threads with circular waiting → Deadlock
-- 🚨 Multiple threads named "pool-1-thread-X" → Need ThreadFactory
-- 🚨 Thread doing CPU work for long time → Infinite loop or expensive operation
+- Many threads in WAITING on same object → Likely missed countDown/release
+- BLOCKED threads with circular waiting → Deadlock
+- Multiple threads named "pool-1-thread-X" → Need ThreadFactory
+- Thread doing CPU work for long time → Infinite loop or expensive operation
 
 ### Common Deadlock Patterns
 
 #### Pattern 1: Classic Lock Ordering Deadlock
 
 ```java
-// ❌ DEADLOCK
+// DEADLOCK
 class Account {
     private final Object lock = new Object();
     
@@ -768,7 +752,7 @@ class Account {
 // Thread 2: accountB.transfer(accountA, 50);   // Locks B, waits for A
 // DEADLOCK!
 
-// ✅ SOLUTION: Acquire locks in consistent order
+// SOLUTION: Acquire locks in consistent order
 public void transfer(Account to, double amount) {
     Account first = System.identityHashCode(this) < System.identityHashCode(to) 
                     ? this : to;
@@ -792,7 +776,7 @@ public void transfer(Account to, double amount) {
 #### Pattern 2: Nested Lock Acquisition
 
 ```java
-// ❌ DEADLOCK
+// DEADLOCK
 class Service {
     private final Lock lock1 = new ReentrantLock();
     private final Lock lock2 = new ReentrantLock();
@@ -826,7 +810,7 @@ class Service {
     }
 }
 
-// ✅ SOLUTION: Use tryLock with timeout
+// SOLUTION: Use tryLock with timeout
 public void method2() {
     lock2.lock();
     try {
@@ -849,7 +833,7 @@ public void method2() {
 #### Pattern 3: Forgotten CountDownLatch
 
 ```java
-// ❌ HANGS FOREVER
+// HANGS FOREVER
 CountDownLatch latch = new CountDownLatch(3);
 pool.submit(() -> {
     doWork();
@@ -860,7 +844,7 @@ pool.submit(() -> {
 
 latch.await(); // Might wait forever if success=false
 
-// ✅ SOLUTION: Always countDown
+// SOLUTION: Always countDown
 pool.submit(() -> {
     try {
         doWork();
@@ -991,14 +975,14 @@ public class ConcurrencyMetrics {
 ### 1. Thread Pool Sizing
 
 ```java
-// ❌ ANTI-PATTERN: Magic numbers
+// ANTI-PATTERN: Magic numbers
 ExecutorService pool = Executors.newFixedThreadPool(42);
 
-// ✅ CORRECT: Calculate based on workload
+// CORRECT: Calculate based on workload
 int poolSize = Runtime.getRuntime().availableProcessors() * 
                (isCpuBound ? 1 : 2);
 
-// ✅ BETTER: Use formula for I/O-bound
+// BETTER: Use formula for I/O-bound
 // ThreadCount = NumCores * (1 + WaitTime/ComputeTime)
 int poolSize = cores * (1 + (int)(waitTimeMs / computeTimeMs));
 ```
@@ -1006,13 +990,13 @@ int poolSize = cores * (1 + (int)(waitTimeMs / computeTimeMs));
 ### 2. Ignoring Shutdown
 
 ```java
-// ❌ ANTI-PATTERN: No shutdown
+// ANTI-PATTERN: No shutdown
 public void process() {
     ExecutorService pool = Executors.newFixedThreadPool(10);
     pool.submit(() -> work());
 } // Pool leaks!
 
-// ✅ CORRECT: Proper shutdown
+// CORRECT: Proper shutdown
 public void process() {
     ExecutorService pool = Executors.newFixedThreadPool(10);
     try {
@@ -1029,14 +1013,14 @@ public void process() {
 ### 3. Daemon Threads for Critical Work
 
 ```java
-// ❌ ANTI-PATTERN: Daemon thread for DB writes
+// ANTI-PATTERN: Daemon thread for DB writes
 ThreadFactory factory = r -> {
     Thread t = new Thread(r);
     t.setDaemon(true); // JVM can exit before DB write!
     return t;
 };
 
-// ✅ CORRECT: Non-daemon for critical work
+// CORRECT: Non-daemon for critical work
 ThreadFactory factory = r -> {
     Thread t = new Thread(r);
     t.setDaemon(false);
@@ -1047,7 +1031,7 @@ ThreadFactory factory = r -> {
 ### 4. Unbounded Queues
 
 ```java
-// ❌ ANTI-PATTERN: Unbounded queue
+// ANTI-PATTERN: Unbounded queue
 BlockingQueue<Task> queue = new LinkedBlockingQueue<>(); // Unbounded!
 
 // ✅ CORRECT: Bounded with backpressure
@@ -1057,7 +1041,7 @@ BlockingQueue<Task> queue = new ArrayBlockingQueue<>(1000);
 ### 5. Swallowing Exceptions
 
 ```java
-// ❌ ANTI-PATTERN: Silent failure
+// ANTI-PATTERN: Silent failure
 pool.submit(() -> {
     riskyOperation(); // Exception swallowed!
 });
@@ -1222,22 +1206,7 @@ Before deploying concurrent code:
 ## Choosing the Right Tool: Decision Tree
 
 ```mermaid
-graph TB
-    A[Need Concurrency?] -->|Execute Tasks| B{Need Result?}
-    A -->|Coordinate Threads| C{What Type?}
-    
-    B -->|No| D[Executor]
-    B -->|Yes, Blocking| E[ExecutorService + Future]
-    B -->|Yes, Non-blocking| F[CompletableFuture]
-    B -->|Scheduled| G[ScheduledExecutorService]
-    
-    C -->|One-shot Wait| H[CountDownLatch]
-    C -->|Multi-phase, Fixed| I[CyclicBarrier]
-    C -->|Multi-phase, Dynamic| J[Phaser]
-    C -->|Limit Access| K[Semaphore]
-    C -->|Pass Work| L[BlockingQueue]
-    C -->|Delayed Work| M[DelayQueue]
-    C -->|Custom Locking| N[ReentrantLock]
+
 ```
 
 ---
@@ -1274,14 +1243,14 @@ Start simple (CountDownLatch), only use complex tools (Phaser) when truly needed
 
 Before reaching for concurrency, ask:
 
-❌ **Don't use if:**
+**Don't use if:**
 - Sequential processing takes < 100ms
 - Task is inherently sequential (B depends on A)
 - Dataset is small (< 1000 items)
 - Debugging complexity outweighs performance gain
 - Team lacks concurrency expertise
 
-✅ **Do use if:**
+**Do use if:**
 - I/O-bound operations (network, disk, DB)
 - Independent tasks that can parallelize
 - Need to keep UI/API responsive
@@ -1328,5 +1297,4 @@ That's the question I'm learning to answer.
 
 **Previous:** [Day 96 - Java Concurrency Toolkit Part 2: Core Synchronization Patterns](/posts/java/100DaysOfJava/day96)
 
-*What concurrency challenges have you faced in production? Which debugging techniques have saved you? Drop a comment below!*
 
