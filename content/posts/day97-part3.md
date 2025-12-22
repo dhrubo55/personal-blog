@@ -68,11 +68,11 @@ Parts 1 and 2 covered tools you'll use frequently. Part 3 covers **advanced patt
 
 ## 1. DelayQueue: Exponential Backoff Retry
 
-**The Problem:** HTTP requests to external APIs fail intermittently. You need retry logic with exponential backoff to avoid overwhelming the failing service.
+**The Problem:** HTTP requests fail intermittently. Retry immediately and you overwhelm the failing service. Wait too long and users timeout.
 
-DelayQueue handles retry mechanisms where tasks become available after a delay. It manages the timing logic internally.
+DelayQueue holds tasks until a delay expires. Tasks become available for processing only after their delay passes. No manual sleep() calls needed.
 
-**The Solution:** Queue with built-in delay mechanism.
+**How it works:** Each task stores its trigger time. `take()` call blocks until a task's delay expires.
 
 ```java
 import java.util.concurrent.*;
@@ -168,52 +168,52 @@ public class RetryQueue {
 }
 ```
 
-**Production Enhancement:** I persist the retry queue to Redis so retries survive application restarts.
+**Production note:** This queue lives in memory. Application restart loses pending retries. Persist to Redis or a database if retries must survive restarts.
 
-### Trade-offs and Limitations
+### Trade-offs
 
-**Pros:**
-- Built-in delay mechanism
-- No manual timing logic needed
-- Priority-based on delay time
-- Built for retry patterns
+**What you gain:**
+- Automatic delay enforcement. No manual sleep() or timers.
+- Tasks ordered by trigger time. Earliest task dequeues first.
+- Thread-safe. Multiple consumers can call take() concurrently.
 
-**Cons:**
-- Unbounded (grows indefinitely)
-- Requires Delayed interface
-- Clock-dependent (system time changes affect it)
-- Higher CPU usage than simple queue
+**What you pay:**
+- Unbounded. No backpressure. Queue grows until memory exhausted.
+- Clock-dependent. System time changes affect delays.
+- CPU overhead. Internal heap reorders on every insert.
+- Boilerplate. Must implement Delayed interface for every task type.
 
-**Common Mistakes:**
+**Critical implementation detail:**
 
 ```java
-// MISTAKE 1: Incorrect getDelay implementation
+// WRONG: Stores relative delay
 class BadDelayedTask implements Delayed {
-    private long delay;
+    private long delay; // 5000ms
     
     public long getDelay(TimeUnit unit) {
         return unit.convert(delay, TimeUnit.MILLISECONDS);
-        // Wrong! Should return remaining time, not original delay
+        // Always returns 5000ms. Task never becomes available.
     }
 }
 
-// CORRECT: Return remaining time
+// CORRECT: Stores absolute trigger time
 class GoodDelayedTask implements Delayed {
-    private final long triggerTime; // Absolute time
+    private final long triggerTime; // System.currentTimeMillis() + 5000
     
     public long getDelay(TimeUnit unit) {
         long remaining = triggerTime - System.currentTimeMillis();
         return unit.convert(remaining, TimeUnit.MILLISECONDS);
+        // Returns decreasing value. Negative = ready now.
     }
 }
 
-// MISTAKE 2: Forgetting compareTo
+// WRONG: Missing compareTo
 class BadTask implements Delayed {
     public long getDelay(TimeUnit unit) { /*...*/ }
-    // Missing compareTo! ClassCastException at runtime
+    // Compiles fine. Throws ClassCastException when queue reorders.
 }
 
-// CORRECT: Implement compareTo
+// CORRECT: compareTo orders the internal heap
 class GoodTask implements Delayed {
     public long getDelay(TimeUnit unit) { /*...*/ }
     
@@ -223,18 +223,18 @@ class GoodTask implements Delayed {
             this.getDelay(TimeUnit.NANOSECONDS),
             other.getDelay(TimeUnit.NANOSECONDS)
         );
+        // Earliest trigger time = highest priority
     }
 }
 
-// MISTAKE 3: Not handling negative delays
+// Negative delays are correct behavior
 public long getDelay(TimeUnit unit) {
     long remaining = triggerTime - System.currentTimeMillis();
     return unit.convert(remaining, TimeUnit.MILLISECONDS);
-    // If triggerTime is in the past, this is negative = available immediately
+    // Negative = trigger time passed. Task ready immediately.
+    // Zero = trigger time is now. Task ready immediately.
+    // Positive = trigger time in future. Task blocks.
 }
-
-// CORRECT: This is correct behavior!
-// Negative delay = task is ready immediately
 ```
 
 ### Production Pattern: Circuit Breaker with Retry
@@ -277,11 +277,11 @@ public class CircuitBreakerRetry {
 
 ## 2. ReentrantLock: Fine-Grained Control
 
-**The Problem:** Multiple threads need to update a critical resource. The `synchronized` keyword isn't flexible enough—you need timeout support, interruptibility, or conditional locking.
+**The Problem:** Multiple threads update a shared resource. `synchronized` blocks forever if the lock is held. You need timeouts, interruptibility, or fair queueing.
 
-ReentrantLock provides explicit locking with features that `synchronized` lacks. It's more verbose but gives you control over lock behavior.
+ReentrantLock provides explicit locking with timeout and interruption support. More verbose than `synchronized`, but you control when to give up waiting.
 
-**The Solution:** Explicit locking with advanced features.
+**Key mechanism:** `tryLock(timeout)` returns false if lock isn't acquired within the timeout. Thread doesn't block indefinitely.
 
 ```java
 import java.util.concurrent.locks.*;
@@ -351,26 +351,29 @@ public class ConfigurationManager {
 }
 ```
 
-**Why Not synchronized?** ReentrantLock gives you:
-- `tryLock()` with timeout
-- Interruptible lock acquisition
-- Fair vs non-fair queueing
-- Lock status checking
+**Why not synchronized?**
 
-### Trade-offs and Limitations
+`synchronized` blocks forever if the lock is held. No timeout. No interruption. No way to check if locked without blocking.
 
-**Pros:**
-- Timeout support
-- Interruptible lock acquisition
-- Fair vs non-fair modes
-- Lock state checking
-- Condition variables support
+ReentrantLock adds:
+- `tryLock(timeout)` - give up after N seconds
+- `lockInterruptibly()` - thread can be interrupted while waiting
+- Fair mode - threads acquire lock in request order (prevents starvation)
+- `isLocked()` - check status without blocking
 
-**Cons:**
-- More verbose than synchronized
-- Must unlock in finally
-- Easy to create deadlocks
-- No automatic unlock on exception
+### Trade-offs
+
+**What you gain:**
+- Timeout support. Fail fast instead of blocking forever.
+- Interruptibility. Shutdown threads cleanly mid-wait.
+- Fair mode. Prevent thread starvation under contention.
+- Condition variables. Multiple wait queues per lock.
+
+**What you pay:**
+- Manual unlock. Forget `finally` block = permanent lock.
+- More verbose. 5 lines vs 1 for synchronized.
+- Deadlock risk unchanged. Lock ordering still matters.
+- No compiler help. synchronized checks happen at bytecode level.
 
 **synchronized vs ReentrantLock:**
 
@@ -385,32 +388,38 @@ public class ConfigurationManager {
 | **Performance** | Slightly better | Slightly worse |
 | **Simplicity** | ✅ | ❌ |
 
-**Common Mistakes:**
+**Failure modes:**
 
 ```java
-// MISTAKE 1: Forgetting to unlock
+// WRONG: Exception skips unlock
 lock.lock();
-doWork(); // What if this throws?
-lock.unlock(); // Never called!
+doWork(); // Throws IOException
+lock.unlock(); // Never executes. Lock held forever.
+// All other threads block forever on this lock.
 
-// CORRECT: Always use try-finally
+// CORRECT: finally guarantees unlock
 lock.lock();
 try {
     doWork();
 } finally {
-    lock.unlock(); // Always happens
+    lock.unlock(); // Runs even if doWork() throws
 }
 
-// MISTAKE 2: Locking in wrong order (deadlock)
-// Thread 1
-lockA.lock();
-lockB.lock(); // Waits for B
-// Thread 2
-lockB.lock();
-lockA.lock(); // Waits for A
-// DEADLOCK!
+// WRONG: Inconsistent lock order causes deadlock
+// Thread 1: transfer(accountA, accountB, 100)
+synchronized(accountA) {
+    synchronized(accountB) { /* transfer */ }
+}
 
-// CORRECT: Acquire locks in consistent order
+// Thread 2: transfer(accountB, accountA, 50)
+synchronized(accountB) {
+    synchronized(accountA) { /* transfer */ }
+}
+// Thread 1 holds A, waits for B
+// Thread 2 holds B, waits for A
+// Deadlock. Both threads blocked forever.
+
+// CORRECT: Always acquire locks in same order
 Lock first = getLockById(Math.min(idA, idB));
 Lock second = getLockById(Math.max(idA, idB));
 first.lock();
@@ -424,28 +433,30 @@ try {
 } finally {
     first.unlock();
 }
+// Both threads acquire locks in ascending ID order. No circular wait.
 
-// MISTAKE 3: Not handling lock acquisition failure
+// WRONG: tryLock without finally
 if (lock.tryLock()) {
-    doWork(); // What if this throws?
-    lock.unlock(); // Never called!
+    doWork(); // Throws exception
+    lock.unlock(); // Never executes
 }
+// Lock held forever
 
-// CORRECT: tryLock with try-finally
+// CORRECT: tryLock with finally
 if (lock.tryLock()) {
     try {
         doWork();
     } finally {
-        lock.unlock();
+        lock.unlock(); // Runs even if doWork() throws
     }
 } else {
-    // Handle failure to acquire lock
+    // Lock was held. Handle failure.
 }
 
-// MISTAKE 4: Ignoring interruption
-lock.lockInterruptibly(); // Throws InterruptedException
+// WRONG: Ignoring interruption
+lock.lockInterruptibly(); // Throws InterruptedException - must catch
 
-// CORRECT: Handle interruption
+// CORRECT: Restore interrupt status
 try {
     lock.lockInterruptibly();
     try {
@@ -454,8 +465,8 @@ try {
         lock.unlock();
     }
 } catch (InterruptedException e) {
-    Thread.currentThread().interrupt();
-    // Cleanup and exit
+    Thread.currentThread().interrupt(); // Restore flag
+    // Thread was interrupted. Exit gracefully.
 }
 ```
 
@@ -518,11 +529,13 @@ public class CachedData {
 
 ## 3. Phaser: Dynamic Multi-Phase Coordination
 
-**The Problem:** ETL pipeline with Extract → Transform → Load phases. Workers join or leave dynamically based on data volume. CountDownLatch and CyclicBarrier don't support dynamic parties.
+**The Problem:** ETL pipeline with Extract → Transform → Load phases. Workers join when data arrives. Workers leave when their partition completes. Party count changes during execution.
 
-Phaser is the most advanced synchronizer in this toolkit. It's more complex than CountDownLatch or CyclicBarrier, but it's your only option for dynamic party registration.
+CountDownLatch: Fixed count at creation. Cannot add parties.
+CyclicBarrier: Fixed parties. Cannot add or remove.
+Phaser: Parties register and deregister during execution.
 
-**The Solution:** Dynamic phase synchronization with Phaser.
+**How it works:** Each worker calls `register()` on arrival and `arriveAndDeregister()` on completion. Phaser tracks current party count. Phase advances when all registered parties arrive.
 
 ```java
 import java.util.concurrent.*;
@@ -601,64 +614,67 @@ public class ETLPipeline {
 }
 ```
 
-**When to Use Phaser:**
-- Dynamic party registration
+**When to use Phaser:**
+- Parties join/leave during execution
 - More than 2 phases
-- Phase tracking needed
-- Simple cases (use CountDownLatch or CyclicBarrier instead)
+- Need phase number tracking
 
-### Trade-offs and Limitations
+**When NOT to use:**
+- Fixed party count → Use CountDownLatch or CyclicBarrier
+- Single phase → Use CountDownLatch
+- Adds complexity. Only use when simpler tools don't fit.
 
-**Pros:**
-- Dynamic party registration/deregistration
-- Multiple phases (not limited to 2)
-- Phase number tracking
-- Phase completion callbacks
-- Programmatic phase termination
+### Trade-offs
 
-**Cons:**
-- Most complex synchronizer
-- Higher overhead than CountDownLatch/CyclicBarrier
-- Easy to misuse (register/deregister bugs)
-- Hard to reason about
+**What you gain:**
+- Dynamic parties. Add workers mid-execution. Remove when done.
+- Unlimited phases. CountDownLatch is one-shot. CyclicBarrier resets but doesn't track phase number.
+- Phase callbacks. `onAdvance()` runs between phases.
+- Termination control. Return true from `onAdvance()` to stop.
 
-**Common Mistakes:**
+**What you pay:**
+- Complexity. Hardest synchronizer to reason about.
+- Register/deregister bugs. Forget to deregister = phase never advances.
+- Higher overhead. Atomic operations on every arrive() call.
+- Debugging difficulty. Thread dump shows "waiting on Phaser" but not which phase.
+
+**Failure modes:**
 
 ```java
-// MISTAKE 1: Forgetting to register
+// WRONG: Arrive without registering
 Phaser phaser = new Phaser(1);
 pool.submit(() -> {
-    // Forgot to call phaser.register()!
     phaser.arriveAndAwaitAdvance(); // IllegalStateException
+    // Thread never registered. Phaser doesn't know about it.
 });
 
-// CORRECT: Register in constructor or before work
+// CORRECT: Register before arriving
 class Worker implements Runnable {
     private final Phaser phaser;
     
     Worker(Phaser phaser) {
         this.phaser = phaser;
-        phaser.register(); // Register immediately
+        phaser.register(); // Increment party count
     }
     
     public void run() {
-        phaser.arriveAndAwaitAdvance(); // OK
+        phaser.arriveAndAwaitAdvance(); // Now valid
     }
 }
 
-// MISTAKE 2: Forgetting to deregister
-phaser.register();
+// WRONG: Register but never deregister
+phaser.register(); // Party count = 2
 doWork();
-// Forgot phaser.arriveAndDeregister()
-// Phaser waits forever!
+return; // Exit without deregistering
+// Party count still 2. Other threads wait forever for this thread.
 
-// CORRECT: Always deregister when done
+// CORRECT: Deregister in finally
 phaser.register();
 try {
     doWork();
     phaser.arriveAndAwaitAdvance();
 } finally {
-    phaser.arriveAndDeregister(); // Always cleanup
+    phaser.arriveAndDeregister(); // Decrement party count
 }
 
 // MISTAKE 3: onAdvance returns true too early
@@ -693,7 +709,7 @@ protected boolean onAdvance(int phase, int registeredParties) {
 
 ### Reading Thread Dumps
 
-When your application hangs, take a thread dump to see what threads are doing:
+Application hangs. No error logs. No exceptions. Take a thread dump—it shows every thread's current state and stack trace.
 
 **Windows:**
 ```powershell
@@ -711,7 +727,7 @@ jstack <PID> > thread_dump.txt
 kill -3 <PID>  # Sends SIGQUIT, creates thread dump
 ```
 
-**What to look for in thread dumps:**
+**Example thread dump entry:**
 
 ```
 "payment-worker-1" #23 prio=5 os_prio=0 tid=0x00007f8a2c001000 nid=0x4d2 waiting on condition
@@ -723,15 +739,25 @@ kill -3 <PID>  # Sends SIGQUIT, creates thread dump
         at com.example.Service.process(Service.java:45)
 ```
 
+**What this tells you:**
+- Thread state: WAITING means blocked on a synchronizer (CountDownLatch, Semaphore, Lock)
+- Stack trace: Shows where thread is stuck (line 45 in Service.java)
+- Lock info: Which object thread is waiting on
+
 **Red flags:**
-- Many threads WAITING on same object → Missed countDown/release
-- BLOCKED threads with circular waiting → Deadlock
-- Multiple threads named "pool-1-thread-X" → Need ThreadFactory
-- Thread doing CPU work for long time → Infinite loop or expensive operation
+- Many threads WAITING on same object → Someone forgot countDown() or release()
+- BLOCKED threads with circular dependencies → Deadlock
+- Threads named "pool-1-thread-X" → No custom ThreadFactory (debugging nightmare)
+- Thread in RUNNABLE for minutes → Infinite loop or expensive computation
 
 ### Common Deadlock Patterns
 
-#### Pattern 1: Classic Lock Ordering Deadlock
+#### Pattern 1: Lock Ordering Deadlock
+
+**Why it deadlocks:**
+Thread 1 holds lock A, needs lock B.
+Thread 2 holds lock B, needs lock A.
+Neither can proceed.
 
 ```java
 // DEADLOCK
@@ -750,9 +776,10 @@ class Account {
 
 // Thread 1: accountA.transfer(accountB, 100);  // Locks A, waits for B
 // Thread 2: accountB.transfer(accountA, 50);   // Locks B, waits for A
-// DEADLOCK!
+// Both threads wait forever.
 
-// SOLUTION: Acquire locks in consistent order
+// FIX: Always acquire locks in same order
+// Use object hash code to determine order
 public void transfer(Account to, double amount) {
     Account first = System.identityHashCode(this) < System.identityHashCode(to) 
                     ? this : to;
@@ -761,7 +788,6 @@ public void transfer(Account to, double amount) {
     synchronized (first.lock) {
         synchronized (second.lock) {
             if (this != first) {
-                // Adjust amounts for reversed order
                 to.balance += amount;
                 this.balance -= amount;
             } else {
@@ -771,9 +797,16 @@ public void transfer(Account to, double amount) {
         }
     }
 }
+
+// Now both threads acquire locks in same order. No circular wait.
 ```
 
 #### Pattern 2: Nested Lock Acquisition
+
+**Why it deadlocks:**
+method1() acquires lock1 → lock2
+method2() acquires lock2 → lock1
+Opposite order = deadlock
 
 ```java
 // DEADLOCK
@@ -798,7 +831,7 @@ class Service {
     public void method2() {
         lock2.lock();
         try {
-            lock1.lock();  // Acquires lock1 while holding lock2 (OPPOSITE ORDER!)
+            lock1.lock();  // Opposite order!
             try {
                 doWork();
             } finally {
@@ -810,7 +843,8 @@ class Service {
     }
 }
 
-// SOLUTION: Use tryLock with timeout
+// FIX: Use tryLock with timeout
+// If can't acquire second lock, release first and retry
 public void method2() {
     lock2.lock();
     try {
@@ -832,24 +866,27 @@ public void method2() {
 
 #### Pattern 3: Forgotten CountDownLatch
 
+**Why it hangs:**
+Latch expects 3 countdowns. Task only counts down on success. If task fails, count stays at 3. `await()` blocks forever.
+
 ```java
 // HANGS FOREVER
 CountDownLatch latch = new CountDownLatch(3);
 pool.submit(() -> {
     doWork();
-    if (success) {  // Conditional countdown!
+    if (success) {  // BUG: Conditional countdown
         latch.countDown();
     }
 });
 
-latch.await(); // Might wait forever if success=false
+latch.await(); // Waits forever if doWork() fails
 
-// SOLUTION: Always countDown
+// FIX: Always countDown, regardless of success
 pool.submit(() -> {
     try {
         doWork();
     } finally {
-        latch.countDown(); // Always happens
+        latch.countDown(); // Executes even if doWork() throws
     }
 });
 ```
@@ -886,6 +923,8 @@ public class DeadlockDetector {
 ---
 
 ## Monitoring Concurrent Systems
+
+**Why monitor:** Thread pools fail silently. Queue fills up. Threads deadlock. No exceptions thrown. Metrics reveal problems before users notice.
 
 ### Key Metrics to Track
 
@@ -933,35 +972,60 @@ public class ConcurrencyMetrics {
 
 **Alert on:**
 
-1. **Queue depth > 80% capacity** → Consumers falling behind
+1. **Queue depth > 80% capacity**
+   
+   **What it means:** Producers add tasks faster than consumers process them.
+   
+   **What breaks:** Queue fills. New tasks rejected or block forever.
+   
    ```java
    if (queueUtilization > 0.8) {
        alert("Queue nearly full - scale consumers");
    }
    ```
 
-2. **All threads busy for > 1 minute** → Thread pool too small
+2. **All threads busy for > 1 minute**
+   
+   **What it means:** Every thread in pool is working. No idle threads.
+   
+   **What breaks:** New tasks queue up. Latency increases.
+   
    ```java
    if (activeThreads == poolSize && duration > 60_000) {
        alert("Thread pool saturated - increase size");
    }
    ```
 
-3. **Task duration p99 > SLA** → Performance degradation
+3. **Task duration p99 > SLA**
+   
+   **What it means:** 99th percentile task takes longer than expected.
+   
+   **What breaks:** User-facing timeouts. SLA violations.
+   
    ```java
    if (taskDurationP99 > slaMs) {
        alert("Task latency exceeds SLA");
    }
    ```
 
-4. **Deadlock detected** → Critical failure
+4. **Deadlock detected**
+   
+   **What it means:** Threads waiting on each other in a cycle.
+   
+   **What breaks:** Application hangs. Requires restart.
+   
    ```java
    if (deadlockedThreads > 0) {
-       alert("CRITICAL: Deadlock detected - immediate action required");
+       alert("CRITICAL: Deadlock - restart required");
    }
    ```
 
-5. **Thread count growing** → Thread leak
+5. **Thread count growing**
+   
+   **What it means:** New threads created but never destroyed.
+   
+   **What breaks:** Eventually hits OS thread limit. OutOfMemoryError.
+   
    ```java
    if (threadCountDelta > 10 && timeWindow < 60_000) {
        alert("Thread leak detected");
@@ -989,22 +1053,24 @@ int poolSize = cores * (1 + (int)(waitTimeMs / computeTimeMs));
 
 ### 2. Ignoring Shutdown
 
+**What breaks:** Threads keep running after method returns. JVM doesn't exit. Application hangs on shutdown.
+
 ```java
-// ANTI-PATTERN: No shutdown
+// WRONG: No shutdown
 public void process() {
     ExecutorService pool = Executors.newFixedThreadPool(10);
     pool.submit(() -> work());
-} // Pool leaks!
+} // Threads still running. Pool never cleaned up.
 
-// CORRECT: Proper shutdown
+// CORRECT: Shutdown sequence
 public void process() {
     ExecutorService pool = Executors.newFixedThreadPool(10);
     try {
         pool.submit(() -> work()).get();
     } finally {
-        pool.shutdown();
+        pool.shutdown();                              // Stop accepting new tasks
         if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-            pool.shutdownNow();
+            pool.shutdownNow();                       // Force stop running tasks
         }
     }
 }
@@ -1012,38 +1078,49 @@ public void process() {
 
 ### 3. Daemon Threads for Critical Work
 
+**What breaks:** JVM exits while daemon thread is mid-write. Database transaction incomplete. Data corrupted.
+
+**The rule:** Daemon threads die when JVM exits. Non-daemon threads keep JVM alive until they finish.
+
 ```java
-// ANTI-PATTERN: Daemon thread for DB writes
+// WRONG: Daemon thread for DB writes
 ThreadFactory factory = r -> {
     Thread t = new Thread(r);
-    t.setDaemon(true); // JVM can exit before DB write!
+    t.setDaemon(true); // JVM exits → thread dies → DB write lost
     return t;
 };
 
 // CORRECT: Non-daemon for critical work
 ThreadFactory factory = r -> {
     Thread t = new Thread(r);
-    t.setDaemon(false);
+    t.setDaemon(false); // JVM waits for thread to finish
     return t;
 };
 ```
 
 ### 4. Unbounded Queues
 
-```java
-// ANTI-PATTERN: Unbounded queue
-BlockingQueue<Task> queue = new LinkedBlockingQueue<>(); // Unbounded!
+**What breaks:** Producer faster than consumer. Queue grows. Heap fills. OutOfMemoryError.
 
-// CORRECT: Bounded with backpressure
+```java
+// WRONG: Unbounded queue
+BlockingQueue<Task> queue = new LinkedBlockingQueue<>(); // No limit!
+
+// CORRECT: Bounded queue
 BlockingQueue<Task> queue = new ArrayBlockingQueue<>(1000);
+// When full, put() blocks. Producer slows down. Backpressure applied.
 ```
 
 ### 5. Swallowing Exceptions
 
+**What breaks:** Task throws exception. `submit()` catches it silently. No logs. No alerts. Silent failure.
+
+**Why it happens:** `submit()` returns Future. Exception stored in Future. If you don't call `get()`, you never see it.
+
 ```java
-// ANTI-PATTERN: Silent failure
+// WRONG: Exception disappears
 pool.submit(() -> {
-    riskyOperation(); // Exception swallowed!
+    riskyOperation(); // Throws exception → stored in Future → never retrieved
 });
 
 // CORRECT: Explicit error handling
@@ -1214,28 +1291,30 @@ Before deploying concurrent code:
 ## Key Principles I've Learned
 
 ### 1. Always Set Timeouts
-Every `Future.get()`, every `Semaphore.acquire()`, every `Lock.lock()`. Blocking forever hangs systems in production.
+`Future.get()` without timeout blocks forever if task hangs. `Lock.lock()` without timeout deadlocks permanently. Always use timeout variants: `get(timeout)`, `tryLock(timeout)`, `acquire(timeout)`.
 
 ### 2. Name Your Threads
-Thread dumps with "pool-1-thread-17" make debugging nearly impossible. Custom `ThreadFactory` for meaningful names pays off.
+Thread dump shows "pool-1-thread-17". Which service? Which operation? Unknown. Custom `ThreadFactory` adds meaningful names: "payment-processor-3". Debugging becomes possible.
 
 ### 3. Monitor Queue Depths
-A growing `BlockingQueue` signals that consumers can't keep up with producers. Your early warning system.
+Queue at 10% → normal. Queue at 90% → consumers falling behind. Queue at 100% → producers blocking. Monitor queue depth. Alert before it fills.
 
 ### 4. Graceful Shutdown is Hard
-Proper shutdown sequence: call `shutdown()`, then `awaitTermination()`, then `shutdownNow()` if needed. Easy to get wrong.
+Three steps: `shutdown()` stops accepting new tasks. `awaitTermination(timeout)` waits for running tasks. `shutdownNow()` interrupts if timeout exceeded. Miss any step → threads leak or work lost.
 
 ### 5. Beware of Daemon Threads
-Daemon threads die when the JVM exits. If they're doing critical work (like flushing logs), they need to be non-daemon.
+Daemon thread flushing logs. JVM exits. Thread dies mid-write. Logs lost. Use daemon threads only for non-critical background work.
 
 ### 6. Fair vs Unfair Locks Matter
-Unfair locks have better throughput but can cause starvation. Choose based on your requirements.
+Fair lock: threads acquire in request order. Prevents starvation. Lower throughput.
+Unfair lock: any thread can acquire. Higher throughput. Starvation possible.
+Default is unfair. Choose explicitly.
 
 ### 7. Bounded Resources Prevent Cascading Failures
-Unbounded queues and thread pools cause OOM. Always set limits.
+Unbounded queue fills memory. OOM kills application. Bounded queue applies backpressure. Producer slows down. System stays alive.
 
 ### 8. Composition Over Complexity
-Start simple (CountDownLatch), only use complex tools (Phaser) when truly needed.
+Need one-shot coordination? CountDownLatch. Need reusable barrier? CyclicBarrier. Need dynamic parties? Then Phaser. Start simple. Add complexity only when required.
 
 ---
 
@@ -1257,7 +1336,7 @@ Before reaching for concurrency, ask:
 - Processing large datasets
 - Proven bottleneck exists
 
-**Rule:** Measure first. Optimize second. Add concurrency only when there's clear benefit.
+**Rule:** Measure first. Prove the bottleneck. Then add concurrency. Concurrency adds complexity. Complexity adds bugs. Only pay that cost when the benefit is real.
 
 ---
 
@@ -1265,7 +1344,7 @@ Before reaching for concurrency, ask:
 
 Over these three parts, we've explored **13 essential concurrency tools**. I've used some extensively in production (ExecutorService, Future, CountDownLatch, ReentrantLock), while others (Phaser, DelayQueue) I'm still mastering.
 
-**The insight:** Concurrency isn't about raw speed. It's about **structuring your system to handle multiple concerns elegantly and safely**.
+**The insight:** Concurrency isn't about speed. It's about **structure**. How do you coordinate independent work? How do you prevent threads from corrupting shared state? How do you fail gracefully under load?
 
 Each tool solves a specific problem:
 - Execute? → ExecutorService
