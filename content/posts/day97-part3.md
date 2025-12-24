@@ -1282,11 +1282,8 @@ Before deploying concurrent code:
 
 ## Choosing the Right Tool: Decision Tree
 
-```mermaid
+![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909602/Untitled-2025-12-04-2228_gwudj1.png)
 
-```
-
----
 
 ## Key Principles I've Learned
 
