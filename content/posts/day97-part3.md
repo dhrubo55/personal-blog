@@ -60,12 +60,6 @@ This is a **3-part series** on Java Concurrency:
 | **ReentrantLock** | Explicit locking with timeouts, interruptibility, fair mode. More power than `synchronized`. | Must unlock in `finally` - no automatic unlock on exception |
 | **Phaser** | Most advanced - dynamic party registration/deregistration, multiple phases. | Most complex synchronizer. Use only when CountDownLatch/CyclicBarrier won't work |
 
-### Why Part 3 is Different
-
-Parts 1 and 2 covered tools you'll use frequently. Part 3 covers **advanced patterns** you'll use occasionally, plus **critical operational skills** (debugging, monitoring) you'll use daily in production.
-
----
-
 ## 1. DelayQueue: Exponential Backoff Retry
 
 **The Problem:** HTTP requests fail intermittently. Retry immediately and you overwhelm the failing service. Wait too long and users timeout.
@@ -1281,6 +1275,8 @@ Before deploying concurrent code:
 ---
 
 ## Choosing the Right Tool: Decision Tree
+
+From my understanding we can have draw this decision tree as our mental model where we can have some idea to choose which tool will go with whic types of task the best.
 
 ![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909602/Untitled-2025-12-04-2228_gwudj1.png)
 
