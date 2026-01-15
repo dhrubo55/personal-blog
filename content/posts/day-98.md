@@ -1,4 +1,21 @@
-# I Thought Virtual Threads Were Just Green Threads—They're Actually Continuations on the Heap
++++
+category = ["Java", "100DaysOfJava"]
+date = 2025-12-23T00:00:00Z
+description = "Deep dive into Java 21 Virtual Threads implementation - from continuations and heap-based stacks to mount/unmount mechanics, pinning problems, and production trade-offs."
+draft = false
+ShowToc = true
+TocOpen = true
+slug = "posts/java/100DaysOfJava/day98"
+summary = "I thought virtual threads were just green threads—turns out they're continuations on the heap with sophisticated scheduling. Here's what I got wrong and what actually happens under the hood."
+title = "Day 98: I Thought Virtual Threads Were Just Green Threads—They're Actually Continuations on the Heap"
+[cover]
+alt = "day98"
+caption = "day98"
+image = ""
+relative = false
++++
+
+## I Thought Virtual Threads Were Just Green Threads—They're Actually Continuations on the Heap
 
 I used virtual threads in an API earlier in this challenge. Spun up a few thousand threads, watched memory stay flat, called it a win. My mental model was simple: virtual threads are like Go's goroutines—lightweight threads the runtime manages instead of the OS. Green threads. Done.
 
