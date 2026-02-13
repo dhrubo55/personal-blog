@@ -7,7 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day99"
 summary = "I thought virtual threads replaced the need for Netty and event loops. Then I built both models from scratch and benchmarked them. Virtual threads didn't kill event loops they made blocking I/O viable for most cases. But event loops still win for ultra-high connection counts. Here's when each approach wins."
-title = "Day 99: Virtual Threads Didn't Kill Event Loops. Here's When Each Wins"
+title = "Day 99: Virtual Threads Didn't Kill Event Loops. Here's How Each Works"
 [cover]
 alt = "day99"
 caption = "day99"
@@ -630,10 +630,6 @@ Event loops handle I/O multiplexing. Virtual threads handle business logic. Best
 ## Benchmarks and Repo: Putting Both to the Test
 
 To validate the trade-offs with real numbers, I added a benchmark suite to a small project that runs both implementations side by side. The repo is **virtual-thread-eventloop-test** and is set up so you can run the same tests and draw your own conclusions.
-
-### PC Setup
-
-
 
 ### Repo Layout
 
