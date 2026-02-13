@@ -1,6 +1,6 @@
 +++
 category = ["Java", "100DaysOfJava"]
-date = 2026-01-27T00:00:00Z
+date = 2026-02-13T00:00:00Z
 description = "After Day 98, I thought virtual threads replaced event loops. Then I opened Netty's source code—zero virtual threads. I built both models from scratch to understand when each wins. Here's what I learned about non-blocking I/O, event loops, and the real trade-offs."
 draft = false
 ShowToc = true
@@ -15,7 +15,7 @@ image = ""
 relative = false
 +++
 
-After ![Day 98](/posts/java/100DaysOfJava/day-98), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
+After ![Day 98](/posts/posts/day-98), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
 
 Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops—a completely different concurrency model that predates virtual threads by decades.
 
@@ -39,7 +39,7 @@ Non-blocking I/O takes a different approach: one thread, many connections, expli
 
 ### What is I/O multiplexing 
 
-I/O multiplexing breaks down to kernel-level efficiency: one thread polls multiple [file descriptors](/posts/java/100DaysOfJava/day75#file-descriptor-exhaustion) via system calls like [`select()`/`poll()`/`epoll()`](https://jvns.ca/blog/2017/06/03/async-io-on-linux--select--poll--and-epoll/), reacting only to ready I/O events to avoid per-connection blocking.
+I/O multiplexing breaks down to kernel-level efficiency: one thread polls multiple [file descriptors](/posts/posts/java/100DaysOfJava/day75#file-descriptor-exhaustion) via system calls like [`select()`/`poll()`/`epoll()`](https://jvns.ca/blog/2017/06/03/async-io-on-linux--select--poll--and-epoll/), reacting only to ready I/O events to avoid per-connection blocking.
 
 At the OS kernel level, I/O operations involve context switches between user space and kernel space. Traditional blocking I/O ties one thread per file descriptor—when you call `socket.read()`, the thread blocks until data arrives. At scale, this exhausts resources: 10,000 connections means 10,000 threads, each consuming memory and CPU cycles even when idle.
 
@@ -633,7 +633,7 @@ To validate the trade-offs with real numbers, I added a benchmark suite to a sma
 
 ### Repo Layout
 
-The project contains two HTTP servers and a 4-phase benchmark suite:
+Here is the project link [GITHUB](https://github.com/dhrubo55/virtual-thread-eventloop-test) .The project contains two HTTP servers and a 4-phase benchmark suite:
 
 - **`VirtualThreadsHttpServer`** (port 8080) — Java 21 `HttpServer` with `Executors.newVirtualThreadPerTaskExecutor()`. Each request runs on a virtual thread and does ~10 ms simulated blocking work (e.g. DB/REST). Simple sequential handler.
 - **`EventLoopHttpServer`** (port 8081) — Single-thread NIO server: one `Selector`, non-blocking `ServerSocketChannel`/`SocketChannel`, and the same 10 ms work simulated inside the event loop (no virtual threads). Pure reactor style.
