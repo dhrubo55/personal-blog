@@ -631,6 +631,10 @@ Event loops handle I/O multiplexing. Virtual threads handle business logic. Best
 
 To validate the trade-offs with real numbers, I added a benchmark suite to a small project that runs both implementations side by side. The repo is **virtual-thread-eventloop-test** and is set up so you can run the same tests and draw your own conclusions.
 
+### PC Setup
+
+
+
 ### Repo Layout
 
 Here is the project link [GITHUB](https://github.com/dhrubo55/virtual-thread-eventloop-test) .The project contains two HTTP servers and a 4-phase benchmark suite:
@@ -654,6 +658,8 @@ The **benchmarks** folder holds a hypothesis-driven suite that measures throughp
 Load is generated with **Bombardier** (Go-based HTTP benchmark). The repo includes `bombardier.exe` for Windows, so you can run the suite natively. The suite can collect JFR, JMX (e.g. VisualVM), and system metrics; the **analyze-and-report** script turns raw results into CSVs and a **FINAL-REPORT.md** in `benchmark-results/.../analysis/`.
 
 ### Results From a Sample Run
+
+**Test machine** (from the benchmark run’s `config.json`): 16 CPU cores, **31.82 GB** RAM, **183 GB** free disk. Each server ran with **4 GB** heap (-Xmx4096m). Bombardier used 14 worker threads. Windows host.
 
 From one full run (Phase 1–3; Phase 2 summary and report):
 
