@@ -19,7 +19,7 @@ After ![Day 98](/posts/posts/java/100DaysOfJava/day-98), I thought I learned som
 
 Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops—a completely different concurrency model that predates virtual threads by decades.
 
-Why do both approaches exist? When does each win? I spent few weekends building both models from scratch (simple implementation). Here's what I learned.
+Why do both approaches exist? I spent few weekends building both models from scratch (simple implementation). Here's what I learned.
 
 ## The Misconception I Had
 
