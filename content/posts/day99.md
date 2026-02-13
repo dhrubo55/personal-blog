@@ -15,7 +15,7 @@ image = ""
 relative = false
 +++
 
-After ![Day 98](/posts/posts/java/100DaysOfJava/day-98), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
+After [Day 98](/posts/posts/java/100DaysOfJava/day-98), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
 
 Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops—a completely different concurrency model that predates virtual threads by decades.
 
