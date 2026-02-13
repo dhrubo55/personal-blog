@@ -245,7 +245,7 @@ This is the foundation. One thread handles all connections. The Selector monitor
 
 Key insight: `selector.select()` is the only blocking call. Everything else—`accept()`, `read()`, `write()`—returns immediately. If data isn't ready, the operation returns zero bytes. No waiting.
 
-I tested this. One thread handled 10,000 concurrent connections using about 50MB of memory. Each connection added roughly 5KB of overhead (buffers, socket state, selector keys). Compare that to 10,000 virtual threads: ~10-15MB for stack chunks alone.
+“one thread handled 10,000 concurrent connections using about 50MB .That is the whole process (selector, buffers, socket state). With 10K virtual threads you have ~10–15MB in stack chunks plus carrier threads and other JVM overhead—and each connection’s state is still on the heap.” Then the reader knows you’re comparing total system cost, not “50MB vs 15MB
 
 ## Building an Event Loop HTTP Server
 
