@@ -597,7 +597,7 @@ The entire gateway ran on 4 CPU cores, 2GB heap. Event loops handled all 500K co
 
 ### The Hybrid Approach
 
-Most production systems use both. Netty uses event loops for network I/O, then dispatches business logic to thread pools (or virtual threads in newer versions).
+Production system can use both at the same time. Netty uses event loops for network I/O, then dispatches business logic to thread pools (or virtual threads in newer versions).
 
 Pattern:
 
