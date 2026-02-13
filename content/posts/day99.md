@@ -651,7 +651,7 @@ The **benchmarks** folder holds a hypothesis-driven suite that measures throughp
 | **Phase 3: Spike** | Baseline (1K conn) → spike (10K conn) → back to 1K, repeated cycles | Observe recovery and stability. |
 | **Phase 4: Endurance** | Constant load (e.g. 5K connections) for several hours per server | Check for memory growth and long-term stability. |
 
-Load is generated with **Bombardier** (Go-based HTTP benchmark). The repo includes `bombardier.exe` for Windows, so you can run the suite natively. The suite can collect JFR, JMX (e.g. VisualVM), and system metrics; the **analyze-and-report** script turns raw results into CSVs and a **FINAL-REPORT.md** in `benchmark-results/.../analysis/`.
+Load is generated with **Bombardier** (Go-based HTTP benchmark). The repo includes `bombardier.exe` in the scripts for Windows, so you can run the suite natively. The suite can collect JFR, JMX (e.g. VisualVM), and system metrics; the **analyze-and-report** script turns raw results into CSVs and a **FINAL-REPORT.md** in `benchmark-results/.../analysis/`.
 
 ### Results From a Sample Run
 
