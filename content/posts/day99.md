@@ -505,7 +505,7 @@ Example: Processing a payment involves calling fraud detection, inventory check,
 
 **Team velocity**: Most developers understand sequential code. Onboarding is faster. Code reviews are easier. Bugs are simpler to fix.
 
-Here's a complete HTTP server implementation using virtual threads:
+Here's a basic HTTP server implementation using virtual threads:
 
 ```java
 package org.example;
@@ -578,8 +578,6 @@ public class VirtualThreadsHttpServer {
 ```
 
 Total blocking time: ~10ms per request. With platform threads, this ties up a thread for 10ms. With virtual threads, the carrier thread stays free. The virtual thread unmounts at each blocking call. Other virtual threads run.
-
-Sequential code. Easy to read. Easy to debug. Easy to maintain. Virtual threads made this possible at scale.
 
 ### When to Use Event Loops
 
