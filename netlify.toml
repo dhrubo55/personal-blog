@@ -1,5 +1,12 @@
-# Post Processing Settings
+# Build Settings
+[build]
+  command = "hugo version && hugo --gc --minify --enableGitInfo"
+  publish = "public"
 
+[build.environment]
+  HUGO_VERSION = "0.82.1"
+
+# Post Processing Settings
 [build.processing]
   skip_processing = false
 [build.processing.css]
