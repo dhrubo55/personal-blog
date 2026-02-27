@@ -1,6 +1,5 @@
-% Resume in Latex
-% Author : Mohibul Hassan Chowdhury (Based on template by Sourabh Bajaj)
-% License : MIT
+% Hybrid Format Resume - Mohibul Hassan Chowdhury
+% Optimized for ATS + Senior-Level Positioning
 
 \documentclass[letterpaper,11pt]{article}
 
@@ -11,8 +10,8 @@
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{verbatim}
 \usepackage{enumitem}
-\usepackage[pdftex]{hyperref}
 \usepackage{fancyhdr}
+\usepackage[pdftex]{hyperref}
 \usepackage{tabularx}
 
 \pagestyle{fancy}
@@ -22,13 +21,12 @@
 \renewcommand{\footrulewidth}{0pt}
 
 % Adjust margins
-\addtolength{\oddsidemargin}{-0.375in}
-\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
 \addtolength{\textwidth}{1in}
 \addtolength{\topmargin}{-.5in}
 \addtolength{\textheight}{1.0in}
 
-\urlstyle{same}
 
 \raggedbottom
 \raggedright
@@ -36,27 +34,21 @@
 
 % Sections formatting
 \titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
+  \vspace{-6pt}\scshape\raggedright\large\bfseries
 }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
 
 % Custom commands
-\newcommand{\resumeItem}[2]{
-  \item\small{
-    \textbf{#1}{: #2 \vspace{-2pt}}
-  }
+\newcommand{\resumeItem}[1]{
+  \item\small{#1 \vspace{-2pt}}
 }
 
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-1pt}\item
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
       \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-5pt}
+    \end{tabular*}\vspace{-6pt}
 }
-
-\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
-
-\renewcommand{\labelitemii}{$\circ$}
 
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
@@ -72,92 +64,82 @@
   \href{https://www.linkedin.com/in/mohibulhassan}{LinkedIn: linkedin.com/in/mohibulhassan} & Mobile: +88 01891962583
 \end{tabular*}
 
+%-----------PROFESSIONAL SUMMARY-----------------
+\section{Professional Summary}
+\vspace{2pt}
+\small{Senior Full-Stack Engineer with 6+ years designing and scaling SaaS platforms for US and EU clients. Led production AI integrations (Google Vertex AI, AWS Bedrock) and infrastructure optimizations saving \$600--1.2K annually per customer. Strong expertise in Java/Spring Boot microservices, distributed systems, and JVM performance engineering for high-reliability platforms serving 24,000+ users with 99.99\% Service Level Agreement (SLA) uptime.}
+
 %-----------EXPERIENCE-----------------
 \section{Professional Experience}
-  \resumeSubHeadingListStart
-    \resumeSubheading
-      {Cefalo (Offshore branch of Cefalo AS, Norway)}{Dhaka, Bangladesh}
-      {Senior Software Engineer}{Sept 2022 - Present}
-      \resumeItemListStart
-        \resumeItem{Full Stack Development}
-          {Develop and maintain high-performance, scalable solutions for LeadDesk, a leading CPaaS provider, using Java (Jersey), JavaScript (Vue, AngularJS), TypeScript, and Erlang}
-        \resumeItem{Client Collaboration}
-          {Work closely with international clients to understand requirements, design solutions, and implement features that meet business needs}
-        \resumeItem{System Architecture}
-          {Contribute to software architecture decisions and API development, ensuring scalability and maintainability of systems serving 24,000+ users with 99.99\% uptime}
-        \resumeItem{Research \& Development}
-          {Implement performance enhancements and process improvements, increasing release frequency to 4 times per sprint}
-        \resumeItem{Code Quality}
-          {Conduct thorough code reviews, mentor junior developers, and ensure adherence to best practices and coding standards}
-        \resumeItem{Problem Solving}
-          {Utilize strong analytical thinking and decision-making skills to troubleshoot and resolve complex technical issues}
-      \resumeItemListEnd
+\resumeSubHeadingListStart
 
-    \resumeSubheading
-      {Brain Station 23}{Dhaka, Bangladesh}
-      {Software Engineer}{Dec 2020 - Sept 2022}
-      \resumeItemListStart
-        \resumeItem{Backend Development}
-          {Developed robust backend services using Java Spring Boot framework and Spring Data JPA, ensuring scalability and performance}
-        \resumeItem{Authentication System}
-          {Designed and implemented a custom multi-tenant authentication system, enhancing security for various user levels}
-        \resumeItem{Payment Integration}
-          {Successfully integrated Stripe payment gateway into existing Spring Boot application, managing product categories, transaction history, and service allocation}
-        \resumeItem{Testing \& Quality Assurance}
-          {Improved codebase test coverage by writing comprehensive unit and integration tests using JUnit and Mockito}
-        \resumeItem{Agile Practices}
-          {Collaborated effectively with international clients in an Agile/Scrum environment, ensuring timely project delivery}
-      \resumeItemListEnd
+\resumeSubheading
+{Cefalo (Offshore branch of Cefalo AS, Norway)}{Dhaka, Bangladesh}
+{Senior Software Engineer}{Sept 2022 - Present}
+\resumeItemListStart
+\resumeItem{\textbf{AI Platform Architecture:} Led design and deployment of Google Vertex AI (Gemini 1.5) integration for production call transcription across multiple SaaS clients; built resilient single/batch audio pipelines with custom confidence scoring and evaluation frameworks}
+\resumeItem{\textbf{Database Optimization \& Risk Mitigation:} Eliminated 68M unused database records (50--100 GB), preventing recurring AWS ec2 instance upsizing and saving \$600--1,200 annually per customer; proactively mitigated storage exhaustion risk, preventing potential production outages}
+    
+\resumeItem{\textbf{Performance \& Operational Stability:} Removed 8 unnecessary database triggers, reducing write amplification and improving backup performance by 10--20\%; eliminated 12--24 hours of annual manual disk management}
 
-    \resumeSubheading
-      {Welldev}{Dhaka, Bangladesh}
-      {Junior Software Engineer}{Sept 2019 - Nov 2020}
-      \resumeItemListStart
-        \resumeItem{Frontend Development}
-          {Developed responsive UI components for chatbot projects using Vue.js, Nuxt.js, and Angular, implementing state management with Vuex and VuexORM}
-        \resumeItem{Backend Development}
-          {Created RESTful APIs and backend functionalities with Spring Boot and PostgreSQL}
-        \resumeItem{Component Library}
-          {Built a component library using Storybook to facilitate design verification and consistency}
-        \resumeItem{Testing}
-          {Increased code quality by implementing unit tests for Vue components using Jest and Vue Test Utils}
-        \resumeItem{DevOps}
-          {Containerized local development environment using Docker, improving team productivity and consistency}
-      \resumeItemListEnd
+\resumeItem{\textbf{Zero-Downtime Migration Strategy:} Designed phased migration framework with automated validation and rollback safeguards to ensure safe production deployment}
+\resumeItem{\textbf{Distributed Systems Delivery:} Maintained Java (JAX-RS -- Java API for RESTful Web Services) microservices and Vue.js/TypeScript frontends for LeadDesk Contact Platform as a Service (CPaaS) / Contact Center as a Service (CCaaS) platform serving 24,000+ users with 99.99\% uptime}
+\resumeItem{\textbf{Cross-Border Collaboration:} Partnered with Norway-based stakeholders to translate business requirements into scalable technical solutions aligned with product roadmap}
+\resumeItemListEnd
 
-  \resumeSubHeadingListEnd
+\resumeSubheading
+{Brain Station 23}{Dhaka, Bangladesh}
+{Software Engineer}{Dec 2020 - Sept 2022}
+\resumeItemListStart
+\resumeItem{\textbf{Backend System Design:} Built production-grade Spring Boot REST APIs using Spring Data Java Persistence API (JPA) / Hibernate with strong domain modeling and transactional integrity}
+\resumeItem{\textbf{Multi-Tenant Security Architecture:} Designed and implemented custom authentication and authorization system supporting hierarchical roles across tenant boundaries}
+\resumeItem{\textbf{Payment Systems Integration:} Integrated Stripe billing workflows (product catalog, transactions, provisioning) ensuring accurate financial flows}
+\resumeItem{\textbf{Quality Engineering:} Expanded automated test coverage (JUnit, Mockito), reducing production defects and accelerating delivery velocity}
+\resumeItem{\textbf{Enterprise Platform Contribution:} Contributed to AbbviePro multi-tenant healthcare platform (Adobe Experience Manager) with Java backend and AngularJS frontend}
+\resumeItemListEnd
+
+\resumeSubheading
+{Welldev}{Dhaka, Bangladesh}
+{Junior Software Engineer}{Sept 2019 - Nov 2020}
+\resumeItemListStart
+\resumeItem{\textbf{Frontend Engineering:} Built responsive chatbot interface using Vue.js/Nuxt.js with structured state management (Vuex/VuexORM)}
+\resumeItem{\textbf{Backend API Development:} Developed RESTful services using Spring Boot and PostgreSQL}
+\resumeItem{\textbf{UI System Design:} Built Storybook component library to standardize UI and accelerate development}
+\resumeItem{\textbf{DevOps Foundations:} Dockerized development environments to ensure reproducible builds and reduce onboarding friction}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------TECHNICAL LEADERSHIP-----------------
+\section{Technical Leadership \& Systems Expertise}
+\resumeSubHeadingListStart
+\resumeItem{\textbf{AI \& Large Language Model (LLM) Systems:} Designed end-to-end agent architectures using Spring AI with streaming chat, persistent memory (Java Database Connectivity -- JDBC), Retrieval-Augmented Generation (RAG) via vector stores (MongoDB Atlas), tool invocation, and cloud model orchestration (AWS Bedrock, Google Vertex AI)}
+\resumeItem{\textbf{Performance Engineering:} Applied Java Microbenchmark Harness (JMH) for statistical benchmarking; production monitoring with Java Management Extensions (JMX); heap analysis (VisualVM, Eclipse Memory Analyzer Tool); garbage collection tuning for latency-sensitive systems}
+\resumeItem{\textbf{Security Engineering:} Implemented Transport Layer Security (TLS) / Java Secure Socket Extension (JSSE); designed secure sandboxing for untrusted execution; authentication systems using JSON Web Token (JWT)}
+\resumeItem{\textbf{Distributed Systems Design:} Idempotent API patterns, consistent hashing strategies, microservices decomposition, and high-availability service design}
+\resumeItem{\textbf{Technical Writing:} Baeldung contributor publishing production-focused Java/Spring articles; author of 100DaysOfJava blog covering JVM internals, performance, security, and AI systems}
+\resumeSubHeadingListEnd
 
 %--------TECHNICAL SKILLS------------
 \section{Technical Skills}
-  \begin{tabularx}{\textwidth}{l X}
-    \textbf{Languages} & Java, JavaScript, TypeScript, SQL, GoLang, HTML, CSS, Erlang \\
-    \textbf{Frameworks \& Libraries} \quad &  Spring Boot, Hibernate, Vue.js, Nuxt.js, Angular, Node.js, Jersey \\
-    \textbf{Tools \& Technologies} & Git, GitHub Actions (CI/CD), Docker, PostgreSQL, Firebase, Cloud Functions, AEM \\
-    \textbf{Methodologies} & Agile, Scrum, Test-Driven Development (TDD), Microservices Architecture \\
-    \textbf{Technical Writing} & \href{https://www.baeldung.com/author/mohibulhassan100}{Baeldung}: Java/Spring articles with production-ready code samples; collaborate on editorial QA \\
-  \end{tabularx}
+\begin{tabularx}{\textwidth}{l X}
+\textbf{Languages} & Java, JavaScript, TypeScript, SQL, Python, HTML, CSS, Erlang \\
+\textbf{Backend} & Spring Boot, Spring Security, Spring AI, Jersey (JAX-RS), Spring Data JPA, JDBC, REST APIs, Microservices \\
+\textbf{Frontend} & Vue.js, Nuxt.js, Vuex, AngularJS \\
+\textbf{AI/ML} & Google Vertex AI, Gemini 1.5, AWS Bedrock, Retrieval-Augmented Generation (RAG), LLM Integration, Vector Databases (MongoDB Atlas) \\
+\textbf{Cloud \& DevOps} & AWS (RDS, Bedrock), Docker, GitHub Actions, CI/CD \\
+\textbf{Databases} & PostgreSQL, SQL Optimization, Database Migration \\
+\textbf{Performance} & JMH Microbenchmarking, JMX Monitoring, VisualVM, Eclipse MAT, Heap Analysis, GC Tuning \\
+\textbf{Security} & TLS/JSSE, OAuth2, JWT, Secure Sandboxing \\
+\textbf{Testing} & JUnit, Mockito, Jest, Vue Test Utils, Integration Testing, Selenium \\
+\end{tabularx}
 
-
-%-----------PROJECTS-----------------
-\section{Key Projects}
-  \resumeSubHeadingListStart
-    \resumeSubItem{LeadDesk CPaaS Platform (Professional)}
-      {Developed and maintained critical features for a Contact Center as a Service (CCaaS) platform, serving 24,000+ users with 99.99\% uptime. Utilized Java, JavaScript, TypeScript, and Erlang in a microservices architecture.}
-    \resumeSubItem{AbbviePro (Professional)}
-      {Contributed to a multi-tenant Adobe Experience Manager (AEM) website for healthcare professionals. Developed backend in Java and frontend using AngularJS, adhering to enterprise CMS standards.}
-    \resumeSubItem{Hospital Management System (Personal)}
-      {Developed a comprehensive API using Spring Boot, Spring Security, and Hibernate. Implemented JWT-based authentication for secure access to patient, doctor, and admin endpoints.}
-    \resumeSubItem{SOAP-Based Bookmarking Web Service (Personal)}
-      {Created a SOAP web service for bookmark management with CRUD operations, utilizing Spring Boot and XML for data transfer.}
-  \resumeSubHeadingListEnd
-
-  %-----------EDUCATION-----------------
+%-----------EDUCATION-----------------
 \section{Education}
-  \resumeSubHeadingListStart
-    \resumeSubheading
-      {BRAC University}{Dhaka, Bangladesh}
-      {Bachelor of Science in Computer Science}{2019}
-  \resumeSubHeadingListEnd
-
+\resumeSubHeadingListStart
+\resumeSubheading
+{BRAC University}{Dhaka, Bangladesh}
+{Bachelor of Science in Computer Science}{2019}
+\resumeSubHeadingListEnd
 
 \end{document}
