@@ -1,7 +1,7 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2026-02-13T00:00:00Z
-description = "After Day 98, I thought virtual threads replaced event loops. Then I opened Netty's source code—zero virtual threads. I built both models from scratch to understand when each wins. Here's what I learned about non-blocking I/O, event loops, and the real trade-offs."
+description = "After Day 98, I thought virtual threads replaced event loops. Then I opened Netty's source code zero virtual threads. I built both models from scratch to understand when each wins. Here's what I learned about non-blocking I/O, event loops, and the real trade-offs."
 draft = false
 ShowToc = true
 TocOpen = true
@@ -17,7 +17,7 @@ relative = false
 
 After [Day 98](/posts/posts/java/100DaysOfJava/day-98), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
 
-Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops—a completely different concurrency model that predates virtual threads by decades.
+Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops a completely different concurrency model that predates virtual threads by decades.
 
 Why do both approaches exist? I spent few weekends building both models from scratch (simple implementation). Here's what I learned.
 
@@ -25,7 +25,7 @@ Why do both approaches exist? I spent few weekends building both models from scr
 
 I thought virtual threads replaced the need for non-blocking I/O and event loops. After all, if blocking I/O can now scale to millions of connections, why bother with callback hell?
 
-Virtual threads work by unmounting when they hit blocking I/O. The carrier thread stays free. Other virtual threads mount and do work. It's brilliant for business logic—database calls, REST APIs, file I/O. Sequential code that scales.
+Virtual threads work by unmounting when they hit blocking I/O. The carrier thread stays free. Other virtual threads mount and do work. It's brilliant for business logic database calls, REST APIs, file I/O. Sequential code that scales.
 
 But reactive frameworks don't work this way. They use [event loops](https://www.youtube.com/watch?v=8aGhZQkoFbQ): one thread handles thousands of connections by [multiplexing I/O](https://notes.shichao.io/unp/ch6/) events. No mounting. No unmounting. No stack switching. Just a tight loop reading from a Selector.
 
@@ -33,7 +33,7 @@ I needed to understand both models to know when each wins.
 
 ## Non-Blocking I/O: The Foundation
 
-Blocking I/O wastes threads. Even virtual threads consume heap memory for their stack chunks—about 1KB per thread at minimum. Scale to 500K connections? That's 500MB just for stacks. Plus the mount/unmount overhead (1-5 microseconds per context switch).
+Blocking I/O wastes threads. Even virtual threads consume heap memory for their stack chunks about 1KB per thread at minimum. Scale to 500K connections? That's 500MB just for stacks. Plus the mount/unmount overhead (1-5 microseconds per context switch).
 
 Non-blocking I/O takes a different approach: one thread, many connections, explicit multiplexing.
 
@@ -41,13 +41,13 @@ Non-blocking I/O takes a different approach: one thread, many connections, expli
 
 I/O multiplexing breaks down to kernel-level efficiency: one thread polls multiple [file descriptors](/posts/posts/java/100DaysOfJava/day75#file-descriptor-exhaustion) via system calls like [`select()`/`poll()`/`epoll()`](https://jvns.ca/blog/2017/06/03/async-io-on-linux--select--poll--and-epoll/), reacting only to ready I/O events to avoid per-connection blocking.
 
-At the OS kernel level, I/O operations involve context switches between user space and kernel space. Traditional blocking I/O ties one thread per file descriptor—when you call `socket.read()`, the thread blocks until data arrives. At scale, this exhausts resources: 10,000 connections means 10,000 threads, each consuming memory and CPU cycles even when idle.
+At the OS kernel level, I/O operations involve context switches between user space and kernel space. Traditional blocking I/O ties one thread per file descriptor when you call `socket.read()`, the thread blocks until data arrives. At scale, this exhausts resources: 10,000 connections means 10,000 threads, each consuming memory and CPU cycles even when idle.
 
 Multiplexing inverts this model. Instead of one thread per connection, one thread monitors many connections. The kernel tells you which connections are ready for I/O, and you react only to those.
 
 Here's how it works at the kernel level:
 
-**The `select()` system call** (or `epoll` on Linux, `kqueue` on macOS) takes a set of file descriptors with interest operations (read/write/accept), atomically blocks until any file descriptor signals readiness via kernel events, then returns a bitmask of ready file descriptors—all without per-fd polling.
+**The `select()` system call** (or `epoll` on Linux, `kqueue` on macOS) takes a set of file descriptors with interest operations (read/write/accept), atomically blocks until any file descriptor signals readiness via kernel events, then returns a bitmask of ready file descriptors all without per-fd polling.
 
 
 
@@ -55,9 +55,9 @@ Here's how it works at the kernel level:
 
 Java NIO's `Selector` wraps this mechanism. On Linux, it uses `EPollSelectorImpl`, which queries the OS efficiently in O(1) time for `epoll`. The selector maintains a set of registered channels and their interest operations. When you call `selector.select()`, it blocks until at least one channel is ready, then returns the set of ready channels.
 
-Non-blocking channels ensure `read()`/`write()` return immediately—they never block. If data isn't ready, `read()` returns 0 bytes. If the socket buffer is full, `write()` returns 0 bytes written. This forces applications to re-check readiness via selector keys in the event loop.
+Non-blocking channels ensure `read()`/`write()` return immediately they never block. If data isn't ready, `read()` returns 0 bytes. If the socket buffer is full, `write()` returns 0 bytes written. This forces applications to re-check readiness via selector keys in the event loop.
 
-`ByteBuffer` manages data with position/limit/capacity semantics. After reading, you call `flip()` to prepare for consumption: it sets `limit = position` and `position = 0`. This is critical—without `flip()`, you'll read from the wrong position or read garbage data.
+`ByteBuffer` manages data with position/limit/capacity semantics. After reading, you call `flip()` to prepare for consumption: it sets `limit = position` and `position = 0`. This is critical without `flip()`, you'll read from the wrong position or read garbage data.
 
 **The Reactor Pattern** layers on top of multiplexing. It consists of:
 
@@ -70,7 +70,7 @@ In Java reactive frameworks like Netty or Project Reactor, this pattern scales t
 
 A single-thread event loop processes sequentially: select → dispatch → callback. 
 
-If a handler blocks, it stalls the entire loop—that's why reactive frameworks emphasize non-blocking handlers.
+If a handler blocks, it stalls the entire loop that's why reactive frameworks emphasize non-blocking handlers.
 
 The key lifecycle per channel:
 - Register interest operations (e.g., `OP_ACCEPT` for server sockets, `OP_READ` for client sockets)
@@ -243,9 +243,9 @@ public class NonBlockingServer {
 
 This is the foundation. One thread handles all connections. The Selector monitors multiple channels. When data arrives, the selector wakes up with ready events. We handle them without blocking.
 
-Key insight: `selector.select()` is the only blocking call. Everything else—`accept()`, `read()`, `write()`—returns immediately. If data isn't ready, the operation returns zero bytes. No waiting.
+Key insight: `selector.select()` is the only blocking call. Everything else `accept()`, `read()`, `write()` returns immediately. If data isn't ready, the operation returns zero bytes. No waiting.
 
-“one thread handled 10,000 concurrent connections using about 50MB .That is the whole process (selector, buffers, socket state). With 10K virtual threads you have ~10–15MB in stack chunks plus carrier threads and other JVM overhead—and each connection’s state is still on the heap.” Then the reader knows you’re comparing total system cost, not “50MB vs 15MB
+“one thread handled 10,000 concurrent connections using about 50MB .That is the whole process (selector, buffers, socket state). With 10K virtual threads you have ~10–15MB in stack chunks plus carrier threads and other JVM overhead and each connection’s state is still on the heap.” Then the reader knows you’re comparing total system cost, not “50MB vs 15MB
 
 ## Building an Event Loop HTTP Server
 
@@ -633,8 +633,8 @@ To validate the trade-offs with real numbers, I added a benchmark suite to a sma
 
 Here is the project link [GITHUB](https://github.com/dhrubo55/virtual-thread-eventloop-test) .The project contains two HTTP servers and a 4-phase benchmark suite:
 
-- **`VirtualThreadsHttpServer`** (port 8080) — Java 21 `HttpServer` with `Executors.newVirtualThreadPerTaskExecutor()`. Each request runs on a virtual thread and does ~10 ms simulated blocking work (e.g. DB/REST). Simple sequential handler.
-- **`EventLoopHttpServer`** (port 8081) — Single-thread NIO server: one `Selector`, non-blocking `ServerSocketChannel`/`SocketChannel`, and the same 10 ms work simulated inside the event loop (no virtual threads). Pure reactor style.
+- **`VirtualThreadsHttpServer`** (port 8080)   Java 21 `HttpServer` with `Executors.newVirtualThreadPerTaskExecutor()`. Each request runs on a virtual thread and does ~10 ms simulated blocking work (e.g. DB/REST). Simple sequential handler.
+- **`EventLoopHttpServer`** (port 8081)   Single-thread NIO server: one `Selector`, non-blocking `ServerSocketChannel`/`SocketChannel`, and the same 10 ms work simulated inside the event loop (no virtual threads). Pure reactor style.
 
 Both servers expose the same JSON endpoint and the same simulated workload so the comparison is about concurrency model, not API shape. Build with Maven; the `pom.xml` produces two runnable JARs: `virtual-thread-app` and `event-loop-app`.
 
@@ -657,7 +657,7 @@ Load is generated with **Bombardier** (Go-based HTTP benchmark). The repo includ
 
 From one full run (Phase 1–3; Phase 2 summary and report):
 
-- **Peak throughput:** Event Loop ~**4,627** req/s vs Virtual Threads ~**3,926** req/s — event loop ahead under this workload.
+- **Peak throughput:** Event Loop ~**4,627** req/s vs Virtual Threads ~**3,926** req/s   event loop ahead under this workload.
 - **Breaking point (Phase 2):** Both hit limits around **15,000** connections in that environment (stress ramp).
 - **Winner in this setup:** Event Loop, for peak RPS, with both degrading at similar connection counts.
 
