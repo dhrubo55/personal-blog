@@ -27,9 +27,11 @@
 
 {{- with $overrides.aliases -}}
   {{- range . -}}
-    {{- $from := printf "%s" (partial "java_graph/normalize_link.html" (dict "link" .from)) -}}
-    {{- $to := printf "%s" (partial "java_graph/normalize_link.html" (dict "link" .to)) -}}
-    {{- if and (ne $from "") (ne $to "") -}}
+    {{- $fromRaw := partial "java_graph/normalize_link.html" (dict "link" .from) -}}
+    {{- $toRaw := partial "java_graph/normalize_link.html" (dict "link" .to) -}}
+    {{- $from := trim (printf "%s" $fromRaw) " " -}}
+    {{- $to := trim (printf "%s" $toRaw) " " -}}
+    {{- if and (gt (len $from) 0) (gt (len $to) 0) -}}
       {{- $scratch.SetInMap "aliasMap" $from $to -}}
     {{- end -}}
   {{- end -}}
@@ -52,7 +54,8 @@
   {{- $path := lower $post.RelPermalink -}}
   {{- $categoryProbe := lower (printf "%v" $post.Params.category) -}}
   {{- if or (in $slug "100daysofjava") (in $path "100daysofjava") (in $categoryProbe "100daysofjava") -}}
-    {{- $id := printf "%s" (partial "java_graph/node_id.html" (dict "page" $post)) -}}
+    {{- $idRaw := partial "java_graph/node_id.html" (dict "page" $post) -}}
+    {{- $id := trim (printf "%s" $idRaw) " " -}}
 
     {{- $categories := slice -}}
     {{- with $post.Params.category -}}
@@ -103,7 +106,8 @@
       {{- end -}}
     {{- end -}}
 
-    {{- $topic := printf "%s" (partial "java_graph/classify_topic" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories)) -}}
+    {{- $topicRaw := partial "java_graph/classify_topic" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories) -}}
+    {{- $topic := trim (printf "%s" $topicRaw) " " -}}
     {{- with index ($scratch.Get "topicOverrideMap") $id -}}
       {{- $topic = . -}}
     {{- end -}}
@@ -124,8 +128,9 @@
     {{- $scratch.Set "pages" (append ($scratch.Get "pages") $post) -}}
     {{- $scratch.SetInMap "nodeById" $id $node -}}
 
-    {{- $normPermalink := printf "%s" (partial "java_graph/normalize_link.html" (dict "link" $post.RelPermalink)) -}}
-    {{- if ne $normPermalink "" -}}
+    {{- $normPermalinkRaw := partial "java_graph/normalize_link.html" (dict "link" $post.RelPermalink) -}}
+    {{- $normPermalink := trim (printf "%s" $normPermalinkRaw) " " -}}
+    {{- if gt (len $normPermalink) 0 -}}
       {{- $scratch.SetInMap "urlToId" $normPermalink $id -}}
 
       {{- $dayAlias := replaceRE `/day-([0-9]+)$` "/day$1" $normPermalink -}}
@@ -145,8 +150,9 @@
     {{- end -}}
 
     {{- with $post.Params.slug -}}
-      {{- $normSlug := printf "%s" (partial "java_graph/normalize_link.html" (dict "link" .)) -}}
-      {{- if ne $normSlug "" -}}
+      {{- $normSlugRaw := partial "java_graph/normalize_link.html" (dict "link" .) -}}
+      {{- $normSlug := trim (printf "%s" $normSlugRaw) " " -}}
+      {{- if gt (len $normSlug) 0 -}}
         {{- $scratch.SetInMap "urlToId" $normSlug $id -}}
       {{- end -}}
     {{- end -}}
@@ -186,12 +192,14 @@
 
 {{- $pages := $scratch.Get "pages" -}}
 {{- range $post := $pages -}}
-  {{- $sourceID := printf "%s" (partial "java_graph/node_id.html" (dict "page" $post)) -}}
+  {{- $sourceIDRaw := partial "java_graph/node_id.html" (dict "page" $post) -}}
+  {{- $sourceID := trim (printf "%s" $sourceIDRaw) " " -}}
   {{- $rawLinks := findRE `\]\(([^)\s]+)` $post.RawContent -}}
   {{- range $linkMatch := $rawLinks -}}
     {{- $rawLink := replaceRE `^\]\(` "" $linkMatch -}}
-    {{- $normalizedLink := printf "%s" (partial "java_graph/normalize_link.html" (dict "link" $rawLink)) -}}
-    {{- if ne $normalizedLink "" -}}
+    {{- $normalizedLinkRaw := partial "java_graph/normalize_link.html" (dict "link" $rawLink) -}}
+    {{- $normalizedLink := trim (printf "%s" $normalizedLinkRaw) " " -}}
+    {{- if gt (len $normalizedLink) 0 -}}
       {{- $resolved := $normalizedLink -}}
       {{- with index ($scratch.Get "aliasMap") $resolved -}}
         {{- $resolved = . -}}
