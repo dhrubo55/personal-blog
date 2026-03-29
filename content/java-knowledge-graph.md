@@ -1,7 +1,7 @@
 +++
 title = "100DaysOfJava Knowledge Graph"
 description = "A beautiful, interactive graph of the 100DaysOfJava series with topic intelligence and direct post navigation."
-layout = "knowledge-graph"
+type = "knowledge-graph"
 url = "/java/100daysofjava/graph/"
 outputs = ["HTML", "JSON"]
 ShowToc = false
