@@ -1,0 +1,19 @@
+{
+  "topicOverrides": [],
+  "aliases": [
+    {
+      "from": "/posts/posts/java/100DaysOfJava/day-98",
+      "to": "/posts/java/100DaysOfJava/day98"
+    },
+    {
+      "from": "/posts/posts/java/100DaysOfJava/day75",
+      "to": "/posts/java/100DaysOfJava/day75"
+    },
+    {
+      "from": "/posts/posts/java/100daysofjava/day91",
+      "to": "/posts/java/100DaysOfJava/day91"
+    }
+  ],
+  "removeEdges": [],
+  "addEdges": []
+}

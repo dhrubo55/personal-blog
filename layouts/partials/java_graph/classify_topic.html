@@ -1,0 +1,45 @@
+{{- $title := lower (printf "%s" .title) -}}
+{{- $summary := lower (printf "%s" .summary) -}}
+{{- $content := lower (printf "%s" .content) -}}
+{{- $text := printf "%s %s %s" $title $summary $content -}}
+{{- $topic := "Core Java" -}}
+
+{{- $generic := dict "java" true "100daysofjava" true "100 days of java" true -}}
+{{- with .categories -}}
+  {{- range . -}}
+    {{- $c := trim (lower (printf "%v" .)) " " -}}
+    {{- if and (ne $c "") (not (index $generic $c)) -}}
+      {{- if or (in $c "security") (in $c "crypto") -}}
+        {{- $topic = "Security & Crypto" -}}
+      {{- else if or (in $c "jvm") (in $c "perf") (in $c "optimization") -}}
+        {{- $topic = "JVM & Performance" -}}
+      {{- else if or (in $c "spring") (in $c "ai") (in $c "cloud") -}}
+        {{- $topic = "AI, Spring & Cloud" -}}
+      {{- else if or (in $c "annotation") (in $c "meta") -}}
+        {{- $topic = "Metaprogramming" -}}
+      {{- else -}}
+        {{- $topic = title $c -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if eq $topic "Core Java" -}}
+  {{- if regexMatch `(spring|bedrock|vertex|gemini|mcp|\bai\b|agent)` $text -}}
+    {{- $topic = "AI, Spring & Cloud" -}}
+  {{- else if regexMatch `(security|tls|encrypt|cipher|signature|certificate|password|auth|sandbox|secret)` $text -}}
+    {{- $topic = "Security & Crypto" -}}
+  {{- else if regexMatch `(thread|concurr|executor|forkjoin|deadlock|synchron|virtual thread|parallel stream|completablefuture|countdownlatch|semaphore)` $text -}}
+    {{- $topic = "Concurrency" -}}
+  {{- else if regexMatch `(jvm|gc|heap|jmh|profil|memory leak|memory mapping|bytecode|class loader|jmx|unsafe|ffm|off-heap)` $text -}}
+    {{- $topic = "JVM & Performance" -}}
+  {{- else if regexMatch `(stream|spliterator|iterator|functional|monad|functor|api design)` $text -}}
+    {{- $topic = "Language & APIs" -}}
+  {{- else if regexMatch `(http|socket|rmi|rpc|file|nio|zip|filesystem|bufferedreader|network)` $text -}}
+    {{- $topic = "I/O & Networking" -}}
+  {{- else if regexMatch `(reflection|annotation|proxy|instrumentation|agent)` $text -}}
+    {{- $topic = "Metaprogramming" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $topic -}}

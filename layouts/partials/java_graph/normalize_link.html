@@ -1,0 +1,20 @@
+{{- $raw := trim (printf "%v" .link) " \n\r\t" -}}
+{{- if or (eq $raw "") (eq $raw "<nil>") -}}
+{{- "" -}}
+{{- else -}}
+  {{- $normalized := lower $raw -}}
+  {{- $normalized = replaceRE `^https?://[^/]+` "" $normalized -}}
+  {{- $normalized = replaceRE `[#?].*$` "" $normalized -}}
+  {{- $normalized = replaceRE `^\./` "/" $normalized -}}
+  {{- if not (hasPrefix $normalized "/") -}}
+    {{- $normalized = printf "/%s" $normalized -}}
+  {{- end -}}
+  {{- $normalized = replace $normalized "/index.html" "" -}}
+  {{- $normalized = replace $normalized "/posts/posts/" "/posts/" -}}
+  {{- $normalized = replaceRE `/+` "/" $normalized -}}
+  {{- $normalized = replaceRE `/+$` "" $normalized -}}
+  {{- if eq $normalized "" -}}
+    {{- $normalized = "/" -}}
+  {{- end -}}
+  {{- $normalized -}}
+{{- end -}}

@@ -1,0 +1,108 @@
+{{- define "main" -}}
+{{- $jsonURL := "" -}}
+{{- with .OutputFormats.Get "JSON" -}}
+  {{- $jsonURL = .RelPermalink -}}
+{{- end -}}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/java-graph.css">
+
+<section class="java-graph-page" data-java-graph-root>
+  <header class="java-graph-hero">
+    <p class="java-graph-kicker">Interactive Atlas</p>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description | default "Explore the 100DaysOfJava journey as a connected knowledge graph. Zoom, search, filter by topic, and jump straight into any post." }}</p>
+  </header>
+
+  <section class="java-graph-toolbar" aria-label="Graph controls">
+    <label class="java-graph-control">
+      <span>Search</span>
+      <input id="java-graph-search" type="search" placeholder="Day, title, topic" autocomplete="off">
+    </label>
+
+    <label class="java-graph-control">
+      <span>Topic</span>
+      <select id="java-graph-topic-filter">
+        <option value="all">All topics</option>
+      </select>
+    </label>
+
+    <div class="java-graph-control java-graph-range-control">
+      <span>Day range</span>
+      <div class="java-graph-range-values">
+        <output id="java-graph-day-min-value">1</output>
+        <span>to</span>
+        <output id="java-graph-day-max-value">100</output>
+      </div>
+      <div class="java-graph-range-inputs">
+        <input id="java-graph-day-min" type="range" min="1" max="100" value="1">
+        <input id="java-graph-day-max" type="range" min="1" max="100" value="100">
+      </div>
+    </div>
+
+    <fieldset class="java-graph-control java-graph-relations">
+      <legend>Relation types</legend>
+      <label><input class="java-graph-edge-type" type="checkbox" value="sequence" checked> Sequence</label>
+      <label><input class="java-graph-edge-type" type="checkbox" value="reference" checked> References</label>
+      <label><input class="java-graph-edge-type" type="checkbox" value="topic" checked> Topic links</label>
+    </fieldset>
+
+    <div class="java-graph-actions">
+      <button id="java-graph-cluster-toggle" type="button">Collapse topics</button>
+      <button id="java-graph-layout-refresh" type="button">Re-layout</button>
+      <button id="java-graph-reset" type="button">Reset filters</button>
+    </div>
+  </section>
+
+  <section class="java-graph-shell">
+    <div class="java-graph-stage">
+      <div id="java-graph-canvas" role="img" aria-label="Knowledge graph visualization"></div>
+      <aside id="java-graph-hover" class="java-graph-hover" aria-live="polite"></aside>
+      <div id="java-graph-status" class="java-graph-status" aria-live="polite">Loading graph data...</div>
+      <div class="java-graph-legend" aria-label="Legend">
+        <h3>Legend</h3>
+        <ul>
+          <li><span class="legend-line legend-sequence"></span> Sequence edge</li>
+          <li><span class="legend-line legend-reference"></span> Reference edge</li>
+          <li><span class="legend-line legend-topic"></span> Topic edge</li>
+        </ul>
+      </div>
+    </div>
+
+    <aside id="java-graph-inspector" class="java-graph-inspector" aria-live="polite">
+      <h2 id="java-graph-inspector-title">Hover a node</h2>
+      <p id="java-graph-inspector-meta">Topic, day, and related context will appear here.</p>
+      <p id="java-graph-inspector-summary">Use the controls to focus by topic/day and inspect relationships.</p>
+      <a id="java-graph-open-link" class="java-graph-open-link" href="#" hidden>Open post</a>
+      <section>
+        <h3>Related posts</h3>
+        <ul id="java-graph-related-list" class="java-graph-related-list">
+          <li>No node selected yet.</li>
+        </ul>
+      </section>
+    </aside>
+  </section>
+
+  <section id="java-graph-fallback" class="java-graph-fallback">
+    <h2>Fallback list</h2>
+    <p>If interactive rendering is unavailable, use this list of posts.</p>
+    <ul>
+      {{- $posts := where .Site.RegularPages "Type" "posts" -}}
+      {{- range $post := sort $posts "Date" "desc" -}}
+        {{- $slug := lower (printf "%v" $post.Params.slug) -}}
+        {{- $path := lower $post.RelPermalink -}}
+        {{- $categoryProbe := lower (printf "%v" $post.Params.category) -}}
+        {{- if or (in $slug "100daysofjava") (in $path "100daysofjava") (in $categoryProbe "100daysofjava") -}}
+          <li><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></li>
+        {{- end -}}
+      {{- end -}}
+    </ul>
+  </section>
+</section>
+
+<script id="java-graph-config" type="application/json">{"dataUrl":"{{ $jsonURL }}"}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
+<script defer src="/js/java-graph.js"></script>
+{{- end -}}

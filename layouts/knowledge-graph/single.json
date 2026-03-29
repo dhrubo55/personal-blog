@@ -1,0 +1,258 @@
+{{- $scratch := newScratch -}}
+{{- $scratch.Set "nodes" (slice) -}}
+{{- $scratch.Set "pages" (slice) -}}
+{{- $scratch.Set "edges" (slice) -}}
+{{- $scratch.Set "edgeSeen" (dict) -}}
+{{- $scratch.Set "degree" (dict) -}}
+{{- $scratch.Set "nodeById" (dict) -}}
+{{- $scratch.Set "urlToId" (dict) -}}
+{{- $scratch.Set "dayToId" (dict) -}}
+{{- $scratch.Set "topicLast" (dict) -}}
+{{- $scratch.Set "topicCounts" (dict) -}}
+{{- $scratch.Set "topicOverrideMap" (dict) -}}
+{{- $scratch.Set "aliasMap" (dict) -}}
+{{- $scratch.Set "removeEdgeMap" (dict) -}}
+
+{{- $overrides := .Site.Data.java_graph_overrides -}}
+
+{{- with $overrides.topicOverrides -}}
+  {{- range . -}}
+    {{- $nodeID := trim (printf "%v" .nodeId) " " -}}
+    {{- $topic := trim (printf "%v" .topic) " " -}}
+    {{- if and (ne $nodeID "") (ne $topic "") -}}
+      {{- $scratch.SetInMap "topicOverrideMap" $nodeID $topic -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $overrides.aliases -}}
+  {{- range . -}}
+    {{- $from := partial "java_graph/normalize_link.html" (dict "link" .from) -}}
+    {{- $to := partial "java_graph/normalize_link.html" (dict "link" .to) -}}
+    {{- if and (ne $from "") (ne $to "") -}}
+      {{- $scratch.SetInMap "aliasMap" $from $to -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $overrides.removeEdges -}}
+  {{- range . -}}
+    {{- $source := trim (printf "%v" .source) " " -}}
+    {{- $target := trim (printf "%v" .target) " " -}}
+    {{- $type := trim (printf "%v" .type) " " -}}
+    {{- if and (ne $source "") (ne $target "") (ne $type "") -}}
+      {{- $scratch.SetInMap "removeEdgeMap" (printf "%s|%s|%s" $source $target $type) true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $allPosts := where .Site.RegularPages "Type" "posts" -}}
+{{- range $post := $allPosts -}}
+  {{- $slug := lower (printf "%v" $post.Params.slug) -}}
+  {{- $path := lower $post.RelPermalink -}}
+  {{- $categoryProbe := lower (printf "%v" $post.Params.category) -}}
+  {{- if or (in $slug "100daysofjava") (in $path "100daysofjava") (in $categoryProbe "100daysofjava") -}}
+    {{- $id := partial "java_graph/node_id.html" (dict "page" $post) -}}
+
+    {{- $categories := slice -}}
+    {{- with $post.Params.category -}}
+      {{- $categoryType := printf "%T" . -}}
+      {{- if or (eq $categoryType "[]string") (eq $categoryType "[]interface {}") -}}
+        {{- range . -}}
+          {{- $value := trim (printf "%v" .) " " -}}
+          {{- if and (ne $value "") (ne $value "[]") -}}
+            {{- $categories = append $categories $value -}}
+          {{- end -}}
+        {{- end -}}
+      {{- else -}}
+        {{- $value := trim (printf "%v" .) " " -}}
+        {{- if and (ne $value "") (ne $value "[]") -}}
+          {{- $categories = append $categories $value -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $post.Params.categories -}}
+      {{- $categoryType := printf "%T" . -}}
+      {{- if or (eq $categoryType "[]string") (eq $categoryType "[]interface {}") -}}
+        {{- range . -}}
+          {{- $value := trim (printf "%v" .) " " -}}
+          {{- if and (ne $value "") (ne $value "[]") -}}
+            {{- $categories = append $categories $value -}}
+          {{- end -}}
+        {{- end -}}
+      {{- else -}}
+        {{- $value := trim (printf "%v" .) " " -}}
+        {{- if and (ne $value "") (ne $value "[]") -}}
+          {{- $categories = append $categories $value -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $summary := trim ($post.Summary | plainify | htmlUnescape) " " -}}
+    {{- if eq $summary "" -}}
+      {{- $summary = truncate 240 ($post.Plain | plainify | htmlUnescape) -}}
+    {{- end -}}
+
+    {{- $day := 0 -}}
+    {{- $dayProbe := printf "%s %s %s" $post.Title (printf "%v" $post.Params.slug) $post.File.BaseFileName -}}
+    {{- $dayToken := findRE `(?i)day[-:\s]*[0-9]{1,3}` $dayProbe 1 -}}
+    {{- if gt (len $dayToken) 0 -}}
+      {{- $dayDigits := replaceRE `\D` "" (index $dayToken 0) -}}
+      {{- if ne $dayDigits "" -}}
+        {{- $day = int $dayDigits -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $topic := partial "java_graph/classify_topic.html" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories) -}}
+    {{- with index ($scratch.Get "topicOverrideMap") $id -}}
+      {{- $topic = . -}}
+    {{- end -}}
+
+    {{- $node := dict
+      "id" $id
+      "title" $post.Title
+      "url" $post.RelPermalink
+      "day" $day
+      "date" ($post.Date.Format "2006-01-02")
+      "summary" $summary
+      "topic" $topic
+      "categories" $categories
+      "importance" 1
+    -}}
+
+    {{- $scratch.Set "nodes" (append ($scratch.Get "nodes") $node) -}}
+    {{- $scratch.Set "pages" (append ($scratch.Get "pages") $post) -}}
+    {{- $scratch.SetInMap "nodeById" $id $node -}}
+
+    {{- $normPermalink := partial "java_graph/normalize_link.html" (dict "link" $post.RelPermalink) -}}
+    {{- if ne $normPermalink "" -}}
+      {{- $scratch.SetInMap "urlToId" $normPermalink $id -}}
+
+      {{- $dayAlias := replaceRE `/day-([0-9]+)$` "/day$1" $normPermalink -}}
+      {{- if ne $dayAlias $normPermalink -}}
+        {{- $scratch.SetInMap "urlToId" $dayAlias $id -}}
+      {{- end -}}
+
+      {{- if hasPrefix $normPermalink "/posts/" -}}
+        {{- $noPosts := replaceRE `^/posts` "" $normPermalink -}}
+        {{- if ne $noPosts "" -}}
+          {{- $scratch.SetInMap "urlToId" $noPosts $id -}}
+        {{- end -}}
+      {{- else -}}
+        {{- $withPosts := printf "/posts%s" $normPermalink -}}
+        {{- $scratch.SetInMap "urlToId" $withPosts $id -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- with $post.Params.slug -}}
+      {{- $normSlug := partial "java_graph/normalize_link.html" (dict "link" .) -}}
+      {{- if ne $normSlug "" -}}
+        {{- $scratch.SetInMap "urlToId" $normSlug $id -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $sortedNodes := sort ($scratch.Get "nodes") "day" "asc" -}}
+{{- range $node := $sortedNodes -}}
+  {{- $day := int (default 0 (index $node "day")) -}}
+  {{- if gt $day 0 -}}
+    {{- $dayKey := printf "%d" $day -}}
+    {{- if not (index ($scratch.Get "dayToId") $dayKey) -}}
+      {{- $scratch.SetInMap "dayToId" $dayKey (index $node "id") -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- range $day := seq 1 130 -}}
+  {{- $source := index ($scratch.Get "dayToId") (printf "%d" $day) -}}
+  {{- $target := index ($scratch.Get "dayToId") (printf "%d" (add $day 1)) -}}
+  {{- if and $source $target -}}
+    {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $source "target" $target "type" "sequence" "weight" 1.3 "label" "Day progression") -}}
+  {{- end -}}
+{{- end -}}
+
+{{- range $node := $sortedNodes -}}
+  {{- $topic := trim (printf "%v" (index $node "topic")) " " -}}
+  {{- if ne $topic "" -}}
+    {{- $topicKey := lower (anchorize $topic) -}}
+    {{- $previousID := index ($scratch.Get "topicLast") $topicKey -}}
+    {{- if and $previousID (ne $previousID (index $node "id")) -}}
+      {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $previousID "target" (index $node "id") "type" "topic" "weight" 0.8 "label" "Shared topic") -}}
+    {{- end -}}
+    {{- $scratch.SetInMap "topicLast" $topicKey (index $node "id") -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $pages := $scratch.Get "pages" -}}
+{{- range $post := $pages -}}
+  {{- $sourceID := partial "java_graph/node_id.html" (dict "page" $post) -}}
+  {{- $rawLinks := findRE `\]\(([^)\s]+)` $post.RawContent -}}
+  {{- range $linkMatch := $rawLinks -}}
+    {{- $rawLink := replaceRE `^\]\(` "" $linkMatch -}}
+    {{- $normalizedLink := partial "java_graph/normalize_link.html" (dict "link" $rawLink) -}}
+    {{- if ne $normalizedLink "" -}}
+      {{- $resolved := $normalizedLink -}}
+      {{- with index ($scratch.Get "aliasMap") $resolved -}}
+        {{- $resolved = . -}}
+      {{- end -}}
+      {{- with index ($scratch.Get "aliasMap") $resolved -}}
+        {{- $resolved = . -}}
+      {{- end -}}
+      {{- $targetID := index ($scratch.Get "urlToId") $resolved -}}
+      {{- if and $targetID (ne $targetID $sourceID) -}}
+        {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $sourceID "target" $targetID "type" "reference" "weight" 1.0 "label" "References") -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $overrides.addEdges -}}
+  {{- range . -}}
+    {{- $source := trim (printf "%v" .source) " " -}}
+    {{- $target := trim (printf "%v" .target) " " -}}
+    {{- $type := trim (printf "%v" .type) " " -}}
+    {{- if and (index ($scratch.Get "nodeById") $source) (index ($scratch.Get "nodeById") $target) (ne $type "") -}}
+      {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $source "target" $target "type" $type "weight" (default 1.0 .weight) "label" (default $type .label) "ignoreRemove" true) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $finalNodes := slice -}}
+{{- range $node := $sortedNodes -}}
+  {{- $id := index $node "id" -}}
+  {{- $degree := int (default 0 (index ($scratch.Get "degree") $id)) -}}
+  {{- $importance := add 1 (div $degree 2) -}}
+  {{- if lt $importance 1 -}}
+    {{- $importance = 1 -}}
+  {{- end -}}
+  {{- if gt $importance 10 -}}
+    {{- $importance = 10 -}}
+  {{- end -}}
+  {{- $nodeWithImportance := dict
+    "id" (index $node "id")
+    "title" (index $node "title")
+    "url" (index $node "url")
+    "day" (index $node "day")
+    "date" (index $node "date")
+    "summary" (index $node "summary")
+    "topic" (index $node "topic")
+    "categories" (index $node "categories")
+    "importance" $importance
+  -}}
+  {{- $finalNodes = append $finalNodes $nodeWithImportance -}}
+
+  {{- $topic := index $nodeWithImportance "topic" -}}
+  {{- $topicCount := int (default 0 (index ($scratch.Get "topicCounts") $topic)) -}}
+  {{- $scratch.SetInMap "topicCounts" $topic (add $topicCount 1) -}}
+{{- end -}}
+
+{{- $meta := dict
+  "version" "v1"
+  "generatedAt" (now.Format "2006-01-02T15:04:05Z07:00")
+  "nodeCount" (len $finalNodes)
+  "edgeCount" (len ($scratch.Get "edges"))
+  "topicStats" ($scratch.Get "topicCounts")
+-}}
+
+{{- dict "meta" $meta "nodes" $finalNodes "edges" ($scratch.Get "edges") | jsonify -}}

@@ -79,10 +79,14 @@ menu:
     identifier: blog
     url: blog/
     weight: 2
+  - name: Java Graph
+    identifier: java-graph
+    url: java/100daysofjava/graph/
+    weight: 3
   - identifier: resume
     name: Resume
     url: resume.pdf
-    weight: 3
+    weight: 4
 #   - identifier: projects
 #     name: Projects
 #     url: projects/

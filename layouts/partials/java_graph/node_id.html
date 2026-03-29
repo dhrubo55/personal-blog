@@ -1,0 +1,8 @@
+{{- $page := .page -}}
+{{- $path := "" -}}
+{{- with $page.File -}}
+  {{- $path = .TranslationBaseName -}}
+{{- else -}}
+  {{- $path = printf "%s" $page.RelPermalink -}}
+{{- end -}}
+{{- printf "post-%s" (anchorize $path) -}}

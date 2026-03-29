@@ -1,0 +1,43 @@
+{{- $scratch := .scratch -}}
+{{- $source := trim (printf "%v" .source) " " -}}
+{{- $target := trim (printf "%v" .target) " " -}}
+{{- $type := trim (printf "%v" .type) " " -}}
+{{- if eq $type "" -}}
+  {{- $type = "reference" -}}
+{{- end -}}
+{{- if and (ne $source "") (ne $target "") (ne $source "<nil>") (ne $target "<nil>") (ne $source $target) -}}
+  {{- $key := printf "%s|%s|%s" $source $target $type -}}
+  {{- $ignoreRemove := false -}}
+  {{- with .ignoreRemove -}}
+    {{- $ignoreRemove = . -}}
+  {{- end -}}
+  {{- $isRemoved := false -}}
+  {{- if not $ignoreRemove -}}
+    {{- with index ($scratch.Get "removeEdgeMap") $key -}}
+      {{- $isRemoved = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if and (not $isRemoved) (not (index ($scratch.Get "edgeSeen") $key)) -}}
+    {{- $edgeID := printf "edge-%s-%s-%s" (anchorize $source) (anchorize $target) (anchorize $type) -}}
+    {{- $weight := 1.0 -}}
+    {{- with .weight -}}
+      {{- $weight = . -}}
+    {{- end -}}
+    {{- $label := $type -}}
+    {{- with .label -}}
+      {{- $label = . -}}
+    {{- end -}}
+    {{- $edge := dict "id" $edgeID "source" $source "target" $target "type" $type "weight" $weight "label" $label -}}
+
+    {{- $scratch.SetInMap "edgeSeen" $key true -}}
+    {{- $scratch.Set "edges" (append ($scratch.Get "edges") $edge) -}}
+
+    {{- $degrees := $scratch.Get "degree" -}}
+    {{- $sourceDegree := int (default 0 (index $degrees $source)) -}}
+    {{- $scratch.SetInMap "degree" $source (add $sourceDegree 1) -}}
+
+    {{- $degrees = $scratch.Get "degree" -}}
+    {{- $targetDegree := int (default 0 (index $degrees $target)) -}}
+    {{- $scratch.SetInMap "degree" $target (add $targetDegree 1) -}}
+  {{- end -}}
+{{- end -}}
