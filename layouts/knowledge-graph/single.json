@@ -103,7 +103,7 @@
       {{- end -}}
     {{- end -}}
 
-    {{- $topic := partial "java_graph/classify_topic.html" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories) -}}
+    {{- $topic := partial "java_graph/classify_topic" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories) -}}
     {{- with index ($scratch.Get "topicOverrideMap") $id -}}
       {{- $topic = . -}}
     {{- end -}}
