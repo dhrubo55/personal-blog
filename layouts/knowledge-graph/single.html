@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/java-graph.css">
+<script>document.body.classList.add("java-graph-layout");</script>
 
 <section class="java-graph-page" data-java-graph-root>
   <header class="java-graph-hero">
@@ -17,19 +18,19 @@
   </header>
 
   <section class="java-graph-toolbar" aria-label="Graph controls">
-    <label class="java-graph-control">
+    <label class="java-graph-control java-graph-control-search">
       <span>Search</span>
       <input id="java-graph-search" type="search" placeholder="Day, title, topic" autocomplete="off">
     </label>
 
-    <label class="java-graph-control">
+    <label class="java-graph-control java-graph-control-topic">
       <span>Topic</span>
       <select id="java-graph-topic-filter">
         <option value="all">All topics</option>
       </select>
     </label>
 
-    <div class="java-graph-control java-graph-range-control">
+    <div class="java-graph-control java-graph-range-control java-graph-control-day">
       <span>Day range</span>
       <div class="java-graph-range-values">
         <output id="java-graph-day-min-value">1</output>
@@ -42,7 +43,7 @@
       </div>
     </div>
 
-    <fieldset class="java-graph-control java-graph-relations">
+    <fieldset class="java-graph-control java-graph-relations java-graph-control-relations">
       <legend>Relation types</legend>
       <label><input class="java-graph-edge-type" type="checkbox" value="sequence" checked> Sequence</label>
       <label><input class="java-graph-edge-type" type="checkbox" value="reference" checked> References</label>
