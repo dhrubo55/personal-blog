@@ -64,13 +64,13 @@
         {{- range . -}}
           {{- $value := trim (printf "%v" .) " " -}}
           {{- if and (ne $value "") (ne $value "[]") -}}
-            {{- $categories = append $categories $value -}}
+            {{- $categories = append $value $categories -}}
           {{- end -}}
         {{- end -}}
       {{- else -}}
         {{- $value := trim (printf "%v" .) " " -}}
         {{- if and (ne $value "") (ne $value "[]") -}}
-          {{- $categories = append $categories $value -}}
+          {{- $categories = append $value $categories -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}
@@ -80,13 +80,13 @@
         {{- range . -}}
           {{- $value := trim (printf "%v" .) " " -}}
           {{- if and (ne $value "") (ne $value "[]") -}}
-            {{- $categories = append $categories $value -}}
+            {{- $categories = append $value $categories -}}
           {{- end -}}
         {{- end -}}
       {{- else -}}
         {{- $value := trim (printf "%v" .) " " -}}
         {{- if and (ne $value "") (ne $value "[]") -}}
-          {{- $categories = append $categories $value -}}
+          {{- $categories = append $value $categories -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}
@@ -124,8 +124,8 @@
       "importance" 1
     -}}
 
-    {{- $scratch.Set "nodes" (append ($scratch.Get "nodes") $node) -}}
-    {{- $scratch.Set "pages" (append ($scratch.Get "pages") $post) -}}
+    {{- $scratch.Set "nodes" (append $node ($scratch.Get "nodes")) -}}
+    {{- $scratch.Set "pages" (append $post ($scratch.Get "pages")) -}}
     {{- $scratch.SetInMap "nodeById" $id $node -}}
 
     {{- $normPermalinkRaw := partial "java_graph/normalize_link.html" (dict "link" $post.RelPermalink) -}}
@@ -248,7 +248,7 @@
     "categories" (index $node "categories")
     "importance" $importance
   -}}
-  {{- $finalNodes = append $finalNodes $nodeWithImportance -}}
+  {{- $finalNodes = append $nodeWithImportance $finalNodes -}}
 
   {{- $topic := index $nodeWithImportance "topic" -}}
   {{- $topicCount := int (default 0 (index ($scratch.Get "topicCounts") $topic)) -}}

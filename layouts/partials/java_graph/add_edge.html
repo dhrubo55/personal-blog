@@ -30,7 +30,7 @@
     {{- $edge := dict "id" $edgeID "source" $source "target" $target "type" $type "weight" $weight "label" $label -}}
 
     {{- $scratch.SetInMap "edgeSeen" $key true -}}
-    {{- $scratch.Set "edges" (append ($scratch.Get "edges") $edge) -}}
+    {{- $scratch.Set "edges" (append $edge ($scratch.Get "edges")) -}}
 
     {{- $degrees := $scratch.Get "degree" -}}
     {{- $sourceDegree := int (default 0 (index $degrees $source)) -}}
