@@ -95,7 +95,8 @@
         {{- $slug := lower (printf "%v" $post.Params.slug) -}}
         {{- $path := lower $post.RelPermalink -}}
         {{- $categoryProbe := lower (printf "%v" $post.Params.category) -}}
-        {{- if or (in $slug "100daysofjava") (in $path "100daysofjava") (in $categoryProbe "100daysofjava") -}}
+        {{- $categoriesProbe := lower (printf "%v" $post.Params.categories) -}}
+        {{- if or (in $slug "100daysofjava") (in $path "100daysofjava") (in $categoryProbe "100daysofjava") (in $categoriesProbe "100daysofjava") -}}
           <li><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></li>
         {{- end -}}
       {{- end -}}
