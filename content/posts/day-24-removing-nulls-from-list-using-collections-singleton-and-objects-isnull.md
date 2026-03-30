@@ -49,5 +49,6 @@ class Day24 {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 24 LinkedIn post](/images/100daysofjava/linkedin/day24.png)
+[![Day 24 LinkedIn post](/images/100daysofjava/linkedin/day24.png)](https://www.linkedin.com/feed/update/urn:li:share:6843564935948173312/)
+
 

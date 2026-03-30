@@ -51,5 +51,6 @@ class Day12 {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 12 LinkedIn post](/images/100daysofjava/linkedin/day12.png)
+[![Day 12 LinkedIn post](/images/100daysofjava/linkedin/day12.png)](https://www.linkedin.com/feed/update/urn:li:share:6821083331908771840/)
+
 

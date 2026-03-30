@@ -42,5 +42,6 @@ public class Day09 {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 9 LinkedIn post](/images/100daysofjava/linkedin/day09.png)
+[![Day 9 LinkedIn post](/images/100daysofjava/linkedin/day09.png)](https://www.linkedin.com/feed/update/urn:li:share:6817832175115862016/)
+
 

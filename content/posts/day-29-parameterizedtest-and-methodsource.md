@@ -69,4 +69,5 @@ class Day29 {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 29 LinkedIn post](/images/100daysofjava/linkedin/day29.png)
+[![Day 29 LinkedIn post](/images/100daysofjava/linkedin/day29.png)](https://www.linkedin.com/feed/update/urn:li:share:6859503859304407040/)
+

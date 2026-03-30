@@ -70,5 +70,6 @@ class Day25 {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 25 LinkedIn post](/images/100daysofjava/linkedin/day25.png)
+[![Day 25 LinkedIn post](/images/100daysofjava/linkedin/day25.png)](https://www.linkedin.com/feed/update/urn:li:share:6846070390435921922/)
+
 

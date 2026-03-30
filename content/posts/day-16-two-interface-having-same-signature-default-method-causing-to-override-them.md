@@ -55,5 +55,6 @@ class Day015 implements FileUploadExternalDevice, FileUploadAPIEndpoint {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 16 LinkedIn post](/images/100daysofjava/linkedin/day16.png)
+[![Day 16 LinkedIn post](/images/100daysofjava/linkedin/day16.png)](https://www.linkedin.com/feed/update/urn:li:share:6828326505286893568/)
+
 

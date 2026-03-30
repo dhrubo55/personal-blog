@@ -52,5 +52,6 @@ class Scratch {
 
 The original LinkedIn graphic is preserved below.
 
-![Day 13 LinkedIn post](/images/100daysofjava/linkedin/day13.png)
+[![Day 13 LinkedIn post](/images/100daysofjava/linkedin/day13.png)](https://www.linkedin.com/feed/update/urn:li:share:6822890146359316480/)
+
 
