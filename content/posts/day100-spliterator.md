@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava"]
 date = 2025-12-24T00:00:00Z
 description = "Day 100: I added .parallel() expecting near-linear speedup on 8 cores. I got 60% CPU utilization. Here's why the default spliterator gets load balancing wrong, and how a 50-line fix pushed it to 95%."
-draft = false
+draft = true
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day100"
