@@ -1,12 +1,12 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2021-07-02T00:00:00Z
-description = "Today i found out that string declared with "" are placed in string constant pool while with new keyword its in heap. String.intern() return string if defined in string pool otherwise creates the string and then returns it."
+description = "Today i found out that string declared with \"\" are placed in string constant pool while with new keyword its in heap. String.intern() return string if defined in string pool otherwise creates the string and then returns it."
 draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day7"
-summary = "Today i found out that string declared with "" are placed in string constant pool while with new keyword its in heap. String.intern() return string if defined in string pool otherwise creates the string and then returns it."
-title = "Day 7: Today i found out that string declared with "" are placed in string constant pool while with new keyword its in heap. String.intern() return string if defined in string pool otherwise creates the string and then returns it."
+summary = "Today i found out that string declared with \"\" are placed in string constant pool while with new keyword its in heap. String.intern() return string if defined in string pool otherwise creates the string and then returns it."
+title = "Day 7: Today i found out that string declared with \"\" are placed in string constant pool while with new keyword its in heap. String.intern() return string if defined in string pool otherwise creates the string and then returns it."
 [cover]
 alt = "Day7"
 caption = "Day7"
