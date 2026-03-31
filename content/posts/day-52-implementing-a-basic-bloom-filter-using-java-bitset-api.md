@@ -5,6 +5,7 @@ description = "Implementing a basic bloom filter to understand its concepts and 
 showtoc = false
 slug = "/java/100DaysOfJava/day64"
 summary = "Implementing a basic bloom filter to understand its concepts and usages using Java BitSet api"
+topics = ["Core Java"]
 title = "Day 64: Implementing a basic Bloom Filter Using Java BitSet api"
 [cover]
 alt = "Day64"

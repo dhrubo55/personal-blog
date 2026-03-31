@@ -5,6 +5,7 @@ description = "Mocking void methods using ArgumentCapture and Answering"
 showtoc = false
 slug = "/java/100daysofjava/day58"
 summary = "Mocking void methods using ArgumentCapture and Answering"
+topics = ["Metaprogramming"]
 title = "Day 58: Mocking void methods using ArgumentCapture and Answering"
 [cover]
 alt = "day58"

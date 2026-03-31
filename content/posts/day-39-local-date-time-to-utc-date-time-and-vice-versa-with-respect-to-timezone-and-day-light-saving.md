@@ -5,6 +5,7 @@ description = "Converting LocalDateTime to UTC and vice versa with respect to ti
 showtoc = false
 slug = "/java/100DaysOfJava/day39"
 summary = "Converting LocalDateTime to UTC and vice versa with respect to timezone and Day Light saving time."
+topics = ["Language & APIs"]
 title = "Day 39: Local date time to UTC date time and vice versa with respect to timezone and Day light saving"
 [cover]
 alt = "Day39"

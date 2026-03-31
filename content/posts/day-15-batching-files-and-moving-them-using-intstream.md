@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day15"
 summary = "Batching files and moving them using intStream"
+topics = ["I/O & Networking"]
 title = "Day 15: Batching files and moving them using intStream"
 [cover]
 alt = "Day15"

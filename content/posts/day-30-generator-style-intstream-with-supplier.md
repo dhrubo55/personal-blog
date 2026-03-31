@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day30"
 summary = "Exploring a generator-style approach in Java with Supplier and IntStream.generate()."
+topics = ["Language & APIs"]
 title = "Day 30: Exploring a generator-style approach in Java with Supplier and IntStream"
 [cover]
 alt = "Day30"

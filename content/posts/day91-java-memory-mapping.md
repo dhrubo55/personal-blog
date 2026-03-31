@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day91"
 summary = "Processing giant files - Memory mapping Very Large Files in Java Without Breaking a Sweat"
+topics = ["I/O & Networking"]
 title = "Day 91: The Art of Reading Massive Files Without Breaking a Sweat - Memory Mapping in Java 21"
 [cover]
 alt = "day91"

@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day28"
 summary = "Arrays.asList() and new ArrayList<>() both return lists, but they do not behave the same way."
+topics = ["Language & APIs"]
 title = "Day 28: Arrays.asList() and new ArrayList<>() are not the same"
 [cover]
 alt = "Day28"

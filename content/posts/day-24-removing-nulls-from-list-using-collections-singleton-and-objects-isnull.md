@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day24"
 summary = "Removing nulls from list using Collections.singleton and Objects.isNull"
+topics = ["Language & APIs"]
 title = "Day 24: Removing nulls from list using Collections.singleton and Objects.isNull"
 [cover]
 alt = "Day24"

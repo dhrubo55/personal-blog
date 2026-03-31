@@ -5,6 +5,7 @@ description = "Marker interface and it's uses"
 showtoc = false
 slug = "/java/100daysofjava/day50"
 summary = "Marker interface and it's uses"
+topics = ["Metaprogramming"]
 title = "Day 50: Marker interface and it's uses"
 [cover]
 alt = "Day50"

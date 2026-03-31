@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day10"
 summary = "Function is a functional interface that takes an input and gives an output. so functions can be chained."
+topics = ["Language & APIs"]
 title = "Day 10: Function is a functional interface that takes an input and gives an output. so functions can be chained."
 [cover]
 alt = "Day10"

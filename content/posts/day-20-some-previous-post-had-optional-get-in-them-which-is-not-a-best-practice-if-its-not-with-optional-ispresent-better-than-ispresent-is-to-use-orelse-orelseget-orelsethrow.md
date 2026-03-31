@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day20"
 summary = "Some previous post had optional.get() in them which is not a best practice if its not with Optional.isPresent(). better than isPresent is to use orElse(), orElseGet(), orElseThrow()"
+topics = ["Language & APIs"]
 title = "Day 20: Some previous post had optional.get() in them which is not a best practice if its not with Optional.isPresent(). better than isPresent is to use orElse(), orElseGet(), orElseThrow()"
 [cover]
 alt = "Day20"

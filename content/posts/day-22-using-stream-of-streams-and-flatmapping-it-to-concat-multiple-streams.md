@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day22"
 summary = "Using stream of streams and flatmapping it to concat multiple streams"
+topics = ["Language & APIs"]
 title = "Day 22: Using stream of streams and flatmapping it to concat multiple streams"
 [cover]
 alt = "Day22"

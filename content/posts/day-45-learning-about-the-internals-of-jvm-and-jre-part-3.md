@@ -5,6 +5,7 @@ description = "learning what is Runtime and Runtime environment and Java Runtime
 showtoc = false
 slug = "/java/100DaysOfJava/day45"
 summary = "learning what is Runtime and Runtime environment and Java Runtime"
+topics = ["JVM & Performance"]
 title = "Day 45: learning about the internals of JVM and JRE (part 3)"
 [cover]
 alt = "Day45"

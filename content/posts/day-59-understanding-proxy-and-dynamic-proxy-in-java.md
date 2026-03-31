@@ -5,6 +5,7 @@ description = "Understanding Proxy and Dynamic Proxy in Java"
 showtoc = false
 slug = "/java/100DaysOfJava/day59"
 summary = "Understanding Proxy and Dynamic Proxy in Java"
+topics = ["Metaprogramming"]
 title = "Day 59: Understanding Proxy and Dynamic Proxy in Java"
 [cover]
 alt = "day59"

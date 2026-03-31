@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day81"
 summary = "Implementing Sliding, shifting, Zipping and Folding a Stream by creating it from a custom spliterator"
+topics = ["Language & APIs"]
 title = "Day 81: Creating custom stream operations ex: Slide, Shift, Zip and Fold using Spliterator"
 [cover]
 alt = "day81"

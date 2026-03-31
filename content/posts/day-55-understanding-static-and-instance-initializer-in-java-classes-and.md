@@ -5,6 +5,7 @@ description = "Understanding java classe's static and instance initializer "
 showtoc = false
 slug = "/java/100DaysOfJava/day55"
 summary = "Understanding java classe's static and instance initializer "
+topics = ["Core Java"]
 title = "Day 55: Understanding static and instance initializer in java classes and"
 [cover]
 alt = "day55"

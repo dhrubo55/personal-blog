@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day21"
 summary = "Optional.ifPresent and Optional.filter to log and filter the Scheduled Day according to holiday"
+topics = ["Language & APIs"]
 title = "Day 21: Optional.ifPresent and Optional.filter to log and filter the Scheduled Day according to holiday"
 [cover]
 alt = "Day21"

@@ -5,6 +5,7 @@ description = "Exploring benchmarking harness in Java and how its use to underst
 showtoc = true
 slug = "/java/100DaysOfJava/day69"
 summary = "Exploring benchmarking harness in Java and how its use to understand performance"
+topics = ["JVM & Performance"]
 title = "Day 69 : Unlocking Java Performance Secrets: Harnessing the Power of JMH Microbenchmarking"
 [cover]
 alt = "day69"

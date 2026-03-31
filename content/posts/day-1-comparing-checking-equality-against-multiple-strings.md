@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day1"
 summary = "Comparing/ checking equality against multiple Strings."
+topics = ["Language & APIs"]
 title = "Day 1: Comparing/ checking equality against multiple Strings."
 [cover]
 alt = "Day1"

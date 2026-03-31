@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day87"
 summary = "Exploring how to read and delete environment variables in Java with practical examples"
+topics = ["Language & APIs"]
 title = "Day 87: Java's Environment Variable Paradox: Easy to Read, Impossible to Change?"
 [cover]
 alt = "day87"

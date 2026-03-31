@@ -5,6 +5,7 @@ description = "Writing a method to retry another method execution, Using TimerTa
 showtoc = false
 slug = "/java/100DaysOfJava/day26"
 summary = "Writing a method to retry another method execution, using TimerTask's schedule() and scheduleAtFixedRate to check availability"
+topics = ["Concurrency"]
 title = "Day 26: Writing a method to retry another method execution"
 [cover]
 alt = "cover image"

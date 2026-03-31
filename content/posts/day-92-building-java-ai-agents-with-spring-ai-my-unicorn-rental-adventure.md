@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day92"
 summary = "Building Production-Ready AI Agents with Spring AI - From Chat Interfaces to Sophisticated RAG Systems"
+topics = ["AI, Spring & Cloud"]
 title = "Day 92: Building AI Agents with Java 21 and Spring AI - My Learning from the Workshop"
 [cover]
 alt = "day92"

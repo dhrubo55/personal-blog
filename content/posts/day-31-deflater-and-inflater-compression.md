@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day31"
 summary = "Compressing and decompressing text with Deflater and Inflater."
+topics = ["I/O & Networking"]
 title = "Day 31: Compressing and decompressing text with Deflater and Inflater"
 [cover]
 alt = "Day31"

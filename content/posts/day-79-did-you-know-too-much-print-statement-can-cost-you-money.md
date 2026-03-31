@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day79 "
 summary = "Day 79: Like Python In java printing takes too much processing time which costs money"
+topics = ["JVM & Performance"]
 title = "Day 79: Did you know that too much print statement can cost you money"
 [cover]
 alt = "day79"

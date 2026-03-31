@@ -5,6 +5,7 @@ description = "Implementing ObjectPool pattern to get any type object pooling"
 showtoc = false
 slug = "/java/100DaysOfJava/day46"
 summary = "Implementing ObjectPool pattern to get any type object pooling"
+topics = ["Core Java"]
 title = "Day 46: Writing a generic and thread safe ObjectPool to enable pooling for any type of class"
 [cover]
 alt = "Day46"

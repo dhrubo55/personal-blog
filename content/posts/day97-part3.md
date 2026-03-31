@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day97"
 summary = "Part 3: Advanced Patterns & Production Readiness - Deep dive into 3 advanced tools plus debugging, monitoring, and going to production"
+topics = ["Concurrency"]
 title = "Day 97: Java Concurrency Toolkit Part 3 - Advanced Patterns & Production Readiness"
 [cover]
 alt = "day97"

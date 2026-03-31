@@ -5,6 +5,7 @@ description = "How to enable disable features for paid and unpaid users using fe
 showtoc = false
 slug = "/java/100DaysOfJava/day37"
 summary = "Feature toggle service to enable disable any feature for paid and unpaid users"
+topics = ["Core Java"]
 title = "Day 37: Feature toggle to enable disable features for paid and unpaid user"
 [cover]
 alt = "Day37"

@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day16"
 summary = "Two interface having same signature default method causing to override them."
+topics = ["Language & APIs"]
 title = "Day 16: Two interface having same signature default method causing to override them."
 [cover]
 alt = "Day16"

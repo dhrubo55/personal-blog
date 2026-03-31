@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day34"
 summary = "Inspecting JVM runtime memory and available processor count with Runtime.getRuntime()."
+topics = ["JVM & Performance"]
 title = "Day 34: Inspecting JVM runtime memory and processor count with Runtime"
 [cover]
 alt = "Day34"

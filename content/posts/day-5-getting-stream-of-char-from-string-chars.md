@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day5"
 summary = "Getting stream of char from string.chars()"
+topics = ["Language & APIs"]
 title = "Day 5: Getting stream of char from string.chars()"
 [cover]
 alt = "Day5"

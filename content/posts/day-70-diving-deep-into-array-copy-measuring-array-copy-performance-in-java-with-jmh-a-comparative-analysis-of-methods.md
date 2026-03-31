@@ -6,6 +6,7 @@ draft = false
 showtoc = true
 slug = "/java/100DaysOfJava/day70"
 summary = "Measuring the performance of different array copying methods in Java using JMH"
+topics = ["JVM & Performance"]
 title = "Day 70:Diving deep into Array copy- Measuring Array Copy Performance in Java with JMH: A Comparative Analysis of Methods"
 [cover]
 alt = "day70"

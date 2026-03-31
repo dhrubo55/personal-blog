@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day77"
 summary = "Explore Something Unsafe : Crafting a Memory allocator using Java Unsafe API"
+topics = ["JVM & Performance"]
 title = "Day 77: Explore Something Unsafe : Crafting a Memory allocator using Java Unsafe API"
 [cover]
 alt = "day77"

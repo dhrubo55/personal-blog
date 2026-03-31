@@ -7,6 +7,7 @@ ShowToc = false
 TocOpen = false
 slug = "posts/java/100DaysOfJava/day100.md"
 summary = "This challenge started as a way to learn more Java. Over time, it became a way to follow confusion down to memory, coordination, performance, and failure modes."
+topics = ["JVM & Performance"]
 title = "Day 100: What 100 Days of Java Actually Changed in How I Think About Software"
 [cover]
 alt = "day100"

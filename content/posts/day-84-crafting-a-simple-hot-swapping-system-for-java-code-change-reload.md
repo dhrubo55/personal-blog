@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day84"
 summary = "Implementing a hot class reload system (HMR for js) using WatchService and javax.tools api"
+topics = ["Metaprogramming"]
 title = "Day 84: Hot Class Reload in Java – A Webpack HMR-like Experience for Java Developers"
 [cover]
 alt = "day84"

@@ -5,6 +5,7 @@ description = "Understanding JMX architecture and how it works. In part 1 will l
 showtoc = false
 slug = "/java/100DaysOfJava/day61"
 summary = "Understanding JMX and its architecture"
+topics = ["JVM & Performance"]
 title = "Day 61: Understanding JMX and its architecture (Management Level) "
 [cover]
 alt = "day61"

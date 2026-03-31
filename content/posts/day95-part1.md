@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day95"
 summary = "Part 1: Foundation & Execution - Deep dive into 6 essential concurrency tools with real-world patterns, performance characteristics, and common pitfalls"
+topics = ["Concurrency"]
 title = "Day 95: Java Concurrency Toolkit Part 1 - Foundation & Execution Patterns"
 [cover]
 alt = "day95"

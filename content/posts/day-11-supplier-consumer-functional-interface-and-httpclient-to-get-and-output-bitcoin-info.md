@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day11"
 summary = "Supplier, Consumer functional interface and httpclient to get and output Bitcoin info"
+topics = ["I/O & Networking"]
 title = "Day 11: Supplier, Consumer functional interface and httpclient to get and output Bitcoin info"
 [cover]
 alt = "Day11"

@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day12"
 summary = "Files.walk() and functional interface to remove file extension from fileNames"
+topics = ["I/O & Networking"]
 title = "Day 12: Files.walk() and functional interface to remove file extension from fileNames"
 [cover]
 alt = "Day12"

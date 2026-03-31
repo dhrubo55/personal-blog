@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day33"
 summary = "Getting a programmer joke asynchronously with CompletableFuture, HttpClient, and Jackson."
+topics = ["Concurrency"]
 title = "Day 33: Getting a programmer joke asynchronously with CompletableFuture, HttpClient, and Jackson"
 [cover]
 alt = "Day33"

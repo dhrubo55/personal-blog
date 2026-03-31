@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day25"
 summary = "Using a implementation of supplier creating and caching a large file (any Class in this case that will initialize a very large object) lazily and thread-safe."
+topics = ["Concurrency"]
 title = "Day 25: Using a implementation of supplier creating and caching a large file (any Class in this case that will initialize a very large object) lazily and thread-safe."
 [cover]
 alt = "Day25"

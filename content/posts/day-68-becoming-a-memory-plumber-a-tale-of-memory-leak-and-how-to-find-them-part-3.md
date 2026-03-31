@@ -5,6 +5,7 @@ description = "Finding memory leak by analyzing GC and memory dump using VisualV
 showtoc = true
 slug = "/java/100DaysOfJava/day68"
 summary = "Understanding and finding the causes and types of memory leaks and tools and suggestions to fix them"
+topics = ["JVM & Performance"]
 title = "Day 68 : Becoming a memory plumber; A tale of Memory Leak and how to find them ( part 3)"
 [cover]
 alt = "day68"

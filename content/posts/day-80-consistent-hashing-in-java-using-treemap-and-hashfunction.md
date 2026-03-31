@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day80 "
 summary = "Implementing a Dummy Consistent Hashing in Java using TreeMap and Hash Function"
+topics = ["Core Java"]
 title = "Day 80: From Concept to Code: Implementing a Dummy Consistent Hashing in Java using TreeMap"
 [cover]
 alt = "day80"

@@ -5,6 +5,7 @@ description = "Building a @Sensitive annotation with annotation processor to mas
 showtoc = true
 slug = "/java/100DaysOfJava/day93"
 summary = "Learn how to create a custom @Sensitive annotation with annotation processing to automatically mask passwords and secrets in your Java applications"
+topics = ["Security & Crypto"]
 title = "Day 93: Stop Leaking Passwords - Building Java's Answer to PHP's #[SensitiveParameter]"
 [cover]
 alt = "Day 93 - Sensitive Data Masking in Java"

@@ -6,6 +6,7 @@ draft = true
 showtoc = false
 slug = "/java/100DaysOfJava/day53"
 summary = "ForkJoinPool and parallel processing using Stream and Spliterator"
+topics = ["Concurrency"]
 title = "Day 54:Understanding forkjoinpool and user defined batch size streaming with spliterator to have parallel processing"
 [cover]
 alt = "Day52"

@@ -5,6 +5,7 @@ description = "A python like generator implementation using custom Iterator, Thr
 showtoc = false
 slug = "/java/100DaysOfJava/day40"
 summary = "A python like generator implementation using custom Iterator, Thread and ThreadGroup"
+topics = ["Concurrency"]
 title = "Day 40: Generator implementation using custom Iterator and Threads. "
 [cover]
 alt = "Day40"

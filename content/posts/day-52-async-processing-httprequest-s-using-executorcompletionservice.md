@@ -5,6 +5,7 @@ description = "Async Processing HttpRequest's using ExecutorCompletionService"
 showtoc = false
 slug = "/java/100DaysOfJava/day52"
 summary = "Async Processing HttpRequest's using ExecutorCompletionService"
+topics = ["Concurrency"]
 title = "Day 52: Async Processing HttpRequest's using ExecutorCompletionService"
 [cover]
 alt = "Day52"

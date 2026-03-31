@@ -5,6 +5,7 @@ description = "Using CompletableFuture's execution to process http request async
 showtoc = false
 slug = "/java/100DaysOfJava/day53"
 summary = "Using CompletableFuture's execution to process http request asynchronously"
+topics = ["Concurrency"]
 title = "Day 53: Processing Http Request Asynchronously using CompletableFutures"
 [cover]
 alt = "Day53"

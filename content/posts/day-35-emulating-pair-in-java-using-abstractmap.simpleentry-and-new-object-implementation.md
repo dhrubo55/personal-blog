@@ -5,6 +5,7 @@ description = "Pair behavior in java"
 showtoc = false
 slug = "/java/100DaysOfJava/day35"
 summary = "Pair behavior in java"
+topics = ["Language & APIs"]
 title = "Day 35: Emulating Pair in java using AbstractMap.SimpleEntry<>() and new Object() {} implementation"
 [cover]
 alt = "Day35"

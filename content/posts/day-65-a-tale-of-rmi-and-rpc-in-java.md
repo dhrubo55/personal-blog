@@ -5,6 +5,7 @@ description = "Understanding how RPC and RMI works in java "
 showtoc = false
 slug = "/java/100DaysOfJava/day65"
 summary = "Understanding how RPC and RMI works in java"
+topics = ["I/O & Networking"]
 title = "Day 65: A tale of RMI (Remote Method Invocation)  in java"
 [cover]
 alt = "day65"

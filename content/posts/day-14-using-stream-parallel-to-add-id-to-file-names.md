@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day14"
 summary = "Using stream parallel to add id to file names."
+topics = ["Concurrency"]
 title = "Day 14: Using stream parallel to add id to file names."
 [cover]
 alt = "Day14"

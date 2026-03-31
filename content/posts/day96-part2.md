@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day96"
 summary = "Part 2: Core Synchronization Patterns - Deep dive into 4 essential coordination tools with real-world patterns, performance characteristics, and common pitfalls"
+topics = ["Concurrency"]
 title = "Day 96: Java Concurrency Toolkit Part 2 - Core Synchronization Patterns"
 [cover]
 alt = "day96"

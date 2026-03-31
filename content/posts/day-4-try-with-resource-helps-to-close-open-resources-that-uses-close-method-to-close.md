@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day4"
 summary = "try with resource helps to close open resources that uses .close() method to close."
+topics = ["I/O & Networking"]
 title = "Day 4: try with resource helps to close open resources that uses .close() method to close."
 [cover]
 alt = "Day4"

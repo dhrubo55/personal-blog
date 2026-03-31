@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day76"
 summary = "Implementing a dummy Service Oriented Architecture (SOA) service to Understand Java Service Provider Interface (SPI)"
+topics = ["Metaprogramming"]
 title = "Day 76: Implementing a dummy Service Oriented Architecture (SOA) service to Understand Java Service Provider Interface (SPI)"
 [cover]
 alt = "day76"

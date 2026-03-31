@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day32"
 summary = "Using Objects.equals() when one of the values may be null."
+topics = ["Language & APIs"]
 title = "Day 32: Using Objects.equals() when values may be null"
 [cover]
 alt = "Day32"

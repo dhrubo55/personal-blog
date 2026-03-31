@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day98"
 summary = "I thought virtual threads were just green threads—turns out they're continuations on the heap with sophisticated scheduling. Here's what I got wrong and what actually happens under the hood."
+topics = ["Concurrency"]
 title = "Day 98: I Thought Virtual Threads Were Just Green Threads They're Actually Continuations on the Heap"
 [cover]
 alt = "day98"

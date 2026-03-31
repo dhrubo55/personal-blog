@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day3"
 summary = "Using Objects.requireNonNullElse() where Optional not being able to be used."
+topics = ["Language & APIs"]
 title = "Day 3: Using Objects.requireNonNullElse() where Optional not being able to be used."
 [cover]
 alt = "Day3"

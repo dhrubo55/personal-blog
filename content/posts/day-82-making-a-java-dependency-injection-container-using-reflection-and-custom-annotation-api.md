@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day82"
 summary = "making a minimal spring like java dependency injection container using java reflection and annotation api"
+topics = ["Metaprogramming"]
 title = "Day 82: Reflection in Java: Building a Simple DI Container in 100 Lines of Code"
 [cover]
 alt = "day82"

@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day75"
 summary = "Java Buffered Reader and why we need to close and what will happend if we dont"
+topics = ["I/O & Networking"]
 title = "Day 75: Java BufferedReader: Do We Know Why We Need To Close It?"
 [cover]
 alt = "day75"

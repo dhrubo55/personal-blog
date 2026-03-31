@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day8"
 summary = "I always liked string interpolation in JS. Now i found out about Javas MessageFormat's format method which lets us in its way use string interpolation."
+topics = ["Language & APIs"]
 title = "Day 8: I always liked string interpolation in JS. Now i found out about Javas MessageFormat's format method which lets us in its way use string interpolation."
 [cover]
 alt = "Day8"

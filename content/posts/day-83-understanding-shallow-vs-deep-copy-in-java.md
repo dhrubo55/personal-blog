@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day83"
 summary = "Exploring shallow and deep copying of object in java"
+topics = ["Core Java"]
 title = "Day 83: Java Object Cloning: Exploring Shallow and Deep Copy Techniques"
 [cover]
 alt = "day83"

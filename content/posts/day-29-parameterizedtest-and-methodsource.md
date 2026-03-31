@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day29"
 summary = "Using ParameterizedTest and MethodSource to run the same file-presence test with different inputs."
+topics = ["Metaprogramming"]
 title = "Day 29: ParameterizedTest and MethodSource for repeated test inputs"
 [cover]
 alt = "Day29"

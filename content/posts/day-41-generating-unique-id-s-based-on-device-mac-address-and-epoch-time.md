@@ -5,6 +5,7 @@ description = "Distributed unique id's generator based on device MAC address and
 showtoc = false
 slug = "/java/100DaysOfJava/day41"
 summary = "Generating unique id's based on device MAC address and epoch time"
+topics = ["Core Java"]
 title = "Day 41: Generating unique id's based on device MAC address and epoch time"
 [cover]
 alt = "Day41"

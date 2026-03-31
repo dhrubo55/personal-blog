@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day73"
 summary = "Understanding how Symmetric and Asymmetric encryption works using Java Cryptography Extension"
+topics = ["Security & Crypto"]
 title = "Day 73: Java Security: Safeguarding Data with Encryption and Keys"
 [cover]
 alt = "day73"

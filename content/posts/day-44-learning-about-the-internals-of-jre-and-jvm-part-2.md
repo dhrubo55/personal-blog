@@ -5,6 +5,7 @@ description = "learning about jvm internals and its architecture"
 showtoc = false
 slug = "/java/100DaysOfJava/day44"
 summary = "learning about jvm  architecture"
+topics = ["JVM & Performance"]
 title = "Day 44: learning about the internals of JRE and JVM (Part 2)"
 [cover]
 alt = "Day44"

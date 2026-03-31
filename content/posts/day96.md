@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day94"
 summary = "You've been writing lambdas and streams for years, but are you really doing functional programming? Let's dive into the deep end with monads, functors, and patterns that'll make your Erlang friends jealous."
+topics = ["Language & APIs"]
 title = "Day 94: The Functional Programming Rabbit Hole—Monads, Functors, and Why Your Java Code Still Isn't Functional Enough"
 [cover]
 alt = "day94"

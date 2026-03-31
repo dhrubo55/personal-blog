@@ -5,6 +5,7 @@ description = "Zip and Unzip file using Java FileSystem api"
 showtoc = false
 slug = "/java/100DaysOfJava/day49"
 summary = "Zip and Unzip file using Java FileSystem api"
+topics = ["I/O & Networking"]
 title = "Day 49: A utility class for Zip and Unzip files using java FileSystem api (Part 2)"
 [cover]
 alt = "Day49"

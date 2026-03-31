@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day13"
 summary = "Using Collectors.groupingBy and Collectors.counting to get numbers of file present of a particular type"
+topics = ["Language & APIs"]
 title = "Day 13: Using Collectors.groupingBy and Collectors.counting to get numbers of file present of a particular type"
 [cover]
 alt = "Day13"

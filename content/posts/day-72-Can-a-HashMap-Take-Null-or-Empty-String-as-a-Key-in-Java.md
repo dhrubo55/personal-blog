@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day72"
 summary = "Can a HashMap Take Null as a Key in Java?"
+topics = ["Core Java"]
 title = "Day 72: Can a HashMap Take Null or Empty String as a Key in Java?"
 [cover]
 alt = "day72"

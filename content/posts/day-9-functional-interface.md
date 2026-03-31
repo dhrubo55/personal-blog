@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day9"
 summary = "Functional interface"
+topics = ["Language & APIs"]
 title = "Day 9: Functional interface"
 [cover]
 alt = "Day9"

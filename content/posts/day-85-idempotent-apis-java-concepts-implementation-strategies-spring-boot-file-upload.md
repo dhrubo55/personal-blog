@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day85"
 summary = "Idempotent APIs in Java: Concepts, Implementation Strategies, and a Spring Boot File Upload Implementation"
+topics = ["AI, Spring & Cloud"]
 title = "Day 85: Idempotent APIs in Java: Concepts, Implementation Strategies, and a Spring Boot File Upload Implementation"
 [cover]
 alt = "day85"

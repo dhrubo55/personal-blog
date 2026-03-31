@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day99"
 summary = "I thought virtual threads replaced the need for Netty and event loops. Then I built both models from scratch and benchmarked them. Virtual threads didn't kill event loops they made blocking I/O viable for most cases. But event loops still win for ultra-high connection counts. Here's when each approach wins."
+topics = ["I/O & Networking"]
 title = "Day 99: Virtual Threads Didn't Kill Event Loops. Here's How Each Works"
 [cover]
 alt = "day99"

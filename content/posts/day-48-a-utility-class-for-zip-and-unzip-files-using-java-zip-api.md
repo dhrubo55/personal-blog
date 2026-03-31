@@ -5,6 +5,7 @@ description = "A utility class to zip and unzip files and directories"
 showtoc = false
 slug = "/java/100DaysOfJava/day48"
 summary = "A utility class to zip and unzip files and directories"
+topics = ["I/O & Networking"]
 title = "Day 48: A utility class for Zip and Unzip files using java Zip api (Part 1)"
 [cover]
 alt = "Day48"

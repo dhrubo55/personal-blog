@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day71"
 summary = "Understanding Heap poullion in java and its causes and how to prevent it"
+topics = ["Language & APIs"]
 title = "Day 71: Understanding Heap poullion in java and its causes and how to prevent it"
 [cover]
 alt = "day71"

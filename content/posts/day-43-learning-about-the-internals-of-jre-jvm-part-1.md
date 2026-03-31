@@ -5,6 +5,7 @@ description = "Understating the internals of runtime, execution model, Applicati
 showtoc = false
 slug = "/java/100DaysOfJava/day43"
 summary = "Understating the internals of jre and jvm how does they work to run a java program"
+topics = ["JVM & Performance"]
 title = "Day 43: learning about the internals of jre, jvm (Part 1)"
 [cover]
 alt = "Day43"

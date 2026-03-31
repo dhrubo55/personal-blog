@@ -5,6 +5,7 @@ description = "implementing custom annotations and check if its a class level or
 showtoc = false
 slug = "/java/100DaysOfJava/day42"
 summary = "implementing custom annotations and check if its a class level or field level annotation."
+topics = ["Metaprogramming"]
 title = "Day 42: using custom annotations and check if its a class level or field level annotation"
 [cover]
 alt = "Day42"

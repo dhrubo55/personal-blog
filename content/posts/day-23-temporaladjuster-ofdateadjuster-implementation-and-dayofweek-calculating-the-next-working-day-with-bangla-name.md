@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day23"
 summary = "TemporalAdjuster ofDateAdjuster implementation and DayOfWeek calculating the next working day with Bangla name."
+topics = ["Language & APIs"]
 title = "Day 23: TemporalAdjuster ofDateAdjuster implementation and DayOfWeek calculating the next working day with Bangla name."
 [cover]
 alt = "Day23"

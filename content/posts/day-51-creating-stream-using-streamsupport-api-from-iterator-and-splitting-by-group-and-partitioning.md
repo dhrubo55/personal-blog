@@ -5,6 +5,7 @@ description = "Creating Stream (using StreamSupport API)  from Spliterator by co
 showtoc = false
 slug = "/java/100DaysOfJava/day51"
 summary = "Creating Stream using StreamSupport and splitting it using partitioning and grouping"
+topics = ["Language & APIs"]
 title = "Day 51: Creating Stream (using StreamSupport API)  from Spliterator by converting Iterator to Spliterator"
 [cover]
 alt = "Day51"

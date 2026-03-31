@@ -107,7 +107,41 @@
       {{- end -}}
     {{- end -}}
 
-    {{- $topicRaw := partial "java_graph/classify_topic" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories) -}}
+    {{- $explicitTopics := slice -}}
+    {{- with $post.Params.topic -}}
+      {{- $topicType := printf "%T" . -}}
+      {{- if or (eq $topicType "[]string") (eq $topicType "[]interface {}") -}}
+        {{- range . -}}
+          {{- $value := trim (printf "%v" .) " " -}}
+          {{- if ne $value "" -}}
+            {{- $explicitTopics = append $value $explicitTopics -}}
+          {{- end -}}
+        {{- end -}}
+      {{- else -}}
+        {{- $value := trim (printf "%v" .) " " -}}
+        {{- if ne $value "" -}}
+          {{- $explicitTopics = append $value $explicitTopics -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $post.Params.topics -}}
+      {{- $topicType := printf "%T" . -}}
+      {{- if or (eq $topicType "[]string") (eq $topicType "[]interface {}") -}}
+        {{- range . -}}
+          {{- $value := trim (printf "%v" .) " " -}}
+          {{- if ne $value "" -}}
+            {{- $explicitTopics = append $value $explicitTopics -}}
+          {{- end -}}
+        {{- end -}}
+      {{- else -}}
+        {{- $value := trim (printf "%v" .) " " -}}
+        {{- if ne $value "" -}}
+          {{- $explicitTopics = append $value $explicitTopics -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $topicRaw := partial "java_graph/classify_topic" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories "topics" $explicitTopics) -}}
     {{- $topic := trim (printf "%s" $topicRaw) " " -}}
     {{- with index ($scratch.Get "topicOverrideMap") $id -}}
       {{- $topic = . -}}

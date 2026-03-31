@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day95"
 summary = "Deep dive into 12 essential concurrency tools in Java 21 - with battle-tested patterns from production systems"
+topics = ["Concurrency"]
 title = "Day 95: 12 concurrent tools in Java - Beyond Threads, Into Production-Ready Patterns"
 [cover]
 alt = "day95"

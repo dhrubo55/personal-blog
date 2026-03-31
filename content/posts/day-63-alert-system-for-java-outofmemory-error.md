@@ -5,6 +5,7 @@ description = "Using JMX to write an alert system for Java JVM OutOfMemory Error
 showtoc = false
 slug = "/java/100DaysOfJava/day63"
 summary = "Using JMX to write an alert system for Java JVM OutOfMemory Error"
+topics = ["JVM & Performance"]
 title = "Day 63: Alert system for Java OutOfMemory Error "
 [cover]
 alt = "day63"

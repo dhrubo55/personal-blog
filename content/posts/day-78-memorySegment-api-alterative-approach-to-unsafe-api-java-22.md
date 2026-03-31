@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day78"
 summary = "Day 78: Java 22 - Embracing Safe Memory Allocation Using FFM API - An alternative to Unsafe API"
+topics = ["JVM & Performance"]
 title = "Day 78: Java 22 - Embracing Safe Memory Allocation Using FFM API - An alternative to Unsafe API"
 [cover]
 alt = "day78"

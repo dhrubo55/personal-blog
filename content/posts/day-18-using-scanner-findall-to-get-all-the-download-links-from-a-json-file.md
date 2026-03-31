@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day18"
 summary = "using Scanner.findAll to get all the download links from a json file."
+topics = ["Language & APIs"]
 title = "Day 18: using Scanner.findAll to get all the download links from a json file."
 [cover]
 alt = "Day18"

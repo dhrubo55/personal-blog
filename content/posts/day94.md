@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day94"
 summary = "Your Java app takes so much time to start. You've tried everything, or have you? Here's how I cut startup time using techniques you probably haven't tried yet."
+topics = ["JVM & Performance"]
 title = "Day 94: Nobody Told Me Java Application Could Start This Fast and The Rabbit hole I explored"
 [cover]
 alt = "day94"

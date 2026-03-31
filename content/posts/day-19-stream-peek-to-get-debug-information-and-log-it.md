@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day19"
 summary = "Stream.peek to get debug information and log it."
+topics = ["Language & APIs"]
 title = "Day 19: Stream.peek to get debug information and log it."
 [cover]
 alt = "Day19"

@@ -3,28 +3,64 @@
 {{- $content := lower (printf "%s" .content) -}}
 {{- $text := printf "%s %s %s" $title $summary $content -}}
 {{- $topic := "Core Java" -}}
+{{- $hasExplicitTopic := false -}}
 
-{{- $generic := dict "java" true "100daysofjava" true "100 days of java" true -}}
-{{- with .categories -}}
+{{- with .topics -}}
   {{- range . -}}
-    {{- $c := trim (lower (printf "%v" .)) " " -}}
-    {{- if and (ne $c "") (not (index $generic $c)) -}}
-      {{- if or (in $c "security") (in $c "crypto") -}}
-        {{- $topic = "Security & Crypto" -}}
-      {{- else if or (in $c "jvm") (in $c "perf") (in $c "optimization") -}}
-        {{- $topic = "JVM & Performance" -}}
-      {{- else if or (in $c "spring") (in $c "ai") (in $c "cloud") -}}
-        {{- $topic = "AI, Spring & Cloud" -}}
-      {{- else if or (in $c "annotation") (in $c "meta") -}}
-        {{- $topic = "Metaprogramming" -}}
-      {{- else -}}
+    {{- $t := trim (lower (printf "%v" .)) " " -}}
+    {{- if ne $t "" -}}
+      {{- if or (eq $t "core java") (eq $t "core") -}}
         {{- $topic = "Core Java" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "language & apis") (eq $t "language and apis") (in $t "language") (in $t "functional") (in $t "stream") -}}
+        {{- $topic = "Language & APIs" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "i/o & networking") (eq $t "io & networking") (eq $t "io and networking") (in $t "network") (in $t "i/o") (in $t "nio") (in $t "file") -}}
+        {{- $topic = "I/O & Networking" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "concurrency") (in $t "thread") (in $t "async") -}}
+        {{- $topic = "Concurrency" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "jvm & performance") (eq $t "jvm and performance") (in $t "jvm") (in $t "performance") (in $t "memory") -}}
+        {{- $topic = "JVM & Performance" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "metaprogramming") (in $t "reflection") (in $t "annotation") (in $t "proxy") -}}
+        {{- $topic = "Metaprogramming" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "security & crypto") (eq $t "security and crypto") (in $t "security") (in $t "crypto") -}}
+        {{- $topic = "Security & Crypto" -}}
+        {{- $hasExplicitTopic = true -}}
+      {{- else if or (eq $t "ai, spring & cloud") (eq $t "ai spring cloud") (in $t "spring") (in $t "ai") (in $t "cloud") -}}
+        {{- $topic = "AI, Spring & Cloud" -}}
+        {{- $hasExplicitTopic = true -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{- if eq $topic "Core Java" -}}
+{{- if not $hasExplicitTopic -}}
+  {{- $generic := dict "java" true "100daysofjava" true "100 days of java" true -}}
+  {{- with .categories -}}
+    {{- range . -}}
+      {{- $c := trim (lower (printf "%v" .)) " " -}}
+      {{- if and (ne $c "") (not (index $generic $c)) -}}
+        {{- if or (in $c "security") (in $c "crypto") -}}
+          {{- $topic = "Security & Crypto" -}}
+        {{- else if or (in $c "jvm") (in $c "perf") (in $c "optimization") -}}
+          {{- $topic = "JVM & Performance" -}}
+        {{- else if or (in $c "spring") (in $c "ai") (in $c "cloud") -}}
+          {{- $topic = "AI, Spring & Cloud" -}}
+        {{- else if or (in $c "annotation") (in $c "meta") -}}
+          {{- $topic = "Metaprogramming" -}}
+        {{- else -}}
+          {{- $topic = "Core Java" -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and (not $hasExplicitTopic) (eq $topic "Core Java") -}}
   {{- if gt (len (findRE `(spring|bedrock|vertex|gemini|mcp|\\bai\\b|agent)` $text 1)) 0 -}}
     {{- $topic = "AI, Spring & Cloud" -}}
   {{- else if gt (len (findRE `(security|tls|encrypt|cipher|signature|certificate|password|auth|sandbox|secret)` $text 1)) 0 -}}

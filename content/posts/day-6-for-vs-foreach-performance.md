@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day6"
 summary = "Today I got to know that for loop is faster than foreach loop for a large amount of elements. after checking I found out that is on average 2 times faster for the below program in my machine."
+topics = ["JVM & Performance"]
 title = "Day 6: Today I got to know that for loop is faster than foreach loop for a large amount of elements. after checking I found out that is on average 2 times faster for the below program in my machine."
 [cover]
 alt = "Day6"

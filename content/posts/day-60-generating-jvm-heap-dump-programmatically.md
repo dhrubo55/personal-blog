@@ -5,6 +5,7 @@ description = "Generating Heap dumps programatically by using MBeanServer and Pl
 showtoc = false
 slug = "/java/100DaysOfJava/day60"
 summary = "Generating JVM heap dump using PlatformMBeanServer"
+topics = ["JVM & Performance"]
 title = "Day 60: Generating JVM heap dump programmatically "
 [cover]
 alt = "day60"

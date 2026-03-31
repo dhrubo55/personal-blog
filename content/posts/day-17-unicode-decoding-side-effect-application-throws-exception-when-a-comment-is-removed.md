@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day17"
 summary = "Unicode decoding side effect. Application throws exception when a comment is removed."
+topics = ["Language & APIs"]
 title = "Day 17: Unicode decoding side effect. Application throws exception when a comment is removed."
 [cover]
 alt = "Day17"

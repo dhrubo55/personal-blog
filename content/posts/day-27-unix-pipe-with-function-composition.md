@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day27"
 summary = "Implementing a Unix pipe-like class in Java with Function composition."
+topics = ["Language & APIs"]
 title = "Day 27: Implementing a Unix pipe-like class in Java with Function composition"
 [cover]
 alt = "Day27"

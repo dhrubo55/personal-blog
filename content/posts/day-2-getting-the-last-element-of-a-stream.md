@@ -6,6 +6,7 @@ draft = false
 showtoc = false
 slug = "/java/100DaysOfJava/day2"
 summary = "Getting the last element of a Stream."
+topics = ["Language & APIs"]
 title = "Day 2: Getting the last element of a Stream."
 [cover]
 alt = "Day2"

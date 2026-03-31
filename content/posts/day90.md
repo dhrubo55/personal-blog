@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day90"
 summary = "The Spy Inside Your JVM - Creating Java Agents That Monitor your apps"
+topics = ["Metaprogramming"]
 title = "Day 90: How I Built a Secret Agent That Infiltrates Any Java Application"
 [cover]
 alt = "day90"

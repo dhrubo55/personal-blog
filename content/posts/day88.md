@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day88"
 summary = "Building a robust multilingual audio transcription system using Spring Boot, Google Cloud Storage, and Vertex AI's Gemini 1.5, covering architecture, prompt engineering, safety settings, confidence scoring, and async/batch processing."
+topics = ["AI, Spring & Cloud"]
 title = "Day 88: Multilingual Audio Transcription with Gemini 1.5, Vertex AI, and Spring Boot"
 [cover]
 alt = "day88"

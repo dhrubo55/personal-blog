@@ -5,6 +5,7 @@ description = "Using maven-enforcer plugin and gradle constraints to ban already
 showtoc = false
 slug = "/java/100DaysOfJava/day36"
 summary = "Many 3rd party libraries can have vulnerable dependency like recently reported Log4j 2. so to ban them from getting resolved in your maven or gradle project you can use maven-enforcer plugin."
+topics = ["Security & Crypto"]
 title = "Day 36: Learned about banned dependencies and how to ban transitive dependency in a maven or gradle project"
 [cover]
 alt = "Day36"
