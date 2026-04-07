@@ -2,7 +2,7 @@
 category = ["Java", "100DaysOfJava"]
 date = 2026-03-30T00:00:00Z
 description = "An honest retrospective on a challenge that did not happen in a clean streak, and on how learning Java slowly turned into learning how systems behave."
-draft = true
+draft = false
 ShowToc = false
 TocOpen = false
 slug = "posts/java/100DaysOfJava/day100-capstone.md"
@@ -60,7 +60,7 @@ Even the JMH posts and the later performance posts helped here. They moved perfo
 
 That theme becomes much more concrete in those later virtual-thread and event-loop posts. Once I started looking at virtual threads as continuations, heap-allocated stack chunks, mount and unmount behavior, pinning, carrier threads, selectors, and event loops, the old question "which framework should I use?". The new question I started to ask was what is happening inside and how can it help.
 
-The spliterator material that I thought I would write for 100th day makes more sense to me as one late example of that shift than as the final centerpiece. The real lesson is not that I wrote a custom `Spliterator`. It is that `.parallel()` hid a work-distribution policy I had not thought about carefully enough. Once I noticed the growing-batch behavior, the problem stopped being "why is Java Streams slow?" and became "how is work being divided, why are cores going idle, and what happens when the default coordination strategy does not fit the workload?"
+The [spliterator](/posts/posts/java/100DaysOfJava/spliterator) material that I thought I would write for 100th day makes more sense to me as one late example of that shift than as the final centerpiece. The real lesson is not that I wrote a custom `Spliterator`. It is that `.parallel()` hid a work-distribution policy I had not thought about carefully enough. Once I noticed the growing-batch behavior, the problem stopped being "why is Java Streams slow?" and became "how is work being divided, why are cores going idle, and what happens when the default coordination strategy does not fit the workload?"
 
 At the code level, the turning point was almost embarrassingly small:
 
