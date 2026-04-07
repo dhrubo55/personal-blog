@@ -60,7 +60,7 @@ Even the JMH posts and the later performance posts helped here. They moved perfo
 
 That theme becomes much more concrete in those later virtual-thread and event-loop posts. Once I started looking at virtual threads as continuations, heap-allocated stack chunks, mount and unmount behavior, pinning, carrier threads, selectors, and event loops, the old question "which framework should I use?". The new question I started to ask was what is happening inside and how can it help.
 
-The [spliterator](/posts/posts/java/100DaysOfJava/spliterator) material that I thought I would write for 100th day makes more sense to me as one late example of that shift than as the final centerpiece. The real lesson is not that I wrote a custom `Spliterator`. It is that `.parallel()` hid a work-distribution policy I had not thought about carefully enough. Once I noticed the growing-batch behavior, the problem stopped being "why is Java Streams slow?" and became "how is work being divided, why are cores going idle, and what happens when the default coordination strategy does not fit the workload?"
+The spliterator material that I thought I would write for [100th day](/posts/posts/java/100DaysOfJava/day100-spliterator) makes more sense to me as one late example of that shift than as the final centerpiece. The real lesson is not that I wrote a custom `Spliterator`. It is that `.parallel()` hid a work-distribution policy I had not thought about carefully enough. Once I noticed the growing-batch behavior, the problem stopped being "why is Java Streams slow?" and became "how is work being divided, why are cores going idle, and what happens when the default coordination strategy does not fit the workload?"
 
 At the code level, the turning point was almost embarrassingly small:
 
@@ -95,7 +95,7 @@ I did learn a littl bit more Java from this challenge.I learned APIs I never had
 
 This is not mastery. If anything, it has made me more aware of how much I still do not understand. But it is a better kind of ignorance. It gives me better questions.
 
-That is also why `Chaos;System;Clarity` my new newsletter where I will explore the chaotically beautiful world of Software Engineering and AI. This feels like a natural next step to me. Not because I am done with Java, and not because this challenge ended in some clean graduation. It feels natural because these posts was already moving there. The part I want to carry forward is the habit underneath it: `think, probe, measure, question the default story`, and `keep following the system until the behavior becomes a little less mysterious`.
+That is also why [Chaos;Code;Clarity](https://chaoscodeclarity.substack.com/) my new newsletter where I will explore the chaotically beautiful world of Software Engineering and AI. This feels like a natural next step to me. Not because I am done with Java, and not because this challenge ended in some clean graduation. It feels natural because these posts was already moving there. The part I want to carry forward is the habit underneath it: `think, probe, measure, question the default story`, and `keep following the system until the behavior becomes a little less mysterious`.
 
 I started this trying to learn more Java. I am closing this challange by learning 
 - how deep the java ecosystem can be
