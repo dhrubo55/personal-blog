@@ -1,14 +1,14 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2025-12-24T00:00:00Z
-description = "Day 100: I added .parallel() expecting near-linear speedup on 8 cores. I got 60% CPU utilization. Here's why the default spliterator gets load balancing wrong, and how a 50-line fix pushed it to 95%."
-draft = true
+description = "I added .parallel() expecting near-linear speedup on 8 cores. I got 60% CPU utilization. Here's why the default spliterator gets load balancing wrong, and how a 50-line fix pushed it to 95%."
+draft = false
 ShowToc = true
 TocOpen = true
-slug = "posts/java/100DaysOfJava/day100"
+slug = "posts/java/100DaysOfJava/day100-spliterator"
 summary = "Parallel streams gave me 60% CPU utilization on 8 cores. I thought that was good. Then I discovered why the default spliterator creates massive load imbalance, and how a 50-line custom implementation cut processing time by 40%."
 topics = ["JVM & Performance"]
-title = "Day 100: Why Your Parallel Streams Are Leaving CPU Cores Idle (And How to Fix It)"
+title = "Why Your Parallel Streams were Leaving CPU Cores Idle (And How to Fix It)"
 [cover]
 alt = "day100"
 caption = "day100"
