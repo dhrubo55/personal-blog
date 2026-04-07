@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day95"
 summary = "When you modify a list and the original stays unchanged—is it magic? Nope, it's persistent data structures. Here's why they're evolutionary perfect for modern Java."
+topics = ["Core Java"]
 title = "Day 95: The Data Structures That Refuse to Die (Persistent & Darwinian Structures in Java 21)"
 [cover]
 alt = "day95"

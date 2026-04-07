@@ -7,6 +7,7 @@ ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day100"
 summary = "Parallel streams gave me 60% CPU utilization on 8 cores. I thought that was good. Then I discovered why the default spliterator creates massive load imbalance, and how a 50-line custom implementation cut processing time by 40%."
+topics = ["JVM & Performance"]
 title = "Day 100: Why Your Parallel Streams Are Leaving CPU Cores Idle (And How to Fix It)"
 [cover]
 alt = "day100"
