@@ -79,8 +79,8 @@ menu:
     identifier: blog
     url: blog/
     weight: 2
-  - name: Java Graph
-    identifier: java-graph
+  - name: 100DaysOfJava
+    identifier: 100DaysOfJava-knowledge-graph
     url: java/100daysofjava/graph/
     weight: 3
   - identifier: resume
