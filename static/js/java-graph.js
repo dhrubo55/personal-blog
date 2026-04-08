@@ -74,7 +74,7 @@
   const topicKey = (value) => `topic::${String(value || "Core Java").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   const escapeHtml = (value) => String(value || "")
-    .replace(/&/g, "&amp;")
+    .replace(/&/g, "and")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/\"/g, "&quot;")
