@@ -1,0 +1,43 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+{{- $pages := .RegularPages -}}
+{{- if not $pages -}}
+  {{- $pages = .Pages -}}
+{{- end -}}
+{{- $atom := .OutputFormats.Get "ATOM" -}}
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}{{ end }}</title>
+  <link href="{{ .Permalink }}" rel="alternate" type="text/html" />
+  {{- with $atom }}
+  <link href="{{ .Permalink }}" rel="self" type="application/atom+xml" />
+  {{- end }}
+  <id>{{ .Permalink }}</id>
+  <updated>{{ with $pages }}{{ (index . 0).Date.Format "2006-01-02T15:04:05Z07:00" }}{{ else }}{{ now.Format "2006-01-02T15:04:05Z07:00" }}{{ end }}</updated>
+  <generator uri="https://gohugo.io/">Hugo</generator>
+  {{- with .Site.Params.author }}
+  <author>
+    <name>{{ . }}</name>
+  </author>
+  {{- else }}
+  <author>
+    <name>{{ .Site.Title }}</name>
+  </author>
+  {{- end }}
+  {{- range $pages }}
+  <entry>
+    <title>{{ .Title }}</title>
+    <link href="{{ .Permalink }}" rel="alternate" type="text/html" />
+    <id>{{ .Permalink }}</id>
+    <published>{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}</published>
+    <updated>{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}</updated>
+    {{- with .Params.author }}
+    <author>
+      <name>{{ . }}</name>
+    </author>
+    {{- end }}
+    {{- with .Summary }}
+    <summary type="html">{{ . | html }}</summary>
+    {{- end }}
+    <content type="html">{{ .Content | html }}</content>
+  </entry>
+  {{- end }}
+</feed>

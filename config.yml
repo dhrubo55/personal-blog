@@ -11,6 +11,17 @@ buildExpired: false
 minify:
   disableXML: true
   minifyOutput: true
+outputFormats:
+  ATOM:
+    mediaType: application/atom+xml
+    baseName: atom
+    isPlainText: false
+    noUgly: true
+outputs:
+  home: [HTML, RSS, ATOM]
+  section: [HTML, RSS, ATOM]
+  taxonomy: [HTML, RSS, ATOM]
+  term: [HTML, RSS, ATOM]
 params:
   env: production
   title: Mohibul Hassan
