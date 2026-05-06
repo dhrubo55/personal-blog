@@ -27,7 +27,11 @@
     {{- with .label -}}
       {{- $label = . -}}
     {{- end -}}
-    {{- $edge := dict "id" $edgeID "source" $source "target" $target "type" $type "weight" $weight "label" $label -}}
+    {{- $reason := $label -}}
+    {{- with .reason -}}
+      {{- $reason = . -}}
+    {{- end -}}
+    {{- $edge := dict "id" $edgeID "source" $source "target" $target "type" $type "weight" $weight "label" $label "reason" $reason -}}
 
     {{- $scratch.SetInMap "edgeSeen" $key true -}}
     {{- $scratch.Set "edges" (append $edge ($scratch.Get "edges")) -}}

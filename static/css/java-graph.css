@@ -68,6 +68,32 @@ body.java-graph-layout .main {
   max-width: 78ch;
 }
 
+.java-graph-explainer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.java-graph-explainer article {
+  border: 1px solid var(--java-graph-panel-border);
+  border-radius: 12px;
+  background: rgba(8, 22, 36, 0.72);
+  padding: 0.85rem;
+}
+
+.java-graph-explainer h2 {
+  margin: 0 0 0.42rem;
+  font-size: 0.95rem;
+}
+
+.java-graph-explainer p {
+  margin: 0;
+  color: var(--java-graph-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
 .java-graph-toolbar {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -346,6 +372,71 @@ body.java-graph-layout .main {
   text-decoration: underline;
 }
 
+.java-graph-topic-index {
+  margin-top: 1rem;
+  border: 1px solid var(--java-graph-panel-border);
+  border-radius: 16px;
+  background: rgba(7, 19, 32, 0.74);
+  padding: 1rem;
+}
+
+.java-graph-section-heading {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.java-graph-section-heading h2,
+.java-graph-section-heading p {
+  margin: 0;
+}
+
+.java-graph-section-heading p {
+  color: var(--java-graph-muted);
+}
+
+.java-graph-topic-index-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.java-graph-topic-index-list article {
+  border-top: 1px solid rgba(173, 226, 255, 0.16);
+  padding-top: 0.75rem;
+}
+
+.java-graph-topic-index-list h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0 0 0.55rem;
+  font-size: 0.95rem;
+}
+
+.java-graph-topic-index-list h3 span {
+  color: var(--java-graph-muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+}
+
+.java-graph-topic-index-list ul {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.java-graph-topic-index-list a {
+  color: #9dd9ff;
+  text-decoration: none;
+}
+
+.java-graph-topic-index-list a:hover {
+  text-decoration: underline;
+}
+
 .java-graph-fallback {
   margin-top: 1rem;
   border: 1px dashed rgba(173, 226, 255, 0.28);
@@ -405,6 +496,11 @@ body.java-graph-ready .java-graph-fallback {
     grid-template-columns: 1fr;
   }
 
+  .java-graph-explainer,
+  .java-graph-topic-index-list {
+    grid-template-columns: 1fr;
+  }
+
   .java-graph-control-search,
   .java-graph-control-topic,
   .java-graph-control-day,
@@ -433,6 +529,22 @@ body.java-graph-ready .java-graph-fallback {
 
   .java-graph-legend {
     display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .java-graph-hover {
+    display: none;
+  }
+
+  .java-graph-actions button,
+  .java-graph-control input[type="search"],
+  .java-graph-control select {
+    min-height: 44px;
+  }
+
+  .java-graph-inspector {
+    scroll-margin-top: 0.8rem;
   }
 }
 

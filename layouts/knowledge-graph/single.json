@@ -63,13 +63,13 @@
       {{- $categoryType := printf "%T" . -}}
       {{- if or (eq $categoryType "[]string") (eq $categoryType "[]interface {}") -}}
         {{- range . -}}
-          {{- $value := trim (printf "%v" .) " " -}}
+          {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
           {{- if and (ne $value "") (ne $value "[]") -}}
             {{- $categories = append $value $categories -}}
           {{- end -}}
         {{- end -}}
       {{- else -}}
-        {{- $value := trim (printf "%v" .) " " -}}
+        {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
         {{- if and (ne $value "") (ne $value "[]") -}}
           {{- $categories = append $value $categories -}}
         {{- end -}}
@@ -79,13 +79,13 @@
       {{- $categoryType := printf "%T" . -}}
       {{- if or (eq $categoryType "[]string") (eq $categoryType "[]interface {}") -}}
         {{- range . -}}
-          {{- $value := trim (printf "%v" .) " " -}}
+          {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
           {{- if and (ne $value "") (ne $value "[]") -}}
             {{- $categories = append $value $categories -}}
           {{- end -}}
         {{- end -}}
       {{- else -}}
-        {{- $value := trim (printf "%v" .) " " -}}
+        {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
         {{- if and (ne $value "") (ne $value "[]") -}}
           {{- $categories = append $value $categories -}}
         {{- end -}}
@@ -112,13 +112,13 @@
       {{- $topicType := printf "%T" . -}}
       {{- if or (eq $topicType "[]string") (eq $topicType "[]interface {}") -}}
         {{- range . -}}
-          {{- $value := trim (printf "%v" .) " " -}}
+          {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
           {{- if ne $value "" -}}
             {{- $explicitTopics = append $value $explicitTopics -}}
           {{- end -}}
         {{- end -}}
       {{- else -}}
-        {{- $value := trim (printf "%v" .) " " -}}
+        {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
         {{- if ne $value "" -}}
           {{- $explicitTopics = append $value $explicitTopics -}}
         {{- end -}}
@@ -128,13 +128,13 @@
       {{- $topicType := printf "%T" . -}}
       {{- if or (eq $topicType "[]string") (eq $topicType "[]interface {}") -}}
         {{- range . -}}
-          {{- $value := trim (printf "%v" .) " " -}}
+          {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
           {{- if ne $value "" -}}
             {{- $explicitTopics = append $value $explicitTopics -}}
           {{- end -}}
         {{- end -}}
       {{- else -}}
-        {{- $value := trim (printf "%v" .) " " -}}
+        {{- $value := trim ((printf "%v" .) | htmlUnescape) " " -}}
         {{- if ne $value "" -}}
           {{- $explicitTopics = append $value $explicitTopics -}}
         {{- end -}}
@@ -142,14 +142,14 @@
     {{- end -}}
 
     {{- $topicRaw := partial "java_graph/classify_topic" (dict "title" $post.Title "summary" $summary "content" $post.Plain "categories" $categories "topics" $explicitTopics) -}}
-    {{- $topic := trim (printf "%s" $topicRaw) " " -}}
+    {{- $topic := trim ((printf "%s" $topicRaw) | htmlUnescape) " " -}}
     {{- with index ($scratch.Get "topicOverrideMap") $id -}}
       {{- $topic = . -}}
     {{- end -}}
 
     {{- $node := dict
       "id" $id
-      "title" $post.Title
+      "title" ($post.Title | htmlUnescape)
       "url" $post.RelPermalink
       "day" $day
       "date" ($post.Date.Format "2006-01-02")
@@ -209,7 +209,7 @@
   {{- $source := index ($scratch.Get "dayToId") (printf "%d" $day) -}}
   {{- $target := index ($scratch.Get "dayToId") (printf "%d" (add $day 1)) -}}
   {{- if and $source $target -}}
-    {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $source "target" $target "type" "sequence" "weight" 1.3 "label" "Day progression") -}}
+    {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $source "target" $target "type" "sequence" "weight" 1.3 "label" "Day progression" "reason" "Consecutive posts in the original 100DaysOfJava sequence.") -}}
   {{- end -}}
 {{- end -}}
 
@@ -219,7 +219,7 @@
     {{- $topicKey := lower (anchorize $topic) -}}
     {{- $previousID := index ($scratch.Get "topicLast") $topicKey -}}
     {{- if and $previousID (ne $previousID (index $node "id")) -}}
-      {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $previousID "target" (index $node "id") "type" "topic" "weight" 0.8 "label" "Shared topic") -}}
+      {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $previousID "target" (index $node "id") "type" "topic" "weight" 0.8 "label" "Shared topic" "reason" (printf "Both posts are classified under %s." $topic)) -}}
     {{- end -}}
     {{- $scratch.SetInMap "topicLast" $topicKey (index $node "id") -}}
   {{- end -}}
@@ -244,7 +244,7 @@
       {{- end -}}
       {{- $targetID := index ($scratch.Get "urlToId") $resolved -}}
       {{- if and $targetID (ne $targetID $sourceID) -}}
-        {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $sourceID "target" $targetID "type" "reference" "weight" 1.0 "label" "References") -}}
+        {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $sourceID "target" $targetID "type" "reference" "weight" 1.0 "label" "References" "reason" "The source post links to the target post in Markdown.") -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -256,7 +256,7 @@
     {{- $target := trim (printf "%v" .target) " " -}}
     {{- $type := trim (printf "%v" .type) " " -}}
     {{- if and (index ($scratch.Get "nodeById") $source) (index ($scratch.Get "nodeById") $target) (ne $type "") -}}
-      {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $source "target" $target "type" $type "weight" (default 1.0 .weight) "label" (default $type .label) "ignoreRemove" true) -}}
+      {{- partial "java_graph/add_edge.html" (dict "scratch" $scratch "source" $source "target" $target "type" $type "weight" (default 1.0 .weight) "label" (default $type .label) "reason" (default (default $type .label) .reason) "ignoreRemove" true) -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

@@ -17,6 +17,21 @@
     <p>{{ .Description | default "Explore the 100DaysOfJava journey as a connected knowledge graph. Zoom, search, filter by topic, and jump straight into any post." }}</p>
   </header>
 
+  <section class="java-graph-explainer" aria-label="How to read this graph">
+    <article>
+      <h2>What this is</h2>
+      <p>Each node is one 100DaysOfJava post. The graph is an index for browsing the series by concept, not a replacement for reading the posts in order.</p>
+    </article>
+    <article>
+      <h2>Why edges exist</h2>
+      <p><strong>Sequence</strong> connects consecutive days. <strong>References</strong> come from links between posts. <strong>Topic links</strong> connect nearby posts with the same top-level topic.</p>
+    </article>
+    <article>
+      <h2>Source data</h2>
+      <p>The data is generated from the blog posts, their front matter topics/categories, and Markdown links. The fallback list below is the source post set.</p>
+    </article>
+  </section>
+
   <section class="java-graph-toolbar" aria-label="Graph controls">
     <label class="java-graph-control java-graph-control-search">
       <span>Search</span>
@@ -73,9 +88,9 @@
     </div>
 
     <aside id="java-graph-inspector" class="java-graph-inspector" aria-live="polite">
-      <h2 id="java-graph-inspector-title">Hover a node</h2>
+      <h2 id="java-graph-inspector-title">Select a node</h2>
       <p id="java-graph-inspector-meta">Topic, day, and related context will appear here.</p>
-      <p id="java-graph-inspector-summary">Use the controls to focus by topic/day and inspect relationships.</p>
+      <p id="java-graph-inspector-summary">Tap or click a node to inspect it, then use Open post to read the article.</p>
       <a id="java-graph-open-link" class="java-graph-open-link" href="#" hidden>Open post</a>
       <section>
         <h3>Related posts</h3>
@@ -84,6 +99,16 @@
         </ul>
       </section>
     </aside>
+  </section>
+
+  <section class="java-graph-topic-index" aria-labelledby="java-graph-topic-index-title">
+    <div class="java-graph-section-heading">
+      <h2 id="java-graph-topic-index-title">Explore by topic</h2>
+      <p>Same source data as the graph, grouped for quick scanning and mobile browsing.</p>
+    </div>
+    <div id="java-graph-topic-index-list" class="java-graph-topic-index-list">
+      <p>Loading topic index...</p>
+    </div>
   </section>
 
   <section id="java-graph-fallback" class="java-graph-fallback">

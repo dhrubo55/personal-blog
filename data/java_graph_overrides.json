@@ -15,5 +15,14 @@
     }
   ],
   "removeEdges": [],
-  "addEdges": []
+  "addEdges": [
+    {
+      "source": "post-day-69-unlocking-java-performance-secrets-harnessing-the-power-of-jmh-microbenchmarking",
+      "target": "post-day-6-for-vs-foreach-performance",
+      "type": "reference",
+      "weight": 1.4,
+      "label": "Benchmark correction",
+      "reason": "Day 69 explains JMH, which is the right tool for validating the Day 6 performance question."
+    }
+  ]
 }

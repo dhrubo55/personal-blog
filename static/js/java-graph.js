@@ -20,6 +20,7 @@
   const hoverEl = document.getElementById("java-graph-hover");
   const fallbackEl = document.getElementById("java-graph-fallback");
   const canvasEl = document.getElementById("java-graph-canvas");
+  const topicIndexListEl = document.getElementById("java-graph-topic-index-list");
 
   const inspectorTitleEl = document.getElementById("java-graph-inspector-title");
   const inspectorMetaEl = document.getElementById("java-graph-inspector-meta");
@@ -80,6 +81,12 @@
     .replace(/\"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
+  const decodeHtmlEntities = (value) => {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = String(value || "");
+    return textarea.value;
+  };
+
   const setStatus = (message) => {
     if (statusEl) {
       statusEl.textContent = message;
@@ -94,11 +101,11 @@
     return map;
   };
 
-  const addAdjacency = (source, target, type) => {
+  const addAdjacency = (source, target, type, reason) => {
     if (!adjacency.has(source)) {
       adjacency.set(source, []);
     }
-    adjacency.get(source).push({ target, type });
+    adjacency.get(source).push({ target, type, reason });
   };
 
   const normalizeModel = (raw) => {
@@ -107,13 +114,13 @@
 
     const normalizedNodes = nodes.map((node) => ({
       id: String(node.id || ""),
-      title: String(node.title || "Untitled"),
+      title: decodeHtmlEntities(node.title || "Untitled"),
       url: String(node.url || ""),
       day: Number(node.day || 0),
       date: String(node.date || ""),
-      topic: String(node.topic || "Core Java"),
-      categories: Array.isArray(node.categories) ? node.categories.map((item) => String(item)) : [],
-      summary: String(node.summary || "No summary available."),
+      topic: decodeHtmlEntities(node.topic || "Core Java"),
+      categories: Array.isArray(node.categories) ? node.categories.map((item) => decodeHtmlEntities(item)) : [],
+      summary: decodeHtmlEntities(node.summary || "No summary available."),
       importance: Number(node.importance || 1)
     })).filter((node) => node.id);
 
@@ -125,15 +132,16 @@
       target: String(edge.target || ""),
       type: String(edge.type || "reference"),
       weight: Number(edge.weight || 1),
-      label: String(edge.label || edge.type || "reference")
+      label: decodeHtmlEntities(edge.label || edge.type || "reference"),
+      reason: decodeHtmlEntities(edge.reason || edge.label || edge.type || "reference")
     })).filter((edge) => nodeById.has(edge.source) && nodeById.has(edge.target) && edge.source !== edge.target);
 
     const degree = new Map();
     normalizedEdges.forEach((edge) => {
       degree.set(edge.source, (degree.get(edge.source) || 0) + 1);
       degree.set(edge.target, (degree.get(edge.target) || 0) + 1);
-      addAdjacency(edge.source, edge.target, edge.type);
-      addAdjacency(edge.target, edge.source, edge.type);
+      addAdjacency(edge.source, edge.target, edge.type, edge.reason);
+      addAdjacency(edge.target, edge.source, edge.type, edge.reason);
     });
 
     normalizedNodes.forEach((node) => {
@@ -189,7 +197,8 @@
         target: edge.target,
         type: edge.type,
         weight: edge.weight,
-        label: edge.label
+        label: edge.label,
+        reason: edge.reason
       }
     }))
   });
@@ -258,6 +267,18 @@
     });
 
     return { nodes, edges };
+  };
+
+  const selectPostNode = (node) => {
+    if (!node || !cy) {
+      return;
+    }
+    cy.elements().unselect();
+    node.select();
+    updateInspector(node.data("id"));
+    if (hoverEl) {
+      hoverEl.classList.remove("is-visible");
+    }
   };
 
   const createCy = (elements) => {
@@ -401,10 +422,7 @@
     });
 
     cy.on("tap", "node[kind = 'post']", (event) => {
-      const data = event.target.data();
-      if (data.url) {
-        window.location.href = data.url;
-      }
+      selectPostNode(event.target);
     });
 
     cy.on("tap", "node[kind = 'topic-hub']", (event) => {
@@ -488,7 +506,7 @@
       .slice(0, 10);
 
     relatedListEl.innerHTML = ranked
-      .map((item) => `<li><a href="${escapeHtml(item.node.url)}">${escapeHtml(item.node.title)}</a> <small>(${escapeHtml(item.type)})</small></li>`)
+      .map((item) => `<li><a href="${escapeHtml(item.node.url)}">${escapeHtml(item.node.title)}</a> <small>${escapeHtml(item.type)}: ${escapeHtml(item.reason || item.type)}</small></li>`)
       .join("");
   };
 
@@ -712,6 +730,31 @@
     }
   };
 
+  const renderTopicIndex = () => {
+    if (!topicIndexListEl || !model) {
+      return;
+    }
+
+    const groups = new Map();
+    model.nodes.forEach((node) => {
+      if (!groups.has(node.topic)) {
+        groups.set(node.topic, []);
+      }
+      groups.get(node.topic).push(node);
+    });
+
+    topicIndexListEl.innerHTML = [...groups.entries()]
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([topic, nodes]) => {
+        const links = nodes
+          .sort((a, b) => (a.day || 0) - (b.day || 0))
+          .map((node) => `<li><a href="${escapeHtml(node.url)}">Day ${escapeHtml(node.day || "-")}: ${escapeHtml(node.title.replace(/^Day\s+\d+\s*:?\s*/i, ""))}</a></li>`)
+          .join("");
+        return `<article><h3>${escapeHtml(topic)} <span>${nodes.length}</span></h3><ul>${links}</ul></article>`;
+      })
+      .join("");
+  };
+
   const hydrateTopicFilter = () => {
     if (!topicFilterEl) {
       return;
@@ -762,6 +805,7 @@
 
       hydrateTopicFilter();
       setupDayControls();
+      renderTopicIndex();
       bindUi();
       updateClusterToggleText();
       renderGraph();
