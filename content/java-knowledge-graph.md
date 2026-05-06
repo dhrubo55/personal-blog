@@ -1,5 +1,5 @@
 +++
-title = "100DaysOfJava Knowledge Graph"
+title = "100DaysOfJava showing in Graph"
 description = "A map of 100 Java learning posts, connected by reading order, internal references, and shared topics."
 type = "knowledge-graph"
 url = "/java/100daysofjava/graph/"
