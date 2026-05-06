@@ -1,8 +1,13 @@
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 {{- $pages := .RegularPages -}}
+{{- if .IsHome -}}
+  {{- $pages = .Site.RegularPages -}}
+{{- end -}}
 {{- if not $pages -}}
   {{- $pages = .Pages -}}
 {{- end -}}
+{{- $pages = where $pages "Title" "!=" "" -}}
+{{- $pages = where $pages "Date.IsZero" false -}}
 {{- $atom := .OutputFormats.Get "ATOM" -}}
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}{{ end }}</title>

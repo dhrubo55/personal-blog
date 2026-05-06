@@ -1,0 +1,33 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+{{- $pages := .RegularPages -}}
+{{- if .IsHome -}}
+  {{- $pages = .Site.RegularPages -}}
+{{- end -}}
+{{- if not $pages -}}
+  {{- $pages = .Pages -}}
+{{- end -}}
+{{- $pages = where $pages "Title" "!=" "" -}}
+{{- $pages = where $pages "Date.IsZero" false -}}
+{{- $rss := .OutputFormats.Get "RSS" -}}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} - {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}</description>
+    {{- with $rss }}
+    <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml" />
+    {{- end }}
+    <generator>Hugo</generator>
+    <language>{{ .Site.LanguageCode }}</language>
+    <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ .Summary | html }}</description>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

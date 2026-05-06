@@ -11,6 +11,10 @@ buildExpired: false
 minify:
   disableXML: true
   minifyOutput: true
+mediaTypes:
+  application/atom+xml:
+    suffixes:
+    - xml
 outputFormats:
   ATOM:
     mediaType: application/atom+xml
