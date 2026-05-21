@@ -96,6 +96,46 @@
     color: var(--primary);
 }
 
+.support-button-reset {
+    font: inherit;
+    cursor: pointer;
+}
+
+.support-tabs {
+    display: inline-flex;
+    gap: 6px;
+    margin: 0 0 18px;
+    padding: 5px;
+    border: 1px solid var(--support-card-border);
+    border-radius: calc(var(--radius) + 4px);
+    background: color-mix(in srgb, var(--entry), var(--support-accent) 5%);
+}
+
+.support-tab {
+    min-height: 38px;
+    padding: 8px 15px;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--secondary);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.support-tab-active {
+    background: var(--entry);
+    color: var(--support-accent);
+    box-shadow: 0 6px 18px rgba(15, 118, 110, 0.12);
+}
+
+.support-panel[hidden],
+.support-qr-overlay[hidden],
+.support-toast[hidden] {
+    display: none;
+}
+
 .support-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -307,9 +347,76 @@
     box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
 }
 
+.support-qr-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 19;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0, 0, 0, 0.52);
+}
+
+.support-qr-modal {
+    position: relative;
+    width: min(330px, 100%);
+    padding: 24px;
+    border: 1px solid var(--support-card-border);
+    border-radius: calc(var(--radius) + 6px);
+    background: var(--entry);
+    text-align: center;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.support-qr-heading {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 0;
+}
+
+.support-qr-modal img {
+    display: block;
+    width: min(230px, 100%);
+    height: auto;
+    margin: 16px auto 0;
+    padding: 8px;
+    border: 1px solid var(--support-card-border);
+    border-radius: var(--radius);
+    background: #fff;
+}
+
+.support-qr-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--support-card-border);
+    border-radius: 999px;
+    background: var(--theme);
+    color: var(--secondary);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    line-height: 1;
+}
+
 @media (max-width: 720px) {
     .support-hero {
         padding: 22px;
+    }
+
+    .support-tabs {
+        display: flex;
+        width: 100%;
+    }
+
+    .support-tab {
+        flex: 1;
     }
 
     .support-grid {
