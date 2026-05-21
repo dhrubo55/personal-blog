@@ -17,9 +17,10 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2.5.0
         with:
-          hugo-version: "0.82.1"
-      - name: Generate Static Content
-        run: hugo --minify
+          hugo-version: "0.146.7"
+      - name: Verify and generate static content
+        shell: pwsh
+        run: ./scripts/verify.ps1
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2.2
         with:

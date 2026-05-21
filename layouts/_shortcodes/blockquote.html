@@ -1,0 +1,34 @@
+{{- $author := false -}}
+{{- $source := false -}}
+{{- $link := false -}}
+{{- $title := false -}}
+
+{{- if .IsNamedParams -}}
+  {{- $author = .Get "author" -}}
+  {{- $source = .Get "source" -}}
+  {{- $link = .Get "link" -}}
+  {{- $title = .Get "title" -}}
+{{- end -}}
+
+{{- if and (not $title) $link -}}
+  {{- $title = replaceRE "^https?://(www\\.)?" "" $link -}}
+  {{- if gt (len $title) 32 -}}
+    {{- $title = printf "%s..." (substr $title 0 32) -}}
+  {{- end -}}
+{{- end -}}
+
+<blockquote>
+  <p>{{ .Inner | markdownify }}</p>
+  {{- if or $author $source $link $title }}
+  <footer>
+    {{- with $author }}<strong>{{ . }}</strong>{{ end -}}
+    {{- with $source }}
+    <cite>{{ . }}</cite>
+    {{- else with $link }}
+    <cite><a href="{{ . }}" title="{{ . }}">{{ $title }}</a></cite>
+    {{- else with $title }}
+    <cite>{{ . }}</cite>
+    {{- end }}
+  </footer>
+  {{- end }}
+</blockquote>
