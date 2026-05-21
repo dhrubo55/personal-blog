@@ -105,10 +105,14 @@ menu:
     name: Resume
     url: resume.pdf
     weight: 4
+  - identifier: support
+    name: Support
+    url: support/
+    weight: 5
   - name: RSS
     identifier: rss
     url: index.xml
-    weight: 5
+    weight: 6
 #   - identifier: projects
 #     name: Projects
 #     url: projects/
