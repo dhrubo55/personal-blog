@@ -1,10 +1,7 @@
 # Build Settings
 [build]
-  command = "hugo version && hugo --gc --minify --enableGitInfo"
+  command = "curl -L https://github.com/gohugoio/hugo/releases/download/v0.146.7/hugo_extended_0.146.7_linux-amd64.tar.gz -o /tmp/hugo.tar.gz && mkdir -p /tmp/hugo /tmp/hugo-cache && tar -xzf /tmp/hugo.tar.gz -C /tmp/hugo && /tmp/hugo/hugo version && /tmp/hugo/hugo --gc --minify --enableGitInfo --cacheDir /tmp/hugo-cache"
   publish = "public"
-
-[build.environment]
-  HUGO_VERSION = "0.146.7"
 
 # Post Processing Settings
 [build.processing]
