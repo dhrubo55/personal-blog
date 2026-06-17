@@ -164,7 +164,7 @@ With everything said & done, do let me know if you enjoy reading these contents.
 
 <!-- Reference Links -->
 <!-- * Assets -->
-[Infographic]: https://res.cloudinary.com/jarmos/image/upload/v1613158461/static-site-generator-review-infographic_qwrw0z.jpg  "Choosing the Right Static Site Generator"
+[Infographic]: covers/static-site-generators-review.png  "Choosing the Right Static Site Generator"
 [How to deploy a Gatsby Static Website to Google Firebase]: https://youtu.be/Lk9Cj8a6QJg
 <!-- * Landing Pages -->
 [Jamstack list]: https://www.jamstack.com/generators/
@@ -192,7 +192,7 @@ With everything said & done, do let me know if you enjoy reading these contents.
 [Go template]: https://golang.org/pkg/text/template/
 [SSG]: https://www.cloudflare.com/learning/performance/static-site-generator/
 <!-- * Personal Information -->
-[My Newsletter]: https://jarmos.ck.page/newsletter
-[My Twitter]: https://twitter.com/Jarmosan
-[My Blog]: https://jarmos.netlify.app/
-[My Medium]: https://jarmos.medium.com/
+[My Newsletter]: /
+[My Twitter]: https://twitter.com/dhrubo555
+[My Blog]: https://mohibulsblog.netlify.app/
+[My Medium]: https://medium.com/

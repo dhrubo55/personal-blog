@@ -161,7 +161,6 @@ Anyway, enough of my justifications & let’s cut the chase. This is the configu
       "theme": "dark"
   }
 {{< / highlight >}}
-<script src="https://gist.github.com/Jarmos-san/6464fc65ac3c81f94f855fc76190c911.js"></script>
 
 Anyway, enough of my justifications & let’s cut the chase. This is the configuration I use, feel free to copy & use them.
 
@@ -250,4 +249,4 @@ You can download the preview version to test experimental features. They’re av
 Once downloaded edit the config file by following the steps mentioned above. And you’re good to go! Do let me know how you’ve customized your Terminal. Drop me a tweet & don’t forget to share the config file for others to take inspiration from.
 
 Found this article helpful? Do let me know so I can personalize the next work-in-progress article on customizing PowerShell the prompt. I’ll also share more details on how I set it up along with Neovim on my Windows machine.
-So, if you want to read that as well, then subscribe to my newsletter or follow me on [Twitter](https://twitter.com/Jarmosan) whichever feels more convenient.
+So, if you want to read that as well, follow me on [Twitter](https://twitter.com/dhrubo555).

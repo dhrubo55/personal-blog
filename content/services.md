@@ -53,7 +53,7 @@ For any queries, contact me through the provided [contact details](../about/#con
 [PowerShell]: https://docs.microsoft.com/en-us/powershell/
 [Bash]: https://www.gnu.org/software/bash/
 <!-- * Miscellaneous -->
-[GitHub]: https://github.com/Jarmos-san
-[Kaggle]: https://www.kaggle.com/jarmos
+[GitHub]: https://github.com/dhrubo55
+[Kaggle]: https://www.kaggle.com/
 <!-- * Personal -->
-[Email]: mailto:somraj.mle@gmail.com
+[Email]: mailto:mohibulhassan100@gmail.com

@@ -10,8 +10,7 @@ description: Not sure if a specific business need of your company requires a Dat
 cover:
   image: covers/scientist-vs-engineer.gif
   alt: A GIF image showcasing a versus between an engineer & a scientist
-  caption: 'The Data Scientist VS The ML Engineer: A Showdown | Source -- Somraj Saha
-    (Author)'
+  caption: 'The Data Scientist VS The ML Engineer: A Showdown'
   relative: false
 showtoc: true
 draft: true
@@ -21,7 +20,7 @@ Some time ago, a client approached me with a project proposal. He wanted me to u
 
 A couple of emails later, it didn’t take me long to realize his requirements. His target audience for the article were individuals in a non-engineering field. Perhaps, marketing (my assumption) or maybe analysts.
 
-It made me wonder, are my credentials on [LinkedIn](https://www.linkedin.com/in/jarmos/), [GitHub](https://github.com/jarmos-san) or heck, even [Twitter](https://twitter.com/Jarmosan) not visible to anyone? The fact that the prospect reached out to me with a data science task instead a software engineering job, points out to something. The issue of ambiguity in the roles of a Data Science/Machine Learning practitioner.
+It made me wonder, are my credentials on [LinkedIn](https://www.linkedin.com/in/mohibulhassan/), [GitHub](https://github.com/dhrubo55) or heck, even [Twitter](https://twitter.com/dhrubo555) not visible to anyone? The fact that the prospect reached out to me with a data science task instead a software engineering job, points out to something. The issue of ambiguity in the roles of a Data Science/Machine Learning practitioner.
 
 The responsibilities of a Data Scientist and an ML Engineer are often interrelated. Depending on the size of the company, it wouldn't be surprising to see a Data Scientist working as "the Engineer". In other words, startups, especially those in the early-stages, resort to hiring Data Scientists as the Swiss knife for all their analytics, data science modelling, productionizing ML models & other needs. Those were some common roles to name a few.
 
@@ -85,7 +84,7 @@ Weird, I know, but happens more often than you would realize. Don’t believe me
 
 With that said, let's take a look at some of the job descriptions for a ML project. Below is a screenshot I picked up from one such job ad posting.
 
-![Screenshot of an ML job posting](https://github.com/Jarmos-san/blog/blob/master/content/static/images/ml-job-screenshot.png?raw=true)
+Screenshot of an ML job posting.
 
 ([Screenshot 1](https://in.indeed.com/jobs?q=Machine%20Learning%20Engineer&advn=9253950511738984&vjk=f5ecb2c0b2ec054c) as on 23rd November 2020)
 
@@ -95,7 +94,7 @@ But on the flip side, job descriptions of Data Scientists are often vague & kind
 
 Check it out for yourself.
 
-![Screenshot of a Data Science job posting](https://github.com/Jarmos-san/blog/blob/master/content/static/images/data-science-job-posting.png?raw=true)
+Screenshot of a Data Science job posting.
 
 ([Sreenshot 2](https://in.indeed.com/jobs?q=data%20scientist&vjk=fb0f54d442bf42c4) as on 23rd November 2020)
 

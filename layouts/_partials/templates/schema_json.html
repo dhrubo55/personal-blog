@@ -1,0 +1,36 @@
+{{- $authorName := site.Params.author | default site.Title -}}
+{{- $sameAs := slice -}}
+{{- with site.Params.schema.sameAs -}}
+  {{- range . }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- else -}}
+  {{- range site.Params.socialIcons }}{{ $sameAs = $sameAs | append .url }}{{ end -}}
+{{- end -}}
+{{- $image := (index site.Params.images 0) | default (site.Params.assets.favicon | default "favicon.ico") | absURL -}}
+{{- $person := dict "@type" "Person" "name" $authorName "url" site.Home.Permalink "sameAs" $sameAs -}}
+{{- with site.Params.schema.jobTitle }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end -}}
+{{- with site.Params.schema.knowsAbout }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end -}}
+
+{{- if .IsHome }}
+{{- $schema := merge (dict "@context" "https://schema.org" "image" $image "description" (site.Params.description | plainify) "mainEntityOfPage" site.Home.Permalink) $person -}}
+<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
+{{- else if (or .IsPage .IsSection) }}
+{{- $crumbs := slice -}}
+{{- range .Ancestors.Reverse -}}
+  {{- if not .IsHome -}}
+    {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" .Title "item" .Permalink) -}}
+  {{- end -}}
+{{- end -}}
+{{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" .Title "item" .Permalink) -}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs | jsonify | safeJS }}</script>
+
+{{- if .IsPage }}
+{{- $pageType := cond (eq .Section "posts") "BlogPosting" "WebPage" -}}
+{{- $keywords := .Params.keywords | default .Params.tags | default .Params.category -}}
+{{- $page := dict "@context" "https://schema.org" "@type" $pageType "headline" (.Title | plainify) "name" (.Title | plainify) "description" ((.Description | default .Summary) | plainify) "url" .Permalink "inLanguage" (.Language.Lang | default "en-us") "author" $person "publisher" $person "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink) -}}
+{{- with $keywords }}{{ $page = merge $page (dict "keywords" .) }}{{ end -}}
+{{- with .PublishDate }}{{ $page = merge $page (dict "datePublished" (.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+{{- with .Lastmod }}{{ $page = merge $page (dict "dateModified" (.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+{{- if eq $pageType "BlogPosting" }}{{ $page = merge $page (dict "articleBody" (.Plain | plainify)) }}{{ end -}}
+<script type="application/ld+json">{{ $page | jsonify | safeJS }}</script>
+{{- end }}
+{{- end -}}

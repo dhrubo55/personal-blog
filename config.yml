@@ -1,6 +1,7 @@
 baseURL: "https://mohibulsblog.netlify.app"
 languageCode: "en-us"
 title: "Mohibul Hassan"
+copyright: "© 2026 Mohibul Hassan Chowdhury. All rights reserved."
 theme: "hugo-PaperMod"
 pagination:
   pagerSize: 5
@@ -16,25 +17,55 @@ mediaTypes:
   application/atom+xml:
     suffixes:
     - xml
+  text/plain:
+    suffixes:
+    - txt
 outputFormats:
   ATOM:
     mediaType: application/atom+xml
     baseName: atom
     isPlainText: false
     noUgly: true
+  LLMS:
+    mediaType: text/plain
+    baseName: llms
+    isPlainText: true
+    noUgly: true
+    notAlternative: true
 outputs:
-  home: [HTML, RSS, ATOM]
+  home: [HTML, RSS, ATOM, LLMS]
   section: [HTML, RSS, ATOM]
   taxonomy: [HTML, RSS, ATOM]
   term: [HTML, RSS, ATOM]
 params:
   env: production
   title: Mohibul Hassan
+  author: Mohibul Hassan Chowdhury
   description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast"
+  keywords:
+  - Mohibul Hassan Chowdhury
+  - software engineering
+  - Java
+  - Spring Boot
+  - artificial intelligence
+  - technical writing
   images: ['profile-pic.jpg']
   ShowReadingTime: true
   ShowCodeCopyButtons: true
   pygmentsUseClasses: true
+  schema:
+    publisherType: Person
+    jobTitle: Software Engineer
+    knowsAbout:
+    - Java
+    - Spring Boot
+    - software engineering
+    - artificial intelligence
+    - technical writing
+    sameAs:
+    - https://twitter.com/dhrubo555
+    - https://github.com/dhrubo55
+    - https://www.linkedin.com/in/mohibulhassan/
 
   defaultTheme: auto
   disableThemeToggle: false
@@ -70,8 +101,6 @@ params:
     url: https://github.com/dhrubo55
   - name: medium
     url: https://medium.com/
-      # - name: instagram
-      # url: https://www.instagram.com/jarmos.san/
   - name: linkedin
     url: https://www.linkedin.com/in/mohibulhassan
       # - name: facebook
@@ -86,7 +115,7 @@ params:
     hiddenInSingle: false
     linkFullImages: true
   footer:
-    text: 'This site is [open-sourced](https://github.com/dhrubo55/blog) with love · [Terms of Service](/terms-and-conditions/) · [Privacy Policy](/privacy-policy/) · Articles are licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)'
+    text: '[Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
 menu:
   main:
   - name: About
@@ -126,9 +155,6 @@ menu:
   #   identifier: collaborate
   #   url: collaborations/
   #   weight: 5
-  # - name: Newsletter
-  #   identifier: newsletter
-  #   url: https://jarmos.ck.page/newsletter
   #   weight: 6
 markup:
   highlight:

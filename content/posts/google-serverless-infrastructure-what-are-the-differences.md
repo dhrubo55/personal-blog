@@ -8,7 +8,7 @@ summary: Learn about GCP & it's serverless computing infrastructure. Learn when 
 description: Learn about GCP & it's serverless computing infrastructure. Learn when
   to use App Engine, Cloud Functions or Cloud Run on Google Cloud Platform.
 cover:
-  image: https://res.cloudinary.com/jarmos/image/upload/v1619527745/google-serverless-ftw_rn1gi4.jpg
+  image: ""
   alt: Should you choose Digital Ocean over Google Cloud Platform?
   caption: Who needs Digital Ocean when you got Google Serverless services?
   relative: false

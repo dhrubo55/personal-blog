@@ -1,0 +1,40 @@
+{{- $description := site.Params.description | default site.Title -}}
+# {{ site.Title }}
+
+> {{ $description | plainify }}
+
+Author: {{ site.Params.author | default site.Title }}
+Rights: Original writing by {{ site.Params.author | default site.Title }}. All rights reserved unless a page says otherwise.
+Canonical site: {{ site.Home.Permalink }}
+Sitemap: {{ "sitemap.xml" | absURL }}
+RSS: {{ "index.xml" | absURL }}
+Atom: {{ "atom.xml" | absURL }}
+
+## Primary Pages
+
+{{- range where site.RegularPages "Section" "" }}
+{{- if and .Title (not .Params.searchHidden) (not .Params.robotsNoIndex) (not .Draft) }}
+- [{{ .Title }}]({{ .Permalink }}){{ with (.Description | default .Summary) }} - {{ . | plainify | truncate 180 }}{{ end }}
+{{- end }}
+{{- end }}
+
+## Articles
+
+{{- range site.RegularPages.ByDate.Reverse }}
+{{- if and .Title (eq .Section "posts") (not .Params.searchHidden) (not .Params.robotsNoIndex) }}
+- [{{ .Title }}]({{ .Permalink }}){{ with .Date }} (published {{ .Format "2006-01-02" }}){{ end }}{{ with (.Description | default .Summary) }} - {{ . | plainify | truncate 180 }}{{ end }}
+{{- end }}
+{{- end }}
+
+## Other Collections
+
+{{- range site.Sections }}
+{{- if ne .Section "posts" }}
+### {{ .Title }}
+{{- range .RegularPages.ByTitle }}
+{{- if and .Title (not .Params.searchHidden) (not .Params.robotsNoIndex) }}
+- [{{ .Title }}]({{ .Permalink }}){{ with (.Description | default .Summary) }} - {{ . | plainify | truncate 180 }}{{ end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
