@@ -1,67 +1,43 @@
 ---
-title: About Me
-url: "/about"
+title: About Mohibul Hassan Chowdhury
+url: "/about/"
 hidemeta: true
 disableShare: true
-summary: About Mohibul Hassan. This section details what he does & everything else
-  you might want to know about him.
-
+summary: Senior Software Engineer II working with Java, distributed systems, production AI, and reliability.
 ---
-Hi there! :wave: I am Mohibul Hassan Chowdhury.
 
-I work as a Software Engineer for a living. I've been fortunate enough to be able to work with some amazing folks over the past couple of years. And with their help, I garnered 5+ years of experience working on real business issues
+# About Mohibul Hassan Chowdhury
 
-## Technology Stack
+I'm a Senior Software Engineer II with 7+ years of experience building backend systems for US and European clients. My work centers on Java, distributed systems, production AI, and reliability.
 
-Following are the list of technologies I'm most familiar with:
+I like the part of engineering where a tidy abstraction meets an untidy production system. That has led me to work on call transcription and conversation intelligence, database migrations, payment systems, and failures that cross Java services, Erlang state machines, SQL, and messaging workflows.
 
-| Services              |                     Technology                     |
-| :-------------------- | :------------------------------------------------: |
-| Programming Languages |                [Java][Java],[JS][JS]               |
-| Backend               |              [Springboot][Springboot]              |
-| Hosting               |     [AWS][Aws] - [Google Cloud Platform][GCP]      |
-| Frontend              |           [Vue][Vue] - [Nuxt][Nuxt]                |
-| Shell Scripting       |      [PowerShell][PowerShell] - [Bash][Bash]       |
-| Miscellaneous         |                 [GitHub][GitHub]                   |
+## Work I can discuss publicly
 
+- I helped architect and ship call transcription and conversation-intelligence workflows using Google Vertex AI and Gemini.
+- I led a database cleanup after analysis of approximately 68 million records and cross-system dependencies. The migration removed 8 write triggers and 4 unused tables.
+- I contribute technical writing through Baeldung and maintain the 100DaysOfJava archive and Java Learning Atlas.
 
+Read the [case studies](/case-studies/) for scope, evidence, and limitations.
 
-Besides programming, I'm also an amateur Technical Writer. My [blog](../blog/) is one source where you can find most of my up-to-date written content. But, often there's a book or two I keep working on. If you would like to stay updated on their progress, you might want to follow me on Twitter.
+## Career
 
-### Contact Me
+- **Cefalo, 2022 to present.** Senior Software Engineer II working across Java, Erlang, AI, telephony, databases, payments, and reliability.
+- **Brain Station 23, 2020 to 2022.** Software Engineer building Spring Boot APIs, tenant-aware authorization, Stripe billing, and healthcare-platform features.
+- **Welldev, 2019 to 2020.** Junior Software Engineer working with Spring Boot, PostgreSQL, Vue.js, Nuxt.js, Storybook, and Docker.
 
-Want to have a professional chat with me? Feel free to drop a DM! :smile:
+## Writing
 
-These are the platforms you can find me on:
+I write investigations that start with a concrete question, show the evidence, and state what the evidence cannot prove. Browse the [technical writing](/blog/) or use the [Java Learning Atlas](/java/100daysofjava/graph/) to follow the 100DaysOfJava series by topic.
 
-* Email: mohibulhassan100@gmail.com
-* Linkedin: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/ "https://www.linkedin.com/in/mohibulhassan/")
-* Twitter: [https://twitter.com/dhrubo555](https://twitter.com/dhrubo555 "https://twitter.com/dhrubo555")
+## Work and contact
 
-**Note**: I'm more active on Twitter, so you'll definitely want to DM me there.
+I welcome conversations about senior engineering roles, backend and AI architecture, reliability work, and focused consulting engagements.
 
-<!-- Reference Links -->  
-\[Twitter\]: https://twitter.com/dhrubo555  
-\[Linkedin\]: [https://www.linkedin.com/in/mohibulhassan/](https://www.linkedin.com/in/mohibulhassan/)  
-\[Email\]: mailto:mohibulhassan100@gmail.com  
-\[Github\]: https://github.com/dhrubo55  
-\[Blog Source Code\]: https://github.com/dhrubo55/personal-blog
+- [Download my resume](/resume.pdf)
+- [View my resume page](/resume/)
+- [Email me](mailto:mohibulhassan100@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/mohibulhassan/)
+- [GitHub](https://github.com/dhrubo55)
 
-<!-- * Programming Language -->
-[Java]: https://www.java.com/
-[JS]: https://www.javascript.com
-<!-- * Backend Services Tech -->
-[Springboot]: https://spring.io/projects/spring-boot
-<!-- * Machine Learning Libraries -->
-[TensorFlow]: https://www.tensorflow.org/
-[Sklearn]: https://scikit-learn.org
-<!-- * Cloud Platforms -->
-[AWS]: https://aws.amazon.com/
-[GCP]: https://cloud.google.com/
-<!-- * Dev Platforms -->
-[Vue]: https://vuejs.org
-[Nuxt]: https://nuxtjs.org
-<!-- * Shell Scripting -->
-[PowerShell]: https://docs.microsoft.com/en-us/powershell/
-[Bash]: https://www.gnu.org/software/bash/
-[Github]: https://www.github.com/dhrubo55
+{{< newsletter >}}

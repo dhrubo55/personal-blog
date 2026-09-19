@@ -1,5 +1,3 @@
-{{- if eq .Type "posts" }}
-<div class="form">
-  {{ partial "form.html" . }}
-</div>
-{{- end }}
+{{- if eq .Type "posts" -}}
+  {{- partial "newsletter_cta.html" . -}}
+{{- end -}}

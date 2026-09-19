@@ -109,6 +109,23 @@ body,
   margin-block: 2rem;
 }
 
+.newsletter-cta {
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  margin-block: 2rem;
+  padding: 1.4rem;
+}
+
+.newsletter-cta h2 {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.newsletter-cta p:not(.eyebrow) {
+  color: var(--secondary);
+  margin-bottom: 1.25rem;
+}
+
 @media (max-width: 600px) {
   .portfolio-intro { padding-block: 1.5rem; }
   .portfolio-intro h1 { font-size: clamp(2rem, 10vw, 3rem); }

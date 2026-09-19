@@ -52,6 +52,20 @@ Assert-FileContains $config 'name: Case studies' 'The Case studies menu item is 
 Assert-FileContains $config 'name: Newsletter' 'The Newsletter menu item is missing.'
 Assert-FileOmits $config '^\s*- name: RSS$' 'RSS remains in the primary menu.'
 
+$about = Join-Path $root 'content/about.md'
+$newsletter = Join-Path $root 'layouts/_partials/newsletter_cta.html'
+$newsletterShortcode = Join-Path $root 'layouts/_shortcodes/newsletter.html'
+$postHook = Join-Path $root 'layouts/_partials/extend_post_content.html'
+Assert-FileContains $about 'Senior Software Engineer II' 'The About page does not state the current role.'
+Assert-FileContains $about '7\+ years' 'The About page does not state current experience.'
+Assert-FileContains $about 'senior engineering roles' 'The About page does not name the work Mohibul welcomes.'
+Assert-FileOmits $about 'amateur Technical Writer' 'The About page still understates the writing work.'
+Assert-FileOmits $about '^\\\[Twitter\\\]:' 'Escaped reference definitions remain visible.'
+Assert-FileContains $newsletter 'chaoscodeclarity\.substack\.com/subscribe' 'The newsletter call to action has the wrong destination.'
+Assert-FileContains $newsletterShortcode 'partial "newsletter_cta\.html" \.Page' 'The About-page newsletter shortcode does not reuse the shared partial.'
+Assert-FileContains $postHook 'eq \.Type "posts"' 'The article hook does not limit the newsletter invitation to posts.'
+Assert-FileContains $postHook 'partial "newsletter_cta\.html"' 'Published posts do not include the newsletter invitation.'
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'
@@ -59,6 +73,17 @@ if (-not $SourceOnly) {
     Assert-FileOmits $homeHtml '/profile-pic\.jpg' 'Generated social metadata still points to the missing profile image.'
     $featuredCardCount = ([regex]::Matches((Get-Content -Raw -LiteralPath $homeHtml), 'class=(?:"featured-card"|featured-card)')).Count
     Assert-True ($featuredCardCount -eq 3) "Expected 3 featured cards, got $featuredCardCount."
+    $aboutHtml = Join-Path $PublicDir 'about/index.html'
+    $resumeHtml = Join-Path $PublicDir 'resume/index.html'
+    $postHtml = Join-Path $PublicDir 'posts/posts/java/100daysofjava/day99/index.html'
+    $homeNewsletterCount = ([regex]::Matches((Get-Content -Raw -LiteralPath $homeHtml), 'class=(?:"newsletter-cta"|newsletter-cta)')).Count
+    $aboutNewsletterCount = ([regex]::Matches((Get-Content -Raw -LiteralPath $aboutHtml), 'class=(?:"newsletter-cta"|newsletter-cta)')).Count
+    $postNewsletterCount = ([regex]::Matches((Get-Content -Raw -LiteralPath $postHtml), 'class=(?:"newsletter-cta"|newsletter-cta)')).Count
+    $resumeNewsletterCount = ([regex]::Matches((Get-Content -Raw -LiteralPath $resumeHtml), 'class=(?:"newsletter-cta"|newsletter-cta)')).Count
+    Assert-True ($homeNewsletterCount -eq 1) "Expected 1 homepage newsletter invitation, got $homeNewsletterCount."
+    Assert-True ($aboutNewsletterCount -eq 1) "Expected 1 About newsletter invitation, got $aboutNewsletterCount."
+    Assert-True ($postNewsletterCount -eq 1) "Expected 1 article newsletter invitation, got $postNewsletterCount."
+    Assert-True ($resumeNewsletterCount -eq 0) "Expected no resume newsletter invitation, got $resumeNewsletterCount."
 }
 
 Write-Host 'Blog improvement smoke test passed.'

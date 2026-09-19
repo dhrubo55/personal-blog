@@ -39,6 +39,8 @@
   </div>
 </section>
 
+{{ partial "newsletter_cta.html" . }}
+
 {{- with site.Params.socialIcons }}
 <div class="home-socials">{{ partial "social_icons.html" (dict "icons" .) }}</div>
 {{- end }}
