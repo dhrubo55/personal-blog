@@ -107,7 +107,7 @@ params:
     hiddenInSingle: false
     linkFullImages: true
   footer:
-    text: '[Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
+    text: '[Resume](/resume/) · [RSS](/index.xml) · [Support](/support/) · [Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
 menu:
   main:
   - name: Writing

@@ -66,6 +66,17 @@ Assert-FileContains $newsletterShortcode 'partial "newsletter_cta\.html" \.Page'
 Assert-FileContains $postHook 'eq \.Type "posts"' 'The article hook does not limit the newsletter invitation to posts.'
 Assert-FileContains $postHook 'partial "newsletter_cta\.html"' 'Published posts do not include the newsletter invitation.'
 
+$caseStudies = Join-Path $root 'content/projects.md'
+$resumePage = Join-Path $root 'content/resume.md'
+Assert-FileContains $caseStudies 'url: "/case-studies/"' 'Selected work does not use the case-studies route.'
+Assert-FileContains $caseStudies 'Production call intelligence' 'The call-intelligence case study is missing.'
+Assert-FileContains $caseStudies 'approximately 68 million records' 'The database evidence is missing or unqualified.'
+Assert-FileContains $caseStudies 'approximately 1\.8 million unnecessary writes per month' 'The write-reduction evidence is missing or unqualified.'
+Assert-FileContains $caseStudies 'estimated 50 to 100 GB' 'The storage estimate is missing its qualification.'
+Assert-FileContains $caseStudies 'Technical investigation' 'Day 99 is not labeled as a technical investigation.'
+Assert-FileContains $resumePage '\[Download the PDF\]\(/resume\.pdf\)' 'The HTML resume page does not link to the PDF.'
+Assert-FileContains $resumePage '\[Selected work\]\(/case-studies/\)' 'The HTML resume page does not link to selected work.'
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'
@@ -84,6 +95,9 @@ if (-not $SourceOnly) {
     Assert-True ($aboutNewsletterCount -eq 1) "Expected 1 About newsletter invitation, got $aboutNewsletterCount."
     Assert-True ($postNewsletterCount -eq 1) "Expected 1 article newsletter invitation, got $postNewsletterCount."
     Assert-True ($resumeNewsletterCount -eq 0) "Expected no resume newsletter invitation, got $resumeNewsletterCount."
+    Assert-True (Test-Path -LiteralPath (Join-Path $PublicDir 'case-studies/index.html')) 'Generated case-studies page is missing.'
+    Assert-True (Test-Path -LiteralPath (Join-Path $PublicDir 'projects/index.html')) 'Generated projects alias is missing.'
+    Assert-True (Test-Path -LiteralPath $resumeHtml) 'Generated resume page is missing.'
 }
 
 Write-Host 'Blog improvement smoke test passed.'
