@@ -77,6 +77,13 @@ Assert-FileContains $caseStudies 'Technical investigation' 'Day 99 is not labele
 Assert-FileContains $resumePage '\[Download the PDF\]\(/resume\.pdf\)' 'The HTML resume page does not link to the PDF.'
 Assert-FileContains $resumePage '\[Selected work\]\(/case-studies/\)' 'The HTML resume page does not link to selected work.'
 
+$resumeTex = Join-Path $root 'static/resume.tex'
+Assert-FileContains $resumeTex 'Senior Software Engineer II with 7\+ years' 'The resume summary is not current.'
+Assert-FileContains $resumeTex 'approximately 68M records' 'The current database evidence is missing.'
+Assert-FileContains $resumeTex 'approximately 1\.8M unnecessary writes/month' 'The current write-reduction evidence is missing.'
+Assert-FileContains $resumeTex 'revision-aware staleness' 'The conversation-intelligence work is missing.'
+Assert-FileContains $resumeTex 'subject-matter expert for telephony and production reliability' 'The reliability work is missing.'
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'
