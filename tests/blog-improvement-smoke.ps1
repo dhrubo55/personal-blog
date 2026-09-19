@@ -93,6 +93,14 @@ Assert-FileContains $redirects '^/day100/ /posts/posts/java/100daysofjava/day100
 Assert-FileContains $redirects '^/posts/mohibul-writing-guide/ /about/ 301$' 'The writing guide route is not redirected.'
 Assert-FileContains $redirects '^/projects/ /case-studies/ 301$' 'The Projects route is not redirected.'
 
+$atlasContent = Join-Path $root 'content/java-knowledge-graph.md'
+Assert-FileContains $atlasContent 'title = "Java Learning Atlas"' 'The atlas title is not reader-facing.'
+Assert-FileContains $atlasContent 'Debug a Java service' 'The Java debugging path is missing.'
+Assert-FileContains $atlasContent 'Understand concurrency' 'The concurrency path is missing.'
+Assert-FileContains $atlasContent 'Build reliable AI workflows' 'The AI workflow path is missing.'
+Assert-FileContains $atlasContent 'Day 100 retrospective' 'The retrospective distinction is missing.'
+Assert-FileContains $atlasContent 'Spliterator investigation' 'The Spliterator distinction is missing.'
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'
@@ -117,6 +125,16 @@ if (-not $SourceOnly) {
     $sitemap = Join-Path $PublicDir 'sitemap.xml'
     Assert-FileOmits $sitemap '<loc>https://mohibulsblog\.netlify\.app/day100/</loc>' 'The retired Day 100 page remains in the sitemap.'
     Assert-FileOmits $sitemap '<loc>https://mohibulsblog\.netlify\.app/posts/mohibul-writing-guide/</loc>' 'The writing guide remains in the sitemap.'
+
+    $atlasHtmlPath = Join-Path $PublicDir 'java/100daysofjava/graph/index.html'
+    $atlasJsonPath = Join-Path $PublicDir 'java/100daysofjava/graph/index.json'
+    Assert-True (Test-Path -LiteralPath $atlasHtmlPath) 'Generated atlas HTML is missing.'
+    Assert-True (Test-Path -LiteralPath $atlasJsonPath) 'Generated atlas JSON is missing.'
+    $atlasJson = Get-Content -Raw -LiteralPath $atlasJsonPath | ConvertFrom-Json
+    Assert-True ($atlasJson.meta.nodeCount -eq 101) "Expected 101 atlas nodes, got $($atlasJson.meta.nodeCount)."
+    Assert-True ($atlasJson.meta.edgeCount -eq 212) "Expected 212 atlas edges, got $($atlasJson.meta.edgeCount)."
+    Assert-True ($atlasJson.nodes.Count -eq 101) 'Atlas node metadata does not match the node array.'
+    Assert-True ($atlasJson.edges.Count -eq 212) 'Atlas edge metadata does not match the edge array.'
 
     $redirectOnlyPaths = @('/day100/', '/posts/mohibul-writing-guide/', '/projects/')
     Get-ChildItem -LiteralPath $PublicDir -Recurse -Filter '*.html' | ForEach-Object {
