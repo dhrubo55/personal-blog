@@ -7,6 +7,9 @@ slug = "/java/100DaysOfJava/day66"
 summary = "Understanding and finding the causes and types of memory leaks and tools and suggestions to fix them"
 topics = ["JVM & Performance"]
 title = "Day 66: Becoming a memory plumber; A tale of Memory Leak and how to find them ( part 1)"
+featured = true
+featuredOrder = 30
+seriesLabel = "Day 66 of 100DaysOfJava"
 [cover]
 alt = "day65"
 caption = "day65"

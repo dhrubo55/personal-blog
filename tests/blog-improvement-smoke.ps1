@@ -40,11 +40,25 @@ try {
     $bitmap.Dispose()
 }
 
+$homePartial = Join-Path $root 'layouts/_partials/home_info.html'
+$portfolioCss = Join-Path $root 'assets/css/extended/portfolio.css'
+Assert-FileContains $homePartial 'I build reliable backend and AI systems\.' 'The homepage positioning statement is missing.'
+Assert-FileContains $homePartial 'Read selected work' 'The selected-work action is missing.'
+Assert-FileContains $homePartial 'Start here' 'The homepage reading paths are missing.'
+Assert-FileContains $homePartial 'Params\.featured' 'The homepage does not read featured article metadata.'
+Assert-FileContains $portfolioCss '@media \(max-width: 600px\)' 'The portfolio styles do not define a mobile layout.'
+Assert-FileContains $config 'name: Writing' 'The Writing menu item is missing.'
+Assert-FileContains $config 'name: Case studies' 'The Case studies menu item is missing.'
+Assert-FileContains $config 'name: Newsletter' 'The Newsletter menu item is missing.'
+Assert-FileOmits $config '^\s*- name: RSS$' 'RSS remains in the primary menu.'
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'
     Assert-FileContains $homeHtml 'https://mohibulsblog\.netlify\.app/images/social/default\.png' 'Generated social metadata does not use the default card.'
     Assert-FileOmits $homeHtml '/profile-pic\.jpg' 'Generated social metadata still points to the missing profile image.'
+    $featuredCardCount = ([regex]::Matches((Get-Content -Raw -LiteralPath $homeHtml), 'class=(?:"featured-card"|featured-card)')).Count
+    Assert-True ($featuredCardCount -eq 3) "Expected 3 featured cards, got $featuredCardCount."
 }
 
 Write-Host 'Blog improvement smoke test passed.'
