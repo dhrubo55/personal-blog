@@ -16,7 +16,7 @@ image = ""
 relative = false
 +++
 
-> **Series Navigation:** [Part 1 (You are here)](#) • [Part 2: Core Synchronization](/posts/java/100DaysOfJava/day96) • [Part 3: Advanced Patterns](/posts/java/100DaysOfJava/day97)
+> **Series Navigation:** [Part 1 (You are here)](#) • [Part 2: Core Synchronization]({{< relref "posts/day96-part2.md" >}}) • [Part 3: Advanced Patterns]({{< relref "posts/day97-part3.md" >}})
 
 **"Concurrency is not parallelism. Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once."** - Rob Pike
 
@@ -1247,4 +1247,4 @@ We've covered the **foundation of Java concurrency**:
 
 ---
 
-**Next:** [Day 96 - Java Concurrency Toolkit Part 2: Core Synchronization Patterns](/posts/java/100DaysOfJava/day96)
+**Next:** [Day 96 - Java Concurrency Toolkit Part 2: Core Synchronization Patterns]({{< relref "posts/day96-part2.md" >}})

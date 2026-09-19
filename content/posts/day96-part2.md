@@ -16,11 +16,11 @@ image = ""
 relative = false
 +++
 
-> **Series Navigation:** [Part 1: Foundation & Execution](/posts/java/100DaysOfJava/day95) • [Part 2 (You are here)](#) • [Part 3: Advanced Patterns](/posts/java/100DaysOfJava/day97)
+> **Series Navigation:** [Part 1: Foundation & Execution]({{< relref "posts/day95-part1.md" >}}) • [Part 2 (You are here)](#) • [Part 3: Advanced Patterns]({{< relref "posts/day97-part3.md" >}})
 
 **"The art of concurrent programming lies not in making things parallel, but in coordinating parallel things gracefully."**
 
-In [Part 1 (Day 95)](/posts/java/100DaysOfJava/day95), we covered **foundation and execution patterns**: Executor, ExecutorService, ScheduledExecutorService, Future, CompletableFuture, and CountDownLatch. These tools execute tasks concurrently.
+In [Part 1 (Day 95)]({{< relref "posts/day95-part1.md" >}}), we covered **foundation and execution patterns**: Executor, ExecutorService, ScheduledExecutorService, Future, CompletableFuture, and CountDownLatch. These tools execute tasks concurrently.
 
 **Part 2** covers **core synchronization patterns**—the tools that coordinate threads and protect shared resources.
 
@@ -825,6 +825,6 @@ We've covered **4 fundamental synchronization tools**:
 
 ---
 
-**Previous:** [Day 95 - Java Concurrency Toolkit Part 1: Foundation & Execution Patterns](/posts/java/100DaysOfJava/day95)
+**Previous:** [Day 95 - Java Concurrency Toolkit Part 1: Foundation & Execution Patterns]({{< relref "posts/day95-part1.md" >}})
 
-**Next:** [Day 97 - Java Concurrency Toolkit Part 3: Advanced Patterns & Production Readiness](/posts/java/100DaysOfJava/day97)
+**Next:** [Day 97 - Java Concurrency Toolkit Part 3: Advanced Patterns & Production Readiness]({{< relref "posts/day97-part3.md" >}})

@@ -10,6 +10,10 @@ enableEmoji: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+ignoreFiles:
+  - 'content/day100\.md$'
+  - 'content/posts/day100\.md$'
+  - 'content/posts/mohibul-writing-guide\.md$'
 minify:
   disableXML: true
   minifyOutput: true

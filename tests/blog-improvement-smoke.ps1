@@ -84,6 +84,15 @@ Assert-FileContains $resumeTex 'approximately 1\.8M unnecessary writes/month' 'T
 Assert-FileContains $resumeTex 'revision-aware staleness' 'The conversation-intelligence work is missing.'
 Assert-FileContains $resumeTex 'subject-matter expert for telephony and production reliability' 'The reliability work is missing.'
 
+$redirects = Join-Path $root 'static/_redirects'
+Assert-FileContains $config "^ignoreFiles:$" 'The ignored source-file list is missing.'
+Assert-FileContains $config "^  - 'content/day100\\\.md\$'$" 'The root Day 100 page is not ignored.'
+Assert-FileContains $config "^  - 'content/posts/day100\\\.md\$'$" 'The user Day 100 draft is not ignored.'
+Assert-FileContains $config "^  - 'content/posts/mohibul-writing-guide\\\.md\$'$" 'The writing guide is not ignored.'
+Assert-FileContains $redirects '^/day100/ /posts/posts/java/100daysofjava/day100-capstone\.md/ 301$' 'The retired Day 100 route is not redirected.'
+Assert-FileContains $redirects '^/posts/mohibul-writing-guide/ /about/ 301$' 'The writing guide route is not redirected.'
+Assert-FileContains $redirects '^/projects/ /case-studies/ 301$' 'The Projects route is not redirected.'
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'
@@ -105,6 +114,27 @@ if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath (Join-Path $PublicDir 'case-studies/index.html')) 'Generated case-studies page is missing.'
     Assert-True (Test-Path -LiteralPath (Join-Path $PublicDir 'projects/index.html')) 'Generated projects alias is missing.'
     Assert-True (Test-Path -LiteralPath $resumeHtml) 'Generated resume page is missing.'
+    $sitemap = Join-Path $PublicDir 'sitemap.xml'
+    Assert-FileOmits $sitemap '<loc>https://mohibulsblog\.netlify\.app/day100/</loc>' 'The retired Day 100 page remains in the sitemap.'
+    Assert-FileOmits $sitemap '<loc>https://mohibulsblog\.netlify\.app/posts/mohibul-writing-guide/</loc>' 'The writing guide remains in the sitemap.'
+
+    $redirectOnlyPaths = @('/day100/', '/posts/mohibul-writing-guide/', '/projects/')
+    Get-ChildItem -LiteralPath $PublicDir -Recurse -Filter '*.html' | ForEach-Object {
+        $sourceFile = $_.FullName
+        $html = Get-Content -Raw -LiteralPath $sourceFile
+        foreach ($match in [regex]::Matches($html, 'href=["''](?<href>/[^"''#?]*)')) {
+            $href = $match.Groups['href'].Value
+            if ($href.StartsWith('//') -or $redirectOnlyPaths -contains $href) { continue }
+            if ($href -eq '/') {
+                $target = Join-Path $PublicDir 'index.html'
+            } elseif ($href.EndsWith('/')) {
+                $target = Join-Path $PublicDir (($href.TrimStart('/') -replace '/', [IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar + 'index.html')
+            } else {
+                $target = Join-Path $PublicDir ($href.TrimStart('/') -replace '/', [IO.Path]::DirectorySeparatorChar)
+            }
+            Assert-True (Test-Path -LiteralPath $target) "Broken internal link in $sourceFile`: $href"
+        }
+    }
 }
 
 Write-Host 'Blog improvement smoke test passed.'
