@@ -49,7 +49,7 @@ params:
   - Spring Boot
   - artificial intelligence
   - technical writing
-  images: ['profile-pic.jpg']
+  images: ['/images/social/default.png']
   ShowReadingTime: true
   ShowCodeCopyButtons: true
   pygmentsUseClasses: true
