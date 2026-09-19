@@ -8,7 +8,8 @@ TocOpen = false
 slug = "posts/java/100DaysOfJava/day100-capstone.md"
 summary = "This challenge started as a way to learn more Java. Over time, it became a way to follow confusion down to memory, coordination, performance, and failure modes."
 topics = ["JVM & Performance"]
-title = "Day 100: What 100 Days of Java Actually Changed in How I Think About Software"
+title = "What 100DaysOfJava changed in how I investigate systems"
+seriesLabel = "Day 100 retrospective"
 [cover]
 alt = "day100"
 caption = "day100"
@@ -16,11 +17,9 @@ image = ""
 relative = false
 +++
 
-Calling this a 100-day challenge without qualification would be a little dishonest.
+This was not a 100-day streak. The dates make that clear. Day 26 was published on September 30, 2021. Day 66 arrived on January 20, 2023. Day 77 followed on March 14, 2024, Day 91 on August 15, 2025, and Day 99 on February 13, 2026.
 
-The posts themselves does not support that story. Day 26 is dated September 30, 2021. Day 66 lands on January 20, 2023. Day 77 is March 14, 2024. Day 91 is August 15, 2025. Day 99 is February 13, 2026. It was a very long, research-heavy stretch. It stretched across years. I sometimes stopped writing and then came back to it, and kept finding that the questions had changed.
-
-I started it with a much smaller idea in mind. I thought this was about learning more about backend using java.
+I stopped and restarted several times. The questions changed with me. What began as a way to learn more Java became a record of how I investigate runtime behavior.
 
 At the beginning, that mostly meant learning more APIs, more features, more idioms, and more little utilities I could reach for later. Some of the early posts are exactly that. They are small, direct, and useful in a narrow way: retrying a method with `TimerTask`, emulating a Pair, converting an `Iterator` into a `Spliterator`, working through individual language features one by one.
 
@@ -97,8 +96,8 @@ This is not mastery. If anything, it has made me more aware of how much I still 
 
 That is also why [Chaos;Code;Clarity](https://chaoscodeclarity.substack.com/) my new newsletter where I will explore the chaotically beautiful world of Software Engineering and AI. This feels like a natural next step to me. Not because I am done with Java, and not because this challenge ended in some clean graduation. It feels natural because these posts was already moving there. The part I want to carry forward is the habit underneath it: `think, probe, measure, question the default story`, and `keep following the system until the behavior becomes a little less mysterious`.
 
-I started this trying to learn more Java. I am closing this challange by learning 
-- how deep the java ecosystem can be
-- how these deep abstractions create these modern api's
-- how to think about the systems behavior to determine what capabilites I have
-- how to think in systems
+I started this project to learn more Java. I am closing the numbered series with a better method: begin with a concrete question, inspect the system, measure what changes, and state what the evidence cannot prove.
+
+## Limitations
+
+The archive spans several years, JDK versions, and levels of rigor. Early posts are short learning notes, while later posts include larger experiments. Treat each article according to the versions, commands, and evidence it records. The series is a learning history, not one controlled study.

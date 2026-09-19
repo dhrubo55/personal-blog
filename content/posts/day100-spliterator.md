@@ -1,14 +1,15 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2025-12-24T00:00:00Z
-description = "I added .parallel() expecting near-linear speedup on 8 cores. I got 60% CPU utilization. Here's why the default spliterator gets load balancing wrong, and how a 50-line fix pushed it to 95%."
+description = "A recorded parallel file-processing experiment that compares growing and fixed batch sizes, with version context and limits on what the results establish."
 draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day100-spliterator"
-summary = "Parallel streams gave me 60% CPU utilization on 8 cores. I thought that was good. Then I discovered why the default spliterator creates massive load imbalance, and how a 50-line custom implementation cut processing time by 40%."
+summary = "Why one parallel file-processing run left CPU cores idle, how a fixed-batch Spliterator changed the result, and why the finding is tied to its runtime and workload."
 topics = ["JVM & Performance"]
-title = "Why Your Parallel Streams were Leaving CPU Cores Idle (And How to Fix It)"
+title = "Why parallel file processing left CPU cores idle"
+seriesLabel = "Day 100 Spliterator investigation"
 [cover]
 alt = "day100"
 caption = "day100"
@@ -16,9 +17,11 @@ image = ""
 relative = false
 +++
 
-I added `.parallel()` to my stream. Eight cores. Should be 8x faster, right?
+I added `.parallel()` to a file-processing stream and recorded 60% CPU utilization. Processing 100 million rows took 5.2 seconds in that run. A fixed-batch Spliterator reduced the measured time, which led me to inspect how the source divided work.
 
-Nope. 60% CPU utilization. Cores sitting idle. Processing 100 million rows took 5.2 seconds when it should've taken under 2.
+> **Version context.** The unknown-size splitting defect tracked as [JDK-8280915](https://bugs.openjdk.org/browse/JDK-8280915) was fixed in JDK 19. This article examines the runtime and workload recorded below. The measurements do not show that every current JDK or every parallel stream has the historical defect.
+
+**Tested JDK:** The original run artifacts do not preserve the exact JDK build. The article references Java 21 documentation, but that does not prove which runtime produced the measurements. I therefore treat the numbers as a historical workload result, not a claim about current JDK behavior.
 
 What I didn't get at first: the default Java Stream API has a load balancing problem. When you call `.parallel()` on an I/O-based source like `Files.lines()`, the spliterator that divides work among threads uses a growing batch size strategy: 1, 2, 4, 8, 16... up to 16,384 elements per batch.
 
@@ -28,7 +31,7 @@ I found this out the hard way on the One Billion Row Challenge, which is exactly
 
 Top solutions finish in under 2 seconds using `Unsafe`, memory-mapped I/O, and custom parsers. I wanted to understand the fundamentals first: why does the Stream API struggle with this workload, and can we fix it without ditching the abstraction?
 
-You can. A 50-line custom spliterator cut my processing time by 40% and pushed CPU utilization from 60% to 95%. No `Unsafe`. No native code. Just fixing the load balancing problem the JDK gets wrong.
+In the recorded run, a 50-line custom Spliterator cut processing time by 40% and pushed CPU utilization from 60% to 95%. It changed the batching policy without using `Unsafe` or native code.
 
 ***
 
@@ -524,7 +527,7 @@ Keep batches small enough to stay in young gen. For most workloads, that's under
 
 ## What surprised me
 
-The default Stream API optimizes for the wrong thing. Growing batches minimize split overhead. For I/O workloads though, split overhead is tiny next to load imbalance. The JDK picked the wrong trade-off. I get why—they can't know your workload. But it means `.parallel()` often makes things slower. People try it, see worse numbers, and decide "parallel streams don't work." They do. The default spliterator doesn't.
+For this workload, growing batches reduced split overhead but left work distributed unevenly. The fixed-batch implementation traded more splitting for steadier work distribution. That is a workload-specific trade-off, not a general verdict on parallel streams.
 
 I expected to spend most of my time waiting on disk. Nope. Parsing is the bottleneck. Modern SSDs do 3–5 GB/s sequential. Reading the file is a couple of seconds. Parsing is 14 seconds. String allocation, substring copies, `parseDouble()`. That's where the time goes. Top solutions avoid strings and parse bytes directly. No allocations, just arithmetic.
 
@@ -685,8 +688,11 @@ Fixed-batch spliterators sit around 3.5. Fifty lines, 40% faster. The 1BRC made 
 
 ***
 
-## N.B
-Later this problem with stream imbalance split was fixed in openJDK in this [enhancement](https://bugs.openjdk.org/browse/JDK-8280915)
+## Limitations
+
+The original run does not preserve the exact JDK build, raw benchmark files, or enough repeated trials to estimate variance. The percentages describe one recorded machine and workload. They do not establish performance on JDK 19 or later, other file sizes, different storage, or non-file stream sources.
+
+OpenJDK fixed the related unknown-size splitting defect in [JDK-8280915](https://bugs.openjdk.org/browse/JDK-8280915) in JDK 19. Re-run the benchmark on the current target JDK before choosing a custom Spliterator.
 
 ## References
 

@@ -101,6 +101,26 @@ Assert-FileContains $atlasContent 'Build reliable AI workflows' 'The AI workflow
 Assert-FileContains $atlasContent 'Day 100 retrospective' 'The retrospective distinction is missing.'
 Assert-FileContains $atlasContent 'Spliterator investigation' 'The Spliterator distinction is missing.'
 
+$day99 = Join-Path $root 'content/posts/day99.md'
+$day88 = Join-Path $root 'content/posts/day88.md'
+$day66 = Join-Path $root 'content/posts/day-65-becoming-a-memory-plumber-a-tale-of-memory-leak-and-how-to-find-them.md'
+$day100Capstone = Join-Path $root 'content/posts/day100-capstone.md'
+$day100Spliterator = Join-Path $root 'content/posts/day100-spliterator.md'
+Assert-FileContains $day100Spliterator 'JDK-8280915' 'The Spliterator article does not identify the OpenJDK issue.'
+Assert-FileContains $day100Spliterator 'fixed in JDK 19' 'The Spliterator article does not state the fix version.'
+Assert-FileContains $day100Spliterator 'Tested JDK' 'The Spliterator article does not state its runtime evidence.'
+Assert-FileContains $day100Spliterator '^## Limitations$' 'The Spliterator article has no limitations section.'
+Assert-FileOmits $day100Spliterator 'the JDK gets wrong' 'The Spliterator article still makes a universal JDK claim.'
+Assert-FileOmits $day100Spliterator 'The default Stream API optimizes for the wrong thing' 'The Spliterator conclusion still overstates the default behavior.'
+Assert-FileOmits $day99 '95% of applications' 'Day 99 still contains the unsupported percentage claim.'
+Assert-FileContains $day99 '^## Test context$' 'Day 99 does not put its test context up front.'
+
+$editorialFiles = @($day99, $day88, $day66, $day100Capstone, $day100Spliterator)
+foreach ($editorialFile in $editorialFiles) {
+    Assert-FileContains $editorialFile '^seriesLabel = ' "Missing seriesLabel in $editorialFile"
+    Assert-FileOmits $editorialFile '^title = "Day [0-9]+' "Title still leads with a day number in $editorialFile"
+}
+
 if (-not $SourceOnly) {
     Assert-True (Test-Path -LiteralPath $PublicDir) "Generated site not found: $PublicDir"
     $homeHtml = Join-Path $PublicDir 'index.html'

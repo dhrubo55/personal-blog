@@ -1,14 +1,14 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2026-02-13T00:00:00Z
-description = "After Day 98, I thought virtual threads replaced event loops. Then I opened Netty's source code zero virtual threads. I built both models from scratch to understand when each wins. Here's what I learned about non-blocking I/O, event loops, and the real trade-offs."
+description = "A reproducible comparison of virtual-thread and event-loop HTTP servers, including the test machine, commands, results, and limits of one benchmark run."
 draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day99"
-summary = "I thought virtual threads replaced the need for Netty and event loops. Then I built both models from scratch and benchmarked them. Virtual threads didn't kill event loops they made blocking I/O viable for most cases. But event loops still win for ultra-high connection counts. Here's when each approach wins."
+summary = "A measured comparison of virtual threads and event loops, with a public benchmark suite and guidance for testing each model against a real workload."
 topics = ["I/O & Networking"]
-title = "Day 99: Virtual Threads Didn't Kill Event Loops. Here's How Each Works"
+title = "Virtual threads and event loops solve different problems"
 featured = true
 featuredOrder = 10
 seriesLabel = "Day 99 of 100DaysOfJava"
@@ -19,15 +19,24 @@ image = ""
 relative = false
 +++
 
-After [Day 98]({{< relref "posts/day-98.md" >}}), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
+After [Day 98]({{< relref "posts/day-98.md" >}}), I wanted to test a narrower question: when does a virtual-thread server behave differently from an event-loop server?
 
-Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops a completely different concurrency model that predates virtual threads by decades.
+I built one server for each model and published the code and benchmark scripts. The comparison does not establish a universal winner. It shows how the models behave under one recorded workload and makes that workload repeatable.
 
-Why do both approaches exist? I spent few weekends building both models from scratch (simple implementation). Here's what I learned.
+## Test context
 
-## The Misconception I Had
+- Repository: [virtual-thread-eventloop-test](https://github.com/dhrubo55/virtual-thread-eventloop-test)
+- Runtime requirement: JDK 21 or later
+- Recorded machine: Windows, 16 CPU cores, 31.82 GB RAM, and 183 GB free disk
+- Server heap: 4 GB for each implementation
+- Load generator: Bombardier with 14 worker threads
+- Commands and raw-analysis steps: `benchmarks/README.md` and `benchmarks/QUICK-REFERENCE.md` in the repository
 
-I thought virtual threads replaced the need for non-blocking I/O and event loops. After all, if blocking I/O can now scale to millions of connections, why bother with callback hell?
+The recorded results are a sample run, not a production load test. Hardware, network topology, request mix, warmup, heap size, and connection behavior can change the outcome.
+
+## Why compare the models
+
+Virtual threads make blocking I/O practical at high concurrency while keeping sequential control flow. Event loops use a smaller number of threads and explicit state machines to manage many connections. Both models remain useful because they optimize different constraints.
 
 Virtual threads work by unmounting when they hit blocking I/O. The carrier thread stays free. Other virtual threads mount and do work. It's brilliant for business logic database calls, REST APIs, file I/O. Sequential code that scales.
 
@@ -680,7 +689,7 @@ The README in **benchmarks** explains the hypothesis template (predict VT vs EL 
 
 Here's my mental model :
 
-**Start with virtual threads**: For 95% of applications, virtual threads are the right default. Simpler code. Easier debugging. Good enough performance. Your business logic probably involves databases, REST calls, file I/O. Sequential code wins.
+For request handlers that spend most of their time waiting on blocking I/O, virtual threads are a reasonable first model to test. Event loops remain useful when connection density, memory, or control over I/O scheduling dominates the design. Measure the real workload before choosing.
 
 **Switch to event loops when**: You're building infrastructure. API gateways. Load balancers. Proxies. WebSocket servers. High connection counts with simple logic. Memory is constrained. You need maximum throughput.
 
@@ -702,4 +711,8 @@ Understanding both models gives you the full picture of Java's I/O concurrency l
 
 Next time you're designing a system, ask: What's the connection pattern? What's the business logic complexity? What are the memory constraints? Then choose the right model.
 
-Both are tools. Use the right one for the job.
+Both are tools. The benchmark gives you a starting point, not a verdict.
+
+## Limitations
+
+The sample run used one Windows machine and synthetic request patterns. It does not cover production network latency, database contention, long-lived WebSocket traffic, container limits, or failure recovery. Re-run the suite with the traffic shape and resource limits that matter to your system.
