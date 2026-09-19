@@ -8,7 +8,7 @@ summary: Confused between Vim and/or Neovim? Here are my justifications to convi
 description: Confused between Vim and/or Neovim? Here are my justifications to convince
   you to use Neovim instead today!
 cover:
-  image: https://res.cloudinary.com/jarmos/image/upload/v1628425482/vim-vs-neovim_kn8cm9.gif
+  image: ""
   alt: Vim vs Neovim; Which one to use?
   caption: Vim vs Neovim; Which one to use?
   relative: false

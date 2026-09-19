@@ -8,9 +8,9 @@ summary: Create a blog with Hugo Static Site Generator as a Wordpress alternativ
 description: Create a blog with Hugo Static Site Generator as a Wordpress alternative
   & with added automation plus other superpowers
 cover:
-  image: https://res.cloudinary.com/jarmos/image/upload/v1615628184/Overpowered-Hugo-Blog_li3tx3.jpg
+  image: ""
   alt: Hugo, the static site generator with biceps working out with dumbbells
-  caption: Hugo Static Site Generator on Steroids by Somraj Saha
+  caption: Hugo Static Site Generator on Steroids
   relative: false
 showtoc: true
 draft: true
@@ -325,7 +325,7 @@ Phew, that was quite a long read for a tutorial! And if you read it till the end
 
 You might've also noticed, the article isn't as comprehensive. Yet it touches upon all the optimal techniques & tools used to maintain a programming blog. So, I hope the information I shared through this article was enough to get you started with your blog as well! If you do so, reach out to me & say "_Hi! Here's my blog._" over social media and/or email. And I might give away a shoutout for you.
 
-Besides, my blog is [open-sourced][My Blog]! :red_heart: So, if you stumble across a roadblock, check out how I maintain this blog. Or, feel free to open an [Issue][Issue Thread]/[Discussion][Discussion Thread] thread.
+If you stumble across a roadblock, check the official Hugo and Netlify docs linked below.
 
 That said, I look forward to how you use Hugo to share your amazing content to the rest of the world!
 
@@ -343,7 +343,7 @@ That said, I look forward to how you use Hugo to share your amazing content to t
 [Hugo Content Organization]: https://gohugo.io/content-management/organization/
 [Netlify Git Deploy]: https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git
 <!-- * Personal -->
-[My Blog]: https://github.com/Jarmos-san/blog
+[My Blog]: https://github.com/dhrubo55
 <!-- * Landing pages -->
 [Contentful]: https://www.contentful.com/
 [Netlify CMS]: https://www.netlifycms.org/
@@ -367,8 +367,6 @@ That said, I look forward to how you use Hugo to share your amazing content to t
 [GitHub's Dependabot]: https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/
 [3 Reasons Why You Need a Programming Blog]: https://dbader.org/blog/3-reasons-why-you-need-a-programming-blog
 <!-- * Miscellaneous -->
-[Issue Thread]: https://github.com/Jarmos-san/blog/issues/new/choose
-[Discussion Thread]: https://github.com/Jarmos-san/blog/discussions
 [Hugo Stargazers]: https://github.com/gohugoio/hugo/stargazers
 [Hugo Binaries]: https://github.com/gohugoio/hugo/releases
 [New GitHub Repo]: https://repo.new

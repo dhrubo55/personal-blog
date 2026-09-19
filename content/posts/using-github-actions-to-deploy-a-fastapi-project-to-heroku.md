@@ -10,7 +10,7 @@ description: Heroku makes deployment a piece of cake, but compromises on quality
   & best practices. So, this article shows how to use GitHub Actions in tandem with
   Heroku while maintaining best practices.
 cover:
-  image: https://res.cloudinary.com/jarmos/image/upload/v1620895005/GitHub_Actions_Loves_Heroku_dq2ake.jpg
+  image: ""
   alt: Heroku combined with GitHub & GitHub Actions is a match made in heaven.
   caption: GitHub Actions (and GitHub) plus Heroku is a match made in heaven
   relative: false
@@ -135,7 +135,7 @@ on: push
 jobs:
   # Check out the following article for more inspiration on setting up a
   # standard CI/CD pipeline for most Python projects:
-  # https://jarmos.netlify.app/posts/a-standard-ci-cd-pipeline-for-python-projects/
+  # https://mohibulsblog.netlify.app/posts/a-standard-ci-cd-pipeline-for-python-projects/
   test:
   # Include your test suite here.
   lint:

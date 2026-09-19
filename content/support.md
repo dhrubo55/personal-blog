@@ -3,7 +3,7 @@ title: Support Mohibul Hassan
 url: "/support"
 hidemeta: true
 disableShare: true
-summary: Support Mohibul Hassan's writing, open-source work, and software engineering projects.
+summary: Support Mohibul Hassan's writing and software engineering projects.
 ---
 
 {{< rawhtml >}}
