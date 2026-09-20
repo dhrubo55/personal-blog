@@ -68,43 +68,6 @@ body.java-graph-layout .main {
   max-width: 78ch;
 }
 
-.java-graph-reading-paths,
-.java-graph-details {
-  border: 1px solid var(--java-graph-panel-border);
-  border-radius: 14px;
-  background: rgba(8, 22, 36, 0.72);
-  margin-bottom: 1rem;
-  padding: 0.9rem 1rem;
-}
-
-.java-graph-reading-paths ul {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.7rem;
-  list-style: none;
-  margin: 0 0 0.9rem;
-  padding: 0;
-}
-
-.java-graph-reading-paths li,
-.java-graph-reading-paths p {
-  margin: 0;
-}
-
-.java-graph-reading-paths a,
-.java-graph-details summary {
-  color: var(--java-graph-highlight);
-}
-
-.java-graph-details summary {
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.java-graph-details[open] summary {
-  margin-bottom: 0.9rem;
-}
-
 .java-graph-explainer {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -410,7 +373,7 @@ body.java-graph-layout .main {
 }
 
 .java-graph-topic-index {
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   border: 1px solid var(--java-graph-panel-border);
   border-radius: 16px;
   background: rgba(7, 19, 32, 0.74);
@@ -481,6 +444,10 @@ body.java-graph-layout .main {
   padding: 0.85rem;
 }
 
+body.java-graph-ready .java-graph-fallback {
+  display: none;
+}
+
 @media (max-width: 1280px) {
   .java-graph-control-search { grid-column: span 6; }
   .java-graph-control-topic { grid-column: span 3; }
@@ -530,7 +497,6 @@ body.java-graph-layout .main {
   }
 
   .java-graph-explainer,
-  .java-graph-reading-paths ul,
   .java-graph-topic-index-list {
     grid-template-columns: 1fr;
   }
@@ -554,15 +520,6 @@ body.java-graph-layout .main {
 
   .java-graph-relations {
     grid-template-columns: 1fr;
-  }
-
-  .java-graph-control,
-  .java-graph-reading-paths,
-  .java-graph-details,
-  .java-graph-topic-index,
-  .java-graph-shell {
-    min-width: 0;
-    width: 100%;
   }
 
   #java-graph-canvas,

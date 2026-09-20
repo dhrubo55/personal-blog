@@ -38,4 +38,4 @@ I welcome conversations about senior engineering roles, backend and AI architect
 - [LinkedIn](https://www.linkedin.com/in/mohibulhassan/)
 - [GitHub](https://github.com/dhrubo55)
 
-{{< newsletter >}}
+I also publish [Chaos;Code;Clarity](https://chaoscodeclarity.substack.com/), a newsletter about software engineering and AI.
