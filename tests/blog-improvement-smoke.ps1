@@ -83,6 +83,12 @@ Assert-FileContains $resumeTex 'approximately 68M records' 'The current database
 Assert-FileContains $resumeTex 'approximately 1\.8M unnecessary writes/month' 'The current write-reduction evidence is missing.'
 Assert-FileContains $resumeTex 'revision-aware staleness' 'The conversation-intelligence work is missing.'
 Assert-FileContains $resumeTex 'subject-matter expert for telephony and production reliability' 'The reliability work is missing.'
+$resumeSource = Get-Content -Raw -LiteralPath $resumeTex
+$skillsIndex = $resumeSource.IndexOf('\section{Technical Skills}')
+$projectsIndex = $resumeSource.IndexOf('\section{Selected Technical Projects \& Expertise}')
+$writingIndex = $resumeSource.IndexOf('\section{Technical Writing \& Independent Work}')
+$educationIndex = $resumeSource.IndexOf('\section{Education}')
+Assert-True ($skillsIndex -ge 0 -and $skillsIndex -lt $projectsIndex -and $projectsIndex -lt $writingIndex -and $writingIndex -lt $educationIndex) 'The resume source page-two sections do not match the approved PDF order.'
 
 $redirects = Join-Path $root 'static/_redirects'
 Assert-FileContains $config "^ignoreFiles:$" 'The ignored source-file list is missing.'
@@ -114,6 +120,7 @@ Assert-FileOmits $day100Spliterator 'the JDK gets wrong' 'The Spliterator articl
 Assert-FileOmits $day100Spliterator 'The default Stream API optimizes for the wrong thing' 'The Spliterator conclusion still overstates the default behavior.'
 Assert-FileOmits $day99 '95% of applications' 'Day 99 still contains the unsupported percentage claim.'
 Assert-FileContains $day99 '^## Test context$' 'Day 99 does not put its test context up front.'
+Assert-FileContains $day99 '^TocOpen = false$' 'Day 99 opens its long contents panel by default on small screens.'
 
 $editorialFiles = @($day99, $day88, $day66, $day100Capstone, $day100Spliterator)
 foreach ($editorialFile in $editorialFiles) {

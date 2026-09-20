@@ -48,6 +48,6 @@ Assert-FileContains $supportCss '\.support-shell' 'Support page CSS wrapper is m
 Assert-FileContains $supportCss '\.support-tabs' 'Support page tab styling is missing.'
 Assert-FileContains $supportCss '\.support-qr-overlay' 'Support page QR modal styling is missing.'
 Assert-FileContains $supportCss '\.support-payment-row' 'Payment detail row styling is missing.'
-Assert-FileContains $config 'url: support/' 'Support page navigation entry is missing.'
+Assert-FileContains $config '\[Support\]\(/support/\)' 'Support page footer link is missing.'
 
 Write-Host 'Support page smoke test passed.'
