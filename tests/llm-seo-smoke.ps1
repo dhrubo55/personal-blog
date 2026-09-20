@@ -51,7 +51,12 @@ if ($staleIdentityFiles) {
 }
 Assert-FileContains $llms 'All rights reserved' 'LLMS template does not include a rights notice.'
 Assert-FileContains (Join-Path $root 'content/collaborations.md') 'robotsNoIndex: true' 'Stale collaborations page is still indexable.'
-Assert-FileContains (Join-Path $root 'content/projects.md') 'robotsNoIndex: true' 'Stale projects page is still indexable.'
+$selectedWork = Join-Path $root 'content/projects.md'
+Assert-FileContains $selectedWork 'url: "/case-studies/"' 'Selected work does not use the canonical case-studies route.'
+Assert-FileContains $selectedWork 'aliases: \["/projects/"\]' 'Selected work does not preserve the legacy projects route.'
+if (Select-String -LiteralPath $selectedWork -Pattern 'robotsNoIndex:\s*true' -Quiet) {
+    throw 'Selected work remains hidden from search engines.'
+}
 Assert-FileContains (Join-Path $root 'content/privacy-policy.md') 'robotsNoIndex: true' 'Stale privacy page is still indexable.'
 Assert-FileContains (Join-Path $root 'content/terms-and-conditions.md') 'robotsNoIndex: true' 'Stale terms page is still indexable.'
 

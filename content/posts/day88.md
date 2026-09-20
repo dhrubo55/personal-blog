@@ -1,14 +1,17 @@
 +++
 category = ["Java", "Spring Boot", "AI", "Google Cloud"]
 date = 2025-04-29T00:00:00Z
-description = "Leveraging Google Cloud Vertex AI's Gemini 1.5 for advanced, multilingual audio transcription within a Spring Boot application, including prompt engineering, safety settings management, and confidence scoring."
+description = "How a Spring Boot workflow uses Google Vertex AI and Gemini 1.5 for multilingual call transcription, evaluation, and failure handling."
 draft = false
 ShowToc = true
 TocOpen = true
 slug = "posts/java/100DaysOfJava/day88"
-summary = "Building a robust multilingual audio transcription system using Spring Boot, Google Cloud Storage, and Vertex AI's Gemini 1.5, covering architecture, prompt engineering, safety settings, confidence scoring, and async/batch processing."
+summary = "Architecture and implementation notes for multilingual audio transcription with Spring Boot, Google Cloud Storage, Vertex AI, confidence signals, and batch processing."
 topics = ["AI, Spring & Cloud"]
-title = "Day 88: Multilingual Audio Transcription with Gemini 1.5, Vertex AI, and Spring Boot"
+title = "Building production audio transcription with Gemini 1.5 and Spring Boot"
+featured = true
+featuredOrder = 20
+seriesLabel = "Day 88 of 100DaysOfJava"
 [cover]
 alt = "day88"
 caption = "day88"
@@ -16,13 +19,13 @@ image = ""
 relative = false
 +++
 
-As part of my ongoing Java explorations, I recently tackled a practical project that hit the sweet spot between business needs and cutting-edge tech. The challenge? Building a system to transcribe audio files across multiple languages with specific formatting requirements.
+I worked on a production workflow that turns call recordings into structured transcripts. The workflow needed speaker labels, six languages, consistent number and date formatting, and a way to flag uncertain sections for review.
 
-This wasn't just about converting speech to text. The system needed to identify different speakers, handle six different languages, format numbers and dates properly, and flag sections that might need human review. Given these requirements, I decided to leverage Google Cloud's Vertex AI with Gemini 1.5, all orchestrated through a Spring Boot application.
+The implementation uses Spring Boot, Google Cloud Storage, Vertex AI, and Gemini 1.5. This article focuses on the decisions I can discuss publicly: prompt structure, model configuration, confidence signals, single and batch processing, and failure handling.
 
-### The Challenge: Beyond Simple Speech-to-Text
+### Requirements beyond speech-to-text
 
-Most off-the-shelf transcription tools give you a wall of text and call it a day. Our requirements were much more nuanced:
+The workflow had five requirements:
 
 1.  **Multilingual Support**: The system had to handle English plus five other languages without missing a beat.
 2.  **Speaker Diarization**: We needed clear labels showing who was talking when (e.g., "Speaker A:", "Speaker B:"), which is surprisingly hard to get right.
@@ -38,7 +41,7 @@ I built a workflow that looks something like this:
 
 1.  **Audio Ingestion & Preparation**: The backend receives audio files and converts them to FLAC format. I chose FLAC because it preserves audio quality while keeping file sizes manageable.
 2.  **Cloud Storage**: These FLAC files get uploaded to Google Cloud Storage. This step is crucial - it lets Gemini access potentially large audio files without timing out or hitting memory limits.
-3.  **Vertex AI & Gemini 1.5**: Our Spring Boot app calls Vertex AI, pointing Gemini to the audio file's location. The magic happens in the prompt we send along with this request (more on that in a bit).
+3.  **Vertex AI & Gemini 1.5**: The Spring Boot application calls Vertex AI and provides the audio file's location. The prompt carries the transcription and formatting requirements described below.
 4.  **Processing & Storage**: Once Gemini does its thing, we parse the response, add our own confidence scoring, and store everything in our database.
 5.  **Notification/Feedback**: For user-triggered transcriptions, we send back success/failure notifications.
 
@@ -46,7 +49,7 @@ Using GCS as the middleman was a bit of extra work, but it paid off by making th
 
 ### Harnessing Gemini 1.5
 
-Gemini 1.5's massive context window and multimodal capabilities made it perfect for handling audio files directly via GCS URIs.
+Gemini 1.5 supported the required audio input and context through GCS URIs, which made it suitable for this workflow.
 
 #### Prompt Engineering for Precision
 
@@ -215,14 +218,13 @@ To handle different use cases, I implemented two processing modes:
     }
 ```
 
-### Learnings and Final Thoughts
+### What I learned
 
-This project taught me a ton about applying LLMs to practical business problems. My key takeaways:
+- Audio prompts need explicit output rules. Small wording changes can alter speaker labels, timestamps, and number formatting.
+- Safety settings are part of the product behavior and need tests that reflect the audio domain.
+- `avg_logprobs` is not a calibrated confidence score. It can still help route likely failures for review when the threshold is evaluated against known examples.
+- Single-item and batch flows need the same lifecycle and failure semantics, even when their execution paths differ.
 
-* **Gemini 1.5 is a beast** for these kinds of tasks, especially when working with audio through GCS integration.
-* **Prompt engineering makes or breaks you**. The difference between a useless transcript and a perfect one often comes down to how clearly you communicate your requirements.
-* **Safety settings matter**. Understanding what they do and how to configure them for your specific use case is crucial.
-* **Imperfect signals can still be useful**. Even though `avg_logprobs` isn't a perfect confidence metric, it gave us a practical way to implement human-in-the-loop review.
-* **Spring Boot's flexibility shines** when implementing both async and batch processing patterns to handle different use cases.
+## Limitations
 
-Wrangling all these technologies together was challenging but incredibly satisfying. There's something deeply rewarding about seeing a complex system like this come together to solve a real business problem.
+This article omits customer data, private evaluation sets, traffic volume, and provider reliability measurements. The examples explain the architecture and code patterns, but they do not provide a public accuracy benchmark for Gemini 1.5 or compare it with every transcription provider.

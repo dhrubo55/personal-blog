@@ -1,14 +1,17 @@
 +++
 category = ["Java", "100DaysOfJava"]
 date = 2026-02-13T00:00:00Z
-description = "After Day 98, I thought virtual threads replaced event loops. Then I opened Netty's source code zero virtual threads. I built both models from scratch to understand when each wins. Here's what I learned about non-blocking I/O, event loops, and the real trade-offs."
+description = "A reproducible comparison of virtual-thread and event-loop HTTP servers, including the test machine, commands, results, and limits of one benchmark run."
 draft = false
 ShowToc = true
-TocOpen = true
+TocOpen = false
 slug = "posts/java/100DaysOfJava/day99"
-summary = "I thought virtual threads replaced the need for Netty and event loops. Then I built both models from scratch and benchmarked them. Virtual threads didn't kill event loops they made blocking I/O viable for most cases. But event loops still win for ultra-high connection counts. Here's when each approach wins."
+summary = "A measured comparison of virtual threads and event loops, with a public benchmark suite and guidance for testing each model against a real workload."
 topics = ["I/O & Networking"]
-title = "Day 99: Virtual Threads Didn't Kill Event Loops. Here's How Each Works"
+title = "Virtual threads and event loops solve different problems"
+featured = true
+featuredOrder = 10
+seriesLabel = "Day 99 of 100DaysOfJava"
 [cover]
 alt = "day99"
 caption = "day99"
@@ -16,17 +19,26 @@ image = ""
 relative = false
 +++
 
-After [Day 98](/posts/posts/java/100DaysOfJava/day-98), I thought I learned some new concepts (virtual threads). Virtual threads made blocking I/O scalable. Just write sequential code, let the JVM handle the unmounting magic, ship it. Problem solved.
+After [Day 98]({{< relref "posts/day-98.md" >}}), I wanted to test a narrower question: when does a virtual-thread server behave differently from an event-loop server?
 
-Then I asked myself: what are reactive frameworks actually doing? Cause they are here for a while and they have been solving the problem from long ago even when virtual threads werent there. An example Netty framwork, handles millions of connections. Vert.x powers real-time systems. Project Reactor runs high-throughput services. None of them use virtual threads. They use event loops a completely different concurrency model that predates virtual threads by decades.
+I built one server for each model and published the code and benchmark scripts. The comparison does not establish a universal winner. It shows how the models behave under one recorded workload and makes that workload repeatable.
 
-Why do both approaches exist? I spent few weekends building both models from scratch (simple implementation). Here's what I learned.
+## Test context
 
-## The Misconception I Had
+- Repository: [virtual-thread-eventloop-test](https://github.com/dhrubo55/virtual-thread-eventloop-test)
+- Runtime requirement: JDK 21 or later
+- Recorded machine: Windows, 16 CPU cores, 31.82 GB RAM, and 183 GB free disk
+- Server heap: 4 GB for each implementation
+- Load generator: Bombardier with 14 worker threads
+- Commands and raw-analysis steps: `benchmarks/README.md` and `benchmarks/QUICK-REFERENCE.md` in the repository
 
-I thought virtual threads replaced the need for non-blocking I/O and event loops. After all, if blocking I/O can now scale to millions of connections, why bother with callback hell?
+The recorded results are a sample run, not a production load test. Hardware, network topology, request mix, warmup, heap size, and connection behavior can change the outcome.
 
-Virtual threads work by unmounting when they hit blocking I/O. The carrier thread stays free. Other virtual threads mount and do work. It's brilliant for business logic database calls, REST APIs, file I/O. Sequential code that scales.
+## Why compare the models
+
+Virtual threads make blocking I/O practical at high concurrency while keeping sequential control flow. Event loops use a smaller number of threads and explicit state machines to manage many connections. Both models remain useful because they optimize different constraints.
+
+Virtual threads can unmount from a carrier thread during supported blocking operations, allowing that carrier to run other work. This keeps sequential control flow practical for request handlers that wait on databases, remote APIs, or files.
 
 But reactive frameworks don't work this way. They use [event loops](https://www.youtube.com/watch?v=8aGhZQkoFbQ): one thread handles thousands of connections by [multiplexing I/O](https://notes.shichao.io/unp/ch6/) events. No mounting. No unmounting. No stack switching. Just a tight loop reading from a Selector.
 
@@ -34,7 +46,7 @@ I needed to understand both models to know when each wins.
 
 ## Non-Blocking I/O: The Foundation
 
-Blocking I/O wastes threads. Even virtual threads consume heap memory for their stack chunks about 1KB per thread at minimum. Scale to 500K connections? That's 500MB just for stacks. Plus the mount/unmount overhead (1-5 microseconds per context switch).
+Platform-thread-per-request designs can spend substantial resources on threads that are waiting. Virtual threads reduce that cost, but their stack chunks and application state still consume memory, and scheduling is not free. Measure those costs under the intended concurrency and workload.
 
 Non-blocking I/O takes a different approach: one thread, many connections, explicit multiplexing.
 
@@ -42,7 +54,7 @@ Non-blocking I/O takes a different approach: one thread, many connections, expli
 
 I/O multiplexing breaks down to kernel-level efficiency: one thread polls multiple [file descriptors](/posts/posts/java/100DaysOfJava/day75#file-descriptor-exhaustion) via system calls like [`select()`/`poll()`/`epoll()`](https://jvns.ca/blog/2017/06/03/async-io-on-linux--select--poll--and-epoll/), reacting only to ready I/O events to avoid per-connection blocking.
 
-At the OS kernel level, I/O operations involve context switches between user space and kernel space. Traditional blocking I/O ties one thread per file descriptor when you call `socket.read()`, the thread blocks until data arrives. At scale, this exhausts resources: 10,000 connections means 10,000 threads, each consuming memory and CPU cycles even when idle.
+At the OS kernel level, I/O operations cross between user space and kernel space. With a platform-thread-per-connection design, a blocking `socket.read()` leaves that thread waiting for data. Large connection counts can therefore make thread memory and scheduling part of the system's resource budget.
 
 Multiplexing inverts this model. Instead of one thread per connection, one thread monitors many connections. The kernel tells you which connections are ready for I/O, and you react only to those.
 
@@ -54,7 +66,7 @@ Here's how it works at the kernel level:
 
 ### How It Works In Java
 
-Java NIO's `Selector` wraps this mechanism. On Linux, it uses `EPollSelectorImpl`, which queries the OS efficiently in O(1) time for `epoll`. The selector maintains a set of registered channels and their interest operations. When you call `selector.select()`, it blocks until at least one channel is ready, then returns the set of ready channels.
+Java NIO's `Selector` wraps this mechanism. On Linux, the JDK can use an epoll-backed selector. The selector maintains registered channels and their interest operations. When you call `selector.select()`, it waits until at least one channel is ready, then returns the ready keys.
 
 Non-blocking channels ensure `read()`/`write()` return immediately they never block. If data isn't ready, `read()` returns 0 bytes. If the socket buffer is full, `write()` returns 0 bytes written. This forces applications to re-check readiness via selector keys in the event loop.
 
@@ -67,7 +79,7 @@ Non-blocking channels ensure `read()`/`write()` return immediately they never bl
 3. **Dispatcher**: Routes `SelectionKey` events to appropriate handlers
 4. **Handler**: Business logic that processes the I/O event
 
-In Java reactive frameworks like Netty or Project Reactor, this pattern scales to millions of connections. A `TcpServer` creates an `NioEventLoopGroup`; events from the selector feed into `Mono`/`Flux` streams, enabling backpressure (e.g. pause reads when consumers are slow). 
+Java frameworks such as Netty and Reactor Netty build on event-loop designs. A Reactor Netty `TcpServer`, for example, uses Netty event-loop groups and exposes work through reactive streams. The achievable connection count depends on buffers, application state, traffic, operating-system limits, and hardware.
 
 A single-thread event loop processes sequentially: select → dispatch → callback. 
 
@@ -126,7 +138,7 @@ This ping-pongs data efficiently. For production systems, you'd add write queues
 
 ![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1770990437/Java-Reactor_e5h3ft.svg)
 
-The magic: one thread handles thousands of connections. The selector blocks only when no I/O is ready. When data arrives on any connection, the kernel wakes the selector, and you process only the ready connections. No wasted threads. No context switching overhead. Just efficient event-driven I/O.
+The selector waits when no registered I/O is ready. When a channel becomes ready, the loop processes that event without assigning a dedicated platform thread to every idle connection. The design still has scheduling, system-call, buffer, and handler costs; it changes where those costs appear.
 
 
 Here's the core pattern using Java NIO:
@@ -246,15 +258,13 @@ This is the foundation. One thread handles all connections. The Selector monitor
 
 Key insight: `selector.select()` is the only blocking call. Everything else `accept()`, `read()`, `write()` returns immediately. If data isn't ready, the operation returns zero bytes. No waiting.
 
-“one thread handled 10,000 concurrent connections using about 50MB .That is the whole process (selector, buffers, socket state). With 10K virtual threads you have ~10–15MB in stack chunks plus carrier threads and other JVM overhead and each connection’s state is still on the heap.” Then the reader knows you’re comparing total system cost, not “50MB vs 15MB
-
 ## Building an Event Loop HTTP Server
 
 The pattern above is raw NIO. Let's build something more real: an HTTP server using the event loop pattern.
 
 Event loop = infinite loop + selector + event handlers + state machines.
 
-Here's a production-style implementation:
+Here's an instructional implementation for the comparison:
 
 ```java
 package org.example;
@@ -470,39 +480,37 @@ public class EventLoopHttpServer {
 }
 ```
 
-This runs on a single thread. I tested it with **Bombardier** (the Go HTTP benchmarking program):
+The event-loop server listens on port 8081. This command is a quick exploratory run; the recorded comparison later in the article comes from the repository's multi-phase benchmark suite.
 
 ```bash
-bombardier -c 10000 -d 30s http://localhost:8080/
+bombardier -c 10000 -d 30s http://localhost:8081/
 ```
 
-Results: 10,000 concurrent connections, 45K requests/second, memory usage stable at ~120MB. One thread.
-
-The trick: state machines. Each connection is a state machine (READING → WRITING → READING). The event loop transitions states based on I/O readiness. No blocking. No thread-per-connection.
+Each connection is represented by state such as READING → WRITING → READING. The event loop transitions that state when I/O is ready instead of assigning a platform thread to each connection.
 
 ## Virtual Threads vs Event Loops: The Real Trade-offs
 
-I built both models in production. Here's what actually matters:
+The comparison is easier to reason about as a set of trade-offs:
 
 | Aspect | Virtual Threads (Blocking I/O) | Event Loops (Non-blocking I/O) |
 |--------|-------------------------------|-------------------------------|
 | **Programming Model** | Sequential, imperative | Callback-based, state machines |
-| **Memory per connection** | ~1KB heap (stack chunk) | ~Few bytes (state machine) |
-| **CPU overhead** | Mount/unmount (1-5μs) | State machine transitions (~100ns) |
-| **Debuggability** | Stack traces work perfectly | Callback hell, fragmented traces |
-| **Max connections** | Millions (heap limited) | Millions (memory limited) |
-| **Code complexity** | Simple, readable | Complex, hard to follow |
-| **Best for** | Business logic, DB queries | High-throughput proxies |
+| **Memory model** | Stack chunks plus request state | Explicit connection state and buffers |
+| **Scheduling work** | Virtual-thread scheduling and mount/unmount behavior | Event dispatch and state-machine transitions |
+| **Debuggability** | Sequential control flow and familiar stack traces | Traces can cross asynchronous boundaries |
+| **Connection ceiling** | Depends on heap, workload, and runtime behavior | Depends on state, buffers, OS limits, and workload |
+| **Code complexity** | Often simpler for branching business logic | Requires disciplined non-blocking handlers and state management |
+| **Useful starting point** | Blocking request handlers and service orchestration | Connection-heavy infrastructure with controlled I/O scheduling |
 
 ### When to Use Virtual Threads
 
 I use virtual threads when:
 
-**Complex business logic**: Multiple database calls, service calls, branching logic. Sequential code wins. Debugging wins. Maintainability wins.
+**Complex business logic**: Multiple database calls, service calls, and branching logic can be easier to follow in sequential code.
 
-Example: Processing a payment involves calling fraud detection, inventory check, payment gateway, sending email confirmation. Sequential code with virtual threads is 10x easier to write and debug than callback chains.
+For example, a request that coordinates several remote calls can retain ordinary control flow while each virtual thread waits independently. Whether that improves maintainability depends on the framework, observability, and team conventions.
 
-**Moderate connection counts**: 10K-100K concurrent connections. Virtual threads handle this easily. The memory overhead is acceptable. The mount/unmount cost is negligible.
+**Blocking I/O workloads**: Virtual threads are a reasonable model to test when requests spend much of their time waiting on supported blocking operations. Heap use, pinning, and downstream limits still need measurement.
 
 **Team velocity**: Most developers understand sequential code. Onboarding is faster. Code reviews are easier. Bugs are simpler to fix.
 
@@ -584,19 +592,15 @@ Total blocking time: ~10ms per request. With platform threads, this ties up a th
 
 I use event loops when:
 
-**Ultra-high connection counts**: 100K-1M+ connections. Memory matters. Every byte counts. Event loops use ~5KB per connection. Virtual threads use ~1KB+ heap plus JVM overhead.
+**Connection-heavy workloads**: Event loops are worth testing when explicit control over I/O scheduling and per-connection state is more important than sequential request code.
 
 **Simple request/response patterns**: API gateways, load balancers, WebSocket servers, streaming proxies. The logic is simple: read request, forward it, write response. State machines work fine here.
 
-**Maximum memory efficiency**: You're running on constrained hardware. You need to squeeze every ounce of performance. You can't afford the mount/unmount overhead.
-
-Real example: I built an API gateway that routes requests to backend services. Peak load: 500K concurrent WebSocket connections. Each connection forwards messages bidirectionally. Minimal state. Event loops won.
-
-The entire gateway ran on 4 CPU cores, 2GB heap. Event loops handled all 500K connections. Virtual threads would've used ~500MB just for stacks. Plus mount/unmount overhead on every message.
+**Explicit resource control**: A small event-loop pool can make thread ownership predictable, but buffers, queues, callbacks, and application state still consume memory. Benchmark the complete process rather than comparing thread counts alone.
 
 ### The Hybrid Approach
 
-Production system can use both at the same time. Netty uses event loops for network I/O, then dispatches business logic to thread pools (or virtual threads in newer versions).
+A system can use both models. An event loop can own network I/O while other executors handle work that would otherwise block the loop. The handoff adds coordination cost, so it should be justified by measurements and framework behavior.
 
 Pattern:
 
@@ -673,30 +677,32 @@ So for this “many connections, small fixed delay per request” scenario, the 
 
 The README in **benchmarks** explains the hypothesis template (predict VT vs EL before running), what to monitor in VisualVM, and how to interpret throughput, latency percentiles, and breaking points. Repeating the suite on your own machine is a good way to see how the two models behave under your constraints.
 
-## The Production Decision
+## Choosing a model
 
 Here's my mental model :
 
-**Start with virtual threads**: For 95% of applications, virtual threads are the right default. Simpler code. Easier debugging. Good enough performance. Your business logic probably involves databases, REST calls, file I/O. Sequential code wins.
+For request handlers that spend most of their time waiting on blocking I/O, virtual threads are a reasonable first model to test. Event loops remain useful when connection density, memory, or control over I/O scheduling dominates the design. Measure the real workload before choosing.
 
-**Switch to event loops when**: You're building infrastructure. API gateways. Load balancers. Proxies. WebSocket servers. High connection counts with simple logic. Memory is constrained. You need maximum throughput.
+**Test event loops when**: The service owns many connections, handlers can remain non-blocking, and control over I/O scheduling or per-connection state is central to the design.
 
-**Use both when**: You're building a platform. Use event loops for network layer (Netty, Vert.x). Use virtual threads for business logic. This is what modern frameworks do.
+**Test a hybrid when**: The network layer benefits from event loops but some application work is clearer or safer on a separate executor. Include the handoff and queueing behavior in the test.
 
-I made the mistake of using event loops for business logic in 2015. Callback hell. Debugging nightmares. Three-hour sessions tracing through fragmented stack traces. Never again. Virtual threads solved that problem.
-
-The right tool depends on your constraints. Virtual threads didn't replace event loops. They made blocking I/O a viable alternative for most use cases. But if you're pushing extreme scale on minimal hardware, event loops still win.
+The right tool depends on the workload. Virtual threads make blocking I/O practical at higher concurrency, while event loops retain value when explicit I/O scheduling and connection state are the dominant concerns.
 
 ## What I Learned
 
 Virtual threads and event loops solve different problems:
 
-**Virtual threads**: Make blocking I/O scalable. Keep sequential code readable. Remove the need for thread pool tuning. Perfect for business logic.
+**Virtual threads**: Make many blocking-I/O workloads easier to express with sequential code. They reduce reliance on large platform-thread pools but do not remove downstream capacity limits or the need to observe runtime behavior.
 
-**Event loops**: Maximize connection density. Minimize memory overhead. Handle simple I/O patterns efficiently. Perfect for infrastructure.
+**Event loops**: Centralize readiness-driven I/O and make connection state explicit. They can suit infrastructure-style workloads when handlers remain non-blocking and the state-machine complexity is acceptable.
 
 Understanding both models gives you the full picture of Java's I/O concurrency landscape. You can make informed decisions based on your actual constraints, not hype or cargo-culting.
 
 Next time you're designing a system, ask: What's the connection pattern? What's the business logic complexity? What are the memory constraints? Then choose the right model.
 
-Both are tools. Use the right one for the job.
+Both are tools. The benchmark gives you a starting point, not a verdict.
+
+## Limitations
+
+The sample run used one Windows machine and synthetic request patterns. It does not cover production network latency, database contention, long-lived WebSocket traffic, container limits, or failure recovery. Re-run the suite with the traffic shape and resource limits that matter to your system.

@@ -230,8 +230,17 @@
   {{- $sourceIDRaw := partial "java_graph/node_id.html" (dict "page" $post) -}}
   {{- $sourceID := trim (printf "%s" $sourceIDRaw) " " -}}
   {{- $rawLinks := findRE `\]\(([^)\s]+)` $post.RawContent -}}
+  {{- $linkTargets := slice -}}
   {{- range $linkMatch := $rawLinks -}}
     {{- $rawLink := replaceRE `^\]\(` "" $linkMatch -}}
+    {{- $linkTargets = append $rawLink $linkTargets -}}
+  {{- end -}}
+  {{- $renderedLinks := findRE `href=["'][^"']+` (printf "%s" $post.Content) -}}
+  {{- range $linkMatch := $renderedLinks -}}
+    {{- $renderedLink := replaceRE `^href=["']|["']$` "" $linkMatch -}}
+    {{- $linkTargets = append $renderedLink $linkTargets -}}
+  {{- end -}}
+  {{- range $rawLink := $linkTargets | uniq -}}
     {{- $normalizedLinkRaw := partial "java_graph/normalize_link.html" (dict "link" $rawLink) -}}
     {{- $normalizedLink := trim (printf "%s" $normalizedLinkRaw) " " -}}
     {{- if gt (len $normalizedLink) 0 -}}

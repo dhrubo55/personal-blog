@@ -16,11 +16,11 @@ image = ""
 relative = false
 +++
 
-> **Series Navigation:** [Part 1: Foundation & Execution](/posts/java/100DaysOfJava/day95) • [Part 2: Core Synchronization](/posts/java/100DaysOfJava/day96) • [Part 3 (You are here)](#)
+> **Series Navigation:** [Part 1: Foundation & Execution]({{< relref "posts/day95-part1.md" >}}) • [Part 2: Core Synchronization]({{< relref "posts/day96-part2.md" >}}) • [Part 3 (You are here)](#)
 
 **"Mastering concurrency means knowing when NOT to use these tools, and how to debug them when things break."**
 
-In [Part 1 (Day 95)](/posts/java/100DaysOfJava/day95), we explored **execution patterns**. In [Part 2 (Day 96)](/posts/java/100DaysOfJava/day96), we covered **core synchronization tools**.
+In [Part 1 (Day 95)]({{< relref "posts/day95-part1.md" >}}), we explored **execution patterns**. In [Part 2 (Day 96)]({{< relref "posts/day96-part2.md" >}}), we covered **core synchronization tools**.
 
 Now in **Part 3**, we tackle **advanced patterns** and the critical skills for **production systems**: debugging, monitoring, and operational readiness.
 
@@ -1368,6 +1368,6 @@ That's the question I'm learning to answer.
 
 ---
 
-**Previous:** [Day 96 - Java Concurrency Toolkit Part 2: Core Synchronization Patterns](/posts/java/100DaysOfJava/day96)
+**Previous:** [Day 96 - Java Concurrency Toolkit Part 2: Core Synchronization Patterns]({{< relref "posts/day96-part2.md" >}})
 
 

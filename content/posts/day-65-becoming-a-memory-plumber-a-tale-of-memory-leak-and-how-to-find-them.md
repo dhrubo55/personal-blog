@@ -1,12 +1,15 @@
 +++
 category = []
 date = 2023-01-20T00:00:00Z
-description = "Finding memory leak by analyzing GC and memory dump using VisualVM and Eclipse MAT "
+description = "A practical introduction to finding retained Java objects with heap dumps, VisualVM, Eclipse MAT, and bounded caches."
 showtoc = false
 slug = "/java/100DaysOfJava/day66"
-summary = "Understanding and finding the causes and types of memory leaks and tools and suggestions to fix them"
+summary = "How retained references create Java memory leaks, how heap tools expose them, and how cache bounds prevent one common failure mode."
 topics = ["JVM & Performance"]
-title = "Day 66: Becoming a memory plumber; A tale of Memory Leak and how to find them ( part 1)"
+title = "Finding a Java memory leak with heap dumps and JMX"
+featured = true
+featuredOrder = 30
+seriesLabel = "Day 66 of 100DaysOfJava"
 [cover]
 alt = "day65"
 caption = "day65"
@@ -14,19 +17,11 @@ image = ""
 relative = false
 
 +++
-### What is memory leak
+### What a Java memory leak is
 
-Memory leaks are a major issue for software engineers, especially those working with Java. A memory leak occurs when an application continues to use more and more of the computer's RAM without releasing it after it has been used. This can cause serious performance issues as the available RAM decreases and eventually leads to system crashes or outages.
+The garbage collector reclaims objects that are no longer reachable. It cannot reclaim an object while application code still holds a reference to it, even when the application no longer needs the object.
 
-Java has automated memory management system unlike its predecessor C . Java does this using GC. The GC implicitly takes care of allocating and freeing up memory, and thus is capable of handling the majority of memory leak issues.
-
-While the GC effectively handles a good amount of memory, it doesn't guarantee a foolproof solution to memory leaking. The GC is pretty smart, but not flawless. Memory leaks can still happen.
-
-Now let us understand what is Memory Leak
-
-### Memory Leak
-
-a memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in a way that memory which is no longer needed is not released.
+A Java memory leak is therefore a reachability problem. Retained objects accumulate, heap use grows across collection cycles, and the application eventually spends more time collecting garbage or runs out of memory. Heap dumps, VisualVM, Eclipse MAT, and JMX help identify which objects remain reachable and which references retain them.
 
 As a software engineer, it’s important to understand the concept of memory leaks in Java. A memory leak is when an application continues to hold onto memory that it no longer needs and this can lead to performance issues or even system crashes. In Java, a common cause of such leaks is objects not being garbage collected as expected due to references still pointing at them from other parts of the code.
 
@@ -167,4 +162,8 @@ public CustomCache() {
  }
 ```
 
-In part 2 will learn about other type of reasons for memory leak 
+Part 2 covers other causes of retained memory.
+
+## Limitations
+
+The cache example is intentionally small. It demonstrates one retention pattern, but it is not a production incident report. Heap growth can also come from expected load, large live data sets, native allocations, class loaders, threads, or an undersized heap. Confirm the retained path and object growth before changing code.

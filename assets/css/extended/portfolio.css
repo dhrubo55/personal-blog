@@ -1,0 +1,137 @@
+body,
+.main,
+.portfolio-intro,
+.featured-card,
+.reading-paths a {
+  max-width: 100%;
+}
+
+.portfolio-intro {
+  padding-block: 3rem 2rem;
+}
+
+.portfolio-kicker,
+.eyebrow,
+.card-label {
+  color: var(--secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-intro h1 {
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  line-height: 1.02;
+  margin: 0.35rem 0 1rem;
+}
+
+.portfolio-intro > p:not(.portfolio-kicker) {
+  color: var(--secondary);
+  font-size: 1.1rem;
+  max-width: 47rem;
+}
+
+.portfolio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.portfolio-actions a,
+.newsletter-cta a {
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  color: var(--primary);
+  padding: 0.7rem 1rem;
+}
+
+.portfolio-actions a.primary {
+  background: var(--primary);
+  color: var(--theme);
+}
+
+.portfolio-actions a:focus-visible,
+.featured-card a:focus-visible,
+.reading-paths a:focus-visible,
+.newsletter-cta a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.home-section {
+  margin-block: 2.5rem;
+}
+
+.section-heading h2 {
+  margin-top: 0.25rem;
+}
+
+.featured-grid,
+.reading-paths {
+  display: grid;
+  gap: 1rem;
+}
+
+.featured-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.reading-paths {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.featured-card,
+.reading-paths a {
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow-wrap: anywhere;
+  padding: 1.25rem;
+}
+
+.featured-card h3 {
+  margin: 0.35rem 0 0.75rem;
+}
+
+.reading-paths a {
+  color: var(--primary);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.reading-paths span {
+  color: var(--secondary);
+}
+
+.home-socials {
+  margin-block: 2rem;
+}
+
+.newsletter-cta {
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  margin-block: 2rem;
+  padding: 1.4rem;
+}
+
+.newsletter-cta h2 {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.newsletter-cta p:not(.eyebrow) {
+  color: var(--secondary);
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 600px) {
+  .portfolio-intro { padding-block: 1.5rem; }
+  .portfolio-intro h1 { font-size: clamp(2rem, 10vw, 3rem); }
+  .portfolio-actions { display: grid; grid-template-columns: 1fr; }
+  .featured-grid, .reading-paths { grid-template-columns: 1fr; }
+  .header .nav { gap: 0.25rem; }
+  #menu { gap: 0.5rem; overflow-x: visible; flex-wrap: wrap; justify-content: flex-end; }
+  #menu a { font-size: 0.88rem; }
+}

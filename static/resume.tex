@@ -67,7 +67,7 @@
 %-----------PROFESSIONAL SUMMARY-----------------
 \section{Professional Summary}
 \vspace{2pt}
-\small{Senior Full-Stack Engineer with 6+ years designing and scaling SaaS platforms for US and EU clients. Led production AI integrations (Google Vertex AI, AWS Bedrock) and infrastructure optimizations saving \$600--1.2K annually per customer. Strong expertise in Java/Spring Boot microservices, distributed systems, and JVM performance engineering for high-reliability platforms serving 24,000+ users with 99.99\% Service Level Agreement (SLA) uptime.}
+\small{Senior Software Engineer II with 7+ years building high-reliability SaaS and distributed backend systems. Drive architecture for a CPaaS/contact-center platform serving 24,000+ users at 99.99\% uptime. Architected production Google Vertex AI/Gemini call-intelligence capabilities and led database, reliability, telephony, and payment initiatives that reduced production risk and infrastructure cost. Strong in system design, production debugging, and technical leadership.}
 
 %-----------EXPERIENCE-----------------
 \section{Professional Experience}
@@ -75,17 +75,14 @@
 
 \resumeSubheading
 {Cefalo (Offshore branch of Cefalo AS, Norway)}{Dhaka, Bangladesh}
-{Senior Software Engineer}{Sept 2022 - Present}
+{Senior Software Engineer II}{Sep 2022 - Present}
 \resumeItemListStart
-\resumeItem{\textbf{AI Call Intelligence Platform:} Led design and deployment of Google Vertex AI (Gemini 1.5) speech-to-text and conversation-summary workflows across Java backend services and customer activity UI flows; owned single/batch audio pipelines, API contracts, transcript/summary actions, and evaluation-quality hardening}
-\resumeItem{\textbf{Backend Contract Hardening:} Hardened immutable Java domain models and DAO boundaries by replacing nullable API states with explicit Optional handling, standardizing SQL bindings through shared utilities, and validating focused DAO/service paths}
-\resumeItem{\textbf{Database Optimization \& Risk Mitigation:} Eliminated 68M unused database records (50--100 GB), preventing recurring AWS ec2 instance upsizing and saving \$600--1,200 annually per customer; proactively mitigated storage exhaustion risk, preventing potential production outages}
-    
-\resumeItem{\textbf{Performance \& Operational Stability:} Removed 8 unnecessary database triggers, reducing write amplification and improving backup performance by 10--20\%; eliminated 12--24 hours of annual manual disk management}
-
-\resumeItem{\textbf{Zero-Downtime Migration Strategy:} Designed phased migration framework with automated validation and rollback safeguards to ensure safe production deployment}
-\resumeItem{\textbf{Distributed Systems Delivery:} Maintained Java (JAX-RS -- Java API for RESTful Web Services) microservices and Vue.js/TypeScript frontends for LeadDesk Contact Platform as a Service (CPaaS) / Contact Center as a Service (CCaaS) platform serving 24,000+ users with 99.99\% uptime}
-\resumeItem{\textbf{Cross-Border Collaboration:} Partnered with Norway-based stakeholders to translate business requirements into scalable technical solutions aligned with product roadmap}
+\resumeItem{\textbf{Production AI Call Transcription:} Architected and shipped Google Vertex AI/Gemini transcription for call recordings with single and batch processing, multilingual prompting, credential management, confidence-based evaluation, resilient failure handling across backend and administration workflows, provider-reliability evaluation, and bring-your-own-key pricing trade-offs.}
+\resumeItem{\textbf{Conversation Intelligence:} Designed transcript-derived summaries across backend, database, administration, and agent workflows, including revision-aware staleness, append-only lifecycle state, batch processing, retries, feature flags, and notifications.}
+\resumeItem{\textbf{Database Cleanup \& Migration:} Analyzed approximately 68M records and cross-system dependencies; led a phased migration with validation and rollback safeguards that removed 8 write triggers and 4 unused tables, eliminated approximately 1.8M unnecessary writes/month, reclaimed an estimated 50 to 100 GB on affected database instances, and contributed to an estimated USD 600 to 1,200/year in infrastructure savings.}
+\resumeItem{\textbf{Subscription \& Payments:} Built subscription and payment capabilities across frontend and backend, including new/lost/net analytics, payment forecasts, search and filtering, and lifecycle operations; later reviewed architecture for a new payment platform intended to expand customer buying and payment options.}
+\resumeItem{\textbf{Telephony \& Production Reliability:} Serve as a subject-matter expert for telephony and production reliability, tracing complex failures across Java services, Erlang state machines, SQL, anonymization, transcription, dialing, and messaging workflows to resolve correctness, privacy, and reliability issues.}
+\resumeItem{\textbf{Technical Leadership:} Provide technical leadership through architecture and code reviews across Java, Erlang, AI, messaging, payment, and telephony systems; identify failure-mode, API-boundary, correctness, and scalability risks before merge and guide engineers toward simpler, safer designs.}
 \resumeItemListEnd
 
 \resumeSubheading
@@ -111,27 +108,32 @@
 
 \resumeSubHeadingListEnd
 
-%-----------INDEPENDENT PROJECTS-----------------
-\section{Selected Independent Projects \& Technical Writing}
-\resumeSubHeadingListStart
-\resumeItem{\textbf{100DaysOfJava / Java Learning Atlas:} Built and published a Java learning archive with an interactive knowledge graph mapping Java topics across JVM internals, performance, concurrency, security, streams, and AI experiments}
-\resumeItem{\textbf{Rent Management Platform:} Built a Dockerized Spring Boot/PostgreSQL rent-management application with environment-driven configuration, backend API wiring, and Android-client connectivity debugging}
-\resumeItem{\textbf{Applied Java Systems Writing:} Baeldung contributor and author of hands-on Java/Spring articles and labs covering Java Microbenchmark Harness (JMH), Java Management Extensions (JMX), heap analysis, TLS/JSSE, idempotent APIs, consistent hashing, sandboxing, and Spring AI/RAG prototypes}
-\resumeSubHeadingListEnd
-
 %--------TECHNICAL SKILLS------------
 \section{Technical Skills}
 \begin{tabularx}{\textwidth}{l X}
-\textbf{Languages} & Java, JavaScript, TypeScript, SQL, Python, HTML, CSS, Erlang \\
-\textbf{Backend} & Spring Boot, Spring Security, Jersey (JAX-RS), Spring Data JPA, JDBC, REST APIs, Microservices \\
-\textbf{Frontend} & Vue.js, Nuxt.js, Vuex, AngularJS \\
-\textbf{AI/ML} & Google Vertex AI, Gemini 1.5, AWS Bedrock, Spring AI (prototypes), Retrieval-Augmented Generation (RAG), LLM Integration, Vector Databases \\
-\textbf{Cloud \& DevOps} & AWS (RDS, Bedrock), Docker, Docker Compose, GitHub Actions, CI/CD \\
-\textbf{Databases} & PostgreSQL, SQL Optimization, Database Migration \\
-\textbf{Performance} & JMH Microbenchmarking, JMX Monitoring, VisualVM, Eclipse MAT, Heap Analysis, GC Tuning \\
-\textbf{Security} & TLS/JSSE, OAuth2, JWT, Secure Sandboxing \\
-\textbf{Testing} & JUnit, Mockito, Jest, Vue Test Utils, Integration Testing, Selenium \\
+\textbf{Languages} & Java, SQL, Erlang, Python, TypeScript, JavaScript \\
+\textbf{Backend \& APIs} & Spring Boot, Spring Security, Spring AI, Jersey (JAX-RS), Spring Data JPA/Hibernate, JDBC, REST APIs \\
+\textbf{Distributed Systems} & System Design, Microservices, High Availability, Data Modeling, Idempotency, Consistent Hashing \\
+\textbf{AI/LLM} & Google Vertex AI, Gemini, AWS Bedrock, RAG, PGVector, LLM Integration, Speech-to-Text, Structured Output, Batch AI Pipelines \\
+\textbf{Data \& Performance} & MySQL, SQL Optimization, Database Migration, JMH, JMX, VisualVM, Eclipse MAT, Heap Analysis, GC Tuning \\
+\textbf{Cloud \& DevOps} & AWS (EKS, Bedrock), Docker, GitHub Actions, CI/CD \\
+\textbf{Telephony} & WebRTC, SIP/PJSIP, Asterisk, Contact-Center/CCaaS/CPaaS Systems \\
+\textbf{Security \& Testing} & TLS/JSSE, OAuth2, JWT, JUnit, Mockito, Integration Testing, Selenium \\
+\textbf{Frontend} & Vue.js, Nuxt.js, TypeScript, AngularJS \\
 \end{tabularx}
+
+%-----------INDEPENDENT PROJECTS-----------------
+\section{Selected Technical Projects \& Expertise}
+\resumeSubHeadingListStart
+\resumeItem{\textbf{AI/LLM Systems:} Designed Spring AI agent architectures with streaming chat, JDBC-backed persistent memory, Retrieval-Augmented Generation (RAG) with PGVector, tool invocation, AWS Bedrock/Google Vertex AI orchestration, and EKS deployment.}
+\resumeItem{\textbf{JVM Performance \& Security:} Applied JMH, JMX, VisualVM, Eclipse MAT, and garbage-collection tuning for performance analysis; implemented TLS/JSSE, OAuth2/JWT authentication, and secure sandboxing patterns.}
+\resumeItem{\textbf{Distributed Systems:} Applied idempotent API patterns, consistent hashing, microservices decomposition, and high-availability design across Java and Erlang systems.}
+\resumeSubHeadingListEnd
+
+\section{Technical Writing \& Independent Work}
+\resumeSubHeadingListStart
+\resumeItem{Baeldung contributor and creator of 100DaysOfJava / Java Learning Atlas, publishing practical material on JVM internals, performance, concurrency, security, distributed systems, and Spring AI/RAG.}
+\resumeSubHeadingListEnd
 
 %-----------EDUCATION-----------------
 \section{Education}

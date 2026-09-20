@@ -8,7 +8,8 @@ TocOpen = false
 slug = "posts/java/100DaysOfJava/day100-capstone.md"
 summary = "This challenge started as a way to learn more Java. Over time, it became a way to follow confusion down to memory, coordination, performance, and failure modes."
 topics = ["JVM & Performance"]
-title = "Day 100: What 100 Days of Java Actually Changed in How I Think About Software"
+title = "What 100DaysOfJava changed in how I investigate systems"
+seriesLabel = "Day 100 retrospective"
 [cover]
 alt = "day100"
 caption = "day100"
@@ -16,11 +17,9 @@ image = ""
 relative = false
 +++
 
-Calling this a 100-day challenge without qualification would be a little dishonest.
+This was not a 100-day streak. The dates make that clear. Day 26 was published on September 30, 2021. Day 66 arrived on January 20, 2023. Day 77 followed on March 14, 2024, Day 91 on August 15, 2025, and Day 99 on February 13, 2026.
 
-The posts themselves does not support that story. Day 26 is dated September 30, 2021. Day 66 lands on January 20, 2023. Day 77 is March 14, 2024. Day 91 is August 15, 2025. Day 99 is February 13, 2026. It was a very long, research-heavy stretch. It stretched across years. I sometimes stopped writing and then came back to it, and kept finding that the questions had changed.
-
-I started it with a much smaller idea in mind. I thought this was about learning more about backend using java.
+I stopped and restarted several times. The questions changed with me. What began as a way to learn more Java became a record of how I investigate runtime behavior.
 
 At the beginning, that mostly meant learning more APIs, more features, more idioms, and more little utilities I could reach for later. Some of the early posts are exactly that. They are small, direct, and useful in a narrow way: retrying a method with `TimerTask`, emulating a Pair, converting an `Iterator` into a `Spliterator`, working through individual language features one by one.
 
@@ -50,17 +49,17 @@ Even some of the posts I would now write differently were moving in that directi
 
 The other change is even simpler to name because I can feel it in the topics themselves: I became less interested in frameworks and more interested in systems and how are they working to make the things tha I want.
 
-The memory leak series around [Day 66](/posts/posts/java/100DaysOfJava/day66), the heap dump post, the JMX posts, and the OutOfMemory alert post all pulled in the same direction. They made memory stop feeling like a mysterious background concern and start feeling like something I could inspect. Retained references, heap state, threshold notifications, dump files, leak patterns, object lifetime: those are runtime-behavior topics, not framework topics.
+The memory leak series around [Day 66]({{< relref "posts/day-65-becoming-a-memory-plumber-a-tale-of-memory-leak-and-how-to-find-them.md" >}}), the heap dump post, the JMX posts, and the OutOfMemory alert post all pulled in the same direction. They made memory stop feeling like a mysterious background concern and start feeling like something I could inspect. Retained references, heap state, threshold notifications, dump files, leak patterns, object lifetime: those are runtime-behavior topics, not framework topics.
 
 Then the later memory-heavy posts pushed that further. In [Day 77](/posts/posts/java/100DaysOfJava/day77), I was writing to allocated memory through `Unsafe`. The next step was the safer FFM direction. By [Day 91](/posts/posts/java/100DaysOfJava/day91), I was looking at memory mapping not as a convenient API trick but as a question about where data actually lives, when it gets loaded, and how much of the work belongs to the heap versus the operating system.
 
 Even the JMH posts and the later performance posts helped here. They moved performance a little farther away from opinion and a little closer to measurement. The printing post is not really about `println()` versus file writing. It is about where overhead comes from and what kind of cost a friendly abstraction is hiding.That does not mean frameworks stopped mattering. They just stopped feeling sufficient as explanations.
 
-[Day 95](/posts/posts/java/100DaysOfJava/day95) and the two posts that follow it are broad on the surface. They cover concurrency tools. But even there, the interesting part is not "here are twelve APIs." The interesting part is the repeated warning that concurrency is not automatically a win, that the wrong synchronizer creates the wrong shape of failure, and that production systems need coordination as much as they need execution.
+[Day 95]({{< relref "posts/day95-part1.md" >}}) and the two posts that follow it are broad on the surface. They cover concurrency tools. But even there, the interesting part is not "here are twelve APIs." The interesting part is the repeated warning that concurrency is not automatically a win, that the wrong synchronizer creates the wrong shape of failure, and that production systems need coordination as much as they need execution.
 
 That theme becomes much more concrete in those later virtual-thread and event-loop posts. Once I started looking at virtual threads as continuations, heap-allocated stack chunks, mount and unmount behavior, pinning, carrier threads, selectors, and event loops, the old question "which framework should I use?". The new question I started to ask was what is happening inside and how can it help.
 
-The spliterator material that I thought I would write for [100th day](/posts/posts/java/100DaysOfJava/day100-spliterator) makes more sense to me as one late example of that shift than as the final centerpiece. The real lesson is not that I wrote a custom `Spliterator`. It is that `.parallel()` hid a work-distribution policy I had not thought about carefully enough. Once I noticed the growing-batch behavior, the problem stopped being "why is Java Streams slow?" and became "how is work being divided, why are cores going idle, and what happens when the default coordination strategy does not fit the workload?"
+The spliterator material that I thought I would write for [100th day]({{< relref "posts/day100-spliterator.md" >}}) makes more sense to me as one late example of that shift than as the final centerpiece. The real lesson is not that I wrote a custom `Spliterator`. It is that `.parallel()` hid a work-distribution policy I had not thought about carefully enough. Once I noticed the growing-batch behavior, the problem stopped being "why is Java Streams slow?" and became "how is work being divided, why are cores going idle, and what happens when the default coordination strategy does not fit the workload?"
 
 At the code level, the turning point was almost embarrassingly small:
 
@@ -97,8 +96,8 @@ This is not mastery. If anything, it has made me more aware of how much I still 
 
 That is also why [Chaos;Code;Clarity](https://chaoscodeclarity.substack.com/) my new newsletter where I will explore the chaotically beautiful world of Software Engineering and AI. This feels like a natural next step to me. Not because I am done with Java, and not because this challenge ended in some clean graduation. It feels natural because these posts was already moving there. The part I want to carry forward is the habit underneath it: `think, probe, measure, question the default story`, and `keep following the system until the behavior becomes a little less mysterious`.
 
-I started this trying to learn more Java. I am closing this challange by learning 
-- how deep the java ecosystem can be
-- how these deep abstractions create these modern api's
-- how to think about the systems behavior to determine what capabilites I have
-- how to think in systems
+I started this project to learn more Java. I am closing the numbered series with a better method: begin with a concrete question, inspect the system, measure what changes, and state what the evidence cannot prove.
+
+## Limitations
+
+The archive spans several years, JDK versions, and levels of rigor. Early posts are short learning notes, while later posts include larger experiments. Treat each article according to the versions, commands, and evidence it records. The series is a learning history, not one controlled study.

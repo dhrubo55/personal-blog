@@ -10,6 +10,10 @@ enableEmoji: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+ignoreFiles:
+  - 'content/day100\.md$'
+  - 'content/posts/day100\.md$'
+  - 'content/posts/mohibul-writing-guide\.md$'
 minify:
   disableXML: true
   minifyOutput: true
@@ -49,7 +53,7 @@ params:
   - Spring Boot
   - artificial intelligence
   - technical writing
-  images: ['profile-pic.jpg']
+  images: ['/images/social/default.png']
   ShowReadingTime: true
   ShowCodeCopyButtons: true
   pygmentsUseClasses: true
@@ -87,20 +91,12 @@ params:
   label:
     text: Mohibul Hassan
   homeInfoParams:
-    Title: "Hi there! \U0001F44B"
-    Content: |
-      Welcome to my website. This is the right place to discover more about me if you're interested. I share my thoughts, opinions, project showcases, and experiences as a software engineer.
-
-      Besides that, you'll find content on topics like software engineering, Java, JavaScript, artificial intelligence, and more.
-
-      If you enjoy reading the content, consider sharing it with your friends, family, and acquaintances. If you believe I could improve something, leave feedback through any of my contact details.
+    enabled: true
   socialIcons:
   - name: twitter
     url: https://twitter.com/@dhrubo555
   - name: github
     url: https://github.com/dhrubo55
-  - name: medium
-    url: https://medium.com/
   - name: linkedin
     url: https://www.linkedin.com/in/mohibulhassan
       # - name: facebook
@@ -115,47 +111,25 @@ params:
     hiddenInSingle: false
     linkFullImages: true
   footer:
-    text: '[Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
+    text: '[Resume](/resume/) · [RSS](/index.xml) · [Support](/support/) · [Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
 menu:
   main:
+  - name: Writing
+    identifier: writing
+    url: blog/
+    weight: 1
+  - name: Case studies
+    identifier: case-studies
+    url: case-studies/
+    weight: 2
   - name: About
     identifier: about
     url: about/
-    weight: 1
-  - name: Blog
-    identifier: blog
-    url: blog/
-    weight: 2
-  - name: 100DaysOfJava
-    identifier: 100DaysOfJava-knowledge-graph
-    url: java/100daysofjava/graph/
     weight: 3
-  - identifier: resume
-    name: Resume
-    url: resume.pdf
+  - name: Newsletter
+    identifier: newsletter
+    url: https://chaoscodeclarity.substack.com/subscribe
     weight: 4
-  - identifier: support
-    name: Support
-    url: support/
-    weight: 5
-  - name: RSS
-    identifier: rss
-    url: index.xml
-    weight: 6
-#   - identifier: projects
-#     name: Projects
-#     url: projects/
-#     weight: 3
-      # - name: Services
-      # identifier: hiring
-      # name: Services
-      # url: services/
-      #  weight: 4
-  # - name: Collaborate
-  #   identifier: collaborate
-  #   url: collaborations/
-  #   weight: 5
-  #   weight: 6
 markup:
   highlight:
     # anchorLineNos: true
