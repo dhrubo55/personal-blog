@@ -61,6 +61,7 @@ Assert-FileContains $about '7\+ years' 'The About page does not state current ex
 Assert-FileContains $about 'senior engineering roles' 'The About page does not name the work Mohibul welcomes.'
 Assert-FileOmits $about 'amateur Technical Writer' 'The About page still understates the writing work.'
 Assert-FileOmits $about '^\\\[Twitter\\\]:' 'Escaped reference definitions remain visible.'
+Assert-FileOmits $about '^# About Mohibul Hassan Chowdhury$' 'The About body duplicates the page-title heading.'
 Assert-FileContains $newsletter 'chaoscodeclarity\.substack\.com/subscribe' 'The newsletter call to action has the wrong destination.'
 Assert-FileContains $newsletterShortcode 'partial "newsletter_cta\.html" \.Page' 'The About-page newsletter shortcode does not reuse the shared partial.'
 Assert-FileContains $postHook 'eq \.Type "posts"' 'The article hook does not limit the newsletter invitation to posts.'
@@ -74,6 +75,7 @@ Assert-FileContains $caseStudies 'approximately 68 million records' 'The databas
 Assert-FileContains $caseStudies 'approximately 1\.8 million unnecessary writes per month' 'The write-reduction evidence is missing or unqualified.'
 Assert-FileContains $caseStudies 'estimated 50 to 100 GB' 'The storage estimate is missing its qualification.'
 Assert-FileContains $caseStudies 'Technical investigation' 'Day 99 is not labeled as a technical investigation.'
+Assert-FileOmits $caseStudies '^# Selected work$' 'The selected-work body duplicates the page-title heading.'
 Assert-FileContains $resumePage '\[Download the PDF\]\(/resume\.pdf\)' 'The HTML resume page does not link to the PDF.'
 Assert-FileContains $resumePage '\[Selected work\]\(/case-studies/\)' 'The HTML resume page does not link to selected work.'
 

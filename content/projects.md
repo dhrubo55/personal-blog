@@ -7,8 +7,6 @@ disableShare: true
 summary: Selected production work and technical investigations by Mohibul Hassan Chowdhury.
 ---
 
-# Selected work
-
 These examples separate production responsibilities from public technical investigations. Customer names and private data are omitted.
 
 ## Production call intelligence

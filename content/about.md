@@ -6,8 +6,6 @@ disableShare: true
 summary: Senior Software Engineer II working with Java, distributed systems, production AI, and reliability.
 ---
 
-# About Mohibul Hassan Chowdhury
-
 I'm a Senior Software Engineer II with 7+ years of experience building backend systems for US and European clients. My work centers on Java, distributed systems, production AI, and reliability.
 
 I like the part of engineering where a tidy abstraction meets an untidy production system. That has led me to work on call transcription and conversation intelligence, database migrations, payment systems, and failures that cross Java services, Erlang state machines, SQL, and messaging workflows.
