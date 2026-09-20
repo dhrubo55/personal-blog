@@ -119,8 +119,16 @@ Assert-FileContains $day100Spliterator '^## Limitations$' 'The Spliterator artic
 Assert-FileOmits $day100Spliterator 'the JDK gets wrong' 'The Spliterator article still makes a universal JDK claim.'
 Assert-FileOmits $day100Spliterator 'The default Stream API optimizes for the wrong thing' 'The Spliterator conclusion still overstates the default behavior.'
 Assert-FileOmits $day99 '95% of applications' 'Day 99 still contains the unsupported percentage claim.'
+Assert-FileOmits $day99 'I built both models in production' 'Day 99 still contains an unsupported production-experience claim.'
+Assert-FileOmits $day99 '500K concurrent WebSocket' 'Day 99 still contains an unsupported API-gateway anecdote.'
+Assert-FileOmits $day99 '45K requests/second' 'Day 99 still contains a result that conflicts with the recorded benchmark section.'
+Assert-FileOmits $day99 '10x easier' 'Day 99 still contains an unsupported productivity multiplier.'
+Assert-FileOmits $day99 'Stack traces work perfectly' 'Day 99 still overstates the debugging comparison.'
+Assert-FileOmits $day99 '1-5 microseconds' 'Day 99 still contains an unsupported context-switch estimate.'
 Assert-FileContains $day99 '^## Test context$' 'Day 99 does not put its test context up front.'
 Assert-FileContains $day99 '^TocOpen = false$' 'Day 99 opens its long contents panel by default on small screens.'
+Assert-FileOmits $day88 'The magic happens' 'Day 88 still uses dramatic filler in the architecture explanation.'
+Assert-FileOmits $day88 'made it perfect' 'Day 88 still overstates the model choice.'
 
 $editorialFiles = @($day99, $day88, $day66, $day100Capstone, $day100Spliterator)
 foreach ($editorialFile in $editorialFiles) {
@@ -164,12 +172,14 @@ if (-not $SourceOnly) {
     Assert-True ($atlasJson.edges.Count -eq 212) 'Atlas edge metadata does not match the edge array.'
 
     $redirectOnlyPaths = @('/day100/', '/posts/mohibul-writing-guide/', '/projects/')
+    $auditedLinkCount = 0
     Get-ChildItem -LiteralPath $PublicDir -Recurse -Filter '*.html' | ForEach-Object {
         $sourceFile = $_.FullName
         $html = Get-Content -Raw -LiteralPath $sourceFile
-        foreach ($match in [regex]::Matches($html, 'href=["''](?<href>/[^"''#?]*)')) {
+        foreach ($match in [regex]::Matches($html, 'href=(?:(?<quote>["''])(?<href>/[^"''#?]*)\k<quote>|(?<href>/[^\s>"''#?]+))')) {
             $href = $match.Groups['href'].Value
             if ($href.StartsWith('//') -or $redirectOnlyPaths -contains $href) { continue }
+            $auditedLinkCount += 1
             if ($href -eq '/') {
                 $target = Join-Path $PublicDir 'index.html'
             } elseif ($href.EndsWith('/')) {
@@ -180,6 +190,7 @@ if (-not $SourceOnly) {
             Assert-True (Test-Path -LiteralPath $target) "Broken internal link in $sourceFile`: $href"
         }
     }
+    Assert-True ($auditedLinkCount -gt 0) 'The generated same-origin link audit did not inspect any links.'
 }
 
 Write-Host 'Blog improvement smoke test passed.'

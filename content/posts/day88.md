@@ -41,7 +41,7 @@ I built a workflow that looks something like this:
 
 1.  **Audio Ingestion & Preparation**: The backend receives audio files and converts them to FLAC format. I chose FLAC because it preserves audio quality while keeping file sizes manageable.
 2.  **Cloud Storage**: These FLAC files get uploaded to Google Cloud Storage. This step is crucial - it lets Gemini access potentially large audio files without timing out or hitting memory limits.
-3.  **Vertex AI & Gemini 1.5**: Our Spring Boot app calls Vertex AI, pointing Gemini to the audio file's location. The magic happens in the prompt we send along with this request (more on that in a bit).
+3.  **Vertex AI & Gemini 1.5**: The Spring Boot application calls Vertex AI and provides the audio file's location. The prompt carries the transcription and formatting requirements described below.
 4.  **Processing & Storage**: Once Gemini does its thing, we parse the response, add our own confidence scoring, and store everything in our database.
 5.  **Notification/Feedback**: For user-triggered transcriptions, we send back success/failure notifications.
 
@@ -49,7 +49,7 @@ Using GCS as the middleman was a bit of extra work, but it paid off by making th
 
 ### Harnessing Gemini 1.5
 
-Gemini 1.5's massive context window and multimodal capabilities made it perfect for handling audio files directly via GCS URIs.
+Gemini 1.5 supported the required audio input and context through GCS URIs, which made it suitable for this workflow.
 
 #### Prompt Engineering for Precision
 
