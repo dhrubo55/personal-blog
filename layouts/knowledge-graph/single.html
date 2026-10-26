@@ -18,18 +18,12 @@
   </header>
 
   <section class="java-graph-explainer" aria-label="How to read this graph">
+    {{- range site.Data.java_graph_content.sections }}
     <article>
-      <h2>What this is</h2>
-      <p>Each node is one 100DaysOfJava post. The graph is an index for browsing the series by concept, not a replacement for reading the posts in order.</p>
+      <h2>{{ .title }}</h2>
+      <p>{{ .content | markdownify }}</p>
     </article>
-    <article>
-      <h2>Why edges exist</h2>
-      <p><strong>Sequence</strong> connects consecutive days. <strong>References</strong> come from links between posts. <strong>Topic links</strong> connect nearby posts with the same top-level topic.</p>
-    </article>
-    <article>
-      <h2>Source data</h2>
-      <p>The data is generated from the blog posts, their front matter topics/categories, and Markdown links. The fallback list below is the source post set.</p>
-    </article>
+    {{- end }}
   </section>
 
   <section class="java-graph-toolbar" aria-label="Graph controls">
@@ -113,7 +107,7 @@
 
   <section id="java-graph-fallback" class="java-graph-fallback">
     <h2>Fallback list</h2>
-    <p>If interactive rendering is unavailable, use this list of posts.</p>
+    <p>{{ site.Data.java_graph_content.fallback }}</p>
     <ul>
       {{- $posts := where .Site.RegularPages "Type" "posts" -}}
       {{- range $post := sort $posts "Date" "desc" -}}

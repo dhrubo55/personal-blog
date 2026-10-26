@@ -1,0 +1,16 @@
+{
+  "name": "mohibul-personal-blog",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/ai/build.mjs",
+    "test": "node --test tests/ai-*.test.mjs",
+    "verify:ai": "node scripts/ai/verify.mjs"
+  },
+  "devDependencies": {
+    "parse5": "8.0.1",
+    "remark": "15.0.1",
+    "remark-gfm": "4.0.1"
+  }
+}

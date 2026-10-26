@@ -9,10 +9,12 @@
 {{- $person := dict "@type" "Person" "name" $authorName "url" site.Home.Permalink "sameAs" $sameAs -}}
 {{- with site.Params.schema.jobTitle }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end -}}
 {{- with site.Params.schema.knowsAbout }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end -}}
+{{- with site.Params.contactEmail }}{{ $person = merge $person (dict "email" .) }}{{ end -}}
 
 {{- if .IsHome }}
 {{- $schema := merge (dict "@context" "https://schema.org" "image" $image "description" (site.Params.description | plainify) "mainEntityOfPage" site.Home.Permalink) $person -}}
 <script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "description" site.Params.description "publisher" $person | jsonify | safeJS }}</script>
 {{- else if (or .IsPage .IsSection) }}
 {{- $crumbs := slice -}}
 {{- range .Ancestors.Reverse -}}

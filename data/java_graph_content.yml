@@ -1,0 +1,8 @@
+sections:
+  - title: What this is
+    content: Each node is one 100DaysOfJava post. The graph is an index for browsing the series by concept, not a replacement for reading the posts in order.
+  - title: Why edges exist
+    content: "**Sequence** connects consecutive days. **References** come from links between posts. **Topic links** connect nearby posts with the same top-level topic."
+  - title: Source data
+    content: The data is generated from the blog posts, their front matter topics/categories, and Markdown links. The fallback list below is the source post set.
+fallback: If interactive rendering is unavailable, use this list of posts.

@@ -1,4 +1,4 @@
-baseURL: "https://mohibulsblog.netlify.app"
+baseURL: "https://mohibul.pages.dev/"
 locale: "en-US"
 title: "Mohibul Hassan"
 copyright: "© 2026 Mohibul Hassan Chowdhury. All rights reserved."
@@ -26,14 +26,14 @@ outputFormats:
     baseName: atom
     isPlainText: false
     noUgly: true
-  LLMS:
-    mediaType: text/plain
-    baseName: llms
+  AIDATA:
+    mediaType: application/json
+    baseName: ai-data
     isPlainText: true
     noUgly: true
     notAlternative: true
 outputs:
-  home: [HTML, RSS, ATOM, LLMS]
+  home: [HTML, RSS, ATOM, AIDATA]
   section: [HTML, RSS, ATOM]
   taxonomy: [HTML, RSS, ATOM]
   term: [HTML, RSS, ATOM]
@@ -41,6 +41,13 @@ params:
   env: production
   title: Mohibul Hassan
   author: Mohibul Hassan Chowdhury
+  contactEmail: mohibulhassan100@gmail.com
+  ai:
+    recentLimit: 50
+    maxFullCharacters: 500000
+    searchBots: [OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User]
+    trainingBots: [GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot, Bytespider]
+    excludedPaths: [/admin/, /api/, /dashboard/, /auth/, /collaborations/, /privacy-policy/, /terms-of-service-agreement/]
   description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast"
   keywords:
   - Mohibul Hassan Chowdhury

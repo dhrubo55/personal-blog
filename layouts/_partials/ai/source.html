@@ -1,0 +1,45 @@
+{{- $pages := slice -}}
+{{- range site.Pages -}}
+  {{- $excluded := "" -}}
+  {{- $path := .RelPermalink -}}
+  {{- range site.Params.ai.excludedPaths -}}
+    {{- if hasPrefix $path . }}{{ $excluded = "excluded path" }}{{ end -}}
+  {{- end -}}
+  {{- if .Draft }}{{ $excluded = "draft" }}{{ end -}}
+  {{- if .Params.robotsNoIndex }}{{ $excluded = "noindex" }}{{ end -}}
+  {{- if .Params.searchHidden }}{{ $excluded = "searchHidden" }}{{ end -}}
+  {{- if .Date.After now }}{{ $excluded = "future" }}{{ end -}}
+  {{- if and (not .ExpiryDate.IsZero) (.ExpiryDate.Before now) }}{{ $excluded = "expired" }}{{ end -}}
+  {{- $record := dict "path" .RelPermalink "kind" .Kind "excluded" $excluded -}}
+  {{- if not $excluded -}}
+    {{- $body := "" -}}
+    {{- $source := "" -}}
+    {{- with .File }}{{ $source = .Path }}{{ end -}}
+    {{- if $source }}{{ $body = .RawContent }}{{ end -}}
+    {{- $members := union .RegularPages .Sections -}}
+    {{- if .IsHome -}}
+      {{- $members = where site.RegularPages "Type" "in" site.Params.mainSections -}}
+      {{- $members = where $members "Params.hiddenInHomeList" "!=" "true" -}}
+    {{- else if eq .Layout "archives" -}}
+      {{- $members = where site.RegularPages "Type" "in" site.Params.mainSections -}}
+      {{- if site.Params.ShowAllPagesInArchive }}{{ $members = site.RegularPages }}{{ end -}}
+    {{- else if eq .Type "knowledge-graph" -}}
+      {{- $members = slice -}}
+      {{- range where site.RegularPages "Type" "posts" -}}
+        {{- $probe := lower (printf "%v %s %v %v" .Params.slug .RelPermalink .Params.category .Params.categories) -}}
+        {{- if in $probe "100daysofjava" }}{{ $members = $members | append . }}{{ end -}}
+      {{- end -}}
+    {{- else if eq .Kind "taxonomy" }}{{ $members = .Pages.ByTitle }}{{ end -}}
+    {{- $paths := slice -}}
+    {{- range $members }}{{ $paths = $paths | append .RelPermalink }}{{ end -}}
+    {{- $updated := "" -}}
+    {{- $published := "" -}}
+    {{- if not .Lastmod.IsZero }}{{ $updated = .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}{{ end -}}
+    {{- if not .PublishDate.IsZero }}{{ $published = .PublishDate.Format "2006-01-02" }}{{ end -}}
+    {{- $record = merge $record (dict "title" .Title "description" .Description "summary" ((.Description | default .Summary) | plainify | htmlUnescape) "body" $body "source" $source "type" .Type "layout" .Layout "section" .Section "members" $paths "updated" $updated "published" $published "placeholder" .Params.placeholder "hideSummary" .Params.hideSummary) -}}
+  {{- end -}}
+  {{- $pages = $pages | append $record -}}
+{{- end -}}
+{{- $ai := dict "recentLimit" site.Params.ai.recentLimit "maxFullCharacters" site.Params.ai.maxFullCharacters "searchBots" site.Params.ai.searchBots "trainingBots" site.Params.ai.trainingBots "excludedPaths" site.Params.ai.excludedPaths -}}
+{{- $site := dict "name" site.Title "author" site.Params.author "url" site.Home.Permalink "description" site.Params.description "contact" site.Params.contactEmail "home" site.Params.homeInfoParams "socials" site.Params.socialIcons "ai" $ai "graph" site.Data.java_graph_content -}}
+{{- return (dict "site" $site "pages" $pages) -}}

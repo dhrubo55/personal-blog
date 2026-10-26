@@ -1,0 +1,1 @@
+{{- partial "ai/source.html" . | jsonify -}}

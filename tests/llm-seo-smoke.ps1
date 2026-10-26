@@ -2,9 +2,9 @@ $ErrorActionPreference = 'Stop'
 
 $root = Resolve-Path (Join-Path $PSScriptRoot '..')
 $config = Join-Path $root 'config.yml'
-$llms = Join-Path $root 'layouts/llms.txt'
+$llms = Join-Path $root 'public/llms.txt'
 $schema = Join-Path $root 'layouts/_partials/templates/schema_json.html'
-$robots = Join-Path $root 'layouts/robots.txt'
+$robots = Join-Path $root 'public/robots.txt'
 $head = Join-Path $root 'layouts/_partials/extend_head.html'
 $footerConfig = Join-Path $root 'config.yml'
 
@@ -24,11 +24,11 @@ function Assert-FileContains {
     }
 }
 
-Assert-FileContains $config 'LLMS:' 'LLMS output format is missing.'
-Assert-FileContains $config 'home: \[HTML, RSS, ATOM, LLMS\]' 'Home output does not include LLMS.'
+Assert-FileContains $config 'AIDATA:' 'AI source output format is missing.'
+Assert-FileContains $config 'home: \[HTML, RSS, ATOM, (?:JSON, )?AIDATA\]' 'Home output does not include the AI source.'
 Assert-FileContains $config 'publisherType: Person' 'Person schema config is missing.'
 Assert-FileContains $config 'author: Mohibul Hassan Chowdhury' 'Author config is missing.'
-Assert-FileContains $llms '^# \{\{ site\.Title \}\}' 'LLMS template title is missing.'
+Assert-FileContains $llms '^# Mohibul Hassan' 'Generated LLMS title is missing. Run npm run build first.'
 Assert-FileContains $llms '## Articles' 'LLMS template does not list articles.'
 Assert-FileContains $schema '"Person"' 'Schema template does not emit Person data.'
 Assert-FileContains $schema '"BlogPosting"' 'Schema template does not emit BlogPosting data.'

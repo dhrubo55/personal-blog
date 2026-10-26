@@ -1,5 +1,8 @@
 .history
 .npm-cache
+node_modules/
 .tools
 public
 .hugo_build.lock
+
+.wrangler
