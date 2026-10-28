@@ -5,14 +5,16 @@
 {{- else -}}
   {{- range site.Params.socialIcons }}{{ $sameAs = $sameAs | append .url }}{{ end -}}
 {{- end -}}
-{{- $image := (index site.Params.images 0) | default (site.Params.assets.favicon | default "favicon.ico") | absURL -}}
-{{- $person := dict "@type" "Person" "name" $authorName "url" site.Home.Permalink "sameAs" $sameAs -}}
+{{- $image := "" -}}
+{{- with site.Params.images }}{{ $image = index . 0 | absURL }}{{ end -}}
+{{- $person := dict "@type" "Person" "@id" ("#author" | absURL) "name" $authorName "url" ("about/" | absURL) "sameAs" $sameAs -}}
 {{- with site.Params.schema.jobTitle }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end -}}
 {{- with site.Params.schema.knowsAbout }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end -}}
 {{- with site.Params.contactEmail }}{{ $person = merge $person (dict "email" .) }}{{ end -}}
 
 {{- if .IsHome }}
-{{- $schema := merge (dict "@context" "https://schema.org" "image" $image "description" (site.Params.description | plainify) "mainEntityOfPage" site.Home.Permalink) $person -}}
+{{- $schema := merge (dict "@context" "https://schema.org" "description" (site.Params.description | plainify) "mainEntityOfPage" site.Home.Permalink) $person -}}
+{{- with $image }}{{ $schema = merge $schema (dict "image" .) }}{{ end -}}
 <script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
 <script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "description" site.Params.description "publisher" $person | jsonify | safeJS }}</script>
 {{- else if (or .IsPage .IsSection) }}
@@ -30,9 +32,13 @@
 {{- $keywords := .Params.keywords | default .Params.tags | default .Params.category -}}
 {{- $page := dict "@context" "https://schema.org" "@type" $pageType "headline" (.Title | plainify) "name" (.Title | plainify) "description" ((.Description | default .Summary) | plainify) "url" .Permalink "inLanguage" (.Language.Lang | default "en-us") "author" $person "publisher" $person "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink) -}}
 {{- with $keywords }}{{ $page = merge $page (dict "keywords" .) }}{{ end -}}
+{{- with .Params.cover.image -}}
+  {{- $imageURL := . | absURL -}}
+  {{- if eq $.Params.cover.relative true }}{{ $imageURL = (path.Join $.RelPermalink .) | absURL }}{{ end -}}
+  {{- $page = merge $page (dict "image" $imageURL) -}}
+{{- end -}}
 {{- with .PublishDate }}{{ $page = merge $page (dict "datePublished" (.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
 {{- with .Lastmod }}{{ $page = merge $page (dict "dateModified" (.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
-{{- if eq $pageType "BlogPosting" }}{{ $page = merge $page (dict "articleBody" (.Plain | plainify)) }}{{ end -}}
 <script type="application/ld+json">{{ $page | jsonify | safeJS }}</script>
 {{- end }}
 {{- end -}}

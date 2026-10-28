@@ -1,0 +1,10 @@
+/* Chroma uses the same dark code surface in both page themes. */
+.chroma .lnt,
+.chroma .ln,
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs {
+  color: #b8bfd6;
+}

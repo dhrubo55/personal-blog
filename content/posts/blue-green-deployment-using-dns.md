@@ -47,7 +47,7 @@ This ability to simply roll traffic back to the existing production environment 
 
 The Domain Name System (DNS) is the phonebook of the Internet. DNS translates human readable domain names (for example, www.amazon.com) to machine readable IP addresses (for example, 192.0.2.44) .
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1666160051/images-from-blog/Feo0RvAXEAIpBmK_flbann.jpg)
+![DNS query path through recursive resolvers, root, top-level-domain and authoritative name servers](https://res.cloudinary.com/dlsxyts6o/image/upload/v1666160051/images-from-blog/Feo0RvAXEAIpBmK_flbann.jpg)
 
 Fig: DNS Query Explained
 
@@ -97,7 +97,7 @@ For test purpose we are going to do blue green deployment using docker container
 
 GUI DNS application will help us to write DNS query. But we can easily use a cmd application which can be automated through docker compose for easier blue-green switching.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1666002261/images-from-blog/Untitled_Diagram.drawio_fnp9cp.png)
+![Blue and green application environments with DNS routing traffic to the active environment](https://res.cloudinary.com/dlsxyts6o/image/upload/v1666002261/images-from-blog/Untitled_Diagram.drawio_fnp9cp.png)
 
 So the total Blue Green deployment process will be something like this
 

@@ -66,7 +66,7 @@ So if another program (or even another instance of your program) tries to read t
 
 Here you can get the whole idea how memory mapping is working behind the scene 
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1755235621/images-from-blog/Java-Memory-Mapping_vg0yot.svg)
+![Java memory-mapped file access through virtual memory, the operating system page cache and disk](https://res.cloudinary.com/dlsxyts6o/image/upload/v1755235621/images-from-blog/Java-Memory-Mapping_vg0yot.svg)
 
 ### The Java Layer: What's Really Happening
 

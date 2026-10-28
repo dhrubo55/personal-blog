@@ -125,7 +125,7 @@ Non-heap memory includes a method area shared among all threads and memory requi
 
 And for the application, the below diagram will give you an idea about how memory is distributed.
 
-![](http://brucehenry.github.io/blog/public/2018/02/07/JVM-Memory-Structure/JVM-Memory.png)
+![Per-thread stack, program counter and native-method areas beside shared method area and heap](http://brucehenry.github.io/blog/public/2018/02/07/JVM-Memory-Structure/JVM-Memory.png)
 
 so now lets go back to the method `findTenuredGenPool()`. 
 

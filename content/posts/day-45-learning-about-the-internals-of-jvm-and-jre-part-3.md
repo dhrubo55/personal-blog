@@ -86,7 +86,7 @@ Code does not always have to be compiled to OS/architecture-specific binaries. A
 
 ### Java Program’s Runtime Environment
 
-![](https://www.tutorialandexample.com/wp-content/uploads/2019/11/Difference-between-JDK-JRE-JVM.png)
+[JDK, JRE and JVM comparison diagram source](https://www.tutorialandexample.com/wp-content/uploads/2019/11/Difference-between-JDK-JRE-JVM.png)
 
 What does it take to execute a Java program on your computer? This is very close to an executable’s runtime environment; all we need to do is to make sure our java  source can turn into a proper bytecode.
 

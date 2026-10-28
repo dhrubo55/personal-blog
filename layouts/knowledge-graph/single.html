@@ -4,9 +4,7 @@
   {{- $jsonURL = .RelPermalink -}}
 {{- end -}}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/atlas/spacegrotesk-v22-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/java-graph.css">
 <script>document.body.classList.add("java-graph-layout");</script>
 
@@ -47,8 +45,8 @@
         <output id="java-graph-day-max-value">100</output>
       </div>
       <div class="java-graph-range-inputs">
-        <input id="java-graph-day-min" type="range" min="1" max="100" value="1">
-        <input id="java-graph-day-max" type="range" min="1" max="100" value="100">
+        <input id="java-graph-day-min" type="range" min="1" max="100" value="1" aria-label="Minimum day" aria-describedby="java-graph-day-min-value">
+        <input id="java-graph-day-max" type="range" min="1" max="100" value="100" aria-label="Maximum day" aria-describedby="java-graph-day-max-value">
       </div>
     </div>
 
@@ -85,7 +83,7 @@
       <h2 id="java-graph-inspector-title">Select a node</h2>
       <p id="java-graph-inspector-meta">Topic, day, and related context will appear here.</p>
       <p id="java-graph-inspector-summary">Tap or click a node to inspect it, then use Open post to read the article.</p>
-      <a id="java-graph-open-link" class="java-graph-open-link" href="#" hidden>Open post</a>
+      <a id="java-graph-open-link" class="java-graph-open-link" hidden>Open post</a>
       <section>
         <h3>Related posts</h3>
         <ul id="java-graph-related-list" class="java-graph-related-list">

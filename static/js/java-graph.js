@@ -69,6 +69,7 @@
   let model = null;
   let cy = null;
   let expandedElements = null;
+  let activeLayout = null;
   const adjacency = new Map();
 
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -81,10 +82,12 @@
     .replace(/\"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
+  const entityDecoder = document.createElement("textarea");
   const decodeHtmlEntities = (value) => {
-    const textarea = document.createElement("textarea");
-    textarea.innerHTML = String(value || "");
-    return textarea.value;
+    const text = String(value || "");
+    if (!/[&<\r\n\0]/.test(text)) return text;
+    entityDecoder.innerHTML = text;
+    return entityDecoder.value;
   };
 
   const setStatus = (message) => {
@@ -168,12 +171,14 @@
       topicColors,
       minDay,
       maxDay,
-      meta: raw.meta || {}
+      meta: raw.meta || {},
+      geometry: raw.geometry
     };
   };
 
   const buildExpandedElements = () => ({
     nodes: model.nodes.map((node) => ({
+      position: { ...model.geometry.expanded[node.id] },
       data: {
         id: node.id,
         kind: "post",
@@ -206,7 +211,7 @@
   const buildCollapsedElements = () => {
     const visibleTopics = new Map();
 
-    model.nodes.forEach((node) => {
+    model.nodes.filter((node) => node.day === 0 || (node.day >= state.dayMin && node.day <= state.dayMax)).forEach((node) => {
       const key = topicKey(node.topic);
       if (!visibleTopics.has(key)) {
         visibleTopics.set(key, {
@@ -229,6 +234,7 @@
       if (!sourceNode || !targetNode) {
         return;
       }
+      if (![sourceNode, targetNode].every((node) => node.day === 0 || (node.day >= state.dayMin && node.day <= state.dayMax))) return;
       const sourceTopic = topicKey(sourceNode.topic);
       const targetTopic = topicKey(targetNode.topic);
       if (sourceTopic === targetTopic) {
@@ -236,10 +242,11 @@
       }
       const ordered = [sourceTopic, targetTopic].sort();
       const bridgeKey = `${ordered[0]}::${ordered[1]}`;
-      bridgeMap.set(bridgeKey, (bridgeMap.get(bridgeKey) || 0) + 1);
+      bridgeMap.set(bridgeKey, { source: ordered[0], target: ordered[1], weight: (bridgeMap.get(bridgeKey)?.weight || 0) + 1 });
     });
 
     const nodes = [...visibleTopics.values()].map((topicNode) => ({
+      position: { ...model.geometry.collapsed[topicNode.id] },
       data: {
         id: topicNode.id,
         kind: "topic-hub",
@@ -252,8 +259,7 @@
       }
     }));
 
-    const edges = [...bridgeMap.entries()].map(([bridgeKey, weight], index) => {
-      const [source, target] = bridgeKey.split("::");
+    const edges = [...bridgeMap.values()].map(({ source, target, weight }, index) => {
       return {
         data: {
           id: `bridge-${index}`,
@@ -289,6 +295,7 @@
     cy = cytoscape({
       container: canvasEl,
       elements,
+      layout: { name: "preset", fit: false },
       wheelSensitivity: 0.18,
       style: [
         {
@@ -436,7 +443,6 @@
       renderGraph();
     });
 
-    runLayout();
   };
 
   const runLayout = () => {
@@ -444,6 +450,7 @@
       return;
     }
 
+    if (activeLayout) activeLayout.stop();
     const options = state.collapsed
       ? {
           name: "concentric",
@@ -467,7 +474,8 @@
           gravity: 0.22
         };
 
-    cy.layout(options).run();
+    activeLayout = cy.elements(":visible").layout(options);
+    activeLayout.run();
   };
 
   const updateInspector = (nodeId) => {
@@ -591,20 +599,30 @@
   };
 
   const renderGraph = () => {
+    if (activeLayout) { activeLayout.stop(); activeLayout = null; }
     const elements = state.collapsed ? buildCollapsedElements() : expandedElements;
 
-    if (!cy) {
-      createCy(elements);
-    } else {
-      cy.json({ elements });
-      runLayout();
-    }
+    cy.json({ elements });
 
     if (state.collapsed) {
       applyCollapsedFilters();
     } else {
       applyExpandedFilters();
     }
+    const positions = state.collapsed ? model.geometry.collapsed : model.geometry.expanded;
+    cy.nodes().positions(node => ({ ...positions[node.id()] }));
+    if (cy.nodes(":visible").length) cy.fit(cy.nodes(":visible"), 46);
+  };
+
+  const initializeGraph = async () => {
+    createCy({ nodes: [], edges: [] });
+    const elements = [...expandedElements.nodes, ...expandedElements.edges];
+    for (let offset = 0; offset < elements.length; offset += 16) {
+      cy.batch(() => cy.add(elements.slice(offset, offset + 16)));
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    applyExpandedFilters();
+    cy.fit(cy.nodes(":visible"), 46);
   };
 
   const syncDayLabels = () => {
@@ -620,22 +638,14 @@
     if (searchEl) {
       searchEl.addEventListener("input", (event) => {
         state.search = (event.target.value || "").trim().toLowerCase();
-        if (state.collapsed) {
-          applyCollapsedFilters();
-        } else {
-          applyExpandedFilters();
-        }
+        renderGraph();
       });
     }
 
     if (topicFilterEl) {
       topicFilterEl.addEventListener("change", (event) => {
         state.topic = event.target.value || "all";
-        if (state.collapsed) {
-          applyCollapsedFilters();
-        } else {
-          applyExpandedFilters();
-        }
+        renderGraph();
       });
     }
 
@@ -649,9 +659,7 @@
           }
         }
         syncDayLabels();
-        if (!state.collapsed) {
-          applyExpandedFilters();
-        }
+        renderGraph();
       });
     }
 
@@ -665,9 +673,7 @@
           }
         }
         syncDayLabels();
-        if (!state.collapsed) {
-          applyExpandedFilters();
-        }
+        renderGraph();
       });
     }
 
@@ -679,11 +685,7 @@
         } else {
           state.edgeTypes.delete(value);
         }
-        if (state.collapsed) {
-          renderGraph();
-        } else {
-          applyExpandedFilters();
-        }
+        renderGraph();
       });
     });
 
@@ -799,16 +801,22 @@
       }
       return response.json();
     })
-    .then((rawData) => {
+    .then(async (rawData) => {
       model = normalizeModel(rawData);
+      for (const [kind, ids] of [["expanded", model.nodes.map(node => node.id)], ["collapsed", model.topics.map(topicKey)]]) {
+        for (const id of ids) {
+          const point = model.geometry?.[kind]?.[id];
+          if (!point || !Number.isFinite(point.x) || !Number.isFinite(point.y)) throw new Error(`Missing graph position: ${id}`);
+        }
+      }
       expandedElements = buildExpandedElements();
 
       hydrateTopicFilter();
       setupDayControls();
+      await initializeGraph();
       renderTopicIndex();
       bindUi();
       updateClusterToggleText();
-      renderGraph();
 
       if (fallbackEl) {
         document.body.classList.add("java-graph-ready");

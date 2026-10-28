@@ -10,6 +10,8 @@ enableEmoji: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+frontmatter:
+  lastmod: [lastmod, date, publishDate]
 minify:
   disableXML: true
   minifyOutput: true
@@ -48,7 +50,7 @@ params:
     searchBots: [OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User]
     trainingBots: [GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot, Bytespider]
     excludedPaths: [/admin/, /api/, /dashboard/, /auth/, /collaborations/, /privacy-policy/, /terms-of-service-agreement/]
-  description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast"
+  description: "Mohibul Hassan Chowdhury writes about Java, JVM performance, and software engineering through code and investigations."
   keywords:
   - Mohibul Hassan Chowdhury
   - software engineering
@@ -56,7 +58,6 @@ params:
   - Spring Boot
   - artificial intelligence
   - technical writing
-  images: ['profile-pic.jpg']
   ShowCodeCopyButtons: true
   pygmentsUseClasses: true
   schema:
@@ -79,6 +80,12 @@ params:
   ShowShareButtons: true
   ShowPostNavLinks: true
   GoogleAnalyticsID: G-DCTB3KKNMK
+  AdSenseClient: ca-pub-9812767155750716
+  TwitterPixelID: o5htq
+  tracking:
+    googleAnalytics: false
+    adsense: false
+    twitter: false
   disableSpecial1stPost: false
   comments: false
   hidemeta: false
@@ -93,7 +100,7 @@ params:
   label:
     text: Mohibul Hassan
   homeInfoParams:
-    Title: "Hi there! \U0001F44B"
+    Title: "Investigating Java and how software behaves"
     Content: |
       Welcome to my website. This is the right place to discover more about me if you're interested. I share my thoughts, opinions, project showcases, and experiences as a software engineer.
 
@@ -175,6 +182,6 @@ markup:
     guessSyntax: false
     lineNos: true
     lineNumbersInTable: true
-    noClasses: true
+    noClasses: false
     style: native
 

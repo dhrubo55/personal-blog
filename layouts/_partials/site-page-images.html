@@ -1,0 +1,9 @@
+{{- $images := slice -}}
+{{- $sources := .Params.images -}}
+{{- if not .IsPage }}{{ $sources = $sources | default site.Params.images }}{{ end -}}
+{{- range $sources -}}
+  {{- $url := . | absURL -}}
+  {{- with $.Resources.GetMatch . }}{{ $url = .Permalink }}{{ end -}}
+  {{- $images = $images | append (dict "Permalink" $url) -}}
+{{- end -}}
+{{- return $images -}}

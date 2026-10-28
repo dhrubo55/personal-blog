@@ -56,7 +56,7 @@ The dynamics of the JMX technology architecture enables you to use it to monitor
 
 JMX technology provides a tiered architecture where managed resources and management applications can be integrated in the plug-and-play approach as shown in below image . A given resource is instrumented by one or more Java objects known as `Managed Beans (or MBeans)`, which are registered in a core managed object server known as the `MBean server`. This server acts as a management agent and can run on most Java-enabled devices.
 
-![](https://web.archive.org/web/20120609111042im_/http://java.sun.com/developer/technicalArticles/J2SE/fig1.gif)
+![JVM management interfaces connecting a management application to a managed JVM through agents and instrumentation](https://web.archive.org/web/20120609111042im_/http://java.sun.com/developer/technicalArticles/J2SE/fig1.gif)
 
 So in this part the topic of discussion will be the Manager Level. But before going into it let's get a overview of all the levels
 
@@ -70,7 +70,7 @@ So in this part the topic of discussion will be the Manager Level. But before go
 
 JMX API instrumentation can be accessed through existing management protocols. For example Simple Network Management Protocol (SNMP). Another way is through proprietary protocols. The MBean server relies on protocol adaptors and connectors to make a JMX agent accessible from management applications outside the agent’s JVM.
 
-![Java Management Extensions - Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
+[Java Management Extensions - Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
 
 Each **adaptor** provides a view through a specific protocol of all MBeans registered in the MBean server. For example, an HTML adaptor could display an MBean in a browser.
 
@@ -95,11 +95,11 @@ After downloading VisualVM when starting it will look for all the local JVM inst
 
 this configuration is for non-production use case as the port is open withou any SSL security. Here the jmx port will be 9875 and then we will need to connect to this port from visualvm. This port is by default given.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-22-24_ack8y7.png)
+![VisualVM connection dialog for adding a remote Java application](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-22-24_ack8y7.png)
 
 now after connecting with jmx port in visualvm we will get to see something like this
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-28-12_qtvwcv.png)
+![VisualVM overview of the IntelliJ IDEA JVM, including Java version, process details and JVM arguments](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-28-12_qtvwcv.png)
 
 where there is tabs like **monitor** ,**threads**, **sampler**, **profiler** and many more extensions. By using these we can monitor
 
@@ -111,7 +111,7 @@ where there is tabs like **monitor** ,**threads**, **sampler**, **profiler** and
 6. Check Platform and Custom MBeans for JVM and applications
 7. VisualGC which helps to visualize GC
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-34-28_pvax9m.png)
+![VisualVM monitoring charts for CPU, heap, classes and threads in the connected JVM](https://res.cloudinary.com/dlsxyts6o/image/upload/v1669364856/images-from-blog/Screenshot_from_2022-11-25_07-34-28_pvax9m.png)
 
 here we can see the memory and cpu usage of intellij IDE.
 

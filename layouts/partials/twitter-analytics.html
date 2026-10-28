@@ -1,3 +1,4 @@
+{{- if eq .Site.Params.tracking.twitter true }}
 <!-- Twitter universal website tag code -->
 <script>
   !function (e, t, n, s, u, a) {
@@ -7,7 +8,8 @@
       a = t.getElementsByTagName(n)[0], a.parentNode.insertBefore(u, a))
   }(window, document, 'script');
   // Insert Twitter Pixel ID and Standard Event data below
-  twq('init', 'o5htq');
+  twq('init', '{{ .Site.Params.TwitterPixelID }}');
   twq('track', 'PageView');
 </script>
 <!-- End Twitter universal website tag code -->
+{{- end }}

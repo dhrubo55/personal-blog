@@ -36,7 +36,7 @@ The term Heapdump describes **the JVM mechanism that generates a dump of all the
 
 Create heap dumps at regular intervals or when the application experiences an out-of-memory error. Heap dumps can be analyzed using tools like Eclipse Memory Analyzer (MAT) or VisualVM.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1679904629/images-from-blog/Screenshot_2023-03-20_232646_hztwtf.png)
+![VisualVM heap and thread monitoring charts during a memory investigation](https://res.cloudinary.com/dlsxyts6o/image/upload/v1679904629/images-from-blog/Screenshot_2023-03-20_232646_hztwtf.png)
 
 Fig 1: VisualVM
 
@@ -46,7 +46,7 @@ Analyze the heap dumps to identify the objects that are being held in memory but
 
 Java heap dumps can be analyzed using various tools, such as Eclipse Memory Analyzer (MAT) and VisualVM.
 
-![Preventing Server Crashes and Memory Leakage with Eclipse Memory Analyzer  Tool (MAT)](https://www.einfochips.com/blog/wp-content/uploads/2016/06/figure3.png)
+[Preventing Server Crashes and Memory Leakage with Eclipse Memory Analyzer  Tool (MAT)](https://www.einfochips.com/blog/wp-content/uploads/2016/06/figure3.png)
 
 Fig 2: Eclipse MAT
 

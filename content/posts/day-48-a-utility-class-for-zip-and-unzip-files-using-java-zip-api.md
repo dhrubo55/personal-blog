@@ -35,7 +35,7 @@ A ZIP file may contain one or more files or directories that may have been compr
 
 In java when used ZipInputStream and ZipOutputStream we  can create zip file and by using ZipEntry to entry the file in the `.zip` file. To better understand ZipEntry a picture of files and its zip file and what are ZipEntry regarding that file is given below.
 
-![](https://s1.o7planning.com/en/10195/images/18542.png)
+![Entries in a ZIP archive, including nested document and image paths](https://s1.o7planning.com/en/10195/images/18542.png)
 
 #### Zip Single File:
 
