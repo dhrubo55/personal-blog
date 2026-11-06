@@ -10,6 +10,8 @@ enableEmoji: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+frontmatter:
+  lastmod: [lastmod, date, publishDate]
 minify:
   disableXML: true
   minifyOutput: true
@@ -33,7 +35,7 @@ outputFormats:
     noUgly: true
     notAlternative: true
 outputs:
-  home: [HTML, RSS, ATOM, AIDATA]
+  home: [HTML, RSS, ATOM, JSON, AIDATA]
   section: [HTML, RSS, ATOM]
   taxonomy: [HTML, RSS, ATOM]
   term: [HTML, RSS, ATOM]
@@ -48,7 +50,7 @@ params:
     searchBots: [OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User]
     trainingBots: [GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot, Bytespider]
     excludedPaths: [/admin/, /api/, /dashboard/, /auth/, /collaborations/, /privacy-policy/, /terms-of-service-agreement/]
-  description: "Personal website for Mohibul Hassan where I share content based on my experiences as an Software Engineer and AI enthusiast"
+  description: "Mohibul Hassan Chowdhury writes about Java, distributed systems, production AI, and the evidence behind how software behaves."
   keywords:
   - Mohibul Hassan Chowdhury
   - software engineering
@@ -56,7 +58,6 @@ params:
   - Spring Boot
   - artificial intelligence
   - technical writing
-  images: ['profile-pic.jpg']
   ShowCodeCopyButtons: true
   pygmentsUseClasses: true
   schema:
@@ -78,7 +79,17 @@ params:
   ShowReadingTime: true
   ShowShareButtons: true
   ShowPostNavLinks: true
+  fuseOpts:
+    threshold: 0.3
+    minMatchCharLength: 2
+    limit: 12
   GoogleAnalyticsID: G-DCTB3KKNMK
+  AdSenseClient: ca-pub-9812767155750716
+  TwitterPixelID: o5htq
+  tracking:
+    googleAnalytics: false
+    adsense: false
+    twitter: false
   disableSpecial1stPost: false
   comments: false
   hidemeta: false
@@ -93,60 +104,59 @@ params:
   label:
     text: Mohibul Hassan
   homeInfoParams:
-    Title: "Hi there! \U0001F44B"
-    Content: |
-      Welcome to my website. This is the right place to discover more about me if you're interested. I share my thoughts, opinions, project showcases, and experiences as a software engineer.
-
-      Besides that, you'll find content on topics like software engineering, Java, JavaScript, artificial intelligence, and more.
-
-      If you enjoy reading the content, consider sharing it with your friends, family, and acquaintances. If you believe I could improve something, leave feedback through any of my contact details.
+    Eyebrow: "Mohibul Hassan Chowdhury · Software engineer & writer"
+    Title: "I build backend systems and explain how they behave."
+    Content: "I work across Java, distributed systems, and production AI. My writing follows concrete questions through code, measurements, and the occasional wrong assumption."
+    highlights:
+    - title: Java Learning Atlas
+      description: Follow 100 Java posts by topic and reading path.
+      url: java/100daysofjava/graph/
+    - title: Systems in practice
+      description: Production work and public investigations.
+      url: case-studies/
   socialIcons:
-  - name: twitter
-    url: https://twitter.com/@dhrubo555
   - name: github
     url: https://github.com/dhrubo55
-  - name: medium
-    url: https://medium.com/
   - name: linkedin
-    url: https://www.linkedin.com/in/mohibulhassan
-      # - name: facebook
-      # url: https://www.facebook.com/
+    url: https://www.linkedin.com/in/mohibulhassan/
   - name: email
     url: mailto:mohibulhassan100@gmail.com
-  - name: buymeacoffee
-    url: https://www.buymeacoffee.com/celurian92c
   cover:
     hidden: true
     hiddenInList: true
     hiddenInSingle: false
     linkFullImages: true
   footer:
-    text: '[Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
+    text: '[RSS](/index.xml) · [Terms of Service](/terms-of-service-agreement/) · [Privacy Policy](/privacy-policy/)'
 menu:
   main:
+  - name: Work
+    identifier: work
+    url: case-studies/
+    weight: -1
+  - name: Writing
+    identifier: blog
+    url: blog/
+    weight: 1
+  - name: Java Atlas
+    identifier: java-atlas
+    url: java/100daysofjava/graph/
+    weight: 2
   - name: About
     identifier: about
     url: about/
-    weight: 1
-  - name: Blog
-    identifier: blog
-    url: blog/
-    weight: 2
-  - name: 100DaysOfJava
-    identifier: 100DaysOfJava-knowledge-graph
-    url: java/100daysofjava/graph/
     weight: 3
+  - name: Search
+    identifier: search
+    url: search/
+    weight: 4
   - identifier: resume
     name: Resume
     url: resume.pdf
-    weight: 4
+    weight: 5
   - identifier: support
     name: Support
     url: support/
-    weight: 5
-  - name: RSS
-    identifier: rss
-    url: index.xml
     weight: 6
 #   - identifier: projects
 #     name: Projects
@@ -175,6 +185,6 @@ markup:
     guessSyntax: false
     lineNos: true
     lineNumbersInTable: true
-    noClasses: true
+    noClasses: false
     style: native
 

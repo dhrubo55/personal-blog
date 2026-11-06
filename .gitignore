@@ -4,5 +4,5 @@ node_modules/
 .tools
 public
 .hugo_build.lock
-
+.hugo-cache
 .wrangler

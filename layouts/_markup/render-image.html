@@ -1,0 +1,56 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $src := $u.String -}}
+{{- $dimensions := index site.Data.image_dimensions .Destination -}}
+{{- $svg := "" -}}
+{{- if not $u.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $u.Path -}}
+  {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+    {{- $src = .RelPermalink -}}
+    {{- if ne .MediaType.SubType "svg" -}}
+      {{- $dimensions = dict "width" .Width "height" .Height -}}
+    {{- else -}}
+      {{- $svg = .Content -}}
+    {{- end -}}
+    {{- with $u.RawQuery }}{{ $src = printf "%s?%s" $src . }}{{ end -}}
+    {{- with $u.Fragment }}{{ $src = printf "%s#%s" $src . }}{{ end -}}
+  {{- else -}}
+    {{- $staticPath := path.Join "static" $u.Path -}}
+    {{- if fileExists $staticPath -}}
+      {{- if eq (path.Ext $u.Path) ".svg" -}}
+        {{- $svg = readFile $staticPath -}}
+      {{- else -}}
+        {{- with images.Config $staticPath -}}
+          {{- $dimensions = dict "width" .Width "height" .Height -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $svg (not $dimensions) -}}
+  {{- with findRE `(?i)\bviewbox\s*=\s*["'][^"']+["']` $svg 1 -}}
+    {{- $values := findRE `[-+]?(?:\d*\.?\d+)(?:[eE][-+]?\d+)?` (index . 0) -}}
+    {{- if eq (len $values) 4 -}}
+      {{- $dimensions = dict "width" (int (math.Round (float (index $values 2)))) "height" (int (math.Round (float (index $values 3)))) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $attributes := merge .Attributes (dict "alt" (.PlainText | default .Text) "src" $src "title" .Title) -}}
+{{- if not (isset $attributes "loading") }}{{ $attributes = merge $attributes (dict "loading" "lazy") }}{{ end -}}
+{{- with $dimensions -}}
+  {{- if and (not (isset $attributes "width")) (not (isset $attributes "height")) -}}
+    {{- $attributes = merge $attributes (dict "width" .width "height" .height) -}}
+  {{- else if and (isset $attributes "width") (not (isset $attributes "height")) -}}
+    {{- $height := int (math.Round (mul (float (index $attributes "width")) (div (float .height) (float .width)))) -}}
+    {{- $attributes = merge $attributes (dict "height" $height) -}}
+  {{- else if and (isset $attributes "height") (not (isset $attributes "width")) -}}
+    {{- $width := int (math.Round (mul (float (index $attributes "height")) (div (float .width) (float .height)))) -}}
+    {{- $attributes = merge $attributes (dict "width" $width) -}}
+  {{- end -}}
+{{- end -}}
+<img
+  {{- range $key, $value := $attributes -}}
+    {{- if or (eq $key "alt") $value -}}
+      {{- printf " %s=\"%s\"" $key (transform.HTMLEscape (printf "%v" $value)) | safeHTMLAttr -}}
+    {{- end -}}
+  {{- end -}}>
+{{- /**/ -}}

@@ -60,7 +60,7 @@ A useful version of this test needs:
 - A consumed result so the JIT cannot remove the loop.
 - Representative data structures, because arrays, `ArrayList`, `LinkedList`, and custom collections do not behave the same way.
 
-For this series, Day 69 covers JMH in more detail: [Day 69 - Unlocking Java Performance Secrets](/posts/java/100DaysOfJava/day69/).
+For this series, Day 69 covers JMH in more detail: [Day 69 - Unlocking Java Performance Secrets](/posts/java/100daysofjava/day69/).
 
 The original LinkedIn graphic is preserved below.
 

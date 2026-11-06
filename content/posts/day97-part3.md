@@ -1279,7 +1279,7 @@ Before deploying concurrent code:
 
 From my understanding we can have draw this decision tree as our mental model where we can have some idea to choose which tool will go with whic types of task the best.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909602/Untitled-2025-12-04-2228_gwudj1.png)
+![Decision tree for choosing an approach when several threads need to coordinate](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909602/Untitled-2025-12-04-2228_gwudj1.png)
 
 
 ## Key Principles I've Learned

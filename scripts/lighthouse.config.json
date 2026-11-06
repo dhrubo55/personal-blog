@@ -1,0 +1,7 @@
+{
+  "version": "13.5.0",
+  "runs": 3,
+  "profiles": ["mobile", "desktop"],
+  "routes": ["/", "/about/", "/blog/", "/support/", "/java/100daysofjava/graph/", "/posts/posts/java/100daysofjava/day99/"],
+  "categories": ["performance", "accessibility", "best-practices", "seo"]
+}

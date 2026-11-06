@@ -1,6 +1,7 @@
 +++
 category = []
 date = 2023-04-15T00:00:00Z
+lastmod = 2026-10-28T00:00:00Z
 description = "Measuring the performance of different array copying methods in Java using JMH"
 draft = false
 showtoc = true
@@ -15,7 +16,7 @@ image = ""
 relative = false
 
 +++
-In software engineering, optimizing the performance of an application is crucial for delivering a high-quality user experience. One area where performance optimizations can make a significant impact is in the manipulation of arrays. Efficient array copying operations can lead to faster execution times and better application performance.
+Does reusing a destination array change the cost of copying 3,000 integers? This example compares loops and Java's array-copy APIs, and separates copying into an existing array from allocating a new one. [Day 69](/posts/java/100daysofjava/day69/) introduces the JMH lifecycle behind the example.
 
 This is where the Java Microbenchmark Harness (JMH) library comes in handy. JMH is a benchmarking tool designed specifically for measuring the performance of Java code. In this article, we will use JMH to measure the performance of various array copying methods.
 
@@ -81,12 +82,10 @@ Let's start by taking a look at the Java code provided above. The code defines a
 * **`loopCopyToExistingArray`**: This method uses a simple loop to copy the contents of one array to an existing array.
 * **`arraysCopy`**: This method uses the **`Arrays.copyOf`** method to copy the contents of one array to another.
 
-Each of these methods is annotated with the **`@Benchmark`** annotation, which tells JMH to measure their execution time.
+In the published example, only **`systemArraysCopyToExistingArray`** and **`loopCopyToExistingArray`** have active **`@Benchmark`** annotations. The other three annotations are commented out. Also, **`loopCopy`** allocates 30 elements for a 3,000-element source, so enabling it as written would exceed the destination's bounds. The source above is retained as published; it needs that correction before a five-method comparison can run.
 
 The **`main`** method of the **`ArrayCopyBenchmarks`** class uses the **`runBenchmark`** method to run the benchmarks and display the results. When you run the program, JMH will execute each benchmark method several times and report the average execution time.
 
-Now let's look at the results of the benchmarks. We can see that the **`systemArraysCopy`** and **`systemArraysCopyToExistingArray`** methods are the fastest, followed by the **`arraysCopy`** method. The **`loopCopy`** and **`loopCopyToExistingArray`** methods are the slowest.
+The original comparison did not include the raw JMH output, JDK and JMH versions, machine details, or run configuration. Without those records, this article cannot establish a performance ranking. Keep allocation and destination reuse separate when rerunning it, and report the uncertainty with the measured times.
 
-These results tell us that the **`System.arraycopy`** method is the most efficient way to copy arrays in Java. It is faster than using a loop or the **`Arrays.copyOf`** method. Additionally, the **`systemArraysCopyToExistingArray`** method is faster than creating a new array and copying the contents of the old array to it.
-
-In conclusion, optimizing array copying operations can have a significant impact on application performance. By using JMH to measure the performance of different array copying methods, we can determine which method is the most efficient. In this case, the **`System.arraycopy`** method is the clear winner. By incorporating this method into your code, you can improve the performance of your Java applications.
+The [System.arraycopy contract](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/System.html#arraycopy(java.lang.Object,int,java.lang.Object,int,int)) describes copying into an existing destination; it does not promise a universal speed advantage. The [JMH samples](https://github.com/openjdk/jmh/tree/master/jmh-samples/src/main/java/org/openjdk/jmh/samples) cover warmup, forks and benchmark design. Use the [Java Atlas](/java/100daysofjava/graph/) to follow the related JVM and performance investigations.

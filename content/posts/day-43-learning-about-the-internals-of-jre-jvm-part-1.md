@@ -40,11 +40,11 @@ A virtual machine is the emulated equivalent of a computer system that runs on t
 
 If the virtual machine is stored on a virtual disk, this is often referred to as a disk image. A disk image may contain the files for a virtual machine to boot, or, it can contain any other specific storage needs.
 
-![](https://img.brainkart.com/imagebk12/FTtnlOD.jpg)
+![A traditional application running on its host operating system, compared with applications on separate virtual machines sharing hardware](https://img.brainkart.com/imagebk12/FTtnlOD.jpg)
 
 There are many type of VM and many layers where virtualization can be done and they are
 
-![](https://img.brainkart.com/imagebk12/oJDo3bd.jpg)
+![Java application, JVM, operating system and hardware layers compared across Windows, Unix and Macintosh platforms](https://img.brainkart.com/imagebk12/oJDo3bd.jpg)
 
 There are five layers where virtualization can be possible. For understanding JVM (Java virtual Machine) that is a application level vm.
 
@@ -71,6 +71,6 @@ JVM has some important tasks to perform and those are
 
 **JVM Architecuture**
 
-![The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
+[The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
 
 In Part 2 details discussion about JVM will be posted

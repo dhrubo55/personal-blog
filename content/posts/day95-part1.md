@@ -998,7 +998,7 @@ public class MicroserviceBootstrap {
 
 ### Visualizing CountDownLatch
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764302698/Untitled-2025-11-28-0958_l1wrub.png)
+![CountDownLatch sequence in which worker threads count down and release the main thread waiting in await](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764302698/Untitled-2025-11-28-0958_l1wrub.png)
 
 ### Trade-offs and Limitations
 

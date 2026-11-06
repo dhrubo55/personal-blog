@@ -77,7 +77,7 @@ When `socket.read()` blocks, the continuation calls `yield(scope)`. This doesn't
 
 ***
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1768479106/virtual_thread_inner_working_gs7pjt.png)
+![Virtual-thread execution across carrier threads, parking and unmounting during blocking I/O](https://res.cloudinary.com/dlsxyts6o/image/upload/v1768479106/virtual_thread_inner_working_gs7pjt.png)
 
 ## The Stack Problem: Why Heap Allocation Matters
 

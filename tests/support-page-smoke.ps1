@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $root = Resolve-Path (Join-Path $PSScriptRoot '..')
 $supportPage = Join-Path $root 'content/support.md'
-$supportCss = Join-Path $root 'assets/css/extended/support.css'
+$supportCss = Join-Path $root 'assets/css/pages/support.css'
 $config = Join-Path $root 'config.yml'
 
 function Assert-FileContains {

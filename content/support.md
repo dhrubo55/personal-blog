@@ -2,6 +2,7 @@
 title: Support Mohibul Hassan
 url: "/support"
 hidemeta: true
+supportStyles: true
 disableShare: true
 summary: Support Mohibul Hassan's writing and software engineering projects.
 ---
@@ -245,7 +246,7 @@ summary: Support Mohibul Hassan's writing and software engineering projects.
       <p class="support-card-label">Scan QR</p>
       <p id="support-qr-title" class="support-qr-heading">QR code</p>
       <p id="support-qr-sub" class="support-detail"></p>
-      <img id="support-qr-img" src="" alt="Payment QR code" loading="lazy">
+      <img id="support-qr-img" alt="Payment QR code" width="280" height="280" loading="lazy">
     </div>
   </div>
 

@@ -14,7 +14,7 @@ image = ""
 relative = false
 
 +++
-![The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
+[The JVM Architecture Explained - DZone Java](https://www.javainterviewpoint.com/java-virtual-machine-architecture-in-java/jvm-architecture/)
 
 JVM has 4 major parts
 
@@ -47,7 +47,7 @@ The Java platform uses a delegation model for loading classes. The basic idea is
 3. The findClass method of ClassLoader searches for the class in the current class loader if the class wasn't found by the parent class loader. You will probably want to override this method when you instantiate a class loader subclass in your application.
 4. The class java.net.URLClassLoader serves as the basic class loader for extensions and other JAR files, overriding the findClass method of java.lang.ClassLoader to search one or more specified URLs for classes and resources.
 
-![](https://docs.oracle.com/cd/E19501-01/819-3659/images/dgdeploy2.gif)
+![Java source compiled into class files, loaded and verified before interpretation or just-in-time compilation](https://docs.oracle.com/cd/E19501-01/819-3659/images/dgdeploy2.gif)
 
 ```Java
 		System.out.println(Day44.class.getClassLoader());
@@ -95,7 +95,7 @@ The Java Virtual Machine has a heap that is shared among all Java Virtual Machin
 
 Heap Memory can be accessed by any thread is further divided into three generations **Young Generation**, **Old** & **PermGen(Permanent Generation)**. When object is created then it first go to Young generation(especially Eden space) when objects get old then it moves to Old/tenured Generation. In PermGen space all static & instance variables name-value pairs(name-references for object) are stored. Below is image showing heap structure of java.
 
-![](https://i.stack.imgur.com/ZzVu5.png)![](https://www.jvmhost.com/articles/how-can-i-monitor-memory-usage-of-my-tomcat-jvm/jvm_memory_diagram1.png)
+![JVM memory split into heap, non-heap and other memory, with thread stacks and direct buffers](https://i.stack.imgur.com/ZzVu5.png)![Heap young and old generations alongside permanent generation and code cache in an older JVM memory model](https://www.jvmhost.com/articles/how-can-i-monitor-memory-usage-of-my-tomcat-jvm/jvm_memory_diagram1.png)
 
 You can manually increase heap size by some JVM parameters as shown in images. Suppose we have a simple class Day44 then increasing its memory by following parameters:-
 

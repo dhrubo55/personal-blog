@@ -52,7 +52,7 @@ Non-blocking I/O takes a different approach: one thread, many connections, expli
 
 ### What is I/O multiplexing 
 
-I/O multiplexing breaks down to kernel-level efficiency: one thread polls multiple [file descriptors](/posts/posts/java/100DaysOfJava/day75#file-descriptor-exhaustion) via system calls like [`select()`/`poll()`/`epoll()`](https://jvns.ca/blog/2017/06/03/async-io-on-linux--select--poll--and-epoll/), reacting only to ready I/O events to avoid per-connection blocking.
+I/O multiplexing breaks down to kernel-level efficiency: one thread polls multiple [file descriptors](/posts/posts/java/100daysofjava/day75#file-descriptor-exhaustion) via system calls like [`select()`/`poll()`/`epoll()`](https://jvns.ca/blog/2017/06/03/async-io-on-linux--select--poll--and-epoll/), reacting only to ready I/O events to avoid per-connection blocking.
 
 At the OS kernel level, I/O operations cross between user space and kernel space. With a platform-thread-per-connection design, a blocking `socket.read()` leaves that thread waiting for data. Large connection counts can therefore make thread memory and scheduling part of the system's resource budget.
 
@@ -136,7 +136,7 @@ while (true) {
 
 This ping-pongs data efficiently. For production systems, you'd add write queues (only register `OP_WRITE` when the queue is non-empty) and handle partial reads/writes properly. See in the below diagram how this event loop works.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1770990437/Java-Reactor_e5h3ft.svg)
+![Java NIO reactor loop registering channels with a selector and dispatching ready read and write events](https://res.cloudinary.com/dlsxyts6o/image/upload/v1770990437/Java-Reactor_e5h3ft.svg)
 
 The selector waits when no registered I/O is ready. When a channel becomes ready, the loop processes that event without assigning a dedicated platform thread to every idle connection. The design still has scheduling, system-call, buffer, and handler costs; it changes where those costs appear.
 

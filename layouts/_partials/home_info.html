@@ -1,0 +1,34 @@
+{{- with site.Params.homeInfoParams }}
+<section class="home-info" aria-labelledby="home-title">
+  <h1 id="home-title">{{ .Title }}</h1>
+  <div class="home-details">
+  <p class="home-byline">{{ .Eyebrow }}</p>
+  <p class="home-intro">{{ .Content }}</p>
+  <div class="home-actions">
+    <a class="home-action home-action-primary" href="{{ "case-studies/" | relURL }}">Explore my work <svg class="site-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+    <a class="home-action home-action-secondary" href="{{ "resume.pdf" | relURL }}">View résumé</a>
+  </div>
+  <div class="home-social" aria-label="Find me elsewhere">
+    <span>Elsewhere</span>
+    {{ partial "social_icons.html" (dict "align" .AlignSocialIconsTo) }}
+  </div>
+  </div>
+</section>
+
+<section class="home-highlights" aria-label="Explore the site">
+  {{- range .highlights }}
+  <a class="home-highlight" href="{{ .url | relURL }}">
+    <strong>{{ .title }}</strong>
+    <span>{{ .description }}</span>
+    <svg class="home-highlight-arrow site-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg>
+  </a>
+  {{- end }}
+</section>
+
+<div class="home-section-heading">
+  <div>
+    <h2>Recent writing</h2>
+  </div>
+  <a href="{{ "blog/" | relURL }}">All writing <svg class="site-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+</div>
+{{- end }}

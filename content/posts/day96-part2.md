@@ -66,7 +66,7 @@ This is a **3-part series** on Java Concurrency:
 
 Part 1 showed how to execute work concurrently. But execution alone isn't enough. Real systems need **coordination**:
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909602/Untitled-2025-12-04-2228_gwudj1.png)
+![Decision tree for choosing an approach when several threads need to coordinate](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909602/Untitled-2025-12-04-2228_gwudj1.png)
 
 Think of it like a construction project:
 - Workers need to sync at checkpoints (CyclicBarrier)
@@ -150,7 +150,7 @@ public class BatchProcessor {
 ### Visualizing CyclicBarrier
 Here's a sequence diagram showing how `CyclicBarrier` works:
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909831/Untitled-2025-12-05-1042_snaqyv.png)
+![CyclicBarrier sequence in which worker threads wait at the barrier, run the barrier action and resume together](https://res.cloudinary.com/dlsxyts6o/image/upload/v1764909831/Untitled-2025-12-05-1042_snaqyv.png)
 
 ### Trade-offs and Limitations
 

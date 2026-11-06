@@ -38,7 +38,7 @@ Look, I'm not usually one to praise PHP. But credit where it's due.
 
 PHP 8.2 introduced `#[SensitiveParameter]`, and it's dead simple:
 
-![](https://pbs.twimg.com/media/G2FRP80XgAAy7f6?format=jpg&name=large)
+![PHP readonly class with a sensitive password parameter highlighted in the constructor](https://pbs.twimg.com/media/G2FRP80XgAAy7f6?format=jpg&name=large)
 
 Just use that attribute on a parameter, and boom. If an exception gets thrown, the parameter shows up as `Object(SensitiveParameterValue)` instead of the actual password. No configuration. No third-party library. Just works.
 

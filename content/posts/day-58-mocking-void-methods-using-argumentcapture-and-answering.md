@@ -16,7 +16,7 @@ relative = false
 +++
 When unit testing any java class which have void methods inside it and also needed to be mocked. Then we mock them in 4 ways using mockito's mocking method's and they are -
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1667032140/images-from-blog/mockito-mocking-void-method.drawio_e1afrl.png)
+![Mockito options for stubbing void methods, including doNothing, doThrow, doAnswer and doCallRealMethod](https://res.cloudinary.com/dlsxyts6o/image/upload/v1667032140/images-from-blog/mockito-mocking-void-method.drawio_e1afrl.png)
 
 1. doNothing() & ArgumentCapture
 2. doThrow()

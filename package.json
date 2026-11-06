@@ -2,14 +2,23 @@
   "name": "mohibul-personal-blog",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22.19"
+  },
   "scripts": {
     "build": "node scripts/ai/build.mjs",
-    "test": "node --test tests/ai-*.test.mjs",
+    "test": "node --test tests/ai-*.test.mjs tests/site-*.test.mjs",
+    "audit:site": "node scripts/audit-site.mjs",
+    "audit:lighthouse": "node scripts/audit-lighthouse.mjs",
+    "audit:browser": "node scripts/audit-browser.mjs",
     "verify:ai": "node scripts/ai/verify.mjs"
   },
   "devDependencies": {
+    "chrome-launcher": "1.2.1",
+    "cytoscape": "3.29.2",
+    "lighthouse": "13.5.0",
     "parse5": "8.0.1",
+    "puppeteer-core": "25.16.0",
     "remark": "15.0.1",
     "remark-gfm": "4.0.1"
   }

@@ -11,4 +11,4 @@ draft: false
 
 I am not actively maintaining a public collaboration page right now.
 
-For writing, software engineering, or project discussions, use the contact links on the [About page](../about/#contact-me).
+For writing, software engineering, or project discussions, use the contact links on the [About page](../about/#work-and-contact).

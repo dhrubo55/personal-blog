@@ -4,6 +4,8 @@ import { cp, mkdir, readFile, readdir, realpath, rm, writeFile } from 'node:fs/p
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildRegistry, buildDiscovery } from './registry.mjs';
+import { addGeometry } from '../graph-layout.mjs';
+import { auditSite } from '../audit-site.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const staging = path.join(root, '.tools', 'ai-staging');
@@ -61,7 +63,9 @@ async function build() {
     .map(file => '/' + path.relative(staging, file).replaceAll('\\', '/'));
   data.site.staticMarkdownPaths = staticMarkdownPaths;
   for (const page of data.pages.filter(page => !page.excluded && page.type === 'knowledge-graph')) {
-    page.graph = JSON.parse(await readFile(path.join(staging, decodeURIComponent(page.path), 'index.json'), 'utf8'));
+    const graphFile = path.join(staging, decodeURIComponent(page.path), 'index.json');
+    page.graph = addGeometry(JSON.parse(await readFile(graphFile, 'utf8')));
+    await writeFile(graphFile, JSON.stringify(page.graph) + '\n');
   }
   const routes = buildRegistry(data);
   const metadata = routes.map(({ body, ...route }) => route);
@@ -106,6 +110,9 @@ async function build() {
   const sources = data.pages.filter(page => !page.excluded && page.source).map(page => ({ path: page.path, source: page.source }));
   await writeFile(path.join(root, '.tools', 'ai-coverage.json'), JSON.stringify({ routes: metadata, exclusions, sources,
     aggregate: { characters: discovery.full.length, included: discovery.included, omitted: discovery.omitted } }, null, 2));
+  const quality = await auditSite(staging, { tracking: config.params.tracking });
+  await writeFile(path.join(root, '.tools', 'site-quality-build.json'), JSON.stringify(quality, null, 2) + '\n');
+  if (quality.errors.length) throw new Error(`Site quality failed before publication: ${JSON.stringify(quality.errors.slice(0, 10))}`);
   await clearGenerated(output);
   await cp(staging, output, { recursive: true });
   console.log(`AI build: ${routes.length} Markdown routes; ${discovery.full.length} aggregate characters; ${discovery.omitted} complete pages omitted from aggregate.`);

@@ -16,7 +16,7 @@ relative = false
 +++
 In part one we disscussed about JMX and its remote management layer. In this one we are going to understand its second layer which is Agent layer.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
+[Memory Analyzer diagram source](https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JMX_Architecture.svg/400px-JMX_Architecture.svg.png)
 
 ### Agent Overview
 
@@ -220,18 +220,18 @@ The MBean needs a `ObjectName` to identify it within the MBeanServer. The name m
 
 After running the program it will run a thread in the background as `while(true)` so after selecting the running program from visualvm we will get something like this
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-34-49_crystz.png)
+![VisualVM MBeans view for exploring a running Java application](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-34-49_crystz.png)
 
 I have run this program in intellij Scratch so visualVM is registering it as that. Now if i click on the mbean menu i will see something like
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-35-09_vwpz8s.png)
+![VisualVM MBean details showing management attributes exposed by the JVM](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-35-09_vwpz8s.png)
 
 where we can see `com.simple.app` which we have given in the `PlafromMBean` registration. After expanding it we will see the name of the object which is `SystemStatus`
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-26_loqy0l.png)
+![VisualVM SystemStatus MBean showing the custom Uptime attribute at 14 seconds](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-26_loqy0l.png)
 
 after opening the SystemStatus we can see the `uptime` that we have defined for getting the uptime of the program. This metric will be updated as per the program. So if we press `refresh` then we can see the updated value of the uptime metric. 
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-31_mpqgyn.png)
+![The same VisualVM SystemStatus MBean after refresh, with Uptime updated to 61 seconds](https://res.cloudinary.com/dlsxyts6o/image/upload/v1670572950/images-from-blog/Screenshot_from_2022-12-09_08-36-31_mpqgyn.png)
 
 Here the uptime metric changed from 14 to 61 seconds. So we can define metrics using mbeans and get information.

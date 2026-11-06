@@ -24,7 +24,7 @@ Traditional hashing techniques often result in significant rehashing of keys whe
 
 ## Key Concepts
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1716810696/consistent_hashing_uxq5xo.png)
+![Consistent hashing ring with data keys assigned to nodes A, B, C and D](https://res.cloudinary.com/dlsxyts6o/image/upload/v1716810696/consistent_hashing_uxq5xo.png)
 
 Fig: Consistent Hashing
 

@@ -12,7 +12,8 @@ Run a local preview:
 hugo server
 ```
 
-Install Node.js 22 or newer and Hugo Extended 0.146.0 or newer. Install the
+Use Node.js 22.19 or newer and Hugo Extended 0.146.7 for reproducible quality
+checks. Install the
 build dependencies and run a production build:
 
 ```powershell
@@ -115,6 +116,74 @@ HTML build exists in `.tools/ai-baseline/`, it also compares the full parsed
 HTML while excluding the intentional metadata changes. With a local URL,
 it fetches every alternate and tests the Worker protocol. The report is
 written to `.tools/ai-verification.json`.
+
+## Site quality
+
+Google Analytics, AdSense and the Twitter advertising pixel are disabled by
+default. Enable each deliberately through the independent boolean settings
+`params.tracking.googleAnalytics`, `params.tracking.adsense` and
+`params.tracking.twitter` in `config.yml`. Their existing identifiers remain
+configured. Enabling one does not enable the others. Default quality audits
+expect all three to remain disabled.
+
+The Atlas receives deterministic preset coordinates during the staged build.
+Filtering and collapsing reuse those coordinates. The Re-layout button is
+the only action that starts a new force layout. Support CSS is fingerprinted
+and loaded only by `/support/`.
+
+The Atlas serves its existing Space Grotesk and JetBrains Mono fonts locally.
+Their unmodified files, source records and SIL Open Font License notices are
+in `static/fonts/atlas/`.
+
+The build audits every generated HTML file before replacing `public/`. A
+missing image alternative or dimension, broken internal URL or fragment,
+unlabeled range control, invalid schema, or unexpected integration stops
+publication and leaves the previous artifact in place. The build report is
+`.tools/site-quality-build.json`. See [the content checklist](docs/content-quality.md)
+for image descriptions, remote dimensions and benchmark evidence.
+
+Run the artifact audit and browser checks after building:
+
+```powershell
+npm run audit:site
+node scripts/serve-site.mjs public 8792
+# In another terminal, with the preview running:
+npm run verify:ai -- http://127.0.0.1:8792/
+npm run audit:browser -- http://127.0.0.1:8792/
+npm run audit:lighthouse -- http://127.0.0.1:8792/ public .tools/site-quality/lighthouse
+```
+
+Restart the preview after each build. Set `CHROME_PATH` to the installed
+Chrome executable if automatic discovery cannot find it. The browser check
+covers desktop/mobile, both themes, Atlas controls and fallback, code contrast,
+support tabs and QR controls, and actual tracking/stylesheet requests.
+The preview negotiates gzip for text assets, matching normal compressed
+delivery. Before/after measurements must use the same preview server.
+
+Lighthouse 13.5.0 runs sequentially in fresh Chrome profiles, with ordinary
+network access and cold caches. Each of the six routes in
+`scripts/lighthouse.config.json` has three mobile and three desktop runs.
+Reports retain browser/settings, OS/CPU, Node version, source commit and a
+SHA-256 identity covering every generated artifact. The runner reports medians,
+raw JSON/HTML, failed measurements and target shortfalls separately. It exits
+unsuccessfully if a measurement fails or a category remains below 100.
+Performance comparisons require the same browser, host, build tools, theme
+revision and presets. Local and CI scores are separate evidence sets.
+Some desktop browser bridges expose decoded text responses to Chrome even
+when the server sends gzip. Reports retain that observed transport detail;
+these preview scores must not be presented as production wire measurements.
+
+The independent `Site quality` pull-request workflow uses the tracked theme,
+Hugo 0.146.7 and Node 22.19.0. It runs correctness checks and retains reports;
+it has read-only repository permissions and no deployment credentials.
+Production publication remains a separate step. Before publishing, retain
+the current known-good Cloudflare deployment ID. Verify the new deployment's
+HTML, CSS, graph JSON, Markdown and discovery files against the reviewed
+artifact; the Markdown catalog identity alone does not cover every asset.
+Use Cloudflare's previous deployment for rollback if verification fails.
+
+Search Console indexing and AI referrals require their own observations.
+Lighthouse scores do not establish indexing, rankings or citations.
 
 ## Rights
 

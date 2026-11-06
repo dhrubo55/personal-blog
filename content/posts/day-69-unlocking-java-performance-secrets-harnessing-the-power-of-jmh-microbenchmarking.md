@@ -1,6 +1,7 @@
 +++
 category = ["100DaysOfJava"]
 date = 2023-04-05T00:00:00Z
+lastmod = 2026-10-28T00:00:00Z
 description = "Exploring benchmarking harness in Java and how its use to understand performance"
 showtoc = true
 slug = "/java/100DaysOfJava/day69"
@@ -24,7 +25,7 @@ A benchmark harness is a software that provides the infrastructure to conduct be
 
 ### What is JMH:
 
-JMH is built on top of the Java Virtual Machine's (JVM) HotSpot compiler infrastructure. It uses the Just-In-Time (JIT) compiler to optimize code at runtime, which means that the code is executed multiple times before the actual benchmark is run. This ensures that the benchmark results are accurate and consistent.
+JMH runs benchmark code through warmup and measurement iterations. Warmup gives the JVM time to compile frequently executed code, but it does not guarantee that a benchmark represents production behavior. Forks, benchmark state, allocation and the workload still affect what the result means. The [OpenJDK JMH samples](https://github.com/openjdk/jmh/tree/master/jmh-samples/src/main/java/org/openjdk/jmh/samples) show these pitfalls in runnable examples.
 
 To achieve this, JMH generates a benchmarking harness that consists of a loop that executes the benchmark method multiple times. This loop is called a "measurement iteration" and it is executed several times to ensure that the benchmark results are reliable.
 
@@ -32,7 +33,7 @@ To achieve this, JMH generates a benchmarking harness that consists of a loop th
 
 we'll explore the different phases of the JMH execution lifecycle and what happens during each phase.
 
-![](https://res.cloudinary.com/dlsxyts6o/image/upload/v1681057025/images-from-blog/JMH_uiajzf.png)
+![JMH lifecycle from setup through warmup and measurement iterations to result aggregation and teardown](https://res.cloudinary.com/dlsxyts6o/image/upload/v1681057025/images-from-blog/JMH_uiajzf.png)
 
 Fig: JMH
 

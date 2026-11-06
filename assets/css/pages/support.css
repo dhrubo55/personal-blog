@@ -1,8 +1,8 @@
 .support-shell {
-    --support-accent: #0f766e;
-    --support-accent-strong: #0d9488;
+    --support-accent: var(--accent);
+    --support-accent-strong: var(--primary);
     --support-gold: #b7791f;
-    --support-blue: #2563eb;
+    --support-blue: #1d4ed8;
     --support-card-border: color-mix(in srgb, var(--border), var(--primary) 8%);
     max-width: 760px;
     margin: 0 auto;
@@ -12,14 +12,16 @@
     box-sizing: border-box;
 }
 
+.dark .support-card-icon {
+    color: var(--primary);
+}
+
 .support-hero {
     margin: 6px 0 22px;
     padding: 28px;
     border: 1px solid var(--support-card-border);
     border-radius: var(--radius);
-    background:
-        linear-gradient(135deg, color-mix(in srgb, var(--entry), var(--support-accent) 7%), var(--entry) 58%),
-        var(--entry);
+    background: var(--entry);
 }
 
 .support-kicker,
@@ -82,12 +84,12 @@
 .support-button-primary {
     border: 1px solid var(--support-accent);
     background: var(--support-accent);
-    color: #fff;
+    color: var(--theme);
 }
 
 .support-button-primary:hover {
     background: var(--support-accent-strong);
-    color: #fff;
+    color: var(--theme);
 }
 
 .support-button-secondary {
@@ -206,8 +208,8 @@
 }
 
 .support-card-icon-bank {
-    background: color-mix(in srgb, #2563eb, var(--theme) 84%);
-    color: #2563eb;
+    background: color-mix(in srgb, var(--support-blue), var(--theme) 84%);
+    color: var(--support-blue);
     font-size: 0.78rem;
 }
 
@@ -294,11 +296,11 @@
 .support-card-link {
     border: 1px solid var(--support-accent);
     background: var(--support-accent);
-    color: #fff;
+    color: var(--theme);
 }
 
 .support-card-link:hover {
-    color: #fff;
+    color: var(--theme);
     background: var(--support-accent-strong);
 }
 

@@ -6,6 +6,7 @@
 <!-- End of Google Search Console Tools -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
+{{- if eq .Site.Params.tracking.googleAnalytics true }}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.GoogleAnalyticsID}}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -14,6 +15,7 @@
 
   gtag('config', '{{ .Site.Params.GoogleAnalyticsID}}');
 </script>
+{{- end }}
 <!-- End of Global site tag (gtag.js) - Google Analytics -->
 
 {{- with .OutputFormats.Get "RSS" }}
@@ -26,5 +28,13 @@
 <link rel="describedby" type="text/plain" href="{{ "llms-full.txt" | absURL }}">
 <link rel="describedby" type="text/plain" href="{{ "ai.txt" | absURL }}">
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9812767155750716"
+{{- if eq .Site.Params.tracking.adsense true }}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ .Site.Params.AdSenseClient }}"
      crossorigin="anonymous"></script>
+{{- end }}
+
+{{- if .Params.supportStyles }}
+{{- with resources.Get "css/pages/support.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
+{{- end }}
