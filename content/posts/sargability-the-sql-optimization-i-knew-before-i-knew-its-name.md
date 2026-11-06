@@ -6,20 +6,15 @@ draft = true
 ShowToc = true
 TocOpen = false
 slug = "sql/sargability"
-summary = "The index was there, but the query still scanned. ChatGPT explained why, and gave me a name for a rewrite I already used: SARGability."
+summary = "The index was there, but the query still scanned. I knew the rewrite. ChatGPT gave me its name: SARGability."
 topics = ["Databases & SQL"]
 title = "SARGability: the SQL optimization I knew before I knew its name"
-[cover]
-alt = ""
-caption = ""
-image = ""
-relative = false
 +++
-Recently, while rewriting a SQL query, I found a term in ChatGPT's output: SARGability. I had never heard of it. When ChatGPT explained it, I thought this technique I used quite often when I wrote range queries. I just did not know it had a name.
+The query filtered the `transcripts` table on `YEAR(created_at) = 2026`. The column had an index. `EXPLAIN` showed a full table scan anyway.
 
-This post explains why a function on an indexed column can stop the database from using the index for a range lookup, and how to rewrite the query so it can. Each example shows MySQL 8.4 and PostgreSQL.
+I knew the rewrite I would try, because I had made similar changes before. I thought of each one as a separate trick, next to dropping a `LOWER()` or a `CAST()` from a `WHERE` clause. Then, while I worked on the rewrite, ChatGPT's output used a word I had never seen: SARGability. It was the name for all of them.
 
-Here is the kind of query I was rewriting. In MySQL:
+Here is the query, in MySQL:
 
 ```sql
 SELECT *
@@ -27,17 +22,20 @@ FROM transcripts
 WHERE YEAR(created_at) = 2026;
 ```
 
-PostgreSQL has no `YEAR()` function. The same filter uses `EXTRACT`:
+And the rewrite:
 
 ```sql
 SELECT *
 FROM transcripts
-WHERE EXTRACT(YEAR FROM created_at) = 2026;
+WHERE created_at >= '2026-01-01 00:00:00'
+  AND created_at <  '2027-01-01 00:00:00';
 ```
 
-The `transcripts` table had an index on `created_at`, but `EXPLAIN` showed a full table scan. I knew the rewrite I would try, because I had made similar changes before. What I did not know was that the idea behind it had a name.
+Both queries return the same rows. Only the second one lets MySQL search the index.
 
-In the examples below, `created_at` is a `DATETIME` column in MySQL and a `timestamp` column in PostgreSQL. It holds UTC values and has a plain index.
+**SARG** is short for *search argument*, a term from IBM's System R query optimizer ([Selinger et al., 1979](https://doi.org/10.1145/582095.582099)). A predicate is **SARGable** when the database can use it as a search argument for an index. In practice, the indexed column stands alone on one side of the comparison, and the other side is a constant or a bind parameter. `YEAR(created_at) = 2026` fails that test, because the column is inside a function. `created_at >= '2026-01-01 00:00:00'` passes it.
+
+In this post, `created_at` holds UTC values and has a plain B-tree index. The plans come from MySQL 8.4. PostgreSQL behaves the same way, with a few differences in syntax and types, and gets its own section near the end.
 
 To see why the rewrite works, start with how a B-tree index orders its values.
 
@@ -68,46 +66,45 @@ Smith -> count 5 -> keep
 
 The phonebook still has an order. The new question cannot use that order to narrow the search.
 
+`YEAR(created_at) = 2026` creates the same mismatch. The B-tree stores full timestamp values in order. It does not store the year of each timestamp unless I create an index on that expression.
 
+![B-tree index on created_at, with leaf keys from 2025-11-03 to 2027-01-01 in sorted order. The predicate YEAR(created_at) = 2026 cannot be turned into a seek on those keys.](https://res.cloudinary.com/dlsxyts6o/image/upload/f_auto,q_auto/v1790919027/ChatGPT_Image_Oct_2_2026_10_30_34_AM-1_dypykp.png)
 
-`YEAR(created_at) = 2026` creates the same mismatch, and so does the `EXTRACT` version. The B-tree stores full timestamp values in order. It does not store the year of each timestamp unless I create an index on that expression.
+MySQL does not translate `YEAR(created_at) = 2026` back into a range of timestamps. With only a plain index on `created_at`, it computes the year for each row and compares it with 2026. If no other condition narrows the work, that means a full table scan, or a full index scan when the index holds every column the query needs.
 
-![B-tree index on the timestamp column, with leaf keys from 2025-11-03 to 2027-01-01 in order. The predicate YEAR(createdAt) = 2026 cannot be turned into a seek on those raw keys.](https://res.cloudinary.com/dlsxyts6o/image/upload/v1790919027/ChatGPT_Image_Oct_2_2026_10_30_34_AM-1_dypykp.png)
+## Why the range works
 
-With only a plain index on `created_at`, the database cannot turn this predicate into a timestamp range. It has to compute the year for each row and compare it with 2026. If no other condition narrows the work, that means a full table scan, or a full index scan when the index holds every column the query needs.
+So back to the rewrite. The range query compares the column itself with two constants, and the order of the B-tree becomes useful again.
 
-![Table of eight rows from 2025 to 2027. The database computes YEAR() for every row and keeps only the three rows where the result is 2026.](https://res.cloudinary.com/dlsxyts6o/image/upload/v1790919023/ChatGPT_Image_Oct_2_2026_10_30_36_AM-2_riapb2.png)
+![The same B-tree with the range query. The lower bound points at the 2026-01-01 leaf key and the upper bound at 2027-01-01, and the keys between them are highlighted.](https://res.cloudinary.com/dlsxyts6o/image/upload/f_auto,q_auto/v1790919027/ChatGPT_Image_Oct_2_2026_10_30_39_AM-3_vhbmwc.png)
 
-The exact plan depends on the database and its optimizer.
+The database goes down the tree to the first entry on or after `2026-01-01 00:00:00`, reads the entries in order, and stops when it reaches `2027-01-01 00:00:00`. MySQL calls this the `range` access method. From the [MySQL manual](https://dev.mysql.com/doc/refman/8.4/en/range-optimization.html):
 
-## Rewrite the predicate as a range
+> The `range` access method uses a single index to retrieve a subset of table rows that are contained within one or several index value intervals.
 
-SARG is short for *search argument*, a term from IBM's System R query optimizer ([Selinger et al., 1979](https://doi.org/10.1145/582095.582099)). A predicate is SARGable when the database can use it as a search argument for an index. In practice, the indexed column appears alone on one side of the comparison, and a constant appears on the other.
+![Range seek in four steps: follow the tree from the root to the first key on or after 2026-01-01, read the keys in order, return their rows, and stop before 2027-01-01.](https://res.cloudinary.com/dlsxyts6o/image/upload/f_auto,q_auto/v1790919022/ChatGPT_Image_Oct_2_2026_10_30_40_AM-4_lyoi7p.png)
 
-For this example, I can express the same request as a range. This query works in both MySQL and PostgreSQL:
+## What EXPLAIN showed
 
-```sql
-SELECT *
-FROM transcripts
-WHERE created_at >= '2026-01-01 00:00:00'
-  AND created_at <  '2027-01-01 00:00:00';
-```
+The plans below come from a test table, not from production. It has 200,001 rows and an indexed `DATETIME(3)` column named `created_at`: one row every 1,576 seconds from 2020-01-01 to 2029-12-27, plus one extra row that matters later. 20,011 of the rows fall in 2026. The index is named `idx_created`. I ran both queries through `EXPLAIN` on MySQL 8.4. The table below shows the columns that matter.
 
-Now the predicate compares the indexed column with two constant values. The order of the B-tree becomes useful again.
+| Query | `type` | `possible_keys` | `key` | `rows` |
+|---|---|---|---|---|
+| `YEAR()` filter | `ALL` | `NULL` | `NULL` | 199,060 |
+| Range filter | `range` | `idx_created` | `idx_created` | 38,708 |
+| `YEAR()` filter, `SELECT created_at` only | `index` | `NULL` | `idx_created` | 199,060 |
 
-![The same B-tree with the range query. The lower bound points at the 2026-01-01 leaf key and the upper bound at 2027-01-01, and the 2026 keys between them are highlighted.](https://res.cloudinary.com/dlsxyts6o/image/upload/v1790919027/ChatGPT_Image_Oct_2_2026_10_30_39_AM-3_vhbmwc.png)
+For the `YEAR()` query, `possible_keys` is `NULL`. The [MySQL manual](https://dev.mysql.com/doc/refman/8.4/en/explain-output.html) says what that means:
 
-The database can seek to the lower boundary, read the matching entries, and stop at the upper boundary. MySQL calls this the `range` access method. It uses one index to read the rows inside one or more intervals of index values. PostgreSQL shows the same work as an `Index Scan` or a `Bitmap Index Scan`, with both boundaries in the `Index Cond` line of the plan.
+> If this column is NULL (or undefined in JSON-formatted output), there are no relevant indexes.
 
-![Range seek in four steps: follow the tree from the root to the first key on or after 2026-01-01, read the keys in order, return their rows, and stop before 2027-01-01.](https://res.cloudinary.com/dlsxyts6o/image/upload/v1790919022/ChatGPT_Image_Oct_2_2026_10_30_40_AM-4_lyoi7p.png)
+MySQL did not consider `idx_created` at all, and `type` is `ALL`, a full table scan. For the range query, `idx_created` appears in both columns and `type` is `range`.
 
-The range is half-open: it includes the lower boundary and excludes the upper one. `< '2027-01-01 00:00:00'` includes every timestamp in 2026, whatever the column's fractional-second precision. A condition such as `<= '2026-12-31 23:59:59'` can miss a row stamped `23:59:59.500` when the column stores fractional seconds. MySQL `DATETIME(3)` does, and so does PostgreSQL `timestamp`, which keeps microseconds by default.
+The third row is easy to misread. `key` shows `idx_created`, but `type` is `index`. MySQL read every entry in the index instead of every row in the table, because the index holds the only column this query selects. It still computed `YEAR()` for every entry.
 
-Fractional seconds can also move a row into the wrong year before any query runs. A plain MySQL `DATETIME` column stores whole seconds, so MySQL rounds the fraction when the row is inserted. Insert `'2026-12-31 23:59:59.500'` and MySQL stores `2027-01-01 00:00:00`. Every query after that counts it as a 2027 row, and no `WHERE` clause can change that. If the fraction matters, give the column the precision you need, such as `DATETIME(3)`.
+![Eight index entries read in created_at order. The engine computes YEAR() for each one and keeps only the three where the result is 2026.](https://res.cloudinary.com/dlsxyts6o/image/upload/f_auto,q_auto/v1790919023/ChatGPT_Image_Oct_2_2026_10_30_36_AM-2_riapb2.png)
 
-The boundaries also depend on time zones. Here, `created_at` holds UTC values. If "2026" means a local business year, calculate the two UTC boundaries first, then compare the unchanged column with them. For a business year in Dhaka (UTC+6), the range runs from `'2025-12-31 18:00:00'` to `'2026-12-31 18:00:00'`.
-
-A MySQL `TIMESTAMP` column and a PostgreSQL `timestamptz` column work differently from `DATETIME` and `timestamp`. Both read a literal without an offset in the session time zone. For those types, write the boundaries in the session time zone, or set the session time zone to UTC first.
+The `rows` column is an estimate. For InnoDB tables, the manual says "this number is an estimate, and may not always be exact." The range query matched 20,011 rows, and MySQL estimated 38,708. These were plain `EXPLAIN` runs, so they have no timings. `EXPLAIN ANALYZE` runs the query and reports actual rows and time.
 
 ## A usable index is not a chosen index
 
@@ -115,18 +112,79 @@ A SARGable predicate makes an index-based path possible. It does not force the o
 
 If most rows in the table are from 2026, scanning the table may cost less than following the index and fetching nearly every row. Table size, data distribution, the selected columns, and the table statistics all affect the decision.
 
+The test table shows this. A range from `2021-01-01` to `2030-01-01` covers about 90% of its rows. For that query, MySQL lists `idx_created` in `possible_keys`, but `key` is `NULL` and `type` is `ALL`. It considered the index and chose a full table scan.
+
 So the rewrite gives the optimizer an index range to consider. The optimizer still decides whether to use it.
 
 A non-SARGable predicate does not guarantee a full scan either. Some optimizers rewrite a few specific expressions. SQL Server, for example, can still [seek an index on a `datetime` column](https://lobsterpot.com.au/blog/2021/03/09/beware-the-width-of-the-covering-range/) for `CAST(col AS date) = @d`. These rewrites are exceptions, and they differ between databases.
 
-MySQL and PostgreSQL can also index the expression itself. MySQL 8.0.13 and later support functional key parts. The expression needs its own parentheses:
+## Getting the boundaries right
+
+The range is half-open: it includes the lower boundary and excludes the upper one. `< '2027-01-01 00:00:00'` includes every timestamp in 2026, whatever the column's fractional-second precision.
+
+A closed range such as `<= '2026-12-31 23:59:59'` can miss rows. The test table has one extra row at `2026-12-31 23:59:59.500` to show this:
+
+| Filter | Rows |
+|---|---|
+| `YEAR(created_at) = 2026` | 20,011 |
+| `>= '2026-01-01 00:00:00' AND < '2027-01-01 00:00:00'` | 20,011 |
+| `>= '2026-01-01 00:00:00' AND <= '2026-12-31 23:59:59'` | 20,010 |
+
+The closed range missed that one row.
+
+Fractional seconds can also move a row into the wrong year before any query runs. A plain MySQL `DATETIME` column stores whole seconds, and by default MySQL rounds the fraction when the row is inserted. Inserting `'2026-12-31 23:59:59.500'` into a `DATETIME` column stores `2027-01-01 00:00:00`. Every query after that counts it as a 2027 row, and no `WHERE` clause can change that. The `TIME_TRUNCATE_FRACTIONAL` SQL mode makes MySQL truncate instead of round. If the fraction matters, give the column the precision you need, such as `DATETIME(3)`.
+
+The boundaries also depend on time zones. Here, `created_at` holds UTC values. If "2026" means a local business year, calculate the two UTC boundaries first, then compare the unchanged column with them. For a business year in Dhaka (UTC+6), the range runs from `'2025-12-31 18:00:00'` to `'2026-12-31 18:00:00'`.
+
+A MySQL `TIMESTAMP` column works differently from `DATETIME`. MySQL reads a literal without an offset in the session time zone. On the test server, with the session time zone set to `+06:00`, inserting `'2026-01-01 00:00:00'` into a `TIMESTAMP` column and reading it back at `+00:00` returned `2025-12-31 18:00:00`. For `TIMESTAMP` columns, write the boundaries in the session time zone, or set the session time zone to UTC first.
+
+## Or index the expression
+
+MySQL can also index the expression itself. MySQL 8.0.13 and later support functional key parts. The expression needs its own parentheses:
 
 ```sql
 CREATE INDEX idx_transcripts_created_year
   ON transcripts ((YEAR(created_at)));
 ```
 
+Without the extra pair, `ON transcripts (YEAR(created_at))`, MySQL 8.4 returns `ERROR 1064 (42000)`, a syntax error. With the index in place, `EXPLAIN` for the original `YEAR()` query shows `type` = `ref` and `key` = `idx_transcripts_created_year`.
+
 MySQL can also use an index on a generated column when the query expression matches the column's definition exactly.
+
+The index must match the expression the query searches. For a year filter, I still try the range rewrite first, because it needs no extra index. The plain index on `created_at` also serves other ranges, such as one month or the last seven days. The `YEAR()` index serves only queries that filter on `YEAR(created_at)`, and every extra index adds work to each insert.
+
+## If you use PostgreSQL
+
+The PostgreSQL 17 test table has the same shape: `created_at` is `timestamp`, there are 200,048 rows, the same extra row is at `23:59:59.500`, and the three counts are again 20,011, 20,011 and 20,010.
+
+PostgreSQL has no `YEAR()` function:
+
+```text
+ERROR:  function year(timestamp without time zone) does not exist
+```
+
+The same filter uses `EXTRACT`, and the plan is a sequential scan:
+
+```sql
+EXPLAIN SELECT * FROM transcripts
+WHERE EXTRACT(YEAR FROM created_at) = 2026;
+```
+
+```text
+ Gather  (cost=1000.00..5139.13 rows=1000 width=63)
+   Workers Planned: 1
+   ->  Parallel Seq Scan on transcripts  (cost=0.00..4039.13 rows=588 width=63)
+         Filter: (EXTRACT(year FROM created_at) = '2026'::numeric)
+```
+
+The range query works unchanged, and both boundaries appear in the `Index Cond` line:
+
+```text
+ Index Scan using idx_created on transcripts  (cost=0.42..857.80 rows=20069 width=63)
+   Index Cond: ((created_at >= '2026-01-01 00:00:00'::timestamp without time zone) AND (created_at < '2027-01-01 00:00:00'::timestamp without time zone))
+```
+
+Look at `rows=1000` in the `EXTRACT` plan. 20,011 rows matched. PostgreSQL keeps statistics on `created_at`, but not on the year computed from it, so the planner used a default estimate.
 
 PostgreSQL supports indexes on expressions:
 
@@ -135,28 +193,51 @@ CREATE INDEX idx_transcripts_created_year
   ON transcripts ((EXTRACT(YEAR FROM created_at)));
 ```
 
-This works for a `timestamp` column. PostgreSQL rejects it for `timestamptz`, because index expressions must be immutable and the year of a `timestamptz` value depends on the session time zone.
+After this index and an `ANALYZE`, the `EXTRACT` query uses the new index:
 
-In both databases, the index must match the expression the query searches. For a year filter, I still try the range rewrite first, because it needs no extra index.
+```text
+ Index Scan using idx_transcripts_created_year on transcripts  (cost=0.42..812.71 rows=20245 width=63)
+   Index Cond: (EXTRACT(year FROM created_at) = '2026'::numeric)
+```
+
+The estimate also changed, from 1,000 to 20,245. [`pg_statistic`](https://www.postgresql.org/docs/current/catalog-pg-statistic.html) "also stores statistical data about the values of index expressions," so `ANALYZE` now collects statistics on the year.
+
+PostgreSQL `timestamp` keeps microseconds, so the closed range `<= '2026-12-31 23:59:59'` misses the `.500` row here too.
+
+`timestamptz` is different. The same expression index on a `timestamptz` column fails:
+
+```text
+ERROR:  functions in index expression must be marked IMMUTABLE
+```
+
+The year of a `timestamptz` value depends on the session's `TimeZone` setting, so the expression is not immutable. That setting also changes how PostgreSQL reads a literal. With `TimeZone` set to `Asia/Dhaka`, `'2026-01-01 00:00:00'::timestamptz` is `2025-12-31 18:00:00` in UTC. For `timestamptz` columns, write the boundaries with an explicit offset, such as `'2026-01-01 00:00:00+00'`, or set the session time zone first.
 
 ## The question I ask now
 
 Functions in a `WHERE` clause are sometimes necessary. An expression index may be the right design for a query the application runs often.
 
-But when I see `LOWER(email)`, a `CAST` on `order_id`, arithmetic on `price`, or a year taken from `created_at` inside a predicate, I pause. I ask four questions:
+But when I see `LOWER(email)`, a `CAST` on `order_id`, date arithmetic on `created_at`, or a year taken from `created_at` inside a predicate, I pause. I ask four questions:
 
 1. Does the index store the value the predicate searches?
 2. Can I move the transformation to the constant side and compare the column directly?
 3. Would an expression index or generated column better match the real access pattern?
 4. Does `EXPLAIN` show the access path I expected?
 
-The last question matters most. A rewrite is only a hypothesis until the execution plan confirms it.
+The last question matters most. In MySQL, check the `type` column of the `EXPLAIN` output. `ALL` is a full table scan, `index` is a full index scan, and `range` and `ref` read only part of an index. In PostgreSQL, look for `Index Scan`, `Index Only Scan`, or `Bitmap Index Scan` instead of `Seq Scan` or `Parallel Seq Scan`.
 
-In MySQL, check the `type` column of the `EXPLAIN` output. `ALL` is a full table scan, `index` is a full index scan, and `range` is an index range scan. In PostgreSQL, look for `Index Scan`, `Index Only Scan`, or `Bitmap Index Scan` instead of `Seq Scan` or `Parallel Seq Scan`.
+Some common rewrites, in MySQL syntax:
 
-Before I learned the word SARGability, I saw these rewrites as separate tricks. Now I see the rule that connects them.
+| Instead of | Try |
+|---|---|
+| `YEAR(created_at) = 2026` | `created_at >= '2026-01-01' AND created_at < '2027-01-01'` |
+| `DATE(created_at) = '2026-03-15'` | `created_at >= '2026-03-15' AND created_at < '2026-03-16'` |
+| `created_at + INTERVAL 7 DAY > NOW()` | `created_at > NOW() - INTERVAL 7 DAY` |
+| `CAST(order_id AS CHAR) = '42'` | `order_id = 42` |
+| `LOWER(email) = 'a@example.com'` | MySQL: `email = 'a@example.com'`, if the column uses a case-insensitive collation such as the default `utf8mb4_0900_ai_ci`. PostgreSQL: an index on `lower(email)`, or the `citext` type. |
 
-My index on `created_at` was there the whole time. It helps only when the predicate lets the database search it.
+Before I learned the word SARGability, I saw these rewrites as separate tricks. Now I see the rule that connects them. My index on `created_at` was there the whole time. It helps only when the predicate lets the database search it.
+
+And a rewrite is only a hypothesis until the execution plan confirms it.
 
 ## Further reading
 
@@ -169,4 +250,4 @@ My index on `created_at` was there the whole time. It helps only when the predic
 - [PostgreSQL index types](https://www.postgresql.org/docs/current/indexes-types.html)
 - [PostgreSQL indexes on expressions](https://www.postgresql.org/docs/current/indexes-expressional.html)
 - [PostgreSQL: using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)
-
+- [PostgreSQL: statistics used by the planner](https://www.postgresql.org/docs/current/planner-stats.html)

@@ -1,0 +1,79 @@
+Pager usage is off.
+                                                       version                                                        
+----------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+(1 row)
+
+CREATE TABLE
+INSERT 0 200047
+INSERT 0 1
+CREATE INDEX
+ANALYZE
+ count  
+--------
+ 200048
+(1 row)
+
+--- 1. EXTRACT plan
+                                   QUERY PLAN                                   
+--------------------------------------------------------------------------------
+ Gather  (cost=1000.00..5139.13 rows=1000 width=63)
+   Workers Planned: 1
+   ->  Parallel Seq Scan on transcripts  (cost=0.00..4039.13 rows=588 width=63)
+         Filter: (EXTRACT(year FROM created_at) = '2026'::numeric)
+(4 rows)
+
+--- 1b. YEAR() in postgres
+--- 2. range plan
+ERROR:  function year(timestamp without time zone) does not exist
+LINE 1: SELECT * FROM transcripts WHERE YEAR(created_at) = 2026;
+                                        ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using idx_created on transcripts  (cost=0.42..857.80 rows=20069 width=63)
+   Index Cond: ((created_at >= '2026-01-01 00:00:00'::timestamp without time zone) AND (created_at < '2027-01-01 00:00:00'::timestamp without time zone))
+(2 rows)
+
+--- 3. counts
+ by_year | half_open | closed 
+---------+-----------+--------
+   20011 |     20011 |  20010
+(1 row)
+
+--- 4. wide range plan
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on transcripts  (cost=0.00..5274.72 rows=180690 width=63)
+   Filter: ((created_at >= '2021-01-01 00:00:00'::timestamp without time zone) AND (created_at < '2030-01-01 00:00:00'::timestamp without time zone))
+(2 rows)
+
+--- 5. covering with EXTRACT
+VACUUM
+                                  QUERY PLAN                                   
+-------------------------------------------------------------------------------
+ Gather  (cost=1000.00..5139.13 rows=1000 width=8)
+   Workers Planned: 1
+   ->  Parallel Seq Scan on transcripts  (cost=0.00..4039.13 rows=588 width=8)
+         Filter: (EXTRACT(year FROM created_at) = '2026'::numeric)
+(4 rows)
+
+--- 6. expression index on timestamp
+CREATE INDEX
+ANALYZE
+                                              QUERY PLAN                                               
+-------------------------------------------------------------------------------------------------------
+ Index Scan using idx_transcripts_created_year on transcripts  (cost=0.42..812.71 rows=20245 width=63)
+   Index Cond: (EXTRACT(year FROM created_at) = '2026'::numeric)
+(2 rows)
+
+--- 7. expression index on timestamptz
+CREATE TABLE
+ERROR:  functions in index expression must be marked IMMUTABLE
+--- 8. timestamptz literal read in session TimeZone
+SET
+       as_utc        
+---------------------
+ 2025-12-31 18:00:00
+(1 row)
+
